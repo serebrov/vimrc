@@ -102,12 +102,12 @@
 
     set fileencodings=utf-8,cp1251,8bit-cp866
 
-    "set langmap=Ж:,йq,цw,уe,кr,еt,нy,гu,шi,щo,зp,х[,ъ],фa,ыs,вd,аf,пg,рh,оj,лk,дl,э',яz,чx,сc,мv,иb,тn,ьm,б\,,ю.,ё`
+    "set langmap=Ж:,йq,цw,уe,кr,еt,нy,гu,шi,щo,зp,х[,ъ],фa,ыs,вd,аf,пg,рh,оj,лk,дl,э',яz,чx,сc,мv,иb,тn,ьm,б\,,ю.,ё`,ЙQ,ЦW,УE,КR,ЕT,НY,ГU,ШI,ЩO,ЗP,Х{,Ъ},ФA,ЫS,ВD,АF,ПG,РH,ОJ,ЛK,ДL,Э\",ЯZ,ЧX,СC,МV,ИB,ТN,ЬM,Б<,Ю>,Ё~
 
-    "set keymap=russian-jcukenwin
+    set keymap=russian-jcukenwin
     " настраиваю для работы с русскими словами (чтобы w, b, * понимали
     " русские слова)
-    "set iskeyword=@,48-57,_,192-255
+    "set iskeyword=@,48-57,_,192-255 "this is default
     " (XXX: #VIM/tpope warns the line below could break things)
     "?? set iskeyword+=_,$,@,%,# " none of these are word dividers
 
@@ -267,15 +267,27 @@
 " }
 
 " Session manager {
-    map <Leader>s :call SessionManagerToggle()<CR>
+
+    " default: '100,<50,s10,h)
+    set viminfo=!,'100,/50,:50,<50,@50,h,s10,n~/viminfo
+
+    map <Leader>s :SessionList<CR>
+    " load last session on start
+    autocmd VimEnter *  call RestoreLastSessionMan()
+
+    function! RestoreLastSessionMan()
+        " Check that the user has started Vim without editing any files.
+        if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
+            :SessionOpenLast
+        endif
+    endfunction
 
     " Session manager
     " save session on exit
-    set sessionoptions+=globals "need this to save LastSessionLoaded variable
-    let g:sessions_data_path = "~/.vim_sessions/"
-    autocmd VimLeavePre * call SaveLastSession()
+    "let g:sessions_data_path = "~/.vim_sessions/"
+    "autocmd VimLeavePre * call SaveLastSession()
     " load last session on start
-    autocmd VimEnter * call RestoreLastSession()
+    "autocmd VimEnter * call RestoreLastSession()
 
     function! SaveLastSession()
         let last_session_file = glob(g:sessions_data_path) . '.last_session.txt'
@@ -287,8 +299,11 @@
 
     function! RestoreLastSession()
         let last_session_file = glob(g:sessions_data_path) . '.last_session.txt'
-        if filereadable(last_session_file)
-            exec "source " . readfile(last_session_file)[0]
+        " Check that the user has started Vim without editing any files.
+        if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
+            if filereadable(last_session_file)
+                exec "source " . readfile(last_session_file)[0]
+            endif
         endif
     endfunction
 " }
