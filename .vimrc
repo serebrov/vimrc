@@ -9,7 +9,6 @@
 
     filetype plugin indent on " load filetype plugins/indent settings
     "set autochdir " always switch to the current file directory.. Messes with some plugins, best left commented out
-    set autochdir " always switch to the current file directory
 
     set backup " make backup files
     set backupdir=~/.vimbackup " where to put backup files
@@ -124,8 +123,8 @@
      set cursorline " highlight current line
      set incsearch " BUT do highlight as you type you
                    " search phrase
-     "?? set nohlsearch " do not highlight searched for phrases
-     " подсвечивать поиск
+     " set nohlsearch " do not highlight searched for phrases
+     " highlight search
      set hls
 
      set ignorecase " case insensitive by default
@@ -282,30 +281,23 @@
         endif
     endfunction
 
-    " Session manager
-    " save session on exit
-    "let g:sessions_data_path = "~/.vim_sessions/"
-    "autocmd VimLeavePre * call SaveLastSession()
-    " load last session on start
-    "autocmd VimEnter * call RestoreLastSession()
+    "function! SaveLastSession()
+    "    let last_session_file = glob(g:sessions_data_path) . '.last_session.txt'
+    "    if v:this_session != ""
+    "        call writefile([v:this_session], last_session_file)
+    "        call SessionSave()
+    "    endif
+    "endfunction
 
-    function! SaveLastSession()
-        let last_session_file = glob(g:sessions_data_path) . '.last_session.txt'
-        if v:this_session != ""
-            call writefile([v:this_session], last_session_file)
-            call SessionSave()
-        endif
-    endfunction
-
-    function! RestoreLastSession()
-        let last_session_file = glob(g:sessions_data_path) . '.last_session.txt'
-        " Check that the user has started Vim without editing any files.
-        if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
-            if filereadable(last_session_file)
-                exec "source " . readfile(last_session_file)[0]
-            endif
-        endif
-    endfunction
+    "function! RestoreLastSession()
+    "    let last_session_file = glob(g:sessions_data_path) . '.last_session.txt'
+    "    " Check that the user has started Vim without editing any files.
+    "    if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
+    "        if filereadable(last_session_file)
+    "            exec "source " . readfile(last_session_file)[0]
+    "        endif
+    "    endif
+    "endfunction
 " }
 
 " Mappings {
@@ -320,13 +312,6 @@
     map <Leader>fb :FufBuffer<CR>
     map <Leader>ft :FufTag<CR>
 
-
-    "" CTRL-space for omni completion
-    " imap <c-space> <c-x><c-o>
-
-    "" Заставляем shift-insert работать как в Xterm
-    " map <S-Insert> <MiddleMouse>
-
     "" Поиск и замена слова под курсором
     "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
 
@@ -336,14 +321,6 @@
     menu Encoding.windows-1251 :e ++enc=cp1251<CR>
     menu Encoding.cp866 :e ++enc=cp866<CR>
     menu Encoding.utf-8 :e ++enc=utf8 <CR>
-
-    " " Редко когда надо [ без пары =)
-    "imap [ []<LEFT>
-    " " Аналогично и для {
-    "imap {<CR> {<CR>}<Esc>O
-    " " < & > - делаем отступы для блоков
-    "vmap < <gv
-    "vmap > >gv
 
     " ,3 - copen
     nmap <Leader>3 :copen<cr>
