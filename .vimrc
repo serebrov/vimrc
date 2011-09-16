@@ -269,7 +269,7 @@
 " Session manager {
 
     " default: '100,<50,s10,h)
-    set viminfo=!,'100,/50,:50,<50,@50,h,s10,n~/viminfo
+    set viminfo=!,'100,/50,:50,<50,@50,h,s10
 
     map <Leader>s :SessionList<CR>
     " load last session on start
