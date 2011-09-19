@@ -208,14 +208,14 @@ function! s:ListSessions()
 	nnoremap <buffer> <silent> x :call <SID>EditSessionExtra(getline('.'))<CR>
 
 	syn match Comment "^\".*"
-	put ='\"-----------------------------------------------------'
-	put ='\" q                        - close session list'
-	put ='\" o, <CR>, <2-LeftMouse>   - open session'
-	put ='\" d                        - delete session'
-	put ='\" e                        - edit session'
-	put ='\" x                        - edit extra session script'
-	put ='\"-----------------------------------------------------'
-	put =''
+	silent! put ='\"-----------------------------------------------------'
+	silent! put ='\" q                        - close session list'
+	silent! put ='\" o, <CR>, <2-LeftMouse>   - open session'
+	silent! put ='\" d                        - delete session'
+	silent! put ='\" e                        - edit session'
+	silent! put ='\" x                        - edit extra session script'
+	silent! put ='\"-----------------------------------------------------'
+	silent! put =''
 	let l = line(".")
 
 	let sessions = substitute(glob(s:sessions_path . '/*'), '\\', '/', 'g')
@@ -227,7 +227,7 @@ function! s:ListSessions()
 	endif
 	silent put =sessions
 
-	0,1d
+	silent! 0,1d
 	execute l
 	setlocal nomodifiable
 	setlocal nospell
