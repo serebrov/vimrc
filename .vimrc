@@ -94,10 +94,10 @@
     "" Кодировка текста по умолчанию
     if has('win32') || has('win64')
         set encoding=utf8
-        set termencoding=cp1251
+        "set termencoding=cp1251
     elseif has('unix')
         set encoding=utf8
-        set termencoding=utf-8
+        "set termencoding=utf-8
     endif
 
     set fileencodings=utf-8,cp1251,8bit-cp866
