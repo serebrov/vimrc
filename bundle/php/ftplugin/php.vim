@@ -27,11 +27,6 @@ set makeprg=php\ -l\ %
 " " Формат вывода ошибок PHP
 set errorformat=%m\ in\ %f\ on\ line\ %l
 "
-" " Полезные "быстрые шаблоны"
-" " Вывод отладочной информации
-"iabbrev dbg echo '<pre>';var_dump( );echo '</pre>';
-"iabbrev tm echo 'Test message in file: '.__FILE__.', on line: '.__LINE__;
-"
 "let g:pdv_cfg_Uses = 1
 
 "
@@ -81,32 +76,32 @@ let s:save_cpo = &cpo
 set cpo-=C
 
 " Define some defaults in case the included ftplugins don't set them.
-let s:undo_ftplugin = ""
-let s:browsefilter = "HTML Files (*.html, *.htm)\t*.html;*.htm\n" .
-	    \	     "All Files (*.*)\t*.*\n"
-let s:match_words = ""
+" let s:undo_ftplugin = ""
+" let s:browsefilter = "HTML Files (*.html, *.htm)\t*.html;*.htm\n" .
+" 	    \	     "All Files (*.*)\t*.*\n"
+" let s:match_words = ""
 
-runtime! ftplugin/html.vim ftplugin/html_*.vim ftplugin/html/*.vim
-let b:did_ftplugin = 1
+" runtime! ftplugin/html.vim ftplugin/html_*.vim ftplugin/html/*.vim
+" let b:did_ftplugin = 1
 
 " Override our defaults if these were set by an included ftplugin.
-if exists("b:undo_ftplugin")
-    let s:undo_ftplugin = b:undo_ftplugin
-endif
-if exists("b:browsefilter")
-    let s:browsefilter = b:browsefilter
-endif
-if exists("b:match_words")
-    let s:match_words = b:match_words
-endif
-if exists("b:match_skip")
-    unlet b:match_skip
-endif
+" if exists("b:undo_ftplugin")
+"     let s:undo_ftplugin = b:undo_ftplugin
+" endif
+" if exists("b:browsefilter")
+"     let s:browsefilter = b:browsefilter
+" endif
+" if exists("b:match_words")
+"     let s:match_words = b:match_words
+" endif
+" if exists("b:match_skip")
+"     unlet b:match_skip
+" endif
 
 " Change the :browse e filter to primarily show PHP-related files.
-if has("gui_win32")
-    let  b:browsefilter="PHP Files (*.php)\t*.php\n" . s:browsefilter
-endif
+" if has("gui_win32")
+"     let  b:browsefilter="PHP Files (*.php)\t*.php\n" . s:browsefilter
+" endif
 
 " ###
 " Provided by Mikolaj Machowski <mikmach at wp dot pl>
@@ -131,21 +126,19 @@ if exists('&omnifunc')
 endif
 
 " Section jumping: [[ and ]] provided by Antony Scriven <adscriven at gmail dot com>
-let s:function = '\(abstract\s\+\|final\s\+\|private\s\+\|protected\s\+\|public\s\+\|static\s\+\)*function'
-let s:class = '\(abstract\s\+\|final\s\+\)*class'
-let s:interface = 'interface'
-let s:section = '\(.*\%#\)\@!\_^\s*\zs\('.s:function.'\|'.s:class.'\|'.s:interface.'\)'
-exe 'nno <buffer> <silent> [[ ?' . escape(s:section, '|') . '?<CR>:nohls<CR>'
-exe 'nno <buffer> <silent> ]] /' . escape(s:section, '|') . '/<CR>:nohls<CR>'
-exe 'ono <buffer> <silent> [[ ?' . escape(s:section, '|') . '?<CR>:nohls<CR>'
-exe 'ono <buffer> <silent> ]] /' . escape(s:section, '|') . '/<CR>:nohls<CR>'
-
-setlocal commentstring=/*%s*/
+" let s:function = '\(abstract\s\+\|final\s\+\|private\s\+\|protected\s\+\|public\s\+\|static\s\+\)*function'
+" let s:class = '\(abstract\s\+\|final\s\+\)*class'
+" let s:interface = 'interface'
+" let s:section = '\(.*\%#\)\@!\_^\s*\zs\('.s:function.'\|'.s:class.'\|'.s:interface.'\)'
+" exe 'nno <buffer> <silent> [[ ?' . escape(s:section, '|') . '?<CR>:nohls<CR>'
+" exe 'nno <buffer> <silent> ]] /' . escape(s:section, '|') . '/<CR>:nohls<CR>'
+" exe 'ono <buffer> <silent> [[ ?' . escape(s:section, '|') . '?<CR>:nohls<CR>'
+" exe 'ono <buffer> <silent> ]] /' . escape(s:section, '|') . '/<CR>:nohls<CR>'
 
 " Undo the stuff we changed.
-let b:undo_ftplugin = "setlocal commentstring< include< omnifunc<" .
-	    \	      " | unlet! b:browsefilter b:match_words | " .
-	    \	      s:undo_ftplugin
+" let b:undo_ftplugin = "setlocal commentstring< include< omnifunc<" .
+" 	    \	      " | unlet! b:browsefilter b:match_words | " .
+" 	    \	      s:undo_ftplugin
 
 " Restore the saved compatibility options.
 let &cpo = s:save_cpo

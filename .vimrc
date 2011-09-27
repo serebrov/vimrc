@@ -8,11 +8,7 @@
     " }
 
     filetype plugin indent on " load filetype plugins/indent settings
-    "set autochdir " always switch to the current file directory.. Messes with some plugins, best left commented out
 
-    set backup " make backup files
-    set backupdir=~/.vimbackup " where to put backup files
-    "set clipboard+=unnamed " share system clipboard
     set directory=~/.vimswap " directory to place swap files in
 
    " Colors {
@@ -29,30 +25,24 @@
         " http://jeffmilner.com/index.php/2005/07/30/windows-vista-fonts-now-available/
         "set guifont=Consolas:h12:cANSI
         "set guifont=Consolas:h12:cRUSSIAN
+        colorscheme ir_black
     elseif has('unix')
         "let &guifont="Monospace 10"
     endif
 
-    "" Highlights
-    highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-    match OverLength /\%79v.*/
+    "" Highlight text over 79 chars
+    " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+    " match OverLength /\%79v.*/
 
     " GUI Settings {
     if has("gui_running")
-        "colorscheme metacosm " my color scheme (only works in GUI)
-        colorscheme ir_black
         set columns=180 " perfect size for me
         set lines=55 " perfect size for me
-        "set guifont=Consolas:h10:cRUSSIAN " My favorite font
-        " установить шрифт Courier New Cyr
-        "set guifont=courier_new:h10:cRUSSIAN
-
         set guioptions+=ce
         "              ||
         "              |+-- use simple dialogs rather than pop-ups
         "              +  use GUI tabs, not console style tabs
         set mousehide " hide the mouse cursor when typing
-        imap <C-RACE> xx
     endif
     " }
 
@@ -64,7 +54,6 @@
 " }
 
 " General {
-
     " Не выгружать буфер, когда переключаемся на другой
     " Это позволяет редактировать несколько файлов в один и тот же момент без необходимости сохранения каждый раз
     " когда переключаешься между ними
@@ -85,7 +74,6 @@
     "set wildmode=list:longest " turn on wild mode huge list
     set wildmode=longest,list
 " }
-
 
 " Langs and encodings {
     set fileformats=unix,dos,mac " support all three, in this order
@@ -168,21 +156,21 @@
      set showcmd " show the command being typed
      "?? set showmatch " show matching brackets
      set sidescrolloff=10 " Keep 5 lines at the size
-     set statusline=[%n]%F%m%r%h%w[%L][%{&ff}]%y%=[%p%%][%04l,%04v]
-     "                | | | | | |  |   |      |     |     |    |
-     "                | | | | | |  |   |      |     |     |    + current
-     "                | | | | | |  |   |      |     |     |       column
-     "                | | | | | |  |   |      |     |     +-- current line
-     "                | | | | | |  |   |      |     +-- current % into file
-     "                | | | | | |  |   |      +-- current syntax in
-     "                | | | | | |  |   |          square brackets
-     "                | | | | | |  |   +-- current fileformat
-     "                | | | | | |  +-- number of lines
-     "                | | | | | +-- preview flag in square brackets
-     "                | | | | +-- help flag in square brackets
-     "                | | | +-- readonly flag in square brackets
-     "                | | +-- rodified flag in square brackets
-     "                | +-- full path to file in the buffer
+     set statusline=[%n]%{fugitive#statusline()}%F\ %m%r%h%w\ [%L]\ [%{&ff}]%y%=[%p%%][%04l,%04v]
+     "                |                         |   | | | |    |     |      |     |     |    |
+     "                |                         |   | | | |    |     |      |     |     |    + current
+     "                |                         |   | | | |    |     |      |     |     |       column
+     "                |                         |   | | | |    |     |      |     |     +-- current line
+     "                |                         |   | | | |    |     |      |     +-- current % into file
+     "                |                         |   | | | |    |     |      +-- current syntax in
+     "                |                         |   | | | |    |     |          square brackets
+     "                |                         |   | | | |    |     +-- current fileformat
+     "                |                         |   | | | |    +-- number of lines
+     "                |                         |   | | | +-- preview flag in square brackets
+     "                |                         |   | | +-- help flag in square brackets
+     "                |                         |   | +-- readonly flag in square brackets
+     "                |                         |   +-- modified flag in square brackets
+     "                |                         +-- full path to file in the buffer
      "                +-- buffer number
 
     " Status line
@@ -210,9 +198,9 @@
                       " >>, << and stuff like that
     set softtabstop=4 " when hitting tab or backspace, how many spaces
                        "should a tab be (see expandtab)
-    set tabstop=8 " real tabs should be 8, and they will show with
-                   " set list on
+    set tabstop=4 " real tabs will show with set list on
 
+    " set textwidth=80
 
     set formatoptions-=t   " Do not automatically wrap text on textwidth
     set formatoptions+=crq " Automatically insert comment leader on return,
@@ -265,40 +253,6 @@
 
 " }
 
-" Session manager {
-
-    " default: '100,<50,s10,h)
-    set viminfo=!,'100,/50,:50,<50,@50,h,s10
-
-    map <Leader>s :SessionList<CR>
-    " load last session on start
-    autocmd VimEnter *  call RestoreLastSessionMan()
-
-    function! RestoreLastSessionMan()
-        " Check that the user has started Vim without editing any files.
-        if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
-            :SessionOpenLast
-        endif
-    endfunction
-
-    "function! SaveLastSession()
-    "    let last_session_file = glob(g:sessions_data_path) . '.last_session.txt'
-    "    if v:this_session != ""
-    "        call writefile([v:this_session], last_session_file)
-    "        call SessionSave()
-    "    endif
-    "endfunction
-
-    "function! RestoreLastSession()
-    "    let last_session_file = glob(g:sessions_data_path) . '.last_session.txt'
-    "    " Check that the user has started Vim without editing any files.
-    "    if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
-    "        if filereadable(last_session_file)
-    "            exec "source " . readfile(last_session_file)[0]
-    "        endif
-    "    endif
-    "endfunction
-" }
 
 " Mappings {
     let mapleader = ","
@@ -322,8 +276,10 @@
     menu Encoding.cp866 :e ++enc=cp866<CR>
     menu Encoding.utf-8 :e ++enc=utf8 <CR>
 
-    " ,3 - copen
-    nmap <Leader>3 :copen<cr>
+    " ,co - copen
+    nmap <Leader>co :copen<cr>
+    nmap <Leader>n :cnext<cr>
+    nmap <Leader>p :cprevious<cr>
 
     " <F8> File encoding for open
     " ucs-2le - MS Windows unicode encoding
@@ -396,20 +352,60 @@
         au!
 
         "" Auto Completion
-        "autocmd FileType python :set omnifunc=pythoncomplete#Complete
+        autocmd FileType python :set omnifunc=pythoncomplete#Complete
         "autocmd FileType php :set omnifunc=phpcomplete#CompletePHP
-        "autocmd FileType html :set omnifunc=htmlcomplete@CompleteTags
-        "autocmd FileType html :set filetype=xhtml
-        "autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
-        "autocmd FileType css :set omnifunc=csscomplete#CompleteCSS
-        "autocmd FileType c :set omnifunc=ccomplete#Complete
+        autocmd FileType html :set omnifunc=htmlcomplete@CompleteTags
+        autocmd FileType html :set filetype=xhtml
+        autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
+        autocmd FileType css :set omnifunc=csscomplete#CompleteCSS
+        autocmd FileType c :set omnifunc=ccomplete#Complete
 
         "" Python Syntax
-        autocmd BufWrite *.{py} :call CheckPythonSyntax()
+        " autocmd BufWrite *.{py} :call CheckPythonSyntax()
 
     augroup END
 
 
+" }
+
+" Tab for auto-complete
+let g:SuperTabDefaultCompletionType = '<C-x><C-o>'
+
+" Session manager {
+
+    " default: blank,buffers,curdir,folds,help,options,tabpages,winsize"
+    set sessionoptions=buffers,curdir,help,tabpages,winsize " localoptions,
+    " default: '100,<50,s10,h
+    set viminfo=!,'100,/50,:50,<50,@50,h,s10
+
+    map <Leader>s :SessionList<CR>
+    " load last session on start
+    autocmd VimEnter *  call RestoreLastSessionMan()
+
+    function! RestoreLastSessionMan()
+        " Check that the user has started Vim without editing any files.
+        if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
+            :SessionOpenLast
+        endif
+    endfunction
+
+    "function! SaveLastSession()
+    "    let last_session_file = glob(g:sessions_data_path) . '.last_session.txt'
+    "    if v:this_session != ""
+    "        call writefile([v:this_session], last_session_file)
+    "        call SessionSave()
+    "    endif
+    "endfunction
+
+    "function! RestoreLastSession()
+    "    let last_session_file = glob(g:sessions_data_path) . '.last_session.txt'
+    "    " Check that the user has started Vim without editing any files.
+    "    if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
+    "        if filereadable(last_session_file)
+    "            exec "source " . readfile(last_session_file)[0]
+    "        endif
+    "    endif
+    "endfunction
 " }
 
 " Utils {

@@ -105,6 +105,9 @@ endfunction
 "============================================================================"
 
 function! s:OpenSession(name)
+	if g:sessionman_save_on_exit && v:this_session != ''
+		call s:SaveSession()
+	endif
 	if a:name != '' && a:name[0] != '"'
 		call s:RestoreDefaults()
 		if has('cscope')
