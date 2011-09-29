@@ -253,6 +253,9 @@
 
 " }
 
+" Fuzzy Finder {
+    let g:fuf_modesDisable = []
+" }
 
 " Mappings {
     let mapleader = ","
@@ -261,10 +264,15 @@
     map <Leader>cc :source ~/.vimrc<CR>
 
     " Fuzzy Finder
-    map <Leader>ff :FufFile<CR>
+    map <Leader>ff :FufFileWithCurrentBufferDir **/<C-M>
+    map <Leader>fr :FufFile<CR>
     map <Leader>fd :FufDir<CR>
     map <Leader>fb :FufBuffer<CR>
     map <Leader>ft :FufTag<CR>
+    map <Leader>fl :FufLine<CR>
+    map <Leader>fq :FufQuickfix<CR>
+    map <Leader>fm :FufMruFile<CR>
+    map <Leader>fc :FufMruCmd<CR>
 
     "" Поиск и замена слова под курсором
     "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
