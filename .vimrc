@@ -377,7 +377,7 @@
 " }
 
 " Tab for auto-complete
-let g:SuperTabDefaultCompletionType = '<C-x><C-o>'
+"let g:SuperTabDefaultCompletionType = '<C-x><C-o>'
 
 " Session manager {
 
@@ -414,6 +414,11 @@ let g:SuperTabDefaultCompletionType = '<C-x><C-o>'
     "        endif
     "    endif
     "endfunction
+" }
+
+" NERDTree {
+    map <Leader>nt :NERDTreeToggle<CR>
+    map <Leader>nf :NERDTreeFind<CR>
 " }
 
 " Utils {
