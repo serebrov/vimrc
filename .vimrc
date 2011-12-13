@@ -12,11 +12,18 @@
     set directory=~/.vimswap " directory to place swap files in
 
    " Colors {
-        set t_Co=256                        " 256 Colors.
-        set background=dark                 " Set dark background.
         syntax on                           " Turn syntax highlighting on.
-        colorscheme zenburn                 " Set colorscheme to zenburn.
+        set t_Co=256                        " 256 Colors.
+        set background=dark                " Set dark background.
+        " colorscheme zenburn                 " Set colorscheme to zenburn.
         "colorscheme blackboard
+
+        " ------------------------------------------------------------------
+        " Solarized Colorscheme Config
+        " ------------------------------------------------------------------
+        let g:solarized_contrast="high"    "default value is normal
+        let g:solarized_diffmode="high"    "default value is normal
+        colorscheme solarized
    " }
 
     " Font. Very important.
@@ -25,9 +32,11 @@
         " http://jeffmilner.com/index.php/2005/07/30/windows-vista-fonts-now-available/
         "set guifont=Consolas:h12:cANSI
         "set guifont=Consolas:h12:cRUSSIAN
-        colorscheme ir_black
+        colorscheme default
+        " highlight Normal ctermbg=black ctermfg=white
     elseif has('unix')
         "let &guifont="Monospace 10"
+        set guifont=Inconsolata\ Medium\ 11
     endif
 
     "" Highlight text over 79 chars
@@ -42,6 +51,7 @@
         "              ||
         "              |+-- use simple dialogs rather than pop-ups
         "              +  use GUI tabs, not console style tabs
+        set guioptions-=T
         set mousehide " hide the mouse cursor when typing
     endif
     " }
@@ -126,7 +136,7 @@
                " out of my files
      set listchars=tab:>-,trail:- " show tabs and trailing
      if has("gui_running")
-         set listchars=tab:▸\ ,trail:·,eol:¬
+         set listchars=tab:▸\ ,trail:·",eol:¬
      endif
      "Invisible character colors
      highlight NonText guifg=#4a4a59
@@ -327,6 +337,8 @@
     "map <silent> <F4> :w<CR>:!/usr/bin/env python % <CR>
 
     "" Supertab
+    " Tab for auto-complete
+    let g:SuperTabDefaultCompletionType = '<C-x><C-u>'
 
 " }
 
@@ -375,9 +387,6 @@
 
 
 " }
-
-" Tab for auto-complete
-"let g:SuperTabDefaultCompletionType = '<C-x><C-o>'
 
 " Session manager {
 
