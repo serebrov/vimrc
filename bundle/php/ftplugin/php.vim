@@ -21,7 +21,7 @@
 " " Сделаем удобную навигацию по мануалу PHP
 "set keywordprg=~/.vim/bin/php_doc 
 "
-" " Проверка синтаксиса PHP
+" " Проверка синтаксиса PHPOC
 set makeprg=php\ -l\ %
 "
 " " Формат вывода ошибок PHP
@@ -34,7 +34,8 @@ set errorformat=%m\ in\ %f\ on\ line\ %l
 " " Помимо прочего он умеет:
 "
 " " Включаем фолдинг для блоков классов/функций
-let php_folding = 1
+"" makes saving a file too long
+"" let php_folding = 1
 "
 " " Не использовать короткие теги PHP для поиска PHP блоков
 let php_noShortTags = 1

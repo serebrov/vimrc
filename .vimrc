@@ -294,6 +294,11 @@
     menu Encoding.cp866 :e ++enc=cp866<CR>
     menu Encoding.utf-8 :e ++enc=utf8 <CR>
 
+    " Use CTRL-S for saving, also in Insert mode
+    noremap <C-S> :update<CR>
+    vnoremap <C-S> <C-C>:update<CR>
+    inoremap <C-S> <C-O>:update<CR>
+
     " ,co - copen
     nmap <Leader>co :copen<cr>
     nmap <Leader>n :cnext<cr>
