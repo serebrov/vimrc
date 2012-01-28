@@ -1,12 +1,104 @@
 " Basics {
     set nocompatible " explicitly get out of vi-compatible mode
+    filetype off
 
     " pathogen {
-        filetype off
-        call pathogen#infect()
-        call pathogen#helptags()
+        "call pathogen#infect()
+        "call pathogen#helptags()
     " }
+    " vundle {
+        set rtp+=~/.vim/bundle/vundle/
+        call vundle#rc()
 
+        " let Vundle manage Vundle
+        " required!
+        Bundle 'gmarik/vundle'
+    " }
+    " My Bundles here {
+        " original repos on github
+        Bundle 'tpope/vim-fugitive'
+        Bundle 'int3/vim-extradite'
+        "Bundle 'Lokaltog/vim-easymotion'
+        "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+        "Bundle 'tpope/vim-rails.git'
+        " vim-scripts repos
+        Bundle 'L9'
+        Bundle 'FuzzyFinder'
+        "" non github repos
+        Bundle 'git://git.wincent.com/command-t.git'
+        Bundle 'git://github.com/scrooloose/nerdtree.git'
+        Bundle 'git://github.com/scrooloose/nerdcommenter.git'
+        Bundle 'git://github.com/ervandew/supertab.git'
+        Bundle 'git://github.com/altercation/vim-colors-solarized.git'
+        "Bundle 'git://github.com/mattn/zencoding-vim.git'
+        Bundle 'git://github.com/mileszs/ack.vim.git'
+        " PHP
+        Bundle 'git://github.com/vim-scripts/php.vim--Garvin.git'
+        Bundle 'git://github.com/2072/PHP-Indenting-for-VIm.git'
+        Bundle '~/.vim/bundle/sessionman'
+        " ...
+        "
+        " Brief help
+        " :BundleList          - list configured bundles
+        " :BundleInstall(!)    - install(update) bundles
+        " :BundleSearch(!) foo - search(or refresh cache first) for foo
+        " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+        "
+        " see :h vundle for more details or wiki for FAQ
+        " NOTE: comments after Bundle command are not allowed..
+        "" Interface
+        "Bundle 'git://github.com/vim-scripts/taglist.vim.git'
+        " depends: http://ctags.sourceforge.net/
+        "Bundle 'git://github.com/int3/vim-taglist-plus.git'
+        "Bundle 'git://github.com/vim-scripts/IndexedSearch.git'
+        "Bundle 'git://github.com/rphillips/vim-zoomwin.git'
+        "Bundle 'git://github.com/vim-scripts/UltiSnips.git'
+        "Bundle 'git://github.com/msanders/snipmate.vim.git'
+        "Bundle 'git://github.com/miripiruni/vimi-snippets.git'
+        "Bundle 'git://github.com/tpope/vim-surround.git'
+        "Bundle 'git://github.com/tpope/vim-fugitive.git'
+        "Bundle 'git://github.com/tsaleh/vim-align.git'
+        "Bundle 'git://github.com/vim-scripts/bufexplorer.zip.git'
+        "Bundle 'git://github.com/vim-scripts/delimitMate.vim.git'
+        "Bundle 'git://github.com/sjl/gundo.vim.git'
+        "Bundle 'git://github.com/edsono/vim-matchit.git'
+        "Bundle 'git://github.com/sjl/threesome.vim.git'
+        "Bundle 'git://github.com/chrismetcalf/vim-yankring.git'
+        "Bundle 'git://github.com/slack/vim-fuzzyfinder.git'
+        "Bundle 'git://github.com/vim-scripts/vimwiki.git'
+    " Lua
+        "Bundle 'git://github.com/vim-scripts/lua.vim.git'
+        "Bundle 'git://github.com/rkowal/Lua-Omni-Vim-Completion.git'
+        "Bundle 'git://github.com/xolox/vim-lua-ftplugin.git'
+        "Bundle 'git://github.com/xolox/vim-lua-inspect.git'
+    " HTML/HAML
+        "Bundle 'git://github.com/othree/html5.vim.git'
+        "Bundle 'git://github.com/hokaccha/vim-html5validator.git'
+        "Bundle 'git://github.com/tyru/operator-html-escape.vim.git'
+        "Bundle 'git://github.com/tpope/vim-haml.git'
+        "Bundle 'git://github.com/gregsexton/MatchTag.git'
+    " CSS/LESS
+        "Bundle 'git://github.com/hail2u/vim-css3-syntax.git'
+        "Bundle 'git://github.com/skammer/vim-css-color.git'
+        "Bundle 'git://github.com/groenewege/vim-less.git'
+        "Bundle 'git://github.com/miripiruni/vim-better-css-indent.git'
+        "Bundle 'git://github.com/miripiruni/CSScomb-for-Vim.git'
+    " JavaScript
+        "Bundle 'git://github.com/pangloss/vim-javascript.git'
+        "Bundle 'git://github.com/itspriddle/vim-jquery.git'
+        "Bundle 'git://github.com/kchmck/vim-coffee-script.git'
+    " JSON
+        "Bundle 'git://github.com/leshill/vim-json.git'
+    " Python/Django
+        "Bundle 'git://github.com/fs111/pydoc.vim.git'
+    " Perl
+        "Bundle 'git://github.com/petdance/vim-perl.git'
+        "Bundle 'git://github.com/ggray/vim-tt2.git'
+    " Ruby/Rails
+        "Bundle 'git://github.com/vim-ruby/vim-ruby.git'
+        "Bundle 'git://github.com/tpope/vim-rails.git'
+        "Bundle 'git://github.com/tpope/vim-endwise.git'
+    " }
     filetype plugin indent on " load filetype plugins/indent settings
 
     set directory=~/.vimswap " directory to place swap files in
