@@ -14,6 +14,7 @@
         " required!
         Bundle 'gmarik/vundle'
     " }
+    " https://github.com/mutewinter/dot_vim
     " My Bundles here {
         " original repos on github
         "!
@@ -35,6 +36,10 @@
         Bundle 'godlygeek/tabular'
         "!
         Bundle 'Raimondi/delimitMate'
+        "!
+        Bundle 'timcharper/textile.vim'
+        "!
+        Bundle 'gregsexton/MatchTag'
         "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
         "Bundle 'tpope/vim-rails.git'
         " vim-scripts repos
