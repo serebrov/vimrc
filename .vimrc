@@ -27,6 +27,7 @@
         "" non github repos
         Bundle 'git://git.wincent.com/command-t.git'
         Bundle 'git://github.com/scrooloose/nerdtree.git'
+        Bundle 'tyok/nerdtree-ack'
         Bundle 'git://github.com/scrooloose/nerdcommenter.git'
         Bundle 'git://github.com/ervandew/supertab.git'
         Bundle 'git://github.com/altercation/vim-colors-solarized.git'
@@ -357,12 +358,13 @@
 " Fuzzy Finder {
     let g:fuf_modesDisable = []
 " }
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
 " Mappings {
     let mapleader = ","
     imap jj <Esc>
 
-    map <Leader>cc :source ~/.vimrc<CR>
+    map <Leader>vv :source ~/.vimrc<CR>
 
     " Fuzzy Finder
     map <Leader>ff :FufFileWithCurrentBufferDir **/<C-M>
