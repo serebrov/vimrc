@@ -17,9 +17,12 @@
     " https://github.com/mutewinter/dot_vim
     " My Bundles here {
         " original repos on github
-        "!
+        " git support
+        " Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
+        " Ggrep, Glog, Gread, Gwrite, Gbrowse
         Bundle 'tpope/vim-fugitive'
-        "!
+        " fugitive extension, commit browser
+        " :Extradite
         Bundle 'int3/vim-extradite'
         " visual guides for indents, default mapping <Leager>ig
         "!
