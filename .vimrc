@@ -110,12 +110,24 @@
         " colorscheme zenburn                 " Set colorscheme to zenburn.
         "colorscheme blackboard
 
-        " ------------------------------------------------------------------
-        " Solarized Colorscheme Config
-        " ------------------------------------------------------------------
-        let g:solarized_contrast="high"    "default value is normal
-        let g:solarized_diffmode="high"    "default value is normal
-        colorscheme solarized
+        " Solarized {
+            syntax enable
+            let g:solarized_termcolors=256
+            let g:solarized_contrast="high"    "default value is normal
+            let g:solarized_diffmode="high"    "default value is normal
+            set background=dark
+            try
+                colorscheme solarized
+            catch /^Vim\%((\a\+)\)\=:E185/
+                echo "Solarized theme not found. Run :BundleInstall"
+            endtry
+
+            try
+                call togglebg#map("<Leader>b")
+            catch /^Vim\%((\a\+)\)\=:E117/
+                " :(
+            endtry
+        " }
    " }
 
     " Font. Very important.
@@ -137,8 +149,8 @@
 
     " GUI Settings {
     if has("gui_running")
-        set columns=180 " perfect size for me
-        set lines=55 " perfect size for me
+        "set columns=180 " perfect size for me
+        "set lines=55 " perfect size for me
         set guioptions+=ce
         "              ||
         "              |+-- use simple dialogs rather than pop-ups
@@ -153,19 +165,21 @@
 " Spell {
     "set spl=en spell
     setlocal spell spelllang=ru_yo,en_us
+    " z= - suggest word
+    " [s - previous wrong word
+    " ]s - next wrong word
 " }
 
 " General {
     " Не выгружать буфер, когда переключаемся на другой
     " Это позволяет редактировать несколько файлов в один и тот же момент без необходимости сохранения каждый раз
     " когда переключаешься между ними
-    set hidden " you can change buffers without saving
+    set hidden                  " you can change buffers without saving
 
-    set mouse=a " use mouse everywhere
+    set mouse=a                 " use mouse everywhere
     " по правой кнопке - popup меню, расширить выделение - Shift+левая кнопка
     set mousemodel=popup
-    " " Скрывать указатель мыши, когда печатаем
-    set mousehide
+    set mousehide               " hide mouse when typing
 
     set noerrorbells " don't make noise
 
@@ -200,64 +214,64 @@
     " (XXX: #VIM/tpope warns the line below could break things)
     "?? set iskeyword+=_,$,@,%,# " none of these are word dividers
 
-    " по умолчанию - латинская раскладка
-    set iminsert=0
-    " по умолчанию - латинская раскладка при поиске
-    set imsearch=0
-
     highlight lCursor guifg=NONE guibg=Cyan
+    set iminsert=0              " latin langmap by default when typing
+    set imsearch=0              " latin langmap by default when search
+" }
 
+" Search {
+     set incsearch              " do highlight as you type you search phrase
+     " set nohlsearch " do not highlight searched for phrases
+     set hlsearch               " highlight search
+     set ignorecase             " case insensitive by default
+     set smartcase              " if there are caps, go case-sensitive
 " }
 
 " Vim UI {
-     set cursorline " highlight current line
-     set incsearch " BUT do highlight as you type you
-                   " search phrase
-     " set nohlsearch " do not highlight searched for phrases
-     " highlight search
-     set hls
+     set cursorline             " highlight current line
+     set guicursor=n:blinkon0   " turn off cursor blinking
 
-     set ignorecase " case insensitive by default
-     set smartcase " if there are caps, go case-sensitive
+     set laststatus=2           " always show the status line
 
-     set laststatus=2 " always show the status line
-     "?? set linespace=0 " don't insert any extra pixel lines
-                     " betweens rows
-
-     set list " we do what to show tabs, to ensure we get them
-               " out of my files
+     set list                   " we do what to show tabs, to ensure we get them
+                                " out of my files
      set listchars=tab:>-,trail:- " show tabs and trailing
      if has("gui_running")
          set listchars=tab:▸\ ,trail:·",eol:¬
+     else
+         set listchars=tab:»\ ,trail:·",eol:¬
+     endif
+     if has("linebreak")
+         let &sbr = nr2char(8618).' '  " Show ↪ at the beginning of wrapped lines
      endif
      "Invisible character colors
      highlight NonText guifg=#4a4a59
      highlight SpecialKey guifg=#4a4a59
-     " Shortcut to rapidly toggle `set list` (def leader = \)
-     nmap <leader>l :set list!<CR>
 
-     set nostartofline " leave my cursor where it was
+     set nostartofline          " leave my cursor where it was
 
-     set novisualbell " don't blink
+     set novisualbell           " don't blink
      set t_vb=
 
-     set number " turn on line numbers
-     set numberwidth=5 " We are good up to 99999 lines
-     set report=0 " tell us when anything is changed via :...
-     set ruler " Always show current positions along the bottom
-     " Show editing mode
-     set showmode
+     set number                 " turn on line numbers
+     set numberwidth=5          " We are good up to 99999 lines
+     set report=0               " tell us when anything is changed via :...
+     set ruler                  " Always show current positions along the bottom
+     set showmode               " Show editing mode
 
-     set scrolloff=10 " Keep 10 lines (top/bottom) for scope
-     "" Теперь нет необходимости передвигать курсор к краю экрана, чтобы подняться
-     " в режиме редактирования
-     "set scrolljump=7
+     set wrap                    " wrap text, see http://vimcasts.org/episodes/soft-wrapping-text/
+     set linebreak               " do not wrap in the middle of the word
 
-     set shortmess=aOstT " shortens messages to avoid
-                          " 'press a key' prompt
-     set showcmd " show the command being typed
-     "?? set showmatch " show matching brackets
-     set sidescrolloff=10 " Keep 5 lines at the size
+
+     "set scrolloff=10          " Keep 10 lines (top/bottom) for scope
+     set scrolloff=999          " Work line is always in the middle
+                                " alternative: zz - centers current line
+
+     set shortmess=aOstT        " shortens messages to avoid
+                                " 'press a key' prompt
+     set showcmd                " show the command being typed
+     "set showmatch              " show matching brackets
+     set sidescrolloff=10       " Keep 5 lines at the size
      set statusline=[%n]%{fugitive#statusline()}%F\ %m%r%h%w\ [%L]\ [%{&ff}]%y%=[%p%%][%04l,%04v]
      "                |                         |   | | | |    |     |      |     |     |    |
      "                |                         |   | | | |    |     |      |     |     |    + current
@@ -291,29 +305,27 @@
 " }
 
 " Text Formatting/Layout {
-    set expandtab " no real tabs please!
-    "" Умные табы в начале строк
-    set smarttab
+    set expandtab               " expand tabs to spaces
+    set smarttab                " When on, a <Tab> in front of a line inserts
+                                " blanks according to 'shiftwidth'
 
-    set shiftround " when at 3 spaces, and I hit > ... go to 4, not 5
-    set shiftwidth=4 " auto-indent amount when using cindent,
-                      " >>, << and stuff like that
-    set softtabstop=4 " when hitting tab or backspace, how many spaces
-                       "should a tab be (see expandtab)
-    set tabstop=4 " real tabs will show with set list on
+    set shiftround              " when at 3 spaces, and I hit > ... go to 4, not 5
+    set shiftwidth=4            " auto-indent amount when using cindent,
+                                " >>, << and stuff like that
+    set softtabstop=4           " when hitting tab or backspace, how many spaces
+                                " should a tab be (see expandtab)
+    set tabstop=4               " real tabs will show with set list on
 
     " set textwidth=80
 
-    set formatoptions-=t   " Do not automatically wrap text on textwidth
-    set formatoptions+=crq " Automatically insert comment leader on return,
-                           " and let gq format comments
+    set formatoptions-=t        " Do not automatically wrap text on textwidth
+    set formatoptions+=crq      " Automatically insert comment leader on return,
+                                " and let gq format comments
 
-    set infercase " case inferred by default
-    set nowrap " do not wrap line
-    " Включить автоотступы
-    set autoindent
-    " Включаем "умные" отспупы ( например, автоотступ после {)
-    set smartindent
+    set infercase               " case inferred by default
+
+    set autoindent              " indent next line like previous
+    set smartindent             " smart indenting when starting a new line (after {, before }, etc)
     " allow to use backspace instead of "x"
     set backspace=indent,eol,start whichwrap+=<,>,[,]
     " Virtual editing means that the cursor can be positioned where there is
@@ -324,21 +336,32 @@
 " }
 
 " Folding {
-    set foldenable " Turn on folding
-    set foldmarker={,} " Fold C style code (only use this as default
-                        " if you use a high foldlevel)
-    set foldmethod=marker " Fold on the marker
-    set foldlevel=100 " Don't autofold anything (but I can still
-                      " fold manually)
-    set foldopen=block,hor,mark,percent,quickfix,tag " what movements
-                                                      " open folds
-    set foldopen=all
+    set foldenable              " Turn on folding
+    set foldmarker={,}          " Fold C style code (only use this as default
+                                " if you use a high foldlevel)
+    set foldmethod=marker       " Fold on the marker
+    set foldlevel=100           " Don't autofold anything (but I can still
+                                " fold manually)
+    set foldopen=block,hor,mark,percent,quickfix,tag " what movements open folds
+    "set foldopen=all
 
-    function! SimpleFoldText() " {
-        return getline(v:foldstart).' '
-    endfunction " }
-    set foldtext=SimpleFoldText() " Custom fold text function
-                                   " (cleaner than default)
+    " from https://github.com/sjl/dotfiles/blob/master/vim/.vimrc
+    function! MyFoldText()
+        let line = getline(v:foldstart)
+
+        let nucolwidth = &fdc + &number * &numberwidth
+        let windowwidth = winwidth(0) - nucolwidth - 3
+        let foldedlinecount = v:foldend - v:foldstart
+
+        " expand tabs into spaces
+        let onetab = strpart(' ', 0, &tabstop)
+        let line = substitute(line, '\t', onetab, 'g')
+
+        let line = strpart(line, 0, windowwidth - 2 - len(foldedlinecount))
+        let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+        return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+    endfunction
+    set foldtext=MyFoldText()
 " }
 
 " Completions {
@@ -358,7 +381,14 @@
 " Fuzzy Finder {
     let g:fuf_modesDisable = []
 " }
-let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+" Ack {
+    let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+" }
+" NERDTree {
+    let NERDTreeChDirMode=2     " Change CWD to nerd tree root
+    let NERDTreeShowBookmarks=1 " Show bookmarks panel
+" }
+
 
 " Mappings {
     let mapleader = ","
@@ -376,6 +406,11 @@ let g:ackprg="ack-grep -H --nocolor --nogroup --column"
     map <Leader>fq :FufQuickfix<CR>
     map <Leader>fm :FufMruFile<CR>
     map <Leader>fc :FufMruCmd<CR>
+
+    " NERDTree {
+        map <Leader>nt :NERDTreeToggle<CR>
+        map <Leader>nf :NERDTreeFind<CR>
+    " }
 
     "" Поиск и замена слова под курсором
     "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
@@ -400,31 +435,13 @@ let g:ackprg="ack-grep -H --nocolor --nogroup --column"
     " <F8> File encoding for open
     " ucs-2le - MS Windows unicode encoding
     map <Leader>8	:execute RotateEnc()<CR>
-
     " <Shift+F8> Force file encoding for open (encoding = fileencoding)
     map <S-F8>	:execute ForceRotateEnc()<CR>
-
     " <Ctrl+F8> File encoding for save (convert)
     map <C-F8>	:execute RotateFEnc()<CR>
 
     " " F11 - показать окно Taglist
     "map <A-0> :TlistToggle<cr>
-
-    " tab navigation
-    "map <C-l> :tabnext<cr>
-    "map <C-h> :tabprevious<cr>
-    "map <C-t> :tabnew<cr>
-    "map <C-x> :tabclose<cr>
-
-    "imap <C-t> <C-O>:tabnew<cr>
-    "imap <C-l> <C-O>:tabnext<cr>
-    "imap <C-h> <C-O>:tabprevious<cr>
-    "imap <C-x> <C-O>:tabclose<cr>
-
-    "vmap <C-t> <C-C>:tabnew<cr>
-    "vmap <C-l> <C-C>:tabnext<cr>
-    "vmap <C-h> <C-C>:tabprevious<cr>
-    "vmap <C-x> <C-C>:tabclose<cr>
 
     " навигация по окнам - активное окно разворачивается
     "nmap <C-k> <C-W>k<C-W>_ " окно вверх
@@ -432,11 +449,37 @@ let g:ackprg="ack-grep -H --nocolor --nogroup --column"
     "nmap <C-j> <C-W>j<C-W>_ " окно вниз
     "imap <C-j> <Esc><C-W>j<C-W>_a " окно вниз
 
-    "map <silent> <F4> :w<CR>:!/usr/bin/env python % <CR>
+    " Move cursor by display lines when wrapping
+    " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
+    noremap  <buffer> <silent> k gk
+    noremap  <buffer> <silent> j gj
+    noremap  <buffer> <silent> 0 g0
+    noremap  <buffer> <silent> $ g$
+
+    " Move with Ctrl + hjkl in Insert mode
+    imap <C-h> <C-o>h
+    imap <C-j> <C-o>j
+    imap <C-k> <C-o>k
+    imap <C-l> <C-o>l
+
+    " Shortcut to rapidly toggle `set list` (def leader = \)
+    nmap <leader>l :set list!<CR>
 
     "" Supertab
     " Tab for auto-complete
     let g:SuperTabDefaultCompletionType = '<C-x><C-u>'
+
+    " Standard keys
+        " Speller shorcuts {
+            " z= - suggest word
+            " [s - previous wrong word
+            " ]s - next wrong word
+        " }
+        " Folding {
+            " za - open/close current fold
+            " zR - open all folds
+            " zM - close all folds
+        " }
 
 " }
 
@@ -523,10 +566,6 @@ let g:ackprg="ack-grep -H --nocolor --nogroup --column"
     "endfunction
 " }
 
-" NERDTree {
-    map <Leader>nt :NERDTreeToggle<CR>
-    map <Leader>nf :NERDTreeFind<CR>
-" }
 
 " Utils {
 let b:encindex=0
