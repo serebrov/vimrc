@@ -16,26 +16,58 @@
     " }
     " My Bundles here {
         " original repos on github
+        "!
         Bundle 'tpope/vim-fugitive'
+        "!
         Bundle 'int3/vim-extradite'
-        "Bundle 'Lokaltog/vim-easymotion'
+        " visual guides for indents, default mapping <Leager>ig
+        "!
+        Bundle 'nathanaelkane/vim-indent-guides'
+        "!
+        Bundle 'Lokaltog/vim-powerline'
+        "!
+        Bundle 'Lokaltog/vim-easymotion'
+        "!
+        Bundle 'tpope/vim-surround'
+        "!
+        Bundle 'tpope/vim-repeat'
+        "!
+        Bundle 'godlygeek/tabular'
+        "!
+        Bundle 'Raimondi/delimitMate'
         "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
         "Bundle 'tpope/vim-rails.git'
         " vim-scripts repos
         Bundle 'L9'
         Bundle 'FuzzyFinder'
+        Bundle 'Markdown'
+        "!
+        Bundle 'IndexedSearch'
         "" non github repos
+        "!
         Bundle 'git://git.wincent.com/command-t.git'
         Bundle 'git://github.com/scrooloose/nerdtree.git'
         Bundle 'tyok/nerdtree-ack'
+        "!
         Bundle 'git://github.com/scrooloose/nerdcommenter.git'
+        "!
         Bundle 'git://github.com/ervandew/supertab.git'
         Bundle 'git://github.com/altercation/vim-colors-solarized.git'
         "Bundle 'git://github.com/mattn/zencoding-vim.git'
         Bundle 'git://github.com/mileszs/ack.vim.git'
         " PHP
+        "!
         Bundle 'git://github.com/vim-scripts/php.vim--Garvin.git'
+        "!
         Bundle 'git://github.com/2072/PHP-Indenting-for-VIm.git'
+        " This allows you to select some text using Vim's visual mode and then hit *
+        " and # to search for it elsewhere in the file.
+        "!
+        Bundle 'gmarik/vim-visual-star-search'
+        "Bundle "jQuery"
+        "Bundle "tComment"
+        "nnoremap // :TComment<CR>
+        "vnoremap // :TComment<CR>
         " ...
         "
         " Brief help
@@ -237,9 +269,9 @@
                                 " out of my files
      set listchars=tab:>-,trail:- " show tabs and trailing
      if has("gui_running")
-         set listchars=tab:▸\ ,trail:·",eol:¬
+         set listchars=tab:▸\ ,trail:·",eol:¶,extends:»,precedes:«
      else
-         set listchars=tab:»\ ,trail:·",eol:¬
+         set listchars=tab:»\ ,trail:·",eol:¬,extends:»,precedes:«
      endif
      if has("linebreak")
          let &sbr = nr2char(8618).' '  " Show ↪ at the beginning of wrapped lines
@@ -388,13 +420,29 @@
     let NERDTreeChDirMode=2     " Change CWD to nerd tree root
     let NERDTreeShowBookmarks=1 " Show bookmarks panel
 " }
+" Command-T {
+    let g:CommandTMatchWindowAtTop=1 " show window at top
+" }
+
 
 
 " Mappings {
     let mapleader = ","
-    imap jj <Esc>
+    imap jj <Esc>               " jj as ESC
+                                " other options: Ctrl-[, Ctrl-C
 
-    map <Leader>vv :source ~/.vimrc<CR>
+    map <Leader>vv :source ~/.vimrc<CR>     " ,vv to re-read .vimrc
+    nmap <leader>vc :tabedit $MYVIMRC<CR>   " ,vc to view .vimrc
+
+    " Command-T
+    " ,t                        " list files
+
+    " vim-easymotion
+    " ,,w - words; ,,f - char
+    " ,,t - search
+
+    " vim-indent-guides
+    " <Leader>ig
 
     " Fuzzy Finder
     map <Leader>ff :FufFileWithCurrentBufferDir **/<C-M>
@@ -408,8 +456,8 @@
     map <Leader>fc :FufMruCmd<CR>
 
     " NERDTree {
-        map <Leader>nt :NERDTreeToggle<CR>
-        map <Leader>nf :NERDTreeFind<CR>
+        map <Leader>nt :NERDTreeToggle<CR>  " ,nt - toggle tree
+        map <Leader>nf :NERDTreeFind<CR>    " ,nf - find current file in the tree
     " }
 
     "" Поиск и замена слова под курсором
@@ -486,6 +534,9 @@
 " Autocommands {
     au BufRead,BufNewFile *.phps    set filetype=php
     au BufRead,BufNewFile *.thtml   set filetype=php
+    au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
+    au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
+    au BufRead,BufNewFile {COMMIT_EDITMSG}                                set ft=gitcommit
 
     " remove trailing whitespace on save
     " http://vim.wikia.com/wiki/Remove_unwanted_spaces
@@ -497,11 +548,19 @@
     "" When editing a file, always jump to the last known cursor porition.
     "" Don't do it when the position is invalid or when inside an event
     "" handler.
-    autocmd BufReadPost *
-        \ if line("'\"") > 0 && line("'\"") <= line("$") |
-        \       exe "normal! g`\"" |
-        \ endif
+    " autocmd BufReadPost *
+    "    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    "    \       exe "normal! g`\"" |
+    "    \ endif
 
+    au BufReadPost *
+        \ if line("'\"") > 0 |
+        \     if line("'\"") <= line("$") |
+        \         exe("norm '\"") |
+        \     else |
+        \         exe "norm $" |
+        \     endif|
+        \ endif
     " Ruby {
         " ruby standard 2 spaces, always
 "        au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
