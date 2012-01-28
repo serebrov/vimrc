@@ -35,7 +35,6 @@
         " PHP
         Bundle 'git://github.com/vim-scripts/php.vim--Garvin.git'
         Bundle 'git://github.com/2072/PHP-Indenting-for-VIm.git'
-        Bundle '~/.vim/bundle/sessionman'
         " ...
         "
         " Brief help
