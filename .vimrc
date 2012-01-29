@@ -266,6 +266,9 @@
      set cursorline             " highlight current line
      set guicursor=n:blinkon0   " turn off cursor blinking
 
+     set wrap                    " wrap text, see http://vimcasts.org/episodes/soft-wrapping-text/
+     set linebreak               " do not wrap in the middle of the word
+
      set laststatus=2           " always show the status line
 
      set list                   " we do what to show tabs, to ensure we get them
@@ -293,10 +296,6 @@
      set report=0               " tell us when anything is changed via :...
      set ruler                  " Always show current positions along the bottom
      set showmode               " Show editing mode
-
-     set wrap                    " wrap text, see http://vimcasts.org/episodes/soft-wrapping-text/
-     set linebreak               " do not wrap in the middle of the word
-
 
      "set scrolloff=10          " Keep 10 lines (top/bottom) for scope
      set scrolloff=999          " Work line is always in the middle
@@ -401,16 +400,15 @@
 
 " Completions {
     set completeopt=longest,menuone,preview " use a pop up menu for completions
-    set complete=""    " what use for completions
-    set complete+=.    " current buffer
-    set complete+=t    " tags
-    set complete+=k    " dictionary
-    set complete+=b    " other open buffers
+    set complete=""             " what use for completions
+    set complete+=.             " current buffer
+    set complete+=t             " tags
+    set complete+=k             " dictionary
+    set complete+=b             " other open buffers
 
     " tag files
     " ';/' - this will look in the current directory for "tags", and work up the tree towards root until one is found
     set tags=tags;/
-
 " }
 
 " Fuzzy Finder {
@@ -555,7 +553,6 @@
     "    \ if line("'\"") > 0 && line("'\"") <= line("$") |
     "    \       exe "normal! g`\"" |
     "    \ endif
-
     au BufReadPost *
         \ if line("'\"") > 0 |
         \     if line("'\"") <= line("$") |
@@ -564,6 +561,7 @@
         \         exe "norm $" |
         \     endif|
         \ endif
+
     " Ruby {
         " ruby standard 2 spaces, always
 "        au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
@@ -587,12 +585,9 @@
         " autocmd BufWrite *.{py} :call CheckPythonSyntax()
 
     augroup END
-
-
 " }
 
 " Session manager {
-
     " default: blank,buffers,curdir,folds,help,options,tabpages,winsize"
     set sessionoptions=buffers,curdir,help,tabpages,winsize " localoptions,
     " default: '100,<50,s10,h
@@ -665,7 +660,6 @@ function! ForceRotateEnc()
   endwhile
 endfunction
 
-
 let b:fencindex=0
 function! RotateFEnc()
   let y = -1
@@ -700,7 +694,6 @@ function! CheckPythonSyntax()
     exe "!clear"
     exe ":redraw!"
 endfunction
-
 " }
 
 
@@ -709,4 +702,3 @@ endfunction
 "   http://www.vi-improved.org/vimrc.php
 "   http://www.slackorama.com/projects/vim/vimrc.html
 " }
-
