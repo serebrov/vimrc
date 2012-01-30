@@ -107,6 +107,8 @@
     "set iskeyword=@,48-57,_,192-255 "this is default
     " (XXX: #VIM/tpope warns the line below could break things)
     "?? set iskeyword+=_,$,@,%,# " none of these are word dividers
+    " this allow to treat underscore (_) as word boundary
+    "set iskeyword-=_
 
     " по умолчанию - латинская раскладка
     set iminsert=0
