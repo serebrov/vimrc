@@ -17,6 +17,7 @@
     " https://github.com/mutewinter/dot_vim
     " My Bundles here {
         " original repos on github
+        " ========================
         " git support
         " Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
         " Ggrep, Glog, Gread, Gwrite, Gbrowse
@@ -25,11 +26,17 @@
         " :Extradite
         Bundle 'int3/vim-extradite'
         " visual guides for indents, default mapping <Leager>ig
-        "!
         Bundle 'nathanaelkane/vim-indent-guides'
-        "!
+        "Powerline is a utility plugin which allows you to create better-looking, more functional vim statuslines.
         Bundle 'Lokaltog/vim-powerline'
-        "!
+        "simpler way to use some motions in vim.
+        "Strart motion with <Leader><Leader> to trigger easy motion mode.
+        "Like <Leader><Leader>w to trigger the word motion w
+        "Other triggers: f/t/F/T (find char), w/W/b/B/e/E/ge/gE (word motions), j/k (lines), n/N (searches)
+        "Use let g:EasyMotion_leader_key = '<Leader>' to set single leader to
+        "enable easy motion
+        "Tutorial: http://net.tutsplus.com/tutorials/other/vim-essential-plugin-easymotion/
+        "It is similar to vimperator (FireFox extenstion) link select mode
         Bundle 'Lokaltog/vim-easymotion'
         "!
         Bundle 'tpope/vim-surround'
@@ -37,7 +44,7 @@
         Bundle 'tpope/vim-repeat'
         "!
         Bundle 'godlygeek/tabular'
-        "!
+        "This plug-in provides automatic closing of quotes, parenthesis, brackets, etc.
         Bundle 'Raimondi/delimitMate'
         "!
         Bundle 'timcharper/textile.vim'
@@ -45,25 +52,32 @@
         Bundle 'gregsexton/MatchTag'
         "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
         "Bundle 'tpope/vim-rails.git'
+        "!
+        Bundle 'scrooloose/nerdtree'
+        Bundle 'tyok/nerdtree-ack'
+        "!
+        Bundle 'scrooloose/nerdcommenter'
+        "!
+        Bundle 'ervandew/supertab'
+        Bundle 'altercation/vim-colors-solarized'
+        "Bundle 'mattn/zencoding-vim'
+        Bundle 'mileszs/ack.vim'
+        "
         " vim-scripts repos
+        " =================
         Bundle 'L9'
         Bundle 'FuzzyFinder'
         Bundle 'Markdown'
         "!
         Bundle 'IndexedSearch'
-        "" non github repos
+        "
+        " non github repos
+        " ================
         "!
         Bundle 'git://git.wincent.com/command-t.git'
-        Bundle 'git://github.com/scrooloose/nerdtree.git'
-        Bundle 'tyok/nerdtree-ack'
-        "!
-        Bundle 'git://github.com/scrooloose/nerdcommenter.git'
-        "!
-        Bundle 'git://github.com/ervandew/supertab.git'
-        Bundle 'git://github.com/altercation/vim-colors-solarized.git'
-        "Bundle 'git://github.com/mattn/zencoding-vim.git'
-        Bundle 'git://github.com/mileszs/ack.vim.git'
+        "
         " PHP
+        " ====
         "!
         Bundle 'git://github.com/vim-scripts/php.vim--Garvin.git'
         "!
