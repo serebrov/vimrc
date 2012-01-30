@@ -2,3 +2,6 @@
 doc/tags
 sessions
 cache
+bundle/*
+eclim
+plugin/eclim.vim
