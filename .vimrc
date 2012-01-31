@@ -38,7 +38,17 @@
         "Tutorial: http://net.tutsplus.com/tutorials/other/vim-essential-plugin-easymotion/
         "It is similar to vimperator (FireFox extenstion) link select mode
         Bundle 'Lokaltog/vim-easymotion'
-        "!
+        " Change surrounding objects
+        " cs<from><to> - change surrounding
+        " cs"' - change surround " to '
+        " cs'<q> - change surround ' to <q>..</q>
+        " cst" - chage surrounding tag to "
+        " ds<what> - remove surrounding
+        " ds" - remove surrounding "
+        " ys<motion><what> - add surrounding
+        " ysiw] - add surrounding [] for inner word
+        " yssb or yss) - surround a line with ()
+        " in visual mode S<what> will surround selected text
         Bundle 'tpope/vim-surround'
         "!
         Bundle 'tpope/vim-repeat'
@@ -52,28 +62,43 @@
         Bundle 'gregsexton/MatchTag'
         "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
         "Bundle 'tpope/vim-rails.git'
-        "!
+        "Just a NERDTree
         Bundle 'scrooloose/nerdtree'
+        "Ack search support for NERDTree
+        " depends on ack - http://betterthangrep.com
+        " sudo apt-get install ack-grep
         Bundle 'tyok/nerdtree-ack'
-        "!
+        " Commenting code
+        " <Leader>cc - comment line or selected text
+        " <Leader>c<space> - toggle comments state, see more in help
         Bundle 'scrooloose/nerdcommenter'
+        " Syntax checker
+        Bundle 'scrooloose/syntastic'
         "!
         Bundle 'ervandew/supertab'
         Bundle 'altercation/vim-colors-solarized'
         "Bundle 'mattn/zencoding-vim'
+        "Ack support for vim
         Bundle 'mileszs/ack.vim'
+        " Markdown support
+        Bundle 'plasticboy/vim-markdown'
         "
         " vim-scripts repos
         " =================
+        " Library used by FuzzyFinder
         Bundle 'L9'
+        " FuzzyFinder - find files quickly
         Bundle 'FuzzyFinder'
-        Bundle 'Markdown'
-        "!
+        " Bundle 'Markdown' -> plasticboy/vim-markdown
+        " http://fueledbylemons.com/blog/2011/07/27/why-ultisnips/
+        Bundle 'UltiSnips'
+        " At every search command, it automatically prints
+        " "At match #N out of M matches".
         Bundle 'IndexedSearch'
         "
         " non github repos
         " ================
-        "!
+        " Fast file explorer. <Leader>t - files, <Leader>b - buffers.
         Bundle 'git://git.wincent.com/command-t.git'
         "
         " PHP
