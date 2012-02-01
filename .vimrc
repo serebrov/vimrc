@@ -98,6 +98,15 @@
         " :BundleSearch(!) foo - search(or refresh cache first) for foo
         " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
         "
+        " CamelCase and under_score motions
+        " https://github.com/bkad/CamelCaseMotion
+        " Something like FuzzyFinder
+        " https://github.com/kien/ctrlp.vim
+        " Gundo.vim is Vim plugin to visualize your Vim undo tree.
+        " https://github.com/sjl/gundo.vim
+        " Defines 'indentation' text object
+        " https://github.com/michaeljsmith/vim-indent-object
+        "
         " see :h vundle for more details or wiki for FAQ
         " NOTE: comments after Bundle command are not allowed..
         "" Interface
