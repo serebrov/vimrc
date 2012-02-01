@@ -82,6 +82,9 @@
         Bundle 'mileszs/ack.vim'
         " Markdown support
         Bundle 'plasticboy/vim-markdown'
+        " Markup files preview
+        " <Leader>P
+        Bundle 'greyblake/vim-preview'
         "
         " vim-scripts repos
         " =================
