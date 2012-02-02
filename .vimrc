@@ -81,7 +81,8 @@
         "Ack support for vim
         Bundle 'mileszs/ack.vim'
         " Markdown support
-        Bundle 'plasticboy/vim-markdown'
+        "Bundle 'plasticboy/vim-markdown'
+        Bundle 'hallison/vim-markdown'
         " Markup files preview
         " <Leader>P
         Bundle 'greyblake/vim-preview'
@@ -92,9 +93,10 @@
         Bundle 'L9'
         " FuzzyFinder - find files quickly
         Bundle 'FuzzyFinder'
-        " Bundle 'Markdown' -> plasticboy/vim-markdown
+        " ?-> plasticboy/vim-markdown
+        "Bundle 'Markdown'
         " http://fueledbylemons.com/blog/2011/07/27/why-ultisnips/
-        Bundle 'UltiSnips'
+        " Bundle 'UltiSnips'
         " At every search command, it automatically prints
         " "At match #N out of M matches".
         Bundle 'IndexedSearch'
@@ -249,8 +251,10 @@
 " }
 
 " Spell {
-    "set spl=en spell
-    setlocal spell spelllang=ru_yo,en_us
+    " enable spell by default
+    " actually recommended way is to enable spell
+    " setlocal spell spelllang=en_us
+    set spell spelllang=ru_yo,en_us
     " z= - suggest word
     " [s - previous wrong word
     " ]s - next wrong word
@@ -478,8 +482,6 @@
     let g:CommandTMatchWindowAtTop=1 " show window at top
 " }
 
-
-
 " Mappings {
     let mapleader = ","
     imap jj <Esc>               " jj as ESC
@@ -553,10 +555,10 @@
 
     " Move cursor by display lines when wrapping
     " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
-    noremap  <buffer> <silent> k gk
-    noremap  <buffer> <silent> j gj
-    noremap  <buffer> <silent> 0 g0
-    noremap  <buffer> <silent> $ g$
+    noremap k gk
+    noremap j gj
+    noremap 0 g0
+    noremap $ g$
 
     " Move with Ctrl + hjkl in Insert mode
     imap <C-h> <C-o>h
@@ -591,10 +593,19 @@
     au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
     au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
     au BufRead,BufNewFile {COMMIT_EDITMSG}                                set ft=gitcommit
+    "
+    "" Auto Completion
+    autocmd FileType python :set omnifunc=pythoncomplete#Complete
+    autocmd FileType php :set omnifunc=phpcomplete#CompletePHP
+    autocmd FileType html :set omnifunc=htmlcomplete@CompleteTags
+    autocmd FileType html :set filetype=xhtml
+    autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType css :set omnifunc=csscomplete#CompleteCSS
+    autocmd FileType c :set omnifunc=ccomplete#Complete
 
     " remove trailing whitespace on save
     " http://vim.wikia.com/wiki/Remove_unwanted_spaces
-    autocmd FileType c,cpp,java,php,python,vim autocmd BufWritePre <buffer>
+    autocmd FileType c,cpp,java,php,python,vim,text,markdown autocmd BufWritePre <buffer>
         \ call setline(1,map(
         \    getline(1,"$"),'substitute(v:val,"\\s\\+$","","")')
         \ )
@@ -622,22 +633,13 @@
     " }
 
     " Python
-    augroup vimrcEx                 " Put in an autocmd group
-        au!
+    "augroup vimrcEx                 " Put in an autocmd group
+        "au!
 
-        "" Auto Completion
-        autocmd FileType python :set omnifunc=pythoncomplete#Complete
-        "autocmd FileType php :set omnifunc=phpcomplete#CompletePHP
-        autocmd FileType html :set omnifunc=htmlcomplete@CompleteTags
-        autocmd FileType html :set filetype=xhtml
-        autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
-        autocmd FileType css :set omnifunc=csscomplete#CompleteCSS
-        autocmd FileType c :set omnifunc=ccomplete#Complete
+        """ Python Syntax
+        "" autocmd BufWrite *.{py} :call CheckPythonSyntax()
 
-        "" Python Syntax
-        " autocmd BufWrite *.{py} :call CheckPythonSyntax()
-
-    augroup END
+    "augroup END
 " }
 
 " Session manager {
