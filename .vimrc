@@ -27,16 +27,17 @@
         Bundle 'int3/vim-extradite'
         " visual guides for indents, default mapping <Leager>ig
         Bundle 'nathanaelkane/vim-indent-guides'
-        "Powerline is a utility plugin which allows you to create better-looking, more functional vim statuslines.
+        " Powerline is a utility plugin which allows you to create
+        " better-looking, more functional vim statuslines.
         Bundle 'Lokaltog/vim-powerline'
-        "simpler way to use some motions in vim.
-        "Strart motion with <Leader><Leader> to trigger easy motion mode.
-        "Like <Leader><Leader>w to trigger the word motion w
-        "Other triggers: f/t/F/T (find char), w/W/b/B/e/E/ge/gE (word motions), j/k (lines), n/N (searches)
-        "Use let g:EasyMotion_leader_key = '<Leader>' to set single leader to
-        "enable easy motion
-        "Tutorial: http://net.tutsplus.com/tutorials/other/vim-essential-plugin-easymotion/
-        "It is similar to vimperator (FireFox extenstion) link select mode
+        " Simpler way to use some motions in vim.
+        " Start motion with <Leader><Leader> to trigger easy motion mode.
+        " Like <Leader><Leader>w to trigger the word motion w
+        " Other triggers: f/t/F/T (find char), w/W/b/B/e/E/ge/gE (word motions), j/k (lines), n/N (searches)
+        " Use let g:EasyMotion_leader_key = '<Leader>' to set single leader to
+        " enable easy motion
+        " Tutorial: http://net.tutsplus.com/tutorials/other/vim-essential-plugin-easymotion/
+        " It is similar to vimperator (FireFox extenstion) link select mode
         Bundle 'Lokaltog/vim-easymotion'
         " Change surrounding objects
         " cs<from><to> - change surrounding
@@ -50,15 +51,27 @@
         " yssb or yss) - surround a line with ()
         " in visual mode S<what> will surround selected text
         Bundle 'tpope/vim-surround'
-        "!
+        " Required by vim-surround
         Bundle 'tpope/vim-repeat'
-        "!
+        " :Tabularize /, - tablarize by ','
+        " :Tabularize /,/[r|l|c]0
+        "  r - align right, l - left, c - center
+        "  0 (or other number) - number of spaces between fields
+        " :Tabularize /,/r1c1l0
+        "  formatters will be applied in the specified order
+        " :Tabularize /^[^,]*\zs,/r0c0l0 - use regex ^[^,]*\zs, (match only first comma)
+        " :AddTabularPattern first_comma /^[^,]*\zs,/r0c0l0 - save pattern
+        " (:Tab first_comma)
+        " Standard extensions (after/plugin/TabularMaps.vim)
+        "  assignment, two_spaces, multiple_spaces, argument_list,
+        "  split_declarations, trenary_operator, cpp_io, pascal_assign,
+        "  trailing_c_comments
         Bundle 'godlygeek/tabular'
         "This plug-in provides automatic closing of quotes, parenthesis, brackets, etc.
-        Bundle 'Raimondi/delimitMate'
+        " Bundle 'Raimondi/delimitMate'
         "!
         Bundle 'timcharper/textile.vim'
-        "!
+        " This plugin highlights the matching HTML tag when the cursor is
         Bundle 'gregsexton/MatchTag'
         "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
         "Bundle 'tpope/vim-rails.git'
@@ -74,8 +87,10 @@
         Bundle 'scrooloose/nerdcommenter'
         " Syntax checker
         Bundle 'scrooloose/syntastic'
-        "!
+        " Supertab is a plugin which allows you to perform all your insert completion
+        " (|ins-completion|) using the tab key.
         Bundle 'ervandew/supertab'
+        " Solarized color scheme
         Bundle 'altercation/vim-colors-solarized'
         "Bundle 'mattn/zencoding-vim'
         "Ack support for vim
@@ -108,13 +123,10 @@
         "
         " PHP
         " ====
-        "!
         Bundle 'git://github.com/vim-scripts/php.vim--Garvin.git'
-        "!
         Bundle 'git://github.com/2072/PHP-Indenting-for-VIm.git'
         " This allows you to select some text using Vim's visual mode and then hit *
         " and # to search for it elsewhere in the file.
-        "!
         Bundle 'gmarik/vim-visual-star-search'
         "Bundle "jQuery"
         "Bundle "tComment"
@@ -192,10 +204,10 @@
     set directory=~/.vimswap " directory to place swap files in
 
    " Colors {
-        syntax on                           " Turn syntax highlighting on.
-        set t_Co=256                        " 256 Colors.
-        set background=dark                " Set dark background.
-        " colorscheme zenburn                 " Set colorscheme to zenburn.
+        syntax on               " Turn syntax highlighting on.
+        set t_Co=256            " 256 Colors.
+        set background=dark     " Set dark background.
+        "colorscheme zenburn
         "colorscheme blackboard
 
         " Solarized {
@@ -231,7 +243,7 @@
         set guifont=Inconsolata\ Medium\ 11
     endif
 
-    "" Highlight text over 79 chars
+    " Highlight text over 79 chars
     " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
     " match OverLength /\%79v.*/
 
@@ -261,19 +273,17 @@
 " }
 
 " General {
-    " Не выгружать буфер, когда переключаемся на другой
-    " Это позволяет редактировать несколько файлов в один и тот же момент без необходимости сохранения каждый раз
-    " когда переключаешься между ними
     set hidden                  " you can change buffers without saving
 
     set mouse=a                 " use mouse everywhere
-    " по правой кнопке - popup меню, расширить выделение - Shift+левая кнопка
-    set mousemodel=popup
+    set mousemodel=popup        " right mouse btn=popup, select=Shift+left btn
     set mousehide               " hide mouse when typing
 
-    set noerrorbells " don't make noise
+    set noerrorbells            " don't make noise
+    set novisualbell            " don't blink
+    set t_vb=
 
-    set wildmenu " turn on command line completion wild style
+    set wildmenu                " turn on command line completion wild style
     " ignore these list file extensions
     set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,
                     \*.jpg,*.gif,*.png
@@ -284,7 +294,7 @@
 " Langs and encodings {
     set fileformats=unix,dos,mac " support all three, in this order
 
-    "" Кодировка текста по умолчанию
+    " Default text encoding
     if has('win32') || has('win64')
         set encoding=utf8
         "set termencoding=cp1251
@@ -298,8 +308,7 @@
     "set langmap=Ж:,йq,цw,уe,кr,еt,нy,гu,шi,щo,зp,х[,ъ],фa,ыs,вd,аf,пg,рh,оj,лk,дl,э',яz,чx,сc,мv,иb,тn,ьm,б\,,ю.,ё`,ЙQ,ЦW,УE,КR,ЕT,НY,ГU,ШI,ЩO,ЗP,Х{,Ъ},ФA,ЫS,ВD,АF,ПG,РH,ОJ,ЛK,ДL,Э\",ЯZ,ЧX,СC,МV,ИB,ТN,ЬM,Б<,Ю>,Ё~
 
     set keymap=russian-jcukenwin
-    " настраиваю для работы с русскими словами (чтобы w, b, * понимали
-    " русские слова)
+    " Make normal-mode keys work in russian
     "set iskeyword=@,48-57,_,192-255 "this is default
     " (XXX: #VIM/tpope warns the line below could break things)
     "?? set iskeyword+=_,$,@,%,# " none of these are word dividers
@@ -313,7 +322,7 @@
 
 " Search {
      set incsearch              " do highlight as you type you search phrase
-     " set nohlsearch " do not highlight searched for phrases
+     " set nohlsearch           " do not highlight searched for phrases
      set hlsearch               " highlight search
      set ignorecase             " case insensitive by default
      set smartcase              " if there are caps, go case-sensitive
@@ -323,8 +332,8 @@
      set cursorline             " highlight current line
      set guicursor=n:blinkon0   " turn off cursor blinking
 
-     set wrap                    " wrap text, see http://vimcasts.org/episodes/soft-wrapping-text/
-     set linebreak               " do not wrap in the middle of the word
+     set wrap                   " wrap text, see http://vimcasts.org/episodes/soft-wrapping-text/
+     set linebreak              " do not wrap in the middle of the word
 
      set laststatus=2           " always show the status line
 
@@ -345,9 +354,6 @@
 
      set nostartofline          " leave my cursor where it was
 
-     set novisualbell           " don't blink
-     set t_vb=
-
      set number                 " turn on line numbers
      set numberwidth=5          " We are good up to 99999 lines
      set report=0               " tell us when anything is changed via :...
@@ -357,12 +363,12 @@
      "set scrolloff=10          " Keep 10 lines (top/bottom) for scope
      set scrolloff=999          " Work line is always in the middle
                                 " alternative: zz - centers current line
+     set sidescrolloff=10       " Keep 5 lines at the size
 
      set shortmess=aOstT        " shortens messages to avoid
                                 " 'press a key' prompt
      set showcmd                " show the command being typed
-     "set showmatch              " show matching brackets
-     set sidescrolloff=10       " Keep 5 lines at the size
+     "set showmatch             " show matching brackets (slow)
      set statusline=[%n]%{fugitive#statusline()}%F\ %m%r%h%w\ [%L]\ [%{&ff}]%y%=[%p%%][%04l,%04v]
      "                |                         |   | | | |    |     |      |     |     |    |
      "                |                         |   | | | |    |     |      |     |     |    + current
@@ -468,17 +474,15 @@
     set tags=tags;/
 " }
 
-" Fuzzy Finder {
+" Plugins {
+    " Fuzzy Finder
     let g:fuf_modesDisable = []
-" }
-" Ack {
+    " Ack
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
-" }
-" NERDTree {
+    " NERDTree
     let NERDTreeChDirMode=2     " Change CWD to nerd tree root
     let NERDTreeShowBookmarks=1 " Show bookmarks panel
-" }
-" Command-T {
+    " Command-T
     let g:CommandTMatchWindowAtTop=1 " show window at top
 " }
 
@@ -511,15 +515,14 @@
     map <Leader>fm :FufMruFile<CR>
     map <Leader>fc :FufMruCmd<CR>
 
-    " NERDTree {
-        map <Leader>nt :NERDTreeToggle<CR>  " ,nt - toggle tree
-        map <Leader>nf :NERDTreeFind<CR>    " ,nf - find current file in the tree
-    " }
+    " NERDTree
+    map <Leader>nt :NERDTreeToggle<CR>  " ,nt - toggle tree
+    map <Leader>nf :NERDTreeFind<CR>    " ,nf - find current file in the tree
 
-    "" Поиск и замена слова под курсором
+    " Search and replace word under cursor
     "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
 
-    " " Меню выбора кодировки текста (koi8-r, cp1251, cp866, utf8)
+    " Text encoding menu (koi8-r, cp1251, cp866, utf8)
     set wcm=<Tab>
     menu Encoding.koi8-r :e ++enc=koi8-r<CR>
     menu Encoding.windows-1251 :e ++enc=cp1251<CR>
@@ -531,27 +534,27 @@
     vnoremap <C-S> <C-C>:update<CR>
     inoremap <C-S> <C-O>:update<CR>
 
-    " ,co - copen
+    " ,co - copen; ,n - cnext; ,p - cprevious
     nmap <Leader>co :copen<cr>
     nmap <Leader>n :cnext<cr>
     nmap <Leader>p :cprevious<cr>
 
-    " <F8> File encoding for open
+    " ,8 File encoding for open
     " ucs-2le - MS Windows unicode encoding
-    map <Leader>8	:execute RotateEnc()<CR>
+    map <Leader>8 :execute RotateEnc()<CR>
     " <Shift+F8> Force file encoding for open (encoding = fileencoding)
-    map <S-F8>	:execute ForceRotateEnc()<CR>
+    map <S-F8> :execute ForceRotateEnc()<CR>
     " <Ctrl+F8> File encoding for save (convert)
-    map <C-F8>	:execute RotateFEnc()<CR>
+    map <C-F8> :execute RotateFEnc()<CR>
 
-    " " F11 - показать окно Taglist
+    " " F11 - Taglist window
     "map <A-0> :TlistToggle<cr>
 
-    " навигация по окнам - активное окно разворачивается
-    "nmap <C-k> <C-W>k<C-W>_ " окно вверх
-    "imap <C-k> <Esc><C-W>k<C-W>_a " окно вверх
-    "nmap <C-j> <C-W>j<C-W>_ " окно вниз
-    "imap <C-j> <Esc><C-W>j<C-W>_a " окно вниз
+    " windows navigation
+    "nmap <C-k> <C-W>k<C-W>_        " window up
+    "imap <C-k> <Esc><C-W>k<C-W>_a  " window up
+    "nmap <C-j> <C-W>j<C-W>_        " window down
+    "imap <C-j> <Esc><C-W>j<C-W>_a  " window down
 
     " Move cursor by display lines when wrapping
     " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
@@ -593,8 +596,8 @@
     au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
     au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
     au BufRead,BufNewFile {COMMIT_EDITMSG}                                set ft=gitcommit
-    "
-    "" Auto Completion
+
+    " Auto Completion
     autocmd FileType python :set omnifunc=pythoncomplete#Complete
     autocmd FileType php :set omnifunc=phpcomplete#CompletePHP
     autocmd FileType html :set omnifunc=htmlcomplete@CompleteTags
@@ -610,9 +613,9 @@
         \    getline(1,"$"),'substitute(v:val,"\\s\\+$","","")')
         \ )
 
-    "" When editing a file, always jump to the last known cursor porition.
-    "" Don't do it when the position is invalid or when inside an event
-    "" handler.
+    " When editing a file, always jump to the last known cursor porition.
+    " Don't do it when the position is invalid or when inside an event
+    " handler.
     " autocmd BufReadPost *
     "    \ if line("'\"") > 0 && line("'\"") <= line("$") |
     "    \       exe "normal! g`\"" |
@@ -628,8 +631,8 @@
 
     " Ruby {
         " ruby standard 2 spaces, always
-"        au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
-"        au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
+        " au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
+        " au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
     " }
 
     " Python
@@ -677,7 +680,6 @@
     "    endif
     "endfunction
 " }
-
 
 " Utils {
 let b:encindex=0
@@ -750,7 +752,6 @@ function! CheckPythonSyntax()
     exe ":redraw!"
 endfunction
 " }
-
 
 " --------------  links --------------------
 " vimrc {
