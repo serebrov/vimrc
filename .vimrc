@@ -111,7 +111,7 @@
         " ?-> plasticboy/vim-markdown
         "Bundle 'Markdown'
         " http://fueledbylemons.com/blog/2011/07/27/why-ultisnips/
-        " Bundle 'UltiSnips'
+        "Bundle 'UltiSnips'
         " At every search command, it automatically prints
         " "At match #N out of M matches".
         Bundle 'IndexedSearch'
@@ -575,6 +575,16 @@
     "" Supertab
     " Tab for auto-complete
     let g:SuperTabDefaultCompletionType = '<C-x><C-u>'
+
+    inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
+    nnoremap <Leader>pd :call PhpDocSingle()<CR>
+    vnoremap <Leader>pd :call PhpDocRange()<CR>
+     " Default values
+    let g:pdv_cfg_Package = "app"
+    let g:pdv_cfg_Version = ""
+    let g:pdv_cfg_Author = "Boris Serebrov"
+    let g:pdv_cfg_Copyright = ""
+    let g:pdv_cfg_License = ""
 
     " Standard keys
         " Speller shorcuts {
