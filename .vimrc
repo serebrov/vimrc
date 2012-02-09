@@ -485,6 +485,9 @@
     " Command-T
     let g:CommandTMatchWindowAtTop=1 " show window at top
 " }
+" Syntastic {
+    let g:syntastic_phpcs_conf = "--standard=Seb"
+" }
 
 " Mappings {
     let mapleader = ","
@@ -618,7 +621,7 @@
 
     " remove trailing whitespace on save
     " http://vim.wikia.com/wiki/Remove_unwanted_spaces
-    autocmd FileType c,cpp,java,php,python,vim,text,markdown autocmd BufWritePre <buffer>
+    autocmd FileType c,cpp,java,php,python,vim,text,markdown,javascript autocmd BufWritePre <buffer>
         \ call setline(1,map(
         \    getline(1,"$"),'substitute(v:val,"\\s\\+$","","")')
         \ )
