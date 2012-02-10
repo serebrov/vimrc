@@ -83,6 +83,7 @@
         Bundle 'tyok/nerdtree-ack'
         " Commenting code
         " <Leader>cc - comment line or selected text
+        " <Leader>cu - uncomment line or selected text
         " <Leader>c<space> - toggle comments state, see more in help
         Bundle 'scrooloose/nerdcommenter'
         " Syntax checker
