@@ -11,8 +11,8 @@
         call vundle#rc()
 
         " let Vundle manage Vundle
-        " required!
-        Bundle 'gmarik/vundle'
+        " vundle is a submodule
+        "Bundle 'gmarik/vundle'
     " }
     " https://github.com/mutewinter/dot_vim
     " My Bundles here {
@@ -126,6 +126,8 @@
         " ====
         Bundle 'git://github.com/vim-scripts/php.vim--Garvin.git'
         Bundle 'git://github.com/2072/PHP-Indenting-for-VIm.git'
+        Bundle 'mikehaertl/yii-api-vim'
+        Bundle 'mikehaertl/pdv-standalone'
         " This allows you to select some text using Vim's visual mode and then hit *
         " and # to search for it elsewhere in the file.
         Bundle 'gmarik/vim-visual-star-search'
@@ -231,7 +233,7 @@
         " }
    " }
 
-    " Font. Very important.
+    " Font
     if has('win32') || has('win64')
         " set guifont=Monaco:h16
         " http://jeffmilner.com/index.php/2005/07/30/windows-vista-fonts-now-available/
@@ -319,6 +321,9 @@
     highlight lCursor guifg=NONE guibg=Cyan
     set iminsert=0              " latin langmap by default when typing
     set imsearch=0              " latin langmap by default when search
+
+    " Use English messages instead of translations
+    language messages C
 " }
 
 " Search {
@@ -580,6 +585,7 @@
     " Tab for auto-complete
     let g:SuperTabDefaultCompletionType = '<C-x><C-u>'
 
+    " phpDocumenter
     inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
     nnoremap <Leader>pd :call PhpDocSingle()<CR>
     vnoremap <Leader>pd :call PhpDocRange()<CR>
@@ -610,6 +616,9 @@
     au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
     au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
     au BufRead,BufNewFile {COMMIT_EDITMSG}                                set ft=gitcommit
+
+    " S-k to open help
+    autocmd BufNewFile,Bufread *.php set keywordprg="help"
 
     " Auto Completion
     autocmd FileType python :set omnifunc=pythoncomplete#Complete
