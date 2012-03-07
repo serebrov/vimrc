@@ -155,7 +155,7 @@
         " see :h vundle for more details or wiki for FAQ
         " NOTE: comments after Bundle command are not allowed..
         "" Interface
-        "Bundle 'git://github.com/vim-scripts/taglist.vim.git'
+        Bundle 'git://github.com/vim-scripts/taglist.vim.git'
         " depends: http://ctags.sourceforge.net/
         "Bundle 'git://github.com/int3/vim-taglist-plus.git'
         "Bundle 'git://github.com/rphillips/vim-zoomwin.git'
@@ -557,7 +557,7 @@
     map <C-F8> :execute RotateFEnc()<CR>
 
     " " F11 - Taglist window
-    "map <A-0> :TlistToggle<cr>
+    map <Leader>tg :TlistToggle<cr>
 
     " windows navigation
     "nmap <C-k> <C-W>k<C-W>_        " window up
