@@ -84,6 +84,8 @@
         " Commenting code
         " <Leader>cc - comment line or selected text
         " <Leader>cu - uncomment line or selected text
+        " <Leader>cm - comment with multiline /* */ comments
+        " <Leader>cs - 'sexy' comments
         " <Leader>c<space> - toggle comments state, see more in help
         Bundle 'scrooloose/nerdcommenter'
         " Syntax checker
@@ -493,6 +495,8 @@
 " }
 " Syntastic {
     let g:syntastic_phpcs_conf = "--standard=Seb"
+    map <Leader>csd :let g:syntastic_phpcs_disable = 1<CR>
+    " :let g:syntastic_phpmd_disable = 0<CR>
 " }
 
 " Mappings {
