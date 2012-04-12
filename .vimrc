@@ -11,8 +11,7 @@
         call vundle#rc()
 
         " let Vundle manage Vundle
-        " vundle is a submodule
-        "Bundle 'gmarik/vundle'
+        Bundle 'gmarik/vundle'
     " }
     " https://github.com/mutewinter/dot_vim
     " My Bundles here {
