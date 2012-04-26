@@ -498,12 +498,92 @@
     " :let g:syntastic_phpmd_disable = 0<CR>
 " }
 
+" Autocommands {
+    au BufRead,BufNewFile *.phps    set filetype=php
+    au BufRead,BufNewFile *.thtml   set filetype=php
+    au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
+    au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
+    au BufRead,BufNewFile {COMMIT_EDITMSG}                                set ft=gitcommit
+
+    " S-k to open help
+    autocmd BufNewFile,Bufread *.php set keywordprg="help"
+
+    " Auto Completion
+    autocmd FileType python :set omnifunc=pythoncomplete#Complete
+    autocmd FileType php :set omnifunc=phpcomplete#CompletePHP
+    autocmd FileType html :set omnifunc=htmlcomplete@CompleteTags
+    autocmd FileType html :set filetype=xhtml
+    autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType css :set omnifunc=csscomplete#CompleteCSS
+    autocmd FileType c :set omnifunc=ccomplete#Complete
+
+    " execute a command while preserver the position
+    if !exists("*Preserve")
+        function! Preserve(command)
+            " Preparation: save last search, and cursor position.
+            let _s=@/
+            let l = line(".")
+            let c = col(".")
+            " Do the business:
+            execute a:command
+            " Clean up: restore previous search history, and cursor position
+            let @/=_s
+            call cursor(l, c)
+        endfunction
+    endif
+
+    " remove trailing whitespace on save
+    " new version from http://vimcasts.org/episodes/tidying-whitespace/
+    autocmd FileType c,cpp,java,php,python,vim,text,markdown,javascript autocmd BufWritePre <buffer>
+        \ call Preserve("%s/\\s\\+$//e")
+
+    " old version
+    " http://vim.wikia.com/wiki/Remove_unwanted_spaces
+    "\ call setline(1,map(
+    "\    getline(1,"$"),'substitute(v:val,"\\s\\+$","","")')
+    "\ )
+
+    " When editing a file, always jump to the last known cursor porition.
+    " Don't do it when the position is invalid or when inside an event
+    " handler.
+    " autocmd BufReadPost *
+    "    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    "    \       exe "normal! g`\"" |
+    "    \ endif
+    au BufReadPost *
+        \ if line("'\"") > 0 |
+        \     if line("'\"") <= line("$") |
+        \         exe("norm '\"") |
+        \     else |
+        \         exe "norm $" |
+        \     endif|
+        \ endif
+
+    " Ruby {
+        " ruby standard 2 spaces, always
+        " au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
+        " au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
+    " }
+
+    " Python
+    "augroup vimrcEx                 " Put in an autocmd group
+        "au!
+
+        """ Python Syntax
+        "" autocmd BufWrite *.{py} :call CheckPythonSyntax()
+
+    "augroup END
+" }
+
+
 " Mappings {
     let mapleader = ","
     imap jj <Esc>               " jj as ESC
                                 " other options: Ctrl-[, Ctrl-C
 
-    map <Leader>vv :source ~/.vimrc<CR>     " ,vv to re-read .vimrc
+    " ,vv to re-read .vimrc
+    "map <Leader>vv :source ~/.vimrc<CR>
+    map <Leader>vv :call Preserve("source ~\/\.vimrc")<CR>
     nmap <leader>vc :tabedit $MYVIMRC<CR>   " ,vc to view .vimrc
 
     " Command-T
@@ -528,8 +608,8 @@
     map <Leader>fc :FufMruCmd<CR>
 
     " NERDTree
-    map <Leader>nt :NERDTreeToggle<CR>  " ,nt - toggle tree
-    map <Leader>nf :NERDTreeFind<CR>    " ,nf - find current file in the tree
+    map <Leader>nt :NERDTreeToggle<CR>" ,nt - toggle tree
+    map <Leader>nf :NERDTreeFind<CR>" ,nf - find current file in the tree
 
     " Search and replace word under cursor
     "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
@@ -581,6 +661,11 @@
     imap <C-k> <C-o>k
     imap <C-l> <C-o>l
 
+    "space to scroll 10 lines down, backspace - 10 lines up
+    "zz - centers current line
+    nnoremap <space> 10jzz
+    nnoremap <backspace> 10kzz
+
     " Shortcut to rapidly toggle `set list` (def leader = \)
     nmap <leader>l :set list!<CR>
 
@@ -599,6 +684,9 @@
     let g:pdv_cfg_Copyright = ""
     let g:pdv_cfg_License = ""
 
+    nmap _$ :call Preserve("%s/\\s\\+$//e")<CR>
+    nmap _= :call Preserve("normal gg=G")<CR>
+
     " Standard keys
         " Speller shorcuts {
             " z= - suggest word
@@ -610,65 +698,13 @@
             " zR - open all folds
             " zM - close all folds
         " }
-
-" }
-
-" Autocommands {
-    au BufRead,BufNewFile *.phps    set filetype=php
-    au BufRead,BufNewFile *.thtml   set filetype=php
-    au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
-    au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
-    au BufRead,BufNewFile {COMMIT_EDITMSG}                                set ft=gitcommit
-
-    " S-k to open help
-    autocmd BufNewFile,Bufread *.php set keywordprg="help"
-
-    " Auto Completion
-    autocmd FileType python :set omnifunc=pythoncomplete#Complete
-    autocmd FileType php :set omnifunc=phpcomplete#CompletePHP
-    autocmd FileType html :set omnifunc=htmlcomplete@CompleteTags
-    autocmd FileType html :set filetype=xhtml
-    autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType css :set omnifunc=csscomplete#CompleteCSS
-    autocmd FileType c :set omnifunc=ccomplete#Complete
-
-    " remove trailing whitespace on save
-    " http://vim.wikia.com/wiki/Remove_unwanted_spaces
-    autocmd FileType c,cpp,java,php,python,vim,text,markdown,javascript autocmd BufWritePre <buffer>
-        \ call setline(1,map(
-        \    getline(1,"$"),'substitute(v:val,"\\s\\+$","","")')
-        \ )
-
-    " When editing a file, always jump to the last known cursor porition.
-    " Don't do it when the position is invalid or when inside an event
-    " handler.
-    " autocmd BufReadPost *
-    "    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    "    \       exe "normal! g`\"" |
-    "    \ endif
-    au BufReadPost *
-        \ if line("'\"") > 0 |
-        \     if line("'\"") <= line("$") |
-        \         exe("norm '\"") |
-        \     else |
-        \         exe "norm $" |
-        \     endif|
-        \ endif
-
-    " Ruby {
-        " ruby standard 2 spaces, always
-        " au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
-        " au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
-    " }
-
-    " Python
-    "augroup vimrcEx                 " Put in an autocmd group
-        "au!
-
-        """ Python Syntax
-        "" autocmd BufWrite *.{py} :call CheckPythonSyntax()
-
-    "augroup END
+        " History {
+            " http://vim.wikia.com/wiki/Using_command-line_history
+            " q: for commands
+            " q/ for searches
+            " or type : or / to start entering a command or search,
+            " then press the 'cedit' key (default is Ctrl-f :help 'cedit').
+        " }
 " }
 
 " Session manager {
