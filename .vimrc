@@ -263,7 +263,8 @@
     if has("gui_running")
         " GUI is running or is about to start.
         " Maximize gvim window.
-        set lines=999 columns=999
+        " this causes vim to run on 4th workspace in Unity
+        " set lines=999 columns=999
     else
         " This is console Vim.
         if exists("+lines")
@@ -281,7 +282,7 @@
     " enable spell by default
     " actually recommended way is to enable spell
     " setlocal spell spelllang=en_us
-    set spell spelllang=ru_yo,en_us
+    set spell spelllang=ru_ru,en_us
     " z= - suggest word
     " [s - previous wrong word
     " ]s - next wrong word
@@ -589,8 +590,10 @@
 
 " Mappings {
     let mapleader = ","
-    imap jj <Esc>               " jj as ESC
-                                " other options: Ctrl-[, Ctrl-C
+
+    " jj as ESC
+    " other options: Ctrl-[, Ctrl-C
+    imap jj <Esc>
 
     " ,vv to re-read .vimrc
     "map <Leader>vv :source ~/.vimrc<CR>
@@ -598,7 +601,7 @@
     nmap <leader>vc :tabedit $MYVIMRC<CR>   " ,vc to view .vimrc
 
     " Command-T
-    " ,t                        " list files
+    " ,t  <- list files
 
     " vim-easymotion
     " ,,w - words; ,,f - char
