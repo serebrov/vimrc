@@ -133,6 +133,7 @@ function! s:OpenSession(name)
 		endif
 		let g:LAST_SESSION = a:name
 	endif
+	:NERDTree
 endfunction
 
 "============================================================================"
