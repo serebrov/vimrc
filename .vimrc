@@ -188,8 +188,12 @@
         "Bundle 'git://github.com/miripiruni/vim-better-css-indent.git'
         "Bundle 'git://github.com/miripiruni/CSScomb-for-Vim.git'
     " JavaScript
-        "Bundle 'git://github.com/pangloss/vim-javascript.git'
-        "Bundle 'git://github.com/itspriddle/vim-jquery.git'
+        Bundle 'git://github.com/pangloss/vim-javascript.git'
+        Bundle 'git://github.com/itspriddle/vim-jquery.git'
+        " ejs templates syntax highlight
+        Bundle 'git://github.com/briancollins/vim-jst.git'
+        " js syntax checks:
+        " install jshint from here - https://github.com/jshint/node-jshint - supported by syntastic
         "Bundle 'git://github.com/kchmck/vim-coffee-script.git'
     " JSON
         "Bundle 'git://github.com/leshill/vim-json.git'
@@ -512,6 +516,7 @@
 
 " Autocommands {
     au BufRead,BufNewFile *.phps    set filetype=php
+    au BufRead,BufNewFile *.js      set filetype=javascript
     au BufRead,BufNewFile *.thtml   set filetype=php
     au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
     au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
@@ -570,6 +575,12 @@
         \         exe "norm $" |
         \     endif|
         \ endif
+
+    " JS {
+        autocmd FileType javascript :set shiftwidth=2
+        autocmd FileType javascript :set softtabstop=2
+        autocmd FileType javascript :set tabstop=2
+    " }
 
     " Ruby {
         " ruby standard 2 spaces, always
