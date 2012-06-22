@@ -505,6 +505,7 @@
     " NERDTree
     let NERDTreeChDirMode=2     " Change CWD to nerd tree root
     let NERDTreeShowBookmarks=1 " Show bookmarks panel
+    let NERDTreeShowHidden=1 " Show hidden files
     " Command-T
     let g:CommandTMatchWindowAtTop=1 " show window at top
 " }
@@ -551,7 +552,7 @@
 
     " remove trailing whitespace on save
     " new version from http://vimcasts.org/episodes/tidying-whitespace/
-    autocmd FileType c,cpp,java,php,python,vim,text,markdown,javascript autocmd BufWritePre <buffer>
+    autocmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd BufWritePre <buffer>
         \ call Preserve("%s/\\s\\+$//e")
 
     " old version
