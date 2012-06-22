@@ -117,6 +117,7 @@ function! s:OpenSession(name)
 			set eventignore=all
 			let buf_count = s:_wipeBuffers()
 			if buf_count == -1
+				"if there is a modified buffer - exit
 				return
 			endif
 			let n = bufnr('%')
@@ -211,9 +212,9 @@ function! s:ListSessions()
 	setlocal nobuflisted
 
 	nnoremap <buffer> <silent> q :bwipeout<CR>
-	nnoremap <buffer> <silent> o :call <SID>OpenSession(getline('.'))<CR>
-	nnoremap <buffer> <silent> <CR> :call <SID>OpenSession(getline('.'))<CR>
-	nnoremap <buffer> <silent> <2-LeftMouse> :call <SID>OpenSession(getline('.'))<CR>
+	nnoremap <buffer> o :call <SID>OpenSession(getline('.'))<CR>
+	nnoremap <buffer> <CR> :call <SID>OpenSession(getline('.'))<CR>
+	nnoremap <buffer> <2-LeftMouse> :call <SID>OpenSession(getline('.'))<CR>
 	nnoremap <buffer> <silent> d :call <SID>DeleteSession(getline('.'))<CR>
 	nnoremap <buffer> <silent> e :call <SID>EditSession(getline('.'))<CR>
 	nnoremap <buffer> <silent> x :call <SID>EditSessionExtra(getline('.'))<CR>
