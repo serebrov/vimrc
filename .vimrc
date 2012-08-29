@@ -188,8 +188,12 @@
         "Bundle 'git://github.com/miripiruni/vim-better-css-indent.git'
         "Bundle 'git://github.com/miripiruni/CSScomb-for-Vim.git'
     " JavaScript
-        "Bundle 'git://github.com/pangloss/vim-javascript.git'
-        "Bundle 'git://github.com/itspriddle/vim-jquery.git'
+        Bundle 'git://github.com/pangloss/vim-javascript.git'
+        Bundle 'git://github.com/itspriddle/vim-jquery.git'
+        " ejs templates syntax highlight
+        Bundle 'git://github.com/briancollins/vim-jst.git'
+        " js syntax checks:
+        " install jshint from here - https://github.com/jshint/node-jshint - supported by syntastic
         "Bundle 'git://github.com/kchmck/vim-coffee-script.git'
     " JSON
         "Bundle 'git://github.com/leshill/vim-json.git'
@@ -253,8 +257,6 @@
 
     " GUI Settings {
     if has("gui_running")
-        "set columns=180 " perfect size for me
-        "set lines=55 " perfect size for me
         set guioptions+=ce
         "              ||
         "              |+-- use simple dialogs rather than pop-ups
@@ -262,6 +264,20 @@
         set guioptions-=T
         set mousehide " hide the mouse cursor when typing
     endif
+    if has("gui_running")
+        " GUI is running or is about to start.
+        " Maximize gvim window.
+        " this causes vim to run on 4th workspace in Unity
+        " set lines=999 columns=999
+    else
+        " This is console Vim.
+        if exists("+lines")
+            set lines=50
+        endif
+        if exists("+columns")
+            set columns=100
+        endif
+    endi
     " }
 
 " }
@@ -270,7 +286,7 @@
     " enable spell by default
     " actually recommended way is to enable spell
     " setlocal spell spelllang=en_us
-    set spell spelllang=ru_yo,en_us
+    set spell spelllang=ru_ru,en_us
     " z= - suggest word
     " [s - previous wrong word
     " ]s - next wrong word
@@ -491,6 +507,7 @@
     " NERDTree
     let NERDTreeChDirMode=2     " Change CWD to nerd tree root
     let NERDTreeShowBookmarks=1 " Show bookmarks panel
+    let NERDTreeShowHidden=1 " Show hidden files
     " Command-T
     let g:CommandTMatchWindowAtTop=1 " show window at top
 " }
@@ -502,6 +519,7 @@
 
 " Autocommands {
     au BufRead,BufNewFile *.phps    set filetype=php
+    au BufRead,BufNewFile *.js      set filetype=javascript
     au BufRead,BufNewFile *.thtml   set filetype=php
     au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
     au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
@@ -536,7 +554,7 @@
 
     " remove trailing whitespace on save
     " new version from http://vimcasts.org/episodes/tidying-whitespace/
-    autocmd FileType c,cpp,java,php,python,vim,text,markdown,javascript autocmd BufWritePre <buffer>
+    autocmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd BufWritePre <buffer>
         \ call Preserve("%s/\\s\\+$//e")
 
     " old version
@@ -561,6 +579,12 @@
         \     endif|
         \ endif
 
+    " JS {
+        autocmd FileType javascript :set shiftwidth=2
+        autocmd FileType javascript :set softtabstop=2
+        autocmd FileType javascript :set tabstop=2
+    " }
+
     " Ruby {
         " ruby standard 2 spaces, always
         " au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
@@ -580,8 +604,10 @@
 
 " Mappings {
     let mapleader = ","
-    imap jj <Esc>               " jj as ESC
-                                " other options: Ctrl-[, Ctrl-C
+
+    " jj as ESC
+    " other options: Ctrl-[, Ctrl-C
+    imap jj <Esc>
 
     " ,vv to re-read .vimrc
     "map <Leader>vv :source ~/.vimrc<CR>
@@ -589,7 +615,7 @@
     nmap <leader>vc :tabedit $MYVIMRC<CR>   " ,vc to view .vimrc
 
     " Command-T
-    " ,t                        " list files
+    " ,t  <- list files
 
     " vim-easymotion
     " ,,w - words; ,,f - char

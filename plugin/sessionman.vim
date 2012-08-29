@@ -111,14 +111,17 @@ function! s:OpenSession(name)
 	if a:name != '' && a:name[0] != '"'
 		call s:RestoreDefaults()
 		if has('cscope')
-			silent! cscope kill -1
+			silent cscope kill -1
 		endif
 		try
 			set eventignore=all
-			execute 'silent! 1,' . bufnr('$') . 'bwipeout!'
+			let buf_count = s:_wipeBuffers()
+			if buf_count == -1
+				"if there is a modified buffer - exit
+				return
+			endif
 			let n = bufnr('%')
-			execute 'silent! so ' . s:sessions_path . '/' . a:name
-			execute 'silent! bwipeout! ' . n
+			execute 'silent so ' . s:sessions_path . '/' . a:name
 		finally
 			set eventignore=
 			doautoall BufRead
@@ -129,19 +132,25 @@ function! s:OpenSession(name)
 			doautoall SessionLoadPost
 		endtry
 		if has('cscope')
-			silent! cscope add .
+			silent cscope add .
 		endif
 		let g:LAST_SESSION = a:name
 	endif
+	let buf_num = bufnr('%')
+	silent! :NERDTree
+	silent! exec buf_num . "wincmd w"
+	silent! :NERDTreeFind
+	silent! exec buf_num . "wincmd w"
 endfunction
 
 "============================================================================"
 
 function! s:CloseSession()
 	call s:RestoreDefaults()
-	execute 'silent! 1,' . bufnr('$') . 'bwipeout!'
+	"execute 'silent 1,' . bufnr('$') . 'bwipeout'
+	call s:_wipeBuffers()
 	if has('cscope')
-		silent! cscope kill -1
+		silent cscope kill -1
 	endif
 	unlet! g:LAST_SESSION
 	let v:this_session = ''
@@ -169,8 +178,8 @@ endfunction
 
 function! s:EditSession(name)
 	if a:name != '' && a:name[0] != '"'
-		bwipeout!
-		execute 'silent! edit ' . s:sessions_path . '/' . a:name
+		bwipeout
+		execute 'silent edit ' . s:sessions_path . '/' . a:name
 		set ft=vim
 	endif
 endfunction
@@ -179,9 +188,9 @@ endfunction
 
 function! s:EditSessionExtra(name)
 	if a:name != '' && a:name[0] != '"'
-		bwipeout!
+		bwipeout
 		let n = substitute(a:name, "\\.[^.]*$", '', '')
-		execute 'silent! edit ' . s:sessions_path . '/' . n . 'x.vim'
+		execute 'silent edit ' . s:sessions_path . '/' . n . 'x.vim'
 	endif
 endfunction
 
@@ -193,7 +202,7 @@ function! s:ListSessions()
 		execute w_sl . 'wincmd w'
 		return
 	endif
-	silent! split __SessionList__
+	silent split __SessionList__
 
 	" Mark the buffer as scratch
 	setlocal buftype=nofile
@@ -202,23 +211,23 @@ function! s:ListSessions()
 	setlocal nowrap
 	setlocal nobuflisted
 
-	nnoremap <buffer> <silent> q :bwipeout!<CR>
-	nnoremap <buffer> <silent> o :call <SID>OpenSession(getline('.'))<CR>
-	nnoremap <buffer> <silent> <CR> :call <SID>OpenSession(getline('.'))<CR>
-	nnoremap <buffer> <silent> <2-LeftMouse> :call <SID>OpenSession(getline('.'))<CR>
+	nnoremap <buffer> <silent> q :bwipeout<CR>
+	nnoremap <buffer> o :call <SID>OpenSession(getline('.'))<CR>
+	nnoremap <buffer> <CR> :call <SID>OpenSession(getline('.'))<CR>
+	nnoremap <buffer> <2-LeftMouse> :call <SID>OpenSession(getline('.'))<CR>
 	nnoremap <buffer> <silent> d :call <SID>DeleteSession(getline('.'))<CR>
 	nnoremap <buffer> <silent> e :call <SID>EditSession(getline('.'))<CR>
 	nnoremap <buffer> <silent> x :call <SID>EditSessionExtra(getline('.'))<CR>
 
 	syn match Comment "^\".*"
-	silent! put ='\"-----------------------------------------------------'
-	silent! put ='\" q                        - close session list'
-	silent! put ='\" o, <CR>, <2-LeftMouse>   - open session'
-	silent! put ='\" d                        - delete session'
-	silent! put ='\" e                        - edit session'
-	silent! put ='\" x                        - edit extra session script'
-	silent! put ='\"-----------------------------------------------------'
-	silent! put =''
+	silent put ='\"-----------------------------------------------------'
+	silent put ='\" q                        - close session list'
+	silent put ='\" o, <CR>, <2-LeftMouse>   - open session'
+	silent put ='\" d                        - delete session'
+	silent put ='\" e                        - edit session'
+	silent put ='\" x                        - edit extra session script'
+	silent put ='\"-----------------------------------------------------'
+	silent put =''
 	let l = line(".")
 
 	let sessions = substitute(glob(s:sessions_path . '/*'), '\\', '/', 'g')
@@ -230,7 +239,7 @@ function! s:ListSessions()
 	endif
 	silent put =sessions
 
-	silent! 0,1d
+	silent 0,1d
 	execute l
 	setlocal nomodifiable
 	setlocal nospell
@@ -277,6 +286,40 @@ endfunction
 function! s:SessionOpenComplete(A, L, P)
 	let sessions = substitute(glob(s:sessions_path . '/*'), '\\', '/', 'g')
 	return substitute(sessions, '\(^\|\n\)' . s:sessions_path . '/', '\1', 'g')
+endfunction
+
+"============================================================================"
+
+function! s:_wipeBuffers()
+	let last_buffer = bufnr('$')
+	let delete_count = 0
+	let n = 1
+	"let buffer = bufnr('%')
+	"
+	while n <= last_buffer
+		"if n != buffer && buflisted(n)
+		if buflisted(n)
+			if getbufvar(n, '&modified')
+				echohl ErrorMsg
+				echomsg 'No write since last change for buffer'
+				echohl None
+				return -1
+			else
+				silent exe 'bwipeout ' . n
+				if ! buflisted(n)
+					let delete_count = delete_count+1
+				endif
+			endif
+		endif
+		let n = n+1
+	endwhile
+
+	"if delete_count == 1
+		"echomsg delete_count "buffer deleted"
+	"elseif delete_count > 1
+		"echomsg delete_count "buffers deleted"
+	"endif
+	return delete_count
 endfunction
 
 "============================================================================"
