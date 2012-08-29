@@ -349,8 +349,10 @@
      set listchars=tab:>-,trail:- " show tabs and trailing
      if has("gui_running")
          set listchars=tab:▸\ ,trail:·",eol:¶,extends:»,precedes:«
+         set showbreak=-
      else
-         set listchars=tab:»\ ,trail:·",eol:¬,extends:»,precedes:«
+         set listchars=tab:»\ ,trail:·",eol:¬,extends:❯,precedes:❮
+         set showbreak=↪
      endif
      if has("linebreak")
          let &sbr = nr2char(8618).' '  " Show ↪ at the beginning of wrapped lines
