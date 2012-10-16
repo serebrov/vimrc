@@ -2,10 +2,6 @@
     set nocompatible " explicitly get out of vi-compatible mode
     filetype off
 
-    " pathogen {
-        "call pathogen#infect()
-        "call pathogen#helptags()
-    " }
     " vundle {
         set rtp+=~/.vim/bundle/vundle/
         call vundle#rc()
@@ -528,14 +524,28 @@
 
     " Auto Completion
     autocmd FileType python :set omnifunc=pythoncomplete#Complete
+    autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+
     autocmd FileType php :set omnifunc=phpcomplete#CompletePHP
+    autocmd FileType php setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+
     autocmd FileType html :set omnifunc=htmlcomplete@CompleteTags
     autocmd FileType html :set filetype=xhtml
-    autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType css :set omnifunc=csscomplete#CompleteCSS
-    autocmd FileType c :set omnifunc=ccomplete#Complete
+    autocmd FileType html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
-    " execute a command while preserver the position
+    autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+    " autocmd FileType ruby :set omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+    autocmd FileType css :set omnifunc=csscomplete#CompleteCSS
+    autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+    autocmd FileType c :set omnifunc=ccomplete#Complete
+    autocmd FileType c setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+
+    " execute a command while preserve the position
     if !exists("*Preserve")
         function! Preserve(command)
             " Preparation: save last search, and cursor position.
@@ -555,19 +565,9 @@
     autocmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd BufWritePre <buffer>
         \ call Preserve("%s/\\s\\+$//e")
 
-    " old version
-    " http://vim.wikia.com/wiki/Remove_unwanted_spaces
-    "\ call setline(1,map(
-    "\    getline(1,"$"),'substitute(v:val,"\\s\\+$","","")')
-    "\ )
-
     " When editing a file, always jump to the last known cursor porition.
     " Don't do it when the position is invalid or when inside an event
     " handler.
-    " autocmd BufReadPost *
-    "    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    "    \       exe "normal! g`\"" |
-    "    \ endif
     au BufReadPost *
         \ if line("'\"") > 0 |
         \     if line("'\"") <= line("$") |
@@ -576,27 +576,6 @@
         \         exe "norm $" |
         \     endif|
         \ endif
-
-    " JS {
-        autocmd FileType javascript :set shiftwidth=2
-        autocmd FileType javascript :set softtabstop=2
-        autocmd FileType javascript :set tabstop=2
-    " }
-
-    " Ruby {
-        " ruby standard 2 spaces, always
-        " au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
-        " au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
-    " }
-
-    " Python
-    "augroup vimrcEx                 " Put in an autocmd group
-        "au!
-
-        """ Python Syntax
-        "" autocmd BufWrite *.{py} :call CheckPythonSyntax()
-
-    "augroup END
 " }
 
 
@@ -608,8 +587,8 @@
     imap jj <Esc>
 
     " ,vv to re-read .vimrc
-    "map <Leader>vv :source ~/.vimrc<CR>
     map <Leader>vv :call Preserve("source ~\/\.vimrc")<CR>
+    " ,vc to edit .vimrc
     nmap <leader>vc :tabedit $MYVIMRC<CR>   " ,vc to view .vimrc
 
     " Command-T
@@ -697,7 +676,7 @@
 
     "" Supertab
     " Tab for auto-complete
-    let g:SuperTabDefaultCompletionType = '<C-x><C-u>'
+    "let g:SuperTabDefaultCompletionType = '<C-x><C-u>'
 
     " phpDocumenter
     inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
@@ -711,6 +690,7 @@
     let g:pdv_cfg_License = ""
 
     nmap _$ :call Preserve("%s/\\s\\+$//e")<CR>
+    " autoformat file
     nmap _= :call Preserve("normal gg=G")<CR>
 
     " Standard keys
@@ -749,24 +729,6 @@
             :SessionOpenLast
         endif
     endfunction
-
-    "function! SaveLastSession()
-    "    let last_session_file = glob(g:sessions_data_path) . '.last_session.txt'
-    "    if v:this_session != ""
-    "        call writefile([v:this_session], last_session_file)
-    "        call SessionSave()
-    "    endif
-    "endfunction
-
-    "function! RestoreLastSession()
-    "    let last_session_file = glob(g:sessions_data_path) . '.last_session.txt'
-    "    " Check that the user has started Vim without editing any files.
-    "    if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
-    "        if filereadable(last_session_file)
-    "            exec "source " . readfile(last_session_file)[0]
-    "        endif
-    "    endif
-    "endfunction
 " }
 
 " Utils {
@@ -831,14 +793,6 @@ function! PylintReport()
     exe ":redraw!"
 endfunction
 
-function! CheckPythonSyntax()
-    setlocal makeprg=(echo\ '[%]';\ pylint\ --reports=n\ %)
-    setlocal efm=%+P[%f],%t:\ %#%l:%m
-    silent make
-    cwindow
-    exe "!clear"
-    exe ":redraw!"
-endfunction
 " }
 
 " --------------  links --------------------
