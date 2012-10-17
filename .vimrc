@@ -303,7 +303,6 @@
     " ignore these list file extensions
     set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,
                     \*.jpg,*.gif,*.png
-    "set wildmode=list:longest " turn on wild mode huge list
     set wildmode=longest,list
 " }
 
@@ -341,7 +340,6 @@
 
 " Search {
      set incsearch              " do highlight as you type you search phrase
-     " set nohlsearch           " do not highlight searched for phrases
      set hlsearch               " highlight search
      set ignorecase             " case insensitive by default
      set smartcase              " if there are caps, go case-sensitive
@@ -404,19 +402,6 @@
      "                |                         |   +-- modified flag in square brackets
      "                |                         +-- full path to file in the buffer
      "                +-- buffer number
-
-    " Status line
-    "set laststatus=2
-    "set statusline=
-    "set statusline+=%-3.3n\                         " buffer number
-    "set statusline+=%f\                             " filename
-    "set statusline+=%h%m%r%w                        " status flags
-    "set statusline+=\[%{strlen(&ft)?&ft:'none'}]    " file type
-    "set statusline+=%=                              " right align remainder
-    "set statusline+=0x%-8B                          " character value
-    "set statusline+=%-14(%l,%c%V%)                  " line, character
-    "set statusline+=%<%P                            " file position
-
 "
 " }
 
@@ -648,6 +633,18 @@
     map <Leader>tg :TlistToggle<cr>
 
     " windows navigation
+    " C-W h|j|k|l - move to left|down|up|right win
+    " C-W w       - cycle
+    " C-W s|v     - split current win horiz | vert
+    " :on[ly]     - leave only current win
+    " C-W +|-     - height +|- 1 px
+    " C-W _||     - maximize height|width
+    " moving windows:
+    " C-W H|J|K|L - move win to the left|down|up|right
+    " C-W r       - rotate
+    " C-W x       - exchange with neighbour
+    " C-W T       - move window to separate tab
+    "
     "nmap <C-k> <C-W>k<C-W>_        " window up
     "imap <C-k> <Esc><C-W>k<C-W>_a  " window up
     "nmap <C-j> <C-W>j<C-W>_        " window down
@@ -689,9 +686,11 @@
     let g:pdv_cfg_Copyright = ""
     let g:pdv_cfg_License = ""
 
-    nmap _$ :call Preserve("%s/\\s\\+$//e")<CR>
+    " http://technotales.wordpress.com/2010/03/31/preserve-a-vim-function-that-keeps-your-state/
+    " remove trailing spaces
+    nmap _$ :call preserve("%s/\\s\\+$//e")<cr>
     " autoformat file
-    nmap _= :call Preserve("normal gg=G")<CR>
+    nmap _= :call preserve("normal gg=g")<cr>
 
     " Standard keys
         " Speller shorcuts {
@@ -711,6 +710,8 @@
             " or type : or / to start entering a command or search,
             " then press the 'cedit' key (default is Ctrl-f :help 'cedit').
         " }
+        gv - select last visual area and go to visual mode
+
 " }
 
 " Session manager {
