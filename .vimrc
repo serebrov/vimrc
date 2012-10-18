@@ -621,6 +621,14 @@
     nmap <Leader>n :cnext<cr>
     nmap <Leader>p :cprevious<cr>
 
+    " add new line in normal mode
+    nmap <Leader>o o<ESC>
+    nmap <Leader>O O<ESC>
+
+    " Swap ; and :, use ;; as ;
+    nnoremap ; :
+    nnoremap ;; ;
+
     " ,8 File encoding for open
     " ucs-2le - MS Windows unicode encoding
     map <Leader>8 :execute RotateEnc()<CR>
@@ -654,8 +662,8 @@
     " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
     noremap k gk
     noremap j gj
-    noremap 0 g0
-    noremap $ g$
+    "noremap 0 g0
+    "noremap $ g$
 
     " Move with Ctrl + hjkl in Insert mode
     imap <C-h> <C-o>h
@@ -710,7 +718,7 @@
             " or type : or / to start entering a command or search,
             " then press the 'cedit' key (default is Ctrl-f :help 'cedit').
         " }
-        gv - select last visual area and go to visual mode
+        " gv - select last visual area and go to visual mode
 
 " }
 
