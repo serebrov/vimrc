@@ -13,17 +13,14 @@
     " My Bundles here {
         " original repos on github
         " ========================
-        " git support
-        " Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
+        " git support: Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
         " Ggrep, Glog, Gread, Gwrite, Gbrowse
         Bundle 'tpope/vim-fugitive'
-        " fugitive extension, commit browser
-        " :Extradite
+        " fugitive extension, commit browser - :Extradite
         Bundle 'int3/vim-extradite'
         " visual guides for indents, default mapping <Leager>ig
         Bundle 'nathanaelkane/vim-indent-guides'
-        " Powerline is a utility plugin which allows you to create
-        " better-looking, more functional vim statuslines.
+        " Powerline - create better-looking, more functional vim statuslines.
         Bundle 'Lokaltog/vim-powerline'
         " Simpler way to use some motions in vim.
         " Start motion with <Leader><Leader> to trigger easy motion mode.
@@ -64,12 +61,8 @@
         Bundle 'godlygeek/tabular'
         "This plug-in provides automatic closing of quotes, parenthesis, brackets, etc.
         " Bundle 'Raimondi/delimitMate'
-        "!
-        Bundle 'timcharper/textile.vim'
         " This plugin highlights the matching HTML tag when the cursor is
-        Bundle 'gregsexton/MatchTag'
-        "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-        "Bundle 'tpope/vim-rails.git'
+        "Bundle 'gregsexton/MatchTag'
         "Just a NERDTree
         Bundle 'scrooloose/nerdtree'
         "Ack search support for NERDTree
@@ -90,11 +83,9 @@
         Bundle 'ervandew/supertab'
         " Solarized color scheme
         Bundle 'altercation/vim-colors-solarized'
-        "Bundle 'mattn/zencoding-vim'
         "Ack support for vim
         Bundle 'mileszs/ack.vim'
         " Markdown support
-        "Bundle 'plasticboy/vim-markdown'
         Bundle 'hallison/vim-markdown'
         " Markup files preview
         " <Leader>P
@@ -106,23 +97,21 @@
         Bundle 'L9'
         " FuzzyFinder - find files quickly
         Bundle 'FuzzyFinder'
-        " ?-> plasticboy/vim-markdown
-        "Bundle 'Markdown'
         " http://fueledbylemons.com/blog/2011/07/27/why-ultisnips/
         "Bundle 'UltiSnips'
         " At every search command, it automatically prints
         " "At match #N out of M matches".
-        Bundle 'IndexedSearch'
-        "
-        " non github repos
-        " ================
+        " Bundle 'IndexedSearch'
         " Fast file explorer. <Leader>t - files, <Leader>b - buffers.
         Bundle 'git://git.wincent.com/command-t.git'
         "
         " PHP
         " ====
-        Bundle 'git://github.com/vim-scripts/php.vim--Garvin.git'
-        Bundle 'git://github.com/2072/PHP-Indenting-for-VIm.git'
+        " it should be copied to autoload/phpcomplete.vim
+        Bundle 'shawncplus/phpcomplete.vim'
+        Bundle 'vim-scripts/php.vim--Garvin'
+        Bundle '2072/PHP-Indenting-for-VIm'
+        Bundle 'mudpile45/vim-phpdoc'
         Bundle 'mikehaertl/yii-api-vim'
         Bundle 'mikehaertl/pdv-standalone'
         " This allows you to select some text using Vim's visual mode and then hit *
@@ -145,13 +134,12 @@
         " Something like FuzzyFinder
         " https://github.com/kien/ctrlp.vim
         " Gundo.vim is Vim plugin to visualize your Vim undo tree.
-        " https://github.com/sjl/gundo.vim
+        Bundle 'sjl/gundo.vim'
         " Defines 'indentation' text object
         " https://github.com/michaeljsmith/vim-indent-object
         "
-        " see :h vundle for more details or wiki for FAQ
-        " NOTE: comments after Bundle command are not allowed..
         "" Interface
+        Bundle 'git://github.com/xolox/vim-easytags.git'
         Bundle 'git://github.com/vim-scripts/taglist.vim.git'
         " depends: http://ctags.sourceforge.net/
         "Bundle 'git://github.com/int3/vim-taglist-plus.git'
@@ -190,7 +178,6 @@
         Bundle 'git://github.com/briancollins/vim-jst.git'
         " js syntax checks:
         " install jshint from here - https://github.com/jshint/node-jshint - supported by syntastic
-        "Bundle 'git://github.com/kchmck/vim-coffee-script.git'
     " JSON
         "Bundle 'git://github.com/leshill/vim-json.git'
     " Python/Django
@@ -468,7 +455,7 @@
 " }
 
 " Completions {
-    set completeopt=longest,menuone,preview " use a pop up menu for completions
+    "set completeopt=longest,menuone,preview " use a pop up menu for completions
     set complete=""             " what use for completions
     set complete+=.             " current buffer
     set complete+=t             " tags
@@ -476,8 +463,9 @@
     set complete+=b             " other open buffers
 
     " tag files
-    " ';/' - this will look in the current directory for "tags", and work up the tree towards root until one is found
-    set tags=tags;/
+    " ';/' - this will look in the current directory for "tags", and work up the tree
+    " towards root until one is found
+    " set tags=tags;/
 " }
 
 " Plugins {
@@ -683,7 +671,7 @@
 
     "" Supertab
     " Tab for auto-complete
-    "let g:SuperTabDefaultCompletionType = '<C-x><C-u>'
+    let g:SuperTabDefaultCompletionType = '<C-x><C-o>'
 
     " phpDocumenter
     inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
@@ -740,6 +728,37 @@
             :SessionOpenLast
         endif
     endfunction
+" }
+
+" Diff current unsaved file {
+function! s:DiffWithSaved()
+    let filetype=&ft
+    diffthis
+    vnew | r # | normal! 1Gdd
+    diffthis
+    exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+" }
+
+" Find and replace in multiple files {
+command! -nargs=* -complete=file Fart call FindAndReplace(<f-args>)
+function! FindAndReplace(...)
+    if a:0 < 3
+        echohl Error | echo "Three arguments required: 1. file pattern, 2. search expression and 3. replacement" | echohl None
+        return
+    endif
+    if a:0 > 3
+        echohl Error | echo "Too many arguments, three required: 1. file pattern, 2. search expression and 3. replacement" | echohl None
+        return
+    endif
+    let l:pattern = a:1
+    let l:search = a:2
+    let l:replace = a:3
+    echo "Replacing occurences of '".l:search."' with '".l:replace."' in files matching '".l:pattern."'"
+
+    execute '!find . -name "'.l:pattern.'" -print | xargs -t sed -i "s/'.l:search.'/'.l:replace.'/g"'
+endfunction
+
 " }
 
 " Utils {
