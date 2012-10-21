@@ -141,6 +141,14 @@
         "" Interface
         Bundle 'git://github.com/xolox/vim-easytags.git'
         Bundle 'git://github.com/vim-scripts/taglist.vim.git'
+        " tagbar should show scoped tags (if we have a file with several
+        " classes then it will show each class methods under class and not
+        " a list of classes and then a list of methods as taglist)
+        " but this do not work for php
+        " todo: try it with phpctags
+        " see: https://github.com/techlivezheng/phpctags
+        " and https://github.com/techlivezheng/tagbar-phpctags
+        " Bundle 'majutsushi/tagbar'
         " depends: http://ctags.sourceforge.net/
         "Bundle 'git://github.com/int3/vim-taglist-plus.git'
         "Bundle 'git://github.com/rphillips/vim-zoomwin.git'
@@ -149,7 +157,6 @@
         "Bundle 'git://github.com/miripiruni/vimi-snippets.git'
         "Bundle 'git://github.com/tsaleh/vim-align.git'
         "Bundle 'git://github.com/vim-scripts/delimitMate.vim.git'
-        "Bundle 'git://github.com/sjl/gundo.vim.git'
         "Bundle 'git://github.com/edsono/vim-matchit.git'
         "Bundle 'git://github.com/sjl/threesome.vim.git'
         "Bundle 'git://github.com/chrismetcalf/vim-yankring.git'
@@ -479,6 +486,9 @@
     let NERDTreeShowHidden=1 " Show hidden files
     " Command-T
     let g:CommandTMatchWindowAtTop=1 " show window at top
+    " easy tags
+    set tags=./tags;
+    let g:easytags_dynamic_files = 1
 " }
 " Syntastic {
     let g:syntastic_phpcs_conf = "--standard=Seb"
