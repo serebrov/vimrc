@@ -94,16 +94,18 @@
         " vim-scripts repos
         " =================
         " Library used by FuzzyFinder
-        Bundle 'L9'
+        " Bundle 'L9'
         " FuzzyFinder - find files quickly
-        Bundle 'FuzzyFinder'
+        " Bundle 'FuzzyFinder'
         " http://fueledbylemons.com/blog/2011/07/27/why-ultisnips/
         "Bundle 'UltiSnips'
         " At every search command, it automatically prints
         " "At match #N out of M matches".
         " Bundle 'IndexedSearch'
         " Fast file explorer. <Leader>t - files, <Leader>b - buffers.
-        Bundle 'git://git.wincent.com/command-t.git'
+        " Bundle 'git://git.wincent.com/command-t.git'
+        " CtrlP
+        Bundle 'kien/ctrlp.vim'
         "
         " PHP
         " ====
@@ -131,8 +133,6 @@
         "
         " CamelCase and under_score motions
         " https://github.com/bkad/CamelCaseMotion
-        " Something like FuzzyFinder
-        " https://github.com/kien/ctrlp.vim
         " Gundo.vim is Vim plugin to visualize your Vim undo tree.
         Bundle 'sjl/gundo.vim'
         " Defines 'indentation' text object
@@ -141,6 +141,7 @@
         "" Interface
         Bundle 'git://github.com/xolox/vim-easytags.git'
         Bundle 'git://github.com/vim-scripts/taglist.vim.git'
+        Bundle 'git://github.com/vim-scripts/Conque-Shell.git'
         " tagbar should show scoped tags (if we have a file with several
         " classes then it will show each class methods under class and not
         " a list of classes and then a list of methods as taglist)
@@ -477,7 +478,7 @@
 
 " Plugins {
     " Fuzzy Finder
-    let g:fuf_modesDisable = []
+    " let g:fuf_modesDisable = []
     " Ack
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
     " NERDTree
@@ -495,6 +496,8 @@
     map <Leader>csd :let g:syntastic_phpcs_disable = 1<CR>
     " :let g:syntastic_phpmd_disable = 0<CR>
 " }
+" save as sudo
+ca w!! w !sudo tee "%"
 
 " Autocommands {
     au BufRead,BufNewFile *.phps    set filetype=php
@@ -587,15 +590,46 @@
     " <Leader>ig
 
     " Fuzzy Finder
-    map <Leader>ff :FufFileWithCurrentBufferDir **/<C-M>
-    map <Leader>fr :FufFile<CR>
-    map <Leader>fd :FufDir<CR>
-    map <Leader>fb :FufBuffer<CR>
-    map <Leader>ft :FufTag<CR>
-    map <Leader>fl :FufLine<CR>
-    map <Leader>fq :FufQuickfix<CR>
-    map <Leader>fm :FufMruFile<CR>
-    map <Leader>fc :FufMruCmd<CR>
+    "map <Leader>ff :FufFileWithCurrentBufferDir **/<C-M>
+    "map <Leader>fr :FufFile<CR>
+    "map <Leader>fd :FufDir<CR>
+    "map <Leader>fb :FufBuffer<CR>
+    "map <Leader>ft :FufTag<CR>
+    "map <Leader>fl :FufLine<CR>
+    "map <Leader>fq :FufQuickfix<CR>
+    "map <Leader>fm :FufMruFile<CR>
+    "map <Leader>fc :FufMruCmd<CR>
+
+    " CtrlP (new fuzzy finder)
+    let g:ctrlp_map = ',f'
+    map <Leader>ff :CtrlPMixed<CR>
+    map <Leader>fd :CtrlPDir<CR>
+    map <Leader>fb :CtrlPBuffer<CR>
+    map <Leader>ft :CtrlPBufTag<CR>
+    map <Leader>fT :CtrlPTag<CR>
+    map <Leader>fl :CtrlPLine<CR>
+    map <Leader>fm :CtrlPMRU<CR>
+    " to be able to call CtrlP with default search text
+    function! CtrlPWithSearchText(search_text, ctrlp_command_end)
+        execute ':CtrlP' . a:ctrlp_command_end
+        call feedkeys(a:search_text)
+    endfunction
+    " CtrlP with default text
+    nmap ,wg :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
+    nmap ,wG :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
+    nmap ,wf :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
+    nmap ,d ,wg
+    nmap ,D ,wG
+    nmap ,we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
+    nmap ,pe :call CtrlPWithSearchText(expand('<cfile>'), '')<CR>
+    nmap ,wm :call CtrlPWithSearchText(expand('<cword>'), 'MRUFiles')<CR>
+    " Don't change working directory
+    "let g:ctrlp_working_path_mode = 0
+    " Ignore files on fuzzy finder
+    "let g:ctrlp_custom_ignore = {
+    "\ 'dir':  '\v[\/](\.git|\.hg|\.svn)$',
+    "\ 'file': '\.pyc$\|\.pyo$',
+    "\ }
 
     " NERDTree
     map <Leader>nt :NERDTreeToggle<CR>" ,nt - toggle tree
