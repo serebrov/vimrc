@@ -464,7 +464,7 @@
 " }
 
 " Completions {
-    "set completeopt=longest,menuone,preview " use a pop up menu for completions
+    set completeopt=longest,menuone,preview " use a pop up menu for completions
     set complete=""             " what use for completions
     set complete+=.             " current buffer
     set complete+=t             " tags
@@ -489,8 +489,9 @@
     " Command-T
     let g:CommandTMatchWindowAtTop=1 " show window at top
     " easy tags
-    set tags=./tags;
-    let g:easytags_dynamic_files = 1
+    "set tags=./tags;
+    "let g:easytags_dynamic_files = 1
+    "let g:easytags_by_filetype = 1
 " }
 " Syntastic {
     let g:syntastic_phpcs_conf = "--standard=Seb"
@@ -570,6 +571,9 @@ ca w!! w !sudo tee "%"
 
 " Mappings {
     let mapleader = ","
+
+    " map double leader to save
+    map ,, :w<CR>
 
     " jj as ESC
     " other options: Ctrl-[, Ctrl-C
