@@ -80,7 +80,7 @@
         Bundle 'scrooloose/syntastic'
         " Supertab is a plugin which allows you to perform all your insert completion
         " (|ins-completion|) using the tab key.
-        Bundle 'ervandew/supertab'
+        " Bundle 'ervandew/supertab'
         " Solarized color scheme
         Bundle 'altercation/vim-colors-solarized'
         "Ack support for vim
@@ -492,6 +492,8 @@
     "set tags=./tags;
     "let g:easytags_dynamic_files = 1
     "let g:easytags_by_filetype = 1
+    "let g:easytags_by_filetype = 1
+    let g:easytags_on_cursorhold = 0
 " }
 " Syntastic {
     let g:syntastic_phpcs_conf = "--standard=Seb"
@@ -720,7 +722,7 @@ ca w!! w !sudo tee "%"
 
     "" Supertab
     " Tab for auto-complete
-    let g:SuperTabDefaultCompletionType = '<C-x><C-o>'
+    " let g:SuperTabDefaultCompletionType = '<C-x><C-o>'
 
     " phpDocumenter
     inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
