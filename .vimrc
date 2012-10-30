@@ -45,6 +45,20 @@
         Bundle 'tpope/vim-surround'
         " Required by vim-surround
         Bundle 'tpope/vim-repeat'
+        " Pair commands, some of them:
+        " [q |:cprevious|
+        " ]q |:cnext|
+        " [o - previous file in directory
+        " ]o - next file in directory
+        " [Space - add [count] blank lines before cursor
+        " ]Space - add [count] blank lines after cursor
+        " [e - move line up
+        " ]e - move line down
+        " [x - XML encode
+        " ]x - XML decode
+        " [u - URL encode
+        " ]u - URL decode
+        Bundle 'tpope/vim-unimpaired'
         " :Tabularize /, - tablarize by ','
         " :Tabularize /,/[r|l|c]0
         "  r - align right, l - left, c - center
@@ -569,6 +583,10 @@ ca w!! w !sudo tee "%"
 " Mappings {
     let mapleader = ","
 
+    " Swap ; and :, use ;; as ;
+    nnoremap ; :
+    nnoremap ;; ;
+
     " map double leader to save
     map ,, :w<CR>
 
@@ -639,17 +657,15 @@ ca w!! w !sudo tee "%"
     inoremap <C-S> <C-O>:update<CR>
 
     " ,co - copen; ,n - cnext; ,p - cprevious
-    nmap <Leader>co :copen<cr>
-    nmap <Leader>n :cnext<cr>
-    nmap <Leader>p :cprevious<cr>
+    " ]q and [q
+    "nmap <Leader>co :copen<cr>
+    "nmap <Leader>n :cnext<cr>
+    "nmap <Leader>p :cprevious<cr>
 
     " add new line in normal mode
-    nmap <Leader>o o<ESC>
-    nmap <Leader>O O<ESC>
-
-    " Swap ; and :, use ;; as ;
-    nnoremap ; :
-    nnoremap ;; ;
+    " ]Space and [Space
+    "nmap <Leader>o o<ESC>
+    "nmap <Leader>O O<ESC>
 
     " Make last word uppercase
     imap <C-F> <Esc>gUiw`]a
