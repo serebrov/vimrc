@@ -62,7 +62,7 @@
         "This plug-in provides automatic closing of quotes, parenthesis, brackets, etc.
         " Bundle 'Raimondi/delimitMate'
         " This plugin highlights the matching HTML tag when the cursor is
-        "Bundle 'gregsexton/MatchTag'
+        Bundle 'gregsexton/MatchTag'
         "Just a NERDTree
         Bundle 'scrooloose/nerdtree'
         "Ack search support for NERDTree
@@ -93,17 +93,10 @@
         "
         " vim-scripts repos
         " =================
-        " Library used by FuzzyFinder
-        " Bundle 'L9'
-        " FuzzyFinder - find files quickly
-        " Bundle 'FuzzyFinder'
-        " http://fueledbylemons.com/blog/2011/07/27/why-ultisnips/
         "Bundle 'UltiSnips'
         " At every search command, it automatically prints
         " "At match #N out of M matches".
-        " Bundle 'IndexedSearch'
-        " Fast file explorer. <Leader>t - files, <Leader>b - buffers.
-        " Bundle 'git://git.wincent.com/command-t.git'
+        Bundle 'IndexedSearch'
         " CtrlP
         Bundle 'kien/ctrlp.vim'
         "
@@ -586,9 +579,6 @@ ca w!! w !sudo tee "%"
     " ,vc to edit .vimrc
     nmap <leader>vc :tabedit $MYVIMRC<CR>   " ,vc to view .vimrc
 
-    " Command-T
-    " ,t  <- list files
-
     " vim-easymotion
     " ,,w - words; ,,f - char
     " ,,t - search
@@ -596,18 +586,7 @@ ca w!! w !sudo tee "%"
     " vim-indent-guides
     " <Leader>ig
 
-    " Fuzzy Finder
-    "map <Leader>ff :FufFileWithCurrentBufferDir **/<C-M>
-    "map <Leader>fr :FufFile<CR>
-    "map <Leader>fd :FufDir<CR>
-    "map <Leader>fb :FufBuffer<CR>
-    "map <Leader>ft :FufTag<CR>
-    "map <Leader>fl :FufLine<CR>
-    "map <Leader>fq :FufQuickfix<CR>
-    "map <Leader>fm :FufMruFile<CR>
-    "map <Leader>fc :FufMruCmd<CR>
-
-    " CtrlP (new fuzzy finder)
+    " CtrlP
     let g:ctrlp_map = ',f'
     map <Leader>ff :CtrlPMixed<CR>
     map <Leader>fd :CtrlPDir<CR>
@@ -625,8 +604,8 @@ ca w!! w !sudo tee "%"
     nmap ,wg :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
     nmap ,wG :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
     nmap ,wf :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
-    nmap ,d ,wg
-    nmap ,D ,wG
+    "nmap ,d ,wg
+    "nmap ,D ,wG
     nmap ,we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
     nmap ,pe :call CtrlPWithSearchText(expand('<cfile>'), '')<CR>
     nmap ,wm :call CtrlPWithSearchText(expand('<cword>'), 'MRUFiles')<CR>
