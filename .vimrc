@@ -194,7 +194,9 @@
     " }
     filetype plugin indent on " load filetype plugins/indent settings
 
-    set directory=~/.vimswap " directory to place swap files in
+    set nobackup
+    set noswapfile
+    " set directory=~/.vimswap " directory to place swap files in
 
    " Colors {
         syntax on               " Turn syntax highlighting on.
@@ -648,6 +650,9 @@ ca w!! w !sudo tee "%"
     " Swap ; and :, use ;; as ;
     nnoremap ; :
     nnoremap ;; ;
+
+    " Make last word uppercase
+    imap <C-F> <Esc>gUiw`]a
 
     " ,8 File encoding for open
     " ucs-2le - MS Windows unicode encoding
