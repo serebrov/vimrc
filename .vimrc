@@ -495,6 +495,7 @@
     let NERDTreeChDirMode=2     " Change CWD to nerd tree root
     let NERDTreeShowBookmarks=1 " Show bookmarks panel
     let NERDTreeShowHidden=1 " Show hidden files
+    let NERDTreeIngore=['\~$', '\.pyc']
     " Command-T
     let g:CommandTMatchWindowAtTop=1 " show window at top
     " easy tags
