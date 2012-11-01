@@ -6,13 +6,17 @@
         set rtp+=~/.vim/bundle/vundle/
         call vundle#rc()
 
+        " Brief help
+        " :BundleList          - list configured bundles
+        " :BundleInstall(!)    - install(update) bundles
+        " :BundleSearch(!) foo - search(or refresh cache first) for foo
+        " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+        "
         " let Vundle manage Vundle
         Bundle 'gmarik/vundle'
     " }
     " https://github.com/mutewinter/dot_vim
     " My Bundles here {
-        " original repos on github
-        " ========================
         " git support: Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
         " Ggrep, Glog, Gread, Gwrite, Gbrowse
         Bundle 'tpope/vim-fugitive'
@@ -77,7 +81,7 @@
         " Bundle 'Raimondi/delimitMate'
         " This plugin highlights the matching HTML tag when the cursor is
         Bundle 'gregsexton/MatchTag'
-        "Just a NERDTree
+        " NERDTree
         Bundle 'scrooloose/nerdtree'
         "Ack search support for NERDTree
         " depends on ack - http://betterthangrep.com
@@ -105,8 +109,6 @@
         " <Leader>P
         Bundle 'greyblake/vim-preview'
         "
-        " vim-scripts repos
-        " =================
         "Bundle 'UltiSnips'
         " At every search command, it automatically prints
         " "At match #N out of M matches".
@@ -123,20 +125,11 @@
         Bundle 'mudpile45/vim-phpdoc'
         Bundle 'mikehaertl/yii-api-vim'
         Bundle 'mikehaertl/pdv-standalone'
+        Bundle 'joonty/vdebug'
         " This allows you to select some text using Vim's visual mode and then hit *
         " and # to search for it elsewhere in the file.
         Bundle 'gmarik/vim-visual-star-search'
-        "Bundle "jQuery"
-        "Bundle "tComment"
-        "nnoremap // :TComment<CR>
-        "vnoremap // :TComment<CR>
         " ...
-        "
-        " Brief help
-        " :BundleList          - list configured bundles
-        " :BundleInstall(!)    - install(update) bundles
-        " :BundleSearch(!) foo - search(or refresh cache first) for foo
-        " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
         "
         " CamelCase and under_score motions
         " https://github.com/bkad/CamelCaseMotion
@@ -146,10 +139,11 @@
         " https://github.com/michaeljsmith/vim-indent-object
         "
         "" Interface
-        Bundle 'git://github.com/xolox/vim-easytags.git'
-        Bundle 'git://github.com/vim-scripts/taglist.vim.git'
+        Bundle 'xolox/vim-easytags.git'
+        Bundle 'vim-scripts/taglist.vim.git'
         " - doesn't work with vundle install Bundle 'git://github.com/vim-scripts/Conque-Shell.git'
-        Bundle 'acx0/Conque-Shell.git'
+        Bundle 'acx0/Conque-Shell'
+        Bundle 'tyru/open-browser.vim'
         " tagbar should show scoped tags (if we have a file with several
         " classes then it will show each class methods under class and not
         " a list of classes and then a list of methods as taglist)
@@ -188,10 +182,10 @@
         "Bundle 'git://github.com/miripiruni/vim-better-css-indent.git'
         "Bundle 'git://github.com/miripiruni/CSScomb-for-Vim.git'
     " JavaScript
-        Bundle 'git://github.com/pangloss/vim-javascript.git'
-        Bundle 'git://github.com/itspriddle/vim-jquery.git'
+        Bundle 'pangloss/vim-javascript.git'
+        Bundle 'itspriddle/vim-jquery.git'
         " ejs templates syntax highlight
-        Bundle 'git://github.com/briancollins/vim-jst.git'
+        Bundle 'briancollins/vim-jst.git'
         " js syntax checks:
         " install jshint from here - https://github.com/jshint/node-jshint - supported by syntastic
     " JSON
@@ -598,7 +592,7 @@ ca w!! w !sudo tee "%"
     " ,vv to re-read .vimrc
     map <Leader>vv :call Preserve("source ~\/\.vimrc")<CR>
     " ,vc to edit .vimrc
-    nmap <leader>vc :tabedit $MYVIMRC<CR>   " ,vc to view .vimrc
+    nmap <leader>vc :tabedit $MYVIMRC<CR>
 
     " vim-easymotion
     " ,,w - words; ,,f - char
@@ -741,6 +735,32 @@ ca w!! w !sudo tee "%"
     nmap _$ :call preserve("%s/\\s\\+$//e")<cr>
     " autoformat file
     nmap _= :call preserve("normal gg=g")<cr>
+
+    "Debugger
+    "http://jaredforsyth.com/projects/vim-debug/
+    function! Debug(url)
+        let url = 'http://'.a:url.'?XDEBUG_SESSION_START=vim_debug'
+        call OpenBrowser(url)
+        python debugger.run()
+    endfunction
+    command! -nargs=1 Debug call Debug('<args>')
+    let g:vdebug_options= {
+    \    "timeout" : 20,
+    \    "break_on_open" : 1,
+    \    "ide_key" : 'vim_debug',
+    \}
+    let g:vdebug_keymap = {
+    \    "run" : "<F5>",
+    \    "run_to_cursor" : "<F9>",
+    \    "step_over" : "<F10>",
+    \    "step_into" : "<F11>",
+    \    "step_out" : "<F12>",
+    \    "close" : "<F6>",
+    \    "detach" : "<F7>",
+    \    "set_breakpoint" : "<F8>",
+    \    "get_context" : "<F3>",
+    \    "eval_under_cursor" : "<F4>",
+    \}
 
     " Standard keys
         " Speller shorcuts {
