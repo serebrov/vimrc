@@ -739,7 +739,17 @@ ca w!! w !sudo tee "%"
     "Debugger
     "http://jaredforsyth.com/projects/vim-debug/
     function! Debug(url)
-        let url = 'http://'.a:url.'?XDEBUG_SESSION_START=vim_debug'
+        let url = a:url
+        let http_pos = stridx(url, 'http')
+        if http_pos != 0
+            let url = 'http://'.url
+        endif
+        let q_pos = stridx(url, '?')
+        if q_pos == -1
+            let url = url.'?XDEBUG_SESSION_START=vim_debug'
+        else
+            let url = url.'&XDEBUG_SESSION_START=vim_debug'
+        endif
         call OpenBrowser(url)
         python debugger.run()
     endfunction
