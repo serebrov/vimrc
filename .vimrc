@@ -642,9 +642,19 @@ ca w!! w !sudo tee "%"
     menu Encoding.utf-8 :e ++enc=utf8 <CR>
 
     " Use CTRL-S for saving, also in Insert mode
+    " Note: see http://stackoverflow.com/questions/3446320/in-vim-how-to-map-save-to-ctrl-s
+    " Ctrl-S is a common command to terminals to stop updating, it was a way to slow the output
+    " so you could read it on terminals that didn't have a scrollback buffer.
+    " First find out if you can configure your xterm to pass Ctrl-S through to the application.
+    " BTW: if Ctrl-S freezes your terminal, type Ctrl-Q to get it going again.
     noremap <C-S> :update<CR>
-    vnoremap <C-S> <C-C>:update<CR>
+    vnoremap <C-S> <C-C>:update<CR>gv
     inoremap <C-S> <C-O>:update<CR>
+    "
+    " Use CTRL-N to remove search highlight
+    noremap <C-N> :noh<CR>
+    vnoremap <C-N> <C-C>:noh<CR>gv
+    inoremap <C-N> <C-O>:noh<CR>
 
     " ,co - copen; ,n - cnext; ,p - cprevious
     " ]q and [q
@@ -683,11 +693,10 @@ ca w!! w !sudo tee "%"
     " C-W r       - rotate
     " C-W x       - exchange with neighbour
     " C-W T       - move window to separate tab
-    "
-    "nmap <C-k> <C-W>k<C-W>_        " window up
-    "imap <C-k> <Esc><C-W>k<C-W>_a  " window up
-    "nmap <C-j> <C-W>j<C-W>_        " window down
-    "imap <C-j> <Esc><C-W>j<C-W>_a  " window down
+     map <c-j> <c-w>j
+     map <c-k> <c-w>k
+     map <c-l> <c-w>l
+     map <c-h> <c-w>h
 
     " Move cursor by display lines when wrapping
     " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
