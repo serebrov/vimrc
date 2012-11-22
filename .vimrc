@@ -126,6 +126,8 @@
         Bundle 'mikehaertl/yii-api-vim'
         Bundle 'mikehaertl/pdv-standalone'
         Bundle 'joonty/vdebug'
+        Bundle 'joonty/vim-phpunitqf'
+        Bundle 'joonty/vim-taggatron'
         " This allows you to select some text using Vim's visual mode and then hit *
         " and # to search for it elsewhere in the file.
         Bundle 'gmarik/vim-visual-star-search'
@@ -139,7 +141,6 @@
         " https://github.com/michaeljsmith/vim-indent-object
         "
         "" Interface
-        Bundle 'xolox/vim-easytags.git'
         Bundle 'vim-scripts/taglist.vim.git'
         " - doesn't work with vundle install Bundle 'git://github.com/vim-scripts/Conque-Shell.git'
         Bundle 'acx0/Conque-Shell'
@@ -490,14 +491,6 @@
     let NERDTreeShowBookmarks=1 " Show bookmarks panel
     let NERDTreeShowHidden=1 " Show hidden files
     let NERDTreeIngore=['\~$', '\.pyc']
-    " Command-T
-    let g:CommandTMatchWindowAtTop=1 " show window at top
-    " easy tags
-    "set tags=./tags;
-    "let g:easytags_dynamic_files = 1
-    "let g:easytags_by_filetype = 1
-    "let g:easytags_by_filetype = 1
-    let g:easytags_on_cursorhold = 0
 " }
 " Syntastic {
     let g:syntastic_phpcs_conf = "--standard=Seb"
@@ -771,6 +764,14 @@ ca w!! w !sudo tee "%"
     \    "get_context" : "<F3>",
     \    "eval_under_cursor" : "<F4>",
     \}
+
+    "Taggatron
+    let g:tagcommands = {
+    \    "python" : {"tagfile": ".python.tags", "args": "-R"},
+    \    "php" : {"tagfile":".php.tags","args":"-R"},
+    \    "javascript" : {"tagfile":".js.tags","args":"-R"}
+    \}
+    let g:taggatron_verbose = 1
 
     " Standard keys
         " Speller shorcuts {
