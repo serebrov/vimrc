@@ -758,10 +758,31 @@ ca w!! w !sudo tee "%"
         python debugger.run()
     endfunction
     command! -nargs=1 Debug call Debug('<args>')
+    function! DebugPy(...)
+        let str_args = join(a:000, ' ')
+        let last_cmd = '!python -S ~/pydbgp/bin/pydbgp -d localhost:9000 -k vim_debug ' . str_args
+        execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
+        execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
+        execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
+        python debugger.run()
+    endfunction
+    command! -nargs=* DebugPy call DebugPy('% <args>')
+    function! DebugPhpunit(...)
+        let str_args = join(a:000, ' ')
+        let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && phpunit ' . str_args
+        execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
+        execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
+        execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
+        python debugger.run()
+    endfunction
+    " Note: if bootstrap should be used then change vim current folder to the
+    " folder with bootstrap
+    command! -nargs=* DebugPhpunit call DebugPhpunit('% <args>')
     let g:vdebug_options= {
-    \    "timeout" : 20,
+    \    "timeout" : 200,
     \    "break_on_open" : 1,
     \    "ide_key" : 'vim_debug',
+    \    "continuous_mode" : 1,
     \}
     let g:vdebug_keymap = {
     \    "run" : "<F5>",
@@ -782,7 +803,7 @@ ca w!! w !sudo tee "%"
     \    "php" : {"tagfile":".php.tags","args":"-R"},
     \    "javascript" : {"tagfile":".js.tags","args":"-R"}
     \}
-    let g:taggatron_verbose = 1
+    let g:taggatron_verbose = 0
 
     " Standard keys
         " Speller shorcuts {
