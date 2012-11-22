@@ -624,6 +624,8 @@ ca w!! w !sudo tee "%"
     "\ 'dir':  '\v[\/](\.git|\.hg|\.svn)$',
     "\ 'file': '\.pyc$\|\.pyo$',
     "\ }
+    " Don't clear cache on exit
+    let g:ctrlp_clear_cache_on_exit = 0
 
     " NERDTree
     map <Leader>nt :NERDTreeToggle<CR>" ,nt - toggle tree
