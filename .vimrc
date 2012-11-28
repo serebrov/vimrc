@@ -768,7 +768,7 @@ ca w!! w !sudo tee "%"
     command! -nargs=* DebugPy call DebugPy('% <args>')
     function! DebugPhpunit(...)
         let str_args = join(a:000, ' ')
-        let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && phpunit ' . str_args
+        let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && phpunit ' . str_args
         execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
         execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
         execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
