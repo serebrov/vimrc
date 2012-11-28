@@ -597,8 +597,8 @@ ca w!! w !sudo tee "%"
     map <Leader>ff :CtrlPMixed<CR>
     map <Leader>fd :CtrlPDir<CR>
     map <Leader>fb :CtrlPBuffer<CR>
-    map <Leader>ft :CtrlPBufTag<CR>
-    map <Leader>fT :CtrlPTag<CR>
+    map <Leader>fT :CtrlPBufTag<CR>
+    map <Leader>ft :CtrlPTag<CR>
     map <Leader>fl :CtrlPLine<CR>
     map <Leader>fm :CtrlPMRU<CR>
     " to be able to call CtrlP with default search text
