@@ -652,7 +652,8 @@ ca w!! w !sudo tee "%"
     " Use CTRL-N to remove search highlight
     noremap <C-N> :noh<CR>
     vnoremap <C-N> <C-C>:noh<CR>gv
-    inoremap <C-N> <C-O>:noh<CR>
+    " CTRL-N in insert mode is a completion!!!
+    " inoremap <C-N> <C-O>:noh<CR>
 
     " ,co - copen; ,n - cnext; ,p - cprevious
     " ]q and [q
