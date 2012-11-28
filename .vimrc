@@ -142,8 +142,6 @@
         "
         "" Interface
         Bundle 'vim-scripts/taglist.vim.git'
-        " - doesn't work with vundle install Bundle 'git://github.com/vim-scripts/Conque-Shell.git'
-        Bundle 'acx0/Conque-Shell'
         Bundle 'tyru/open-browser.vim'
         " tagbar should show scoped tags (if we have a file with several
         " classes then it will show each class methods under class and not
