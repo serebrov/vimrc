@@ -142,8 +142,6 @@
         "
         "" Interface
         Bundle 'vim-scripts/taglist.vim.git'
-        " - doesn't work with vundle install Bundle 'git://github.com/vim-scripts/Conque-Shell.git'
-        Bundle 'acx0/Conque-Shell'
         Bundle 'tyru/open-browser.vim'
         Bundle 'Shougo/neocomplcache'
         Bundle 'Shougo/neosnippet'
@@ -604,8 +602,8 @@ ca w!! w !sudo tee "%"
     map <Leader>ff :CtrlPMixed<CR>
     map <Leader>fd :CtrlPDir<CR>
     map <Leader>fb :CtrlPBuffer<CR>
-    map <Leader>ft :CtrlPBufTag<CR>
-    map <Leader>fT :CtrlPTag<CR>
+    map <Leader>fT :CtrlPBufTag<CR>
+    map <Leader>ft :CtrlPTag<CR>
     map <Leader>fl :CtrlPLine<CR>
     map <Leader>fm :CtrlPMRU<CR>
     " to be able to call CtrlP with default search text
@@ -659,7 +657,8 @@ ca w!! w !sudo tee "%"
     " Use CTRL-N to remove search highlight
     noremap <C-N> :noh<CR>
     vnoremap <C-N> <C-C>:noh<CR>gv
-    inoremap <C-N> <C-O>:noh<CR>
+    " CTRL-N in insert mode is a completion!!!
+    " inoremap <C-N> <C-O>:noh<CR>
 
     " ,co - copen; ,n - cnext; ,p - cprevious
     " ]q and [q
@@ -774,7 +773,7 @@ ca w!! w !sudo tee "%"
     command! -nargs=* DebugPy call DebugPy('% <args>')
     function! DebugPhpunit(...)
         let str_args = join(a:000, ' ')
-        let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && phpunit ' . str_args
+        let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && phpunit ' . str_args
         execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
         execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
         execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
