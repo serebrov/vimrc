@@ -245,7 +245,8 @@
         " highlight Normal ctermbg=black ctermfg=white
     elseif has('unix')
         "let &guifont="Monospace 10"
-        set guifont=Inconsolata\ Medium\ 11
+        set guifont=Monospace\ 10
+        "set guifont=Inconsolata\ Medium\ 11
     endif
 
     " Highlight text over 79 chars
@@ -254,11 +255,13 @@
 
     " GUI Settings {
     if has("gui_running")
-        set guioptions+=ce
-        "              ||
-        "              |+-- use simple dialogs rather than pop-ups
-        "              +  use GUI tabs, not console style tabs
+        " use simple dialogs rather than pop-ups
+        set guioptions+=c
+        " do not use GUI tabs, use console style tabs
+        set guioptions-=e
         set guioptions-=T
+        set guioptions-=m
+        set guioptions-=r
         set mousehide " hide the mouse cursor when typing
     endif
     if has("gui_running")
@@ -629,6 +632,9 @@ ca w!! w !sudo tee "%"
     "\ }
     " Don't clear cache on exit
     let g:ctrlp_clear_cache_on_exit = 0
+    " by default it is 'Et' which means it will jump to another tab if you
+    " open already opened buffer in current tab
+    let g:ctrlp_switch_buffer = 'et'
 
     " NERDTree
     map <Leader>nt :NERDTreeToggle<CR>" ,nt - toggle tree
@@ -781,7 +787,7 @@ ca w!! w !sudo tee "%"
     endfunction
     " Note: if bootstrap should be used then change vim current folder to the
     " folder with bootstrap
-    command! -nargs=* DebugPhpunit call DebugPhpunit('% <args>')
+    command! -nargs=* DebugPhpunit call DebugPhpunit('<args> %')
     let g:vdebug_options= {
     \    "timeout" : 200,
     \    "break_on_open" : 1,
@@ -946,6 +952,8 @@ endfunction
 
 " Launches neocomplcache automatically on vim startup.
 let g:neocomplcache_enable_at_startup = 1
+"
+let g:neocomplcache_enable_cursor_hold_i = 1
 " Use smartcase.
 let g:neocomplcache_enable_smart_case = 1
 " Use camel case completion.
