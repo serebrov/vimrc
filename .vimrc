@@ -82,11 +82,11 @@
         " This plugin highlights the matching HTML tag when the cursor is
         Bundle 'gregsexton/MatchTag'
         " NERDTree
-        Bundle 'scrooloose/nerdtree'
+        "Bundle 'scrooloose/nerdtree'
         "Ack search support for NERDTree
         " depends on ack - http://betterthangrep.com
         " sudo apt-get install ack-grep
-        Bundle 'tyok/nerdtree-ack'
+        "Bundle 'tyok/nerdtree-ack'
         " Commenting code
         " <Leader>cc - comment line or selected text
         " <Leader>cu - uncomment line or selected text
@@ -486,15 +486,13 @@
 " }
 
 " Plugins {
-    " Fuzzy Finder
-    " let g:fuf_modesDisable = []
     " Ack
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
     " NERDTree
-    let NERDTreeChDirMode=2     " Change CWD to nerd tree root
-    let NERDTreeShowBookmarks=1 " Show bookmarks panel
-    let NERDTreeShowHidden=1 " Show hidden files
-    let NERDTreeIngore=['\~$', '\.pyc']
+    "let NERDTreeChDirMode=2     " Change CWD to nerd tree root
+    "let NERDTreeShowBookmarks=1 " Show bookmarks panel
+    "let NERDTreeShowHidden=1 " Show hidden files
+    "let NERDTreeIngore=['\~$', '\.pyc']
 
 
 " }
