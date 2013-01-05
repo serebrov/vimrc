@@ -118,12 +118,15 @@
         "
         " PHP
         " ====
-        " it should be copied to autoload/phpcomplete.vim
+        " php completion - it should be copied to autoload/phpcomplete.vim
         Bundle 'shawncplus/phpcomplete.vim'
+        " php 5.3 syntax
         Bundle 'vim-scripts/php.vim--Garvin'
         Bundle '2072/PHP-Indenting-for-VIm'
+        " view php docs with K
         Bundle 'mudpile45/vim-phpdoc'
         Bundle 'mikehaertl/yii-api-vim'
+        " php documenter
         Bundle 'mikehaertl/pdv-standalone'
         Bundle 'joonty/vdebug'
         Bundle 'joonty/vim-phpunitqf'
@@ -146,16 +149,7 @@
         Bundle 'Shougo/neocomplcache'
         Bundle 'Shougo/neosnippet'
         Bundle 'Shougo/unite.vim'
-        " tagbar should show scoped tags (if we have a file with several
-        " classes then it will show each class methods under class and not
-        " a list of classes and then a list of methods as taglist)
-        " but this do not work for php
-        " todo: try it with phpctags
-        " see: https://github.com/techlivezheng/phpctags
-        " and https://github.com/techlivezheng/tagbar-phpctags
-        " Bundle 'majutsushi/tagbar'
-        " depends: http://ctags.sourceforge.net/
-        "Bundle 'git://github.com/int3/vim-taglist-plus.git'
+
         "Bundle 'git://github.com/rphillips/vim-zoomwin.git'
         "Bundle 'git://github.com/vim-scripts/UltiSnips.git'
         "Bundle 'git://github.com/msanders/snipmate.vim.git'
@@ -166,11 +160,6 @@
         "Bundle 'git://github.com/sjl/threesome.vim.git'
         "Bundle 'git://github.com/chrismetcalf/vim-yankring.git'
         "Bundle 'git://github.com/vim-scripts/vimwiki.git'
-    " Lua
-        "Bundle 'git://github.com/vim-scripts/lua.vim.git'
-        "Bundle 'git://github.com/rkowal/Lua-Omni-Vim-Completion.git'
-        "Bundle 'git://github.com/xolox/vim-lua-ftplugin.git'
-        "Bundle 'git://github.com/xolox/vim-lua-inspect.git'
     " HTML/HAML
         "Bundle 'git://github.com/othree/html5.vim.git'
         "Bundle 'git://github.com/hokaccha/vim-html5validator.git'
@@ -188,70 +177,40 @@
         Bundle 'itspriddle/vim-jquery.git'
         " ejs templates syntax highlight
         Bundle 'briancollins/vim-jst.git'
-        " js syntax checks:
-        " install jshint from here - https://github.com/jshint/node-jshint - supported by syntastic
     " JSON
         "Bundle 'git://github.com/leshill/vim-json.git'
-    " Python/Django
-        "Bundle 'git://github.com/fs111/pydoc.vim.git'
-    " Perl
-        "Bundle 'git://github.com/petdance/vim-perl.git'
-        "Bundle 'git://github.com/ggray/vim-tt2.git'
     " Ruby/Rails
         "Bundle 'git://github.com/vim-ruby/vim-ruby.git'
         "Bundle 'git://github.com/tpope/vim-rails.git'
         "Bundle 'git://github.com/tpope/vim-endwise.git'
     " }
     filetype plugin indent on " load filetype plugins/indent settings
+    syntax on               " Turn syntax highlighting on.
 
     set nobackup
     set noswapfile
-    " set directory=~/.vimswap " directory to place swap files in
 
    " Colors {
-        syntax on               " Turn syntax highlighting on.
-        set t_Co=256            " 256 Colors.
-        set background=dark     " Set dark background.
-        "colorscheme zenburn
-        "colorscheme blackboard
-
+        set background=dark
         " Solarized {
-            syntax enable
             let g:solarized_termcolors=256
             let g:solarized_contrast="high"    "default value is normal
             let g:solarized_diffmode="high"    "default value is normal
-            set background=dark
             try
                 colorscheme solarized
             catch /^Vim\%((\a\+)\)\=:E185/
                 echo "Solarized theme not found. Run :BundleInstall"
             endtry
-
-            try
-                call togglebg#map("<Leader>b")
-            catch /^Vim\%((\a\+)\)\=:E117/
-                " :(
-            endtry
         " }
    " }
 
     " Font
-    if has('win32') || has('win64')
-        " set guifont=Monaco:h16
-        " http://jeffmilner.com/index.php/2005/07/30/windows-vista-fonts-now-available/
-        "set guifont=Consolas:h12:cANSI
-        "set guifont=Consolas:h12:cRUSSIAN
-        colorscheme default
-        " highlight Normal ctermbg=black ctermfg=white
-    elseif has('unix')
-        "let &guifont="Monospace 10"
-        set guifont=Monospace\ 10
-        "set guifont=Inconsolata\ Medium\ 11
-    endif
-
-    " Highlight text over 79 chars
-    " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-    " match OverLength /\%79v.*/
+    "if has('win32') || has('win64')
+        "colorscheme default
+    "elseif has('unix')
+        "set guifont=Monospace\ 10
+        ""set guifont=Inconsolata\ Medium\ 11
+    "endif
 
     " GUI Settings {
     if has("gui_running")
@@ -262,22 +221,7 @@
         set guioptions-=T
         set guioptions-=m
         set guioptions-=r
-        set mousehide " hide the mouse cursor when typing
     endif
-    if has("gui_running")
-        " GUI is running or is about to start.
-        " Maximize gvim window.
-        " this causes vim to run on 4th workspace in Unity
-        " set lines=999 columns=999
-    else
-        " This is console Vim.
-        if exists("+lines")
-            set lines=50
-        endif
-        if exists("+columns")
-            set columns=100
-        endif
-    endi
     " }
 
 " }
@@ -663,17 +607,6 @@ ca w!! w !sudo tee "%"
     vnoremap <C-N> <C-C>:noh<CR>gv
     " CTRL-N in insert mode is a completion!!!
     " inoremap <C-N> <C-O>:noh<CR>
-
-    " ,co - copen; ,n - cnext; ,p - cprevious
-    " ]q and [q
-    "nmap <Leader>co :copen<cr>
-    "nmap <Leader>n :cnext<cr>
-    "nmap <Leader>p :cprevious<cr>
-
-    " add new line in normal mode
-    " ]Space and [Space
-    "nmap <Leader>o o<ESC>
-    "nmap <Leader>O O<ESC>
 
     " Make last word uppercase
     imap <C-F> <Esc>gUiw`]a
