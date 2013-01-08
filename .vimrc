@@ -579,8 +579,10 @@ ca w!! w !sudo tee "%"
     let g:ctrlp_switch_buffer = 'et'
 
     " NERDTree
-    map <Leader>nt :NERDTreeToggle<CR>" ,nt - toggle tree
-    map <Leader>nf :NERDTreeFind<CR>" ,nf - find current file in the tree
+    "map <Leader>nt :NERDTreeToggle<CR>" ,nt - toggle tree
+    "map <Leader>nf :NERDTreeFind<CR>" ,nf - find current file in the tree
+    map <Leader>nt :Explore<CR>
+    map <Leader>nf :Explore<CR>
 
     " Search and replace word under cursor
     "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
