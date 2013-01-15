@@ -50,18 +50,21 @@
         " Required by vim-surround
         Bundle 'tpope/vim-repeat'
         " Pair commands, some of them:
-        " [q |:cprevious|
-        " ]q |:cnext|
-        " [o - previous file in directory
-        " ]o - next file in directory
+        " [q / ]q, [Q / ]Q- :cprevious / :cnext, :cfirst / :clast - errors in quickfix
+        " [l / l], [L / L] - :lprevious / :lnext, :lfirst / :llast  - errors in current window (?)
+        " [<C-Q> / ]<C-Q> - :cpfile / :cnfile - errors in files (?)
+        " [<C-L] / ]<C-L> - :lpfile / :lnfile - errors in files, use current window (?)
+        " [t / ]t, [T / ]T - :tprevious / :tnext, :tfirst / :tlast - tags
+        " [a / ]a, [A / ]A  - :previous / :next, :first / :last - files in argument list
+        " [b / ]b, [B / ]b  - :bprevious / :bnext, :bfirst / :blast - buffers
+        "
         " [Space - add [count] blank lines before cursor
         " ]Space - add [count] blank lines after cursor
         " [e - move line up
         " ]e - move line down
-        " [x - XML encode
-        " ]x - XML decode
-        " [u - URL encode
-        " ]u - URL decode
+        "
+        " [f / ]f - previous / next file in directory
+        " [n / ]b - previous / next conflict marker
         Bundle 'tpope/vim-unimpaired'
         " :Tabularize /, - tablarize by ','
         " :Tabularize /,/[r|l|c]0
