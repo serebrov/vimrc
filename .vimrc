@@ -82,11 +82,11 @@
         " This plugin highlights the matching HTML tag when the cursor is
         Bundle 'gregsexton/MatchTag'
         " NERDTree
-        "Bundle 'scrooloose/nerdtree'
+        Bundle 'scrooloose/nerdtree'
         "Ack search support for NERDTree
         " depends on ack - http://betterthangrep.com
         " sudo apt-get install ack-grep
-        "Bundle 'tyok/nerdtree-ack'
+        Bundle 'tyok/nerdtree-ack'
         " Commenting code
         " <Leader>cc - comment line or selected text
         " <Leader>cu - uncomment line or selected text
@@ -131,9 +131,6 @@
         Bundle 'joonty/vdebug'
         Bundle 'joonty/vim-phpunitqf'
         Bundle 'joonty/vim-taggatron'
-        " This allows you to select some text using Vim's visual mode and then hit *
-        " and # to search for it elsewhere in the file.
-        Bundle 'gmarik/vim-visual-star-search'
         " ...
         "
         " CamelCase and under_score motions
@@ -189,6 +186,15 @@
 
     set nobackup
     set noswapfile
+
+    set history=64
+    set undolevels=128
+    " try to create undo dir, skip error if exists
+    silent !mkdir ~/.vim_undo > /dev/null 2>&1
+    set undodir=~/.vim_undo/
+    set undofile
+    set undolevels=1000
+    set undoreload=10000
 
    " Colors {
         set background=dark
@@ -433,10 +439,11 @@
     " Ack
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
     " NERDTree
-    "let NERDTreeChDirMode=2     " Change CWD to nerd tree root
-    "let NERDTreeShowBookmarks=1 " Show bookmarks panel
-    "let NERDTreeShowHidden=1 " Show hidden files
-    "let NERDTreeIngore=['\~$', '\.pyc']
+    let NERDTreeChDirMode=2     " Change CWD to nerd tree root
+    let NERDTreeShowBookmarks=1 " Show bookmarks panel
+    let NERDTreeShowHidden=1 " Show hidden files
+    let NERDTreeIngore=['\~$', '\.pyc']
+    let NERDTreeQuitOnOpen = 1
 
 
 " }
@@ -580,9 +587,9 @@ ca w!! w !sudo tee "%"
 
     " NERDTree
     "map <Leader>nt :NERDTreeToggle<CR>" ,nt - toggle tree
-    "map <Leader>nf :NERDTreeFind<CR>" ,nf - find current file in the tree
-    map <Leader>nt :Explore<CR>
-    map <Leader>nf :Explore<CR>
+    map <Leader>nf :NERDTreeFind<CR>" ,nf - find current file in the tree
+    map <Leader>ne :Explore<CR>
+    "map <Leader>nf :Explore<CR>
 
     " Search and replace word under cursor
     "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
@@ -768,6 +775,20 @@ ca w!! w !sudo tee "%"
         " }
         " gv - select last visual area and go to visual mode
 
+" }
+
+" Visual search {
+    " select text and hit * / # to find it
+    " http://got-ravings.blogspot.com/2008/07/vim-pr0n-visual-search-mappings.html
+    function! s:VSetSearch()
+        let temp = @@
+        norm! gvy
+        let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+        let @@ = temp
+    endfunction
+
+    vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
+    vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
 " }
 
 " Session manager {
