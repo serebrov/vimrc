@@ -443,11 +443,12 @@
     " Ack
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
     " NERDTree
-    "let NERDTreeChDirMode=2     " Change CWD to nerd tree root
+    let NERDTreeChDirMode=2     " Change CWD to nerd tree root
     "let NERDTreeShowBookmarks=1 " Show bookmarks panel
-    "let NERDTreeShowHidden=1 " Show hidden files
-    "let NERDTreeIngore=['\~$', '\.pyc']
-    "let NERDTreeQuitOnOpen = 1
+    let NERDTreeShowHidden=1 " Show hidden files
+    let NERDTreeIngore=['\~$', '\.pyc']
+    let NERDTreeQuitOnOpen = 1
+    let NERDTreeHijackNetrw = 1
 
 
 " }
