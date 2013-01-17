@@ -149,6 +149,7 @@
         Bundle 'Shougo/neocomplcache'
         Bundle 'Shougo/neosnippet'
         Bundle 'Shougo/unite.vim'
+        Bundle 'Shougo/vimfiler'
 
         "Bundle 'git://github.com/rphillips/vim-zoomwin.git'
         "Bundle 'git://github.com/vim-scripts/UltiSnips.git'
@@ -442,11 +443,11 @@
     " Ack
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
     " NERDTree
-    let NERDTreeChDirMode=2     " Change CWD to nerd tree root
-    let NERDTreeShowBookmarks=1 " Show bookmarks panel
-    let NERDTreeShowHidden=1 " Show hidden files
-    let NERDTreeIngore=['\~$', '\.pyc']
-    let NERDTreeQuitOnOpen = 1
+    "let NERDTreeChDirMode=2     " Change CWD to nerd tree root
+    "let NERDTreeShowBookmarks=1 " Show bookmarks panel
+    "let NERDTreeShowHidden=1 " Show hidden files
+    "let NERDTreeIngore=['\~$', '\.pyc']
+    "let NERDTreeQuitOnOpen = 1
 
 
 " }
@@ -590,9 +591,9 @@ ca w!! w !sudo tee "%"
 
     " NERDTree
     "map <Leader>nt :NERDTreeToggle<CR>" ,nt - toggle tree
-    map <Leader>nf :NERDTreeFind<CR>" ,nf - find current file in the tree
+    "map <Leader>nf :NERDTreeFind<CR>" ,nf - find current file in the tree
     map <Leader>ne :Explore<CR>
-    "map <Leader>nf :Explore<CR>
+    map <Leader>nf :Explore<CR>
 
     " Search and replace word under cursor
     "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
