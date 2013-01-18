@@ -591,10 +591,20 @@ ca w!! w !sudo tee "%"
     let g:ctrlp_switch_buffer = 'et'
 
     " NERDTree
+    function! NerdFindFile(file)
+        execute ':e ' . fnamemodify(a:file, ':h')
+        execute '/' . fnamemodify(a:file, ':t')
+    endfunction
+    function! NerdFindDir(dir)
+        echo a:dir
+        execute ':e ' . a:dir
+        execute '/' . escape(a:dir, '/')
+    endfunction
     "map <Leader>nt :NERDTreeToggle<CR>" ,nt - toggle tree
     "map <Leader>nf :NERDTreeFind<CR>" ,nf - find current file in the tree
-    map <Leader>ne :Explore<CR>
-    map <Leader>nf :Explore<CR>
+    "map <Leader>nt :execute ':e '.getcwd()<CR>
+    map <Leader>nt :call NerdFindDir(getcwd())<CR>
+    map <Leader>nf :call NerdFindFile(expand('%'))<CR>
 
     " Search and replace word under cursor
     "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
