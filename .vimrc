@@ -137,18 +137,20 @@
         " ...
         "
         " CamelCase and under_score motions
-        " https://github.com/bkad/CamelCaseMotion
-        " Gundo.vim is Vim plugin to visualize your Vim undo tree.
-        Bundle 'sjl/gundo.vim'
+        Bundle 'bkad/CamelCaseMotion'
         " Defines 'indentation' text object
         " https://github.com/michaeljsmith/vim-indent-object
-        "
+
+       "
         "" Interface
         Bundle 'vim-scripts/taglist.vim.git'
         Bundle 'tyru/open-browser.vim'
         Bundle 'Shougo/neocomplcache'
         Bundle 'Shougo/neosnippet'
         Bundle 'Shougo/unite.vim'
+
+         " Gundo.vim is Vim plugin to visualize your Vim undo tree.
+        Bundle 'sjl/gundo.vim'
         Bundle 'Shougo/vimfiler'
 
         "Bundle 'git://github.com/rphillips/vim-zoomwin.git'
