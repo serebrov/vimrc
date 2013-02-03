@@ -149,7 +149,19 @@
         Bundle 'mikehaertl/pdv-standalone'
         Bundle 'joonty/vdebug'
         Bundle 'joonty/vim-phpunitqf'
+
         Bundle 'joonty/vim-taggatron'
+        " https://github.com/majutsushi/tagbar/wiki
+        " http://majutsushi.github.com/tagbar/
+        " :TagbarToggle
+        Bundle 'majutsushi/tagbar'
+        " cd ~/projects
+        " git clone https://github.com/techlivezheng/phpctags
+        " cd phpctags
+        " curl -s http://getcomposer.org/installer | php
+        " php composer.phar install
+        " executable is ~/projects/phpctags/phpctags
+        Bundle 'techlivezheng/tagbar-phpctags'
         " ...
         "
         " CamelCase and under_score motions
@@ -796,6 +808,8 @@ ca w!! w !sudo tee "%"
     \    "javascript" : {"tagfile":".js.tags","args":"-R"}
     \}
     let g:taggatron_verbose = 0
+
+    let g:tagbar_phpctags_bin='~/projects/phpctags/phpctags'
 
     " Standard keys
         " Speller shorcuts {
