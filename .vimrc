@@ -224,6 +224,9 @@
     set undolevels=1000
     set undoreload=10000
 
+    set autoread
+    set autowrite
+
    " Colors {
         set background=dark
         " Solarized {
@@ -369,7 +372,7 @@
      set shortmess=aOstT        " shortens messages to avoid
                                 " 'press a key' prompt
      set showcmd                " show the command being typed
-     "set showmatch             " show matching brackets (slow)
+     set showmatch             " show matching brackets (slow)
      set statusline=[%n]%{fugitive#statusline()}%F\ %m%r%h%w\ [%L]\ [%{&ff}]%y%=[%p%%][%04l,%04v]
      "                |                         |   | | | |    |     |      |     |     |    |
      "                |                         |   | | | |    |     |      |     |     |    + current
