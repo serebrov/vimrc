@@ -167,7 +167,13 @@
 
          " Gundo.vim is Vim plugin to visualize your Vim undo tree.
         Bundle 'sjl/gundo.vim'
+        " command line results into buffer, like :Clam ls,
+        " :1,20Clam python - send first 20 lines into python
+        Bundle 'sjl/clam.vim'
         Bundle 'Shougo/vimfiler'
+
+        " adds a Bundles menu to Vim, displaying the installed plugins and the features they provide
+        Bundle 'Headlights'
 
         "Bundle 'git://github.com/rphillips/vim-zoomwin.git'
         "Bundle 'git://github.com/vim-scripts/UltiSnips.git'
