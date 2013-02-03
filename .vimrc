@@ -128,6 +128,12 @@
         Bundle 'IndexedSearch'
         " CtrlP
         Bundle 'kien/ctrlp.vim'
+
+        " :Multichange and then cw to change word in a whole file (or any
+        " other cxx command)
+        Bundle 'AndrewRadev/multichange.vim'
+        " disable mapping entirely
+        let g:multichange_mapping = ''
         "
         " PHP
         " ====
