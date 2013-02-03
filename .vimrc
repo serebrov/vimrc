@@ -804,7 +804,11 @@ ca w!! w !sudo tee "%"
     "Taggatron
     let g:tagcommands = {
     \    "python" : {"tagfile": ".python.tags", "args": "-R"},
-    \    "php" : {"tagfile":".php.tags","args":"-R"},
+    \    "php" : {
+    \        "tagfile":".php.tags",
+    \        "args":"-R",
+    \        "cmd":"~/projects/phpctags/phpctags"
+    \    },
     \    "javascript" : {"tagfile":".js.tags","args":"-R"}
     \}
     let g:taggatron_verbose = 0
