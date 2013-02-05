@@ -66,6 +66,16 @@
         " [f / ]f - previous / next file in directory
         " [n / ]b - previous / next conflict marker
         Bundle 'tpope/vim-unimpaired'
+        "Vim sugar for the UNIX shell commands that need it the most. Commands include:
+        " :Unlink: Delete a buffer and the file on disk simultaneously.
+        " :Remove: Like :Unlink, but doesn't require a neckbeard.
+        " :Move: Rename a buffer and the file on disk simultaneously.
+        " :Chmod: Change the permissions of the current file.
+        " :Find: Run find and load the results into the quickfix list.
+        " :Locate: Run locate and load the results into the quickfix list.
+        " :SudoWrite: Write a privileged file with sudo.
+        " :W: Write every open window. Handy for kicking off tools like guard.
+        Bundle 'tpope/vim-eunuch'
         " :Tabularize /, - tablarize by ','
         " :Tabularize /,/[r|l|c]0
         "  r - align right, l - left, c - center
@@ -118,6 +128,12 @@
         Bundle 'IndexedSearch'
         " CtrlP
         Bundle 'kien/ctrlp.vim'
+
+        " :Multichange and then cw to change word in a whole file (or any
+        " other cxx command)
+        Bundle 'AndrewRadev/multichange.vim'
+        " disable mapping entirely
+        let g:multichange_mapping = ''
         "
         " PHP
         " ====
@@ -134,25 +150,45 @@
 
         Bundle 'joonty/vdebug'
         Bundle 'joonty/vim-phpunitqf'
+
         Bundle 'joonty/vim-taggatron'
 
         Bundle 'airblade/vim-rooter'
+        " https://github.com/majutsushi/tagbar/wiki
+        " http://majutsushi.github.com/tagbar/
+        " :TagbarToggle
+        Bundle 'majutsushi/tagbar'
+        " cd ~/projects
+        " git clone https://github.com/techlivezheng/phpctags
+        " cd phpctags
+        " curl -s http://getcomposer.org/installer | php
+        " php composer.phar install
+        " executable is ~/projects/phpctags/phpctags
+        Bundle 'techlivezheng/tagbar-phpctags'
         " ...
         "
         " CamelCase and under_score motions
-        " https://github.com/bkad/CamelCaseMotion
-        " Gundo.vim is Vim plugin to visualize your Vim undo tree.
-        Bundle 'sjl/gundo.vim'
+        Bundle 'bkad/CamelCaseMotion'
         " Defines 'indentation' text object
         " https://github.com/michaeljsmith/vim-indent-object
-        "
+
+       "
         "" Interface
         Bundle 'vim-scripts/taglist.vim.git'
         Bundle 'tyru/open-browser.vim'
         Bundle 'Shougo/neocomplcache'
         Bundle 'Shougo/neosnippet'
         Bundle 'Shougo/unite.vim'
+
+         " Gundo.vim is Vim plugin to visualize your Vim undo tree.
+        Bundle 'sjl/gundo.vim'
+        " command line results into buffer, like :Clam ls,
+        " :1,20Clam python - send first 20 lines into python
+        Bundle 'sjl/clam.vim'
         Bundle 'Shougo/vimfiler'
+
+        " adds a Bundles menu to Vim, displaying the installed plugins and the features they provide
+        Bundle 'Headlights'
 
         "Bundle 'git://github.com/rphillips/vim-zoomwin.git'
         "Bundle 'git://github.com/vim-scripts/UltiSnips.git'
@@ -202,6 +238,9 @@
     set undofile
     set undolevels=1000
     set undoreload=10000
+
+    set autoread
+    set autowrite
 
    " Colors {
         set background=dark
@@ -348,7 +387,7 @@
      set shortmess=aOstT        " shortens messages to avoid
                                 " 'press a key' prompt
      set showcmd                " show the command being typed
-     "set showmatch             " show matching brackets (slow)
+     set showmatch             " show matching brackets (slow)
      set statusline=[%n]%{fugitive#statusline()}%F\ %m%r%h%w\ [%L]\ [%{&ff}]%y%=[%p%%][%04l,%04v]
      "                |                         |   | | | |    |     |      |     |     |    |
      "                |                         |   | | | |    |     |      |     |     |    + current
@@ -768,10 +807,16 @@ ca w!! w !sudo tee "%"
     "Taggatron
     let g:tagcommands = {
     \    "python" : {"tagfile": ".python.tags", "args": "-R"},
-    \    "php" : {"tagfile":".php.tags","args":"-R"},
+    \    "php" : {
+    \        "tagfile":".php.tags",
+    \        "args":"-R",
+    \        "cmd":"~/projects/phpctags/phpctags"
+    \    },
     \    "javascript" : {"tagfile":".js.tags","args":"-R"}
     \}
     let g:taggatron_verbose = 0
+
+    let g:tagbar_phpctags_bin='~/projects/phpctags/phpctags'
 
     " Standard keys
         " Speller shorcuts {
