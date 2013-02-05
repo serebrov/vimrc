@@ -131,9 +131,12 @@
         Bundle 'mikehaertl/yii-api-vim'
         " php documenter
         Bundle 'mikehaertl/pdv-standalone'
+
         Bundle 'joonty/vdebug'
         Bundle 'joonty/vim-phpunitqf'
         Bundle 'joonty/vim-taggatron'
+
+        Bundle 'airblade/vim-rooter'
         " ...
         "
         " CamelCase and under_score motions
@@ -443,7 +446,7 @@
     " Ack
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
     " NERDTree
-    let NERDTreeChDirMode=2     " Change CWD to nerd tree root
+    let NERDTreeChDirMode=0     " Change CWD to nerd tree root
     "let NERDTreeShowBookmarks=1 " Show bookmarks panel
     let NERDTreeShowHidden=1 " Show hidden files
     let NERDTreeIngore=['\~$', '\.pyc']
