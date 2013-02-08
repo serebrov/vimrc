@@ -174,7 +174,6 @@
 
        "
         "" Interface
-        Bundle 'vim-scripts/taglist.vim.git'
         Bundle 'tyru/open-browser.vim'
         Bundle 'Shougo/neocomplcache'
         Bundle 'Shougo/neosnippet'
@@ -810,7 +809,6 @@ ca w!! w !sudo tee "%"
     \    "php" : {
     \        "tagfile":".php.tags",
     \        "args":"-R",
-    \        "cmd":"~/projects/phpctags/phpctags"
     \    },
     \    "javascript" : {"tagfile":".js.tags","args":"-R"}
     \}
@@ -864,11 +862,21 @@ ca w!! w !sudo tee "%"
     " load last session on start
     autocmd VimEnter *  call RestoreLastSessionMan()
 
+    function! LoadLocalVimrc()
+        " Check for .vimrc.local in the current directory
+        let custom_config_file = getcwd() . '/.vimrc.local'
+        if filereadable(custom_config_file)
+            exe 'source' custom_config_file
+        endif
+    endfunction
+
     function! RestoreLastSessionMan()
         " Check that the user has started Vim without editing any files.
         if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
             :SessionOpenLast
         endif
+        :Rooter
+        call LoadLocalVimrc()
     endfunction
 " }
 
