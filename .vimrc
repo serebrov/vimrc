@@ -809,12 +809,11 @@ ca w!! w !sudo tee "%"
     \    "python" : {"tagfile": ".python.tags", "args": "-R"},
     \    "php" : {
     \        "tagfile":".php.tags",
-    \        "args":"-R",
-    \        "cmd":"~/projects/phpctags/phpctags"
+    \        "args":"-R"
     \    },
     \    "javascript" : {"tagfile":".js.tags","args":"-R"}
     \}
-    let g:taggatron_verbose = 0
+    let g:taggatron_verbose = 1
 
     let g:tagbar_phpctags_bin='~/projects/phpctags/phpctags'
 
