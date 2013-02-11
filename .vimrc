@@ -27,11 +27,9 @@
         " Powerline - create better-looking, more functional vim statuslines.
         Bundle 'Lokaltog/vim-powerline'
         " Simpler way to use some motions in vim.
-        " Start motion with <Leader><Leader> to trigger easy motion mode.
-        " Like <Leader><Leader>w to trigger the word motion w
+        " Start motion with <Leader><Leader> (remaped to <Space> to trigger easy motion mode.
+        " Like <Space>w to trigger the word motion w
         " Other triggers: f/t/F/T (find char), w/W/b/B/e/E/ge/gE (word motions), j/k (lines), n/N (searches)
-        " Use let g:EasyMotion_leader_key = '<Leader>' to set single leader to
-        " enable easy motion
         " Tutorial: http://net.tutsplus.com/tutorials/other/vim-essential-plugin-easymotion/
         " It is similar to vimperator (FireFox extenstion) link select mode
         Bundle 'Lokaltog/vim-easymotion'
@@ -174,7 +172,6 @@
 
        "
         "" Interface
-        Bundle 'vim-scripts/taglist.vim.git'
         Bundle 'tyru/open-browser.vim'
         Bundle 'Shougo/neocomplcache'
         Bundle 'Shougo/neosnippet'
@@ -574,8 +571,8 @@ ca w!! w !sudo tee "%"
     let mapleader = ","
 
     " Swap ; and :, use ;; as ;
-    nnoremap ; :
-    nnoremap ;; ;
+    "nnoremap ; :
+    "nnoremap ;; ;
 
     " map double leader to save
     map ,, :w<CR>
@@ -590,8 +587,9 @@ ca w!! w !sudo tee "%"
     nmap <leader>vc :tabedit $MYVIMRC<CR>
 
     " vim-easymotion
-    " ,,w - words; ,,f - char
-    " ,,t - search
+    " _w - words; _f - char
+    " _t - search
+    let g:EasyMotion_leader_key = '<Space>'
 
     " vim-indent-guides
     " <Leader>ig
@@ -667,7 +665,7 @@ ca w!! w !sudo tee "%"
     noremap <C-S> :update<CR>
     vnoremap <C-S> <C-C>:update<CR>gv
     inoremap <C-S> <C-O>:update<CR>
-    "
+
     " Use CTRL-N to remove search highlight
     noremap <C-N> :noh<CR>
     vnoremap <C-N> <C-C>:noh<CR>gv
@@ -677,16 +675,9 @@ ca w!! w !sudo tee "%"
     " Make last word uppercase
     imap <C-F> <Esc>gUiw`]a
 
-    " ,8 File encoding for open
-    " ucs-2le - MS Windows unicode encoding
-    map <Leader>8 :execute RotateEnc()<CR>
-    " <Shift+F8> Force file encoding for open (encoding = fileencoding)
-    map <S-F8> :execute ForceRotateEnc()<CR>
-    " <Ctrl+F8> File encoding for save (convert)
-    map <C-F8> :execute RotateFEnc()<CR>
-
-    " " F11 - Taglist window
-    map <Leader>tg :TlistToggle<cr>
+    " Enter to insert a new line below, Shift-Enter - above (in normal mode)
+    nmap <CR> o<Esc>
+    nmap <S-CR> O<Esc>
 
     " windows navigation
     " C-W h|j|k|l - move to left|down|up|right win
@@ -700,10 +691,44 @@ ca w!! w !sudo tee "%"
     " C-W r       - rotate
     " C-W x       - exchange with neighbour
     " C-W T       - move window to separate tab
-     map <c-j> <c-w>j
-     map <c-k> <c-w>k
-     map <c-l> <c-w>l
-     map <c-h> <c-w>h
+
+    " move to and open if not exists
+    " http://www.agillo.net/simple-vim-window-management/
+    function! WinMove(key)
+        let t:curwin = winnr()
+        exec "wincmd ".a:key
+        if (t:curwin == winnr()) "we havent moved
+            if (match(a:key,'[jk]')) "were we going up/down
+                wincmd v
+            else
+                wincmd s
+            endif
+                exec "wincmd ".a:key
+        endif
+    endfunction
+
+    " move to and open if not exists
+    map <c-j> :call WinMove('j')<CR>
+    map <c-k> :call WinMove('k')<CR>
+    map <c-l> :call WinMove('l')<CR>
+    map <c-h> :call WinMove('h')<CR>
+
+    "close
+    map <leader>wc :wincmd q<cr>
+    "rotate
+    map <leader>wr <C-W>r
+
+    "arrows to resize
+    nmap <left>  :3wincmd <<cr>
+    nmap <right> :3wincmd ><cr>
+    nmap <up>    :3wincmd +<cr>
+    nmap <down>  :3wincmd -<cr>
+
+    "move windows
+    map <Leader>h     :wincmd H<cr>
+    map <Leader>k     :wincmd K<cr>
+    map <Leader>l     :wincmd L<cr>
+    map <Leader>j     :wincmd J<cr>
 
     " Move cursor by display lines when wrapping
     " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
@@ -712,23 +737,14 @@ ca w!! w !sudo tee "%"
     "noremap 0 g0
     "noremap $ g$
 
-    " Move with Ctrl + hjkl in Insert mode
+    " Move cursor with Ctrl + hjkl in Insert mode
     imap <C-h> <C-o>h
     imap <C-j> <C-o>j
     imap <C-k> <C-o>k
     imap <C-l> <C-o>l
 
-    "space to scroll 10 lines down, backspace - 10 lines up
-    "zz - centers current line
-    nnoremap <space> 10jzz
-    nnoremap <backspace> 10kzz
-
     " Shortcut to rapidly toggle `set list` (def leader = \)
     nmap <leader>l :set list!<CR>
-
-    "" Supertab
-    " Tab for auto-complete
-    " let g:SuperTabDefaultCompletionType = '<C-x><C-o>'
 
     " phpDocumenter
     inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
@@ -863,11 +879,21 @@ ca w!! w !sudo tee "%"
     " load last session on start
     autocmd VimEnter *  call RestoreLastSessionMan()
 
+    function! LoadLocalVimrc()
+        " Check for .vimrc.local in the current directory
+        let custom_config_file = getcwd() . '/.vimrc.local'
+        if filereadable(custom_config_file)
+            exe 'source' custom_config_file
+        endif
+    endfunction
+
     function! RestoreLastSessionMan()
         " Check that the user has started Vim without editing any files.
         if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
             :SessionOpenLast
         endif
+        :Rooter
+        call LoadLocalVimrc()
     endfunction
 " }
 
