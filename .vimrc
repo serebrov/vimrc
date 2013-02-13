@@ -145,7 +145,7 @@
         Bundle 'joonty/vdebug'
         Bundle 'joonty/vim-phpunitqf'
 
-        "Bundle 'joonty/vim-taggatron'
+        Bundle 'joonty/vim-taggatron'
 
         Bundle 'airblade/vim-rooter'
         " https://github.com/majutsushi/tagbar/wiki
@@ -153,7 +153,7 @@
         " :TagbarToggle
         Bundle 'majutsushi/tagbar'
 
-        Bundle 'xolox/vim-easytags'
+        ":Open, :Maximize, :Fullscreen
         Bundle 'xolox/vim-shell'
         " cd ~/projects
         " git clone https://github.com/techlivezheng/phpctags
@@ -832,32 +832,28 @@ ca w!! w !sudo tee "%"
     \}
 
     "Taggatron
-    "let g:tagcommands = {
-    "\    "python" : {"tagfile": ".python.tags", "args": "-R"},
-    "\    "php" : {
-    "\        "tagfile":".php.tags",
-    "\        "args":"-R"
-    "\    },
-    "\    "javascript" : {"tagfile":".js.tags","args":"-R"}
-    "\}
-    "let g:taggatron_verbose = 0
-    "let g:tagbar_phpctags_bin='~/projects/phpctags/phpctags'
+    let g:tagcommands = {
+    \    "python" : {
+    \        "tagfile": ".python.tags",
+    \         "args": "-R",
+    \         "filesappend": "/**"
+    \    },
+    \    "php" : {
+    \        "tagfile":".php.tags",
+    \        "args":"-R",
+    \        "filesappend": "/**"
+    \    },
+    \    "javascript" : {
+    \        "tagfile":".js.tags",
+    \        "args":"-R",
+    \        "filesappend": "/**"
+    \    }
+    \}
+    let g:taggatron_verbose=1
+    let g:tagbar_phpctags_bin='~/projects/phpctags/phpctags'
 
     " todo: check http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
     "       and https://github.com/tpope/vim-fugitive/issues/104
-
-    " easytags
-    " directory to store tags by filetype
-    " fnamemodify('.tags', ':p') will return '.tags' inside the current working directory
-    " which should be a project root (set by rooter)
-    " one more preferrence is that if there are no .tags dir then tags will
-    " not be generated (plugin will fail), so it will not garbage other
-    " folders
-    " to generate tags for the project:
-    " :UpdateTags -R
-    let g:easytags_by_filetype = '.tags'
-    " use this to see easytags messages
-    "set verbose=1
 
     " Standard keys
         " Speller shorcuts {
