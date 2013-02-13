@@ -574,6 +574,7 @@ ca w!! w !sudo tee "%"
 
     " map double leader to save
     map ,, :w<CR>
+    map ,q :q<CR>
 
     " jj as ESC
     " other options: Ctrl-[, Ctrl-C
@@ -583,6 +584,20 @@ ca w!! w !sudo tee "%"
     map <Leader>vv :call Preserve("source ~\/\.vimrc")<CR>
     " ,vc to edit .vimrc
     nmap <leader>vc :tabedit $MYVIMRC<CR>
+
+    " Use CTRL-N to remove search highlight
+    noremap <C-N> :noh<CR>
+    vnoremap <C-N> <C-C>:noh<CR>gv
+    " CTRL-N in insert mode is a completion!!!
+    " inoremap <C-N> <C-O>:noh<CR>
+
+    " Make last word uppercase
+    imap <C-F> <Esc>gUiw`]a
+
+    " ,o to insert a new line below, ,O - above (in normal mode)
+    nmap <Leader>o o<Esc>
+    nmap <Leader>O O<Esc>
+
 
     " vim-easymotion
     " _w - words; _f - char
@@ -663,19 +678,6 @@ ca w!! w !sudo tee "%"
     noremap <C-S> :update<CR>
     vnoremap <C-S> <C-C>:update<CR>gv
     inoremap <C-S> <C-O>:update<CR>
-
-    " Use CTRL-N to remove search highlight
-    noremap <C-N> :noh<CR>
-    vnoremap <C-N> <C-C>:noh<CR>gv
-    " CTRL-N in insert mode is a completion!!!
-    " inoremap <C-N> <C-O>:noh<CR>
-
-    " Make last word uppercase
-    imap <C-F> <Esc>gUiw`]a
-
-    " Enter to insert a new line below, Shift-Enter - above (in normal mode)
-    nmap <CR> o<Esc>
-    nmap <S-CR> O<Esc>
 
     " windows navigation
     " C-W h|j|k|l - move to left|down|up|right win
