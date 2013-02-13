@@ -88,10 +88,6 @@
         "  split_declarations, trenary_operator, cpp_io, pascal_assign,
         "  trailing_c_comments
         Bundle 'godlygeek/tabular'
-        "This plug-in provides automatic closing of quotes, parenthesis, brackets, etc.
-        " Bundle 'Raimondi/delimitMate'
-        " This plugin highlights the matching HTML tag when the cursor is
-        Bundle 'gregsexton/MatchTag'
         " NERDTree
         Bundle 'scrooloose/nerdtree'
         "Ack search support for NERDTree
@@ -149,20 +145,23 @@
         Bundle 'joonty/vdebug'
         Bundle 'joonty/vim-phpunitqf'
 
-        Bundle 'joonty/vim-taggatron'
+        "Bundle 'joonty/vim-taggatron'
 
         Bundle 'airblade/vim-rooter'
         " https://github.com/majutsushi/tagbar/wiki
         " http://majutsushi.github.com/tagbar/
         " :TagbarToggle
         Bundle 'majutsushi/tagbar'
+
+        Bundle 'xolox/vim-easytags'
+        Bundle 'xolox/vim-shell'
         " cd ~/projects
         " git clone https://github.com/techlivezheng/phpctags
         " cd phpctags
         " curl -s http://getcomposer.org/installer | php
         " php composer.phar install
         " executable is ~/projects/phpctags/phpctags
-        Bundle 'techlivezheng/tagbar-phpctags'
+        "Bundle 'techlivezheng/tagbar-phpctags'
         " ...
         "
         " CamelCase and under_score motions
@@ -172,7 +171,6 @@
 
        "
         "" Interface
-        Bundle 'tyru/open-browser.vim'
         Bundle 'Shougo/neocomplcache'
         Bundle 'Shougo/neosnippet'
         Bundle 'Shougo/unite.vim'
@@ -777,7 +775,7 @@ ca w!! w !sudo tee "%"
         else
             let url = url.'&XDEBUG_SESSION_START=vim_debug'
         endif
-        call OpenBrowser(url)
+        call xolox#shell#open_cmd(url)
         python debugger.run()
     endfunction
     command! -nargs=1 Debug call Debug('<args>')
@@ -801,6 +799,17 @@ ca w!! w !sudo tee "%"
     " Note: if bootstrap should be used then change vim current folder to the
     " folder with bootstrap
     command! -nargs=* DebugPhpunit call DebugPhpunit('<args> %')
+    function! DebugPhpConsole(...)
+        let str_args = join(a:000, ' ')
+        let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && console/yiic ' . str_args
+        execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
+        execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
+        execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
+        python debugger.run()
+    endfunction
+    " Note: if bootstrap should be used then change vim current folder to the
+    " folder with bootstrap
+    command! -nargs=* DebugPhpConsole call DebugPhpConsole('<args>')
     let g:vdebug_options= {
     \    "timeout" : 200,
     \    "break_on_open" : 1,
@@ -821,17 +830,30 @@ ca w!! w !sudo tee "%"
     \}
 
     "Taggatron
-    let g:tagcommands = {
-    \    "python" : {"tagfile": ".python.tags", "args": "-R"},
-    \    "php" : {
-    \        "tagfile":".php.tags",
-    \        "args":"-R"
-    \    },
-    \    "javascript" : {"tagfile":".js.tags","args":"-R"}
-    \}
-    let g:taggatron_verbose = 1
+    "let g:tagcommands = {
+    "\    "python" : {"tagfile": ".python.tags", "args": "-R"},
+    "\    "php" : {
+    "\        "tagfile":".php.tags",
+    "\        "args":"-R"
+    "\    },
+    "\    "javascript" : {"tagfile":".js.tags","args":"-R"}
+    "\}
+    "let g:taggatron_verbose = 0
+    "let g:tagbar_phpctags_bin='~/projects/phpctags/phpctags'
 
-    let g:tagbar_phpctags_bin='~/projects/phpctags/phpctags'
+    " todo: check http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
+    "       and https://github.com/tpope/vim-fugitive/issues/104
+
+    " easytags
+    " directory to store tags by filetype
+    " fnamemodify('.tags', ':p') will return '.tags' inside the current working directory
+    " which should be a project root (set by rooter)
+    " one more preferrence is that if there are no .tags dir then tags will
+    " not be generated (plugin will fail), so it will not garbage other
+    " folders
+    let g:easytags_by_filetype = '.tags'
+    " use this to see easytags messages
+    "set verbose=1
 
     " Standard keys
         " Speller shorcuts {
