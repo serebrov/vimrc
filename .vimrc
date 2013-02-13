@@ -849,8 +849,7 @@ ca w!! w !sudo tee "%"
     \        "filesappend": "/**"
     \    }
     \}
-    let g:taggatron_verbose=1
-    let g:tagbar_phpctags_bin='~/projects/phpctags/phpctags'
+    let g:taggatron_verbose=0
 
     " todo: check http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
     "       and https://github.com/tpope/vim-fugitive/issues/104
