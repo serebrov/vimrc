@@ -851,6 +851,8 @@ ca w!! w !sudo tee "%"
     " one more preferrence is that if there are no .tags dir then tags will
     " not be generated (plugin will fail), so it will not garbage other
     " folders
+    " to generate tags for the project:
+    " :UpdateTags -R
     let g:easytags_by_filetype = '.tags'
     " use this to see easytags messages
     "set verbose=1
