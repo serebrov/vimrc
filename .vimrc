@@ -110,6 +110,7 @@
         " Bundle 'ervandew/supertab'
         " Solarized color scheme
         Bundle 'altercation/vim-colors-solarized'
+        Bundle 'nelstrom/vim-mac-classic-theme'
         "Ack support for vim
         Bundle 'mileszs/ack.vim'
         " Markdown support
