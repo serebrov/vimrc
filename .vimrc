@@ -88,6 +88,8 @@
         "  split_declarations, trenary_operator, cpp_io, pascal_assign,
         "  trailing_c_comments
         Bundle 'godlygeek/tabular'
+        " adopt color schemes for terminal
+        Bundle 'godlygeek/csapprox'
         " NERDTree
         Bundle 'scrooloose/nerdtree'
         "Ack search support for NERDTree
@@ -108,6 +110,7 @@
         " Bundle 'ervandew/supertab'
         " Solarized color scheme
         Bundle 'altercation/vim-colors-solarized'
+        Bundle 'nelstrom/vim-mac-classic-theme'
         "Ack support for vim
         Bundle 'mileszs/ack.vim'
         " Markdown support
@@ -249,6 +252,10 @@
                 echo "Solarized theme not found. Run :BundleInstall"
             endtry
         " }
+        if $COLORTERM == 'gnome-terminal'
+            set t_Co=256
+            set background=dark
+        endif
    " }
 
     " Font
