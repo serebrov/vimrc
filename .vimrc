@@ -780,7 +780,10 @@ ca w!! w !sudo tee "%"
         call xolox#shell#open_cmd(url)
         python debugger.run()
     endfunction
+    " example:
+    "   :Debug localsite.com
     command! -nargs=1 Debug call Debug('<args>')
+
     function! DebugPy(...)
         let str_args = join(a:000, ' ')
         let last_cmd = '!python -S ~/pydbgp/bin/pydbgp -d localhost:9000 -k vim_debug ' . str_args
@@ -790,6 +793,7 @@ ca w!! w !sudo tee "%"
         python debugger.run()
     endfunction
     command! -nargs=* DebugPy call DebugPy('% <args>')
+
     function! DebugPhpunit(...)
         let str_args = join(a:000, ' ')
         let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && phpunit ' . str_args
@@ -800,7 +804,10 @@ ca w!! w !sudo tee "%"
     endfunction
     " Note: if bootstrap should be used then change vim current folder to the
     " folder with bootstrap
+    " example (open test file first):
+    "   :DebugPhpunit --bootstrap tests/unitTests/bootstrap.php
     command! -nargs=* DebugPhpunit call DebugPhpunit('<args> %')
+
     function! DebugPhpConsole(...)
         let str_args = join(a:000, ' ')
         let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && console/yiic ' . str_args
@@ -812,6 +819,7 @@ ca w!! w !sudo tee "%"
     " Note: if bootstrap should be used then change vim current folder to the
     " folder with bootstrap
     command! -nargs=* DebugPhpConsole call DebugPhpConsole('<args>')
+
     let g:vdebug_options= {
     \    "timeout" : 200,
     \    "break_on_open" : 1,
@@ -850,6 +858,9 @@ ca w!! w !sudo tee "%"
     \    }
     \}
     let g:taggatron_verbose=0
+    autocmd FileType php call taggatron#SetTags(".php.tags")
+    autocmd FileType python call taggatron#SetTags(".python.tags")
+    autocmd FileType javascript call taggatron#SetTags(".js.tags")
 
     " todo: check http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
     "       and https://github.com/tpope/vim-fugitive/issues/104
