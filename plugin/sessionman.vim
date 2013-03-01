@@ -137,10 +137,10 @@ function! s:OpenSession(name)
 		let g:LAST_SESSION = a:name
 	endif
 	let buf_num = bufnr('%')
-	silent! :NERDTree
-	silent! exec buf_num . "wincmd w"
-	silent! :NERDTreeFind
-	silent! exec buf_num . "wincmd w"
+	"silent! :NERDTree
+	"silent! exec buf_num . "wincmd w"
+	"silent! :NERDTreeFind
+	"silent! exec buf_num . "wincmd w"
 endfunction
 
 "============================================================================"
