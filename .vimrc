@@ -20,6 +20,8 @@
         " git support: Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
         " Ggrep, Glog, Gread, Gwrite, Gbrowse
         Bundle 'tpope/vim-fugitive'
+        " auto adjust tab settings based on current file
+        Bundle 'tpope/vim-sleuth'
         " fugitive extension, commit browser - :Extradite
         Bundle 'int3/vim-extradite'
         " visual guides for indents, default mapping <Leager>ig
