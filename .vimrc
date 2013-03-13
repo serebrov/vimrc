@@ -555,8 +555,16 @@ ca w!! w !sudo tee "%"
 
     " remove trailing whitespace on save
     " new version from http://vimcasts.org/episodes/tidying-whitespace/
+    let g:clean_trails_enabled = 1
+    function! CleanTrails()
+        if g:clean_trails_enabled
+            call Preserve("%s/\\s\\+$//e")
+        endif
+    endfunction
+
     autocmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd BufWritePre <buffer>
-        \ call Preserve("%s/\\s\\+$//e")
+        \ call CleanTrails()
+        "\ call Preserve("%s/\\s\\+$//e")
 
     " When editing a file, always jump to the last known cursor porition.
     " Don't do it when the position is invalid or when inside an event
@@ -923,6 +931,11 @@ ca w!! w !sudo tee "%"
         let custom_config_file = getcwd() . '/.vimrc.local'
         if filereadable(custom_config_file)
             exe 'source' custom_config_file
+        else
+            let custom_config_file = getcwd() . '/.git/.vimrc.local'
+            if filereadable(custom_config_file)
+                exe 'source' custom_config_file
+            endif
         endif
     endfunction
 
