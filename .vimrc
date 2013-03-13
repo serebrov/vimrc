@@ -559,8 +559,16 @@ ca w!! w !sudo tee "%"
 
     " remove trailing whitespace on save
     " new version from http://vimcasts.org/episodes/tidying-whitespace/
+    let g:clean_trails_enabled = 1
+    function! CleanTrails()
+        if g:clean_trails_enabled
+            call Preserve("%s/\\s\\+$//e")
+        endif
+    endfunction
+
     autocmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd BufWritePre <buffer>
-        \ call Preserve("%s/\\s\\+$//e")
+        \ call CleanTrails()
+        "\ call Preserve("%s/\\s\\+$//e")
 
     " When editing a file, always jump to the last known cursor porition.
     " Don't do it when the position is invalid or when inside an event
@@ -577,15 +585,16 @@ ca w!! w !sudo tee "%"
 
 
 " Mappings {
-    let mapleader = ","
+    "let mapleader = ","
+    let mapleader = "\<space>"
 
     " Swap ; and :, use ;; as ;
     "nnoremap ; :
     "nnoremap ;; ;
 
     " map double leader to save
-    map ,, :w<CR>
-    map ,q :q<CR>
+    map <leader>w :w<CR>
+    map <leader>q :q<CR>
 
     " jj as ESC
     " other options: Ctrl-[, Ctrl-C
@@ -613,13 +622,14 @@ ca w!! w !sudo tee "%"
     " vim-easymotion
     " _w - words; _f - char
     " _t - search
-    let g:EasyMotion_leader_key = '<Space>'
+    "let g:EasyMotion_leader_key = '<Space>'
+    "let g:EasyMotion_leader_key = '\<Leader>\<Leader>
 
     " vim-indent-guides
     " <Leader>ig
 
     " CtrlP
-    let g:ctrlp_map = ',f'
+    "let g:ctrlp_map = ',f'
     map <Leader>ff :CtrlPMixed<CR>
     map <Leader>fd :CtrlPDir<CR>
     map <Leader>fb :CtrlPBuffer<CR>
@@ -927,6 +937,11 @@ ca w!! w !sudo tee "%"
         let custom_config_file = getcwd() . '/.vimrc.local'
         if filereadable(custom_config_file)
             exe 'source' custom_config_file
+        else
+            let custom_config_file = getcwd() . '/.git/.vimrc.local'
+            if filereadable(custom_config_file)
+                exe 'source' custom_config_file
+            endif
         endif
     endfunction
 
