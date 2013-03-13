@@ -173,6 +173,9 @@
         Bundle 'bkad/CamelCaseMotion'
         " Defines 'indentation' text object
         " https://github.com/michaeljsmith/vim-indent-object
+        " av: around variable
+        " iv: inner variable
+        Bundle 'robmiller/vim-movar'
 
        "
         "" Interface
@@ -500,8 +503,7 @@
 " }
 " Syntastic {
     let g:syntastic_phpcs_conf = "--standard=Seb"
-    map <Leader>csd :let g:syntastic_phpcs_disable = 1<CR>
-    " :let g:syntastic_phpmd_disable = 0<CR>
+    map <Leader>csd :let g:syntastic_php_checkers = ['phpmd']<CR>
 " }
 " save as sudo
 ca w!! w !sudo tee "%"
