@@ -29,7 +29,7 @@
         " Powerline - create better-looking, more functional vim statuslines.
         Bundle 'Lokaltog/vim-powerline'
         " Simpler way to use some motions in vim.
-        " Start motion with <Leader><Leader> (remaped to <Space> to trigger easy motion mode.
+        " Start motion with <Leader><Leader>
         " Like <Space>w to trigger the word motion w
         " Other triggers: f/t/F/T (find char), w/W/b/B/e/E/ge/gE (word motions), j/k (lines), n/N (searches)
         " Tutorial: http://net.tutsplus.com/tutorials/other/vim-essential-plugin-easymotion/
@@ -133,7 +133,7 @@
         Bundle 'AndrewRadev/multichange.vim'
         " disable mapping entirely
         let g:multichange_mapping = ''
-        "
+
         " PHP
         " ====
         " php completion - it should be copied to autoload/phpcomplete.vim
@@ -149,10 +149,9 @@
 
         Bundle 'joonty/vdebug'
         Bundle 'joonty/vim-phpunitqf'
-
         Bundle 'joonty/vim-taggatron'
-
         Bundle 'airblade/vim-rooter'
+
         " https://github.com/majutsushi/tagbar/wiki
         " http://majutsushi.github.com/tagbar/
         " :TagbarToggle
@@ -160,24 +159,14 @@
 
         ":Open, :Maximize, :Fullscreen
         Bundle 'xolox/vim-shell'
-        " cd ~/projects
-        " git clone https://github.com/techlivezheng/phpctags
-        " cd phpctags
-        " curl -s http://getcomposer.org/installer | php
-        " php composer.phar install
-        " executable is ~/projects/phpctags/phpctags
-        "Bundle 'techlivezheng/tagbar-phpctags'
-        " ...
-        "
-        " CamelCase and under_score motions
+
+        " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
         Bundle 'bkad/CamelCaseMotion'
-        " Defines 'indentation' text object
-        " https://github.com/michaeljsmith/vim-indent-object
+
         " av: around variable
         " iv: inner variable
         Bundle 'robmiller/vim-movar'
 
-       "
         "" Interface
         Bundle 'Shougo/neocomplcache'
         Bundle 'Shougo/neosnippet'
@@ -193,22 +182,14 @@
         " adds a Bundles menu to Vim, displaying the installed plugins and the features they provide
         Bundle 'Headlights'
 
-        "Bundle 'git://github.com/rphillips/vim-zoomwin.git'
-        "Bundle 'git://github.com/vim-scripts/UltiSnips.git'
-        "Bundle 'git://github.com/msanders/snipmate.vim.git'
-        "Bundle 'git://github.com/miripiruni/vimi-snippets.git'
         "Bundle 'git://github.com/tsaleh/vim-align.git'
-        "Bundle 'git://github.com/vim-scripts/delimitMate.vim.git'
-        "Bundle 'git://github.com/edsono/vim-matchit.git'
         "Bundle 'git://github.com/sjl/threesome.vim.git'
         "Bundle 'git://github.com/chrismetcalf/vim-yankring.git'
-        "Bundle 'git://github.com/vim-scripts/vimwiki.git'
     " HTML/HAML
         "Bundle 'git://github.com/othree/html5.vim.git'
         "Bundle 'git://github.com/hokaccha/vim-html5validator.git'
         "Bundle 'git://github.com/tyru/operator-html-escape.vim.git'
         "Bundle 'git://github.com/tpope/vim-haml.git'
-        "Bundle 'git://github.com/gregsexton/MatchTag.git'
     " CSS/LESS
         "Bundle 'git://github.com/hail2u/vim-css3-syntax.git'
         "Bundle 'git://github.com/skammer/vim-css-color.git'
@@ -521,26 +502,26 @@ ca w!! w !sudo tee "%"
 
     " Auto Completion
     autocmd FileType python :set omnifunc=pythoncomplete#Complete
-    autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+    "autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 
     autocmd FileType php :set omnifunc=phpcomplete#CompletePHP
-    autocmd FileType php setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+    "autocmd FileType php setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 
     autocmd FileType html :set omnifunc=htmlcomplete@CompleteTags
     autocmd FileType html :set filetype=xhtml
-    autocmd FileType html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+    "autocmd FileType html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
     autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+    "autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
     " autocmd FileType ruby :set omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+    "autocmd FileType ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
     autocmd FileType css :set omnifunc=csscomplete#CompleteCSS
-    autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+    "autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
     autocmd FileType c :set omnifunc=ccomplete#Complete
-    autocmd FileType c setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+    "autocmd FileType c setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 
     " execute a command while preserve the position
     if !exists("*Preserve")
@@ -618,10 +599,10 @@ ca w!! w !sudo tee "%"
     nmap <Leader>o o<Esc>
     nmap <Leader>O O<Esc>
 
-    nnoremap <C-S-c> "+y
-    vnoremap <C-S-c> "+y
-    nnoremap <C-S-v> "+gP
-    vnoremap <C-S-v> "+gP
+    nnoremap <Leader>y "+y
+    vnoremap <Leader>y "+y
+    nnoremap <Leader>p "+gP
+    vnoremap <Leader>p "+gP
 
     " Use CTRL-S for saving, also in Insert mode
     " Note: see http://stackoverflow.com/questions/3446320/in-vim-how-to-map-save-to-ctrl-s
