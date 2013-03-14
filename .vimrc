@@ -649,19 +649,17 @@ ca w!! w !sudo tee "%"
     map <Leader>fl :CtrlPLine<CR>
     map <Leader>fm :CtrlPMRU<CR>
     " to be able to call CtrlP with default search text
-    function! CtrlPWithSearchText(search_text, ctrlp_command_end)
-        execute ':CtrlP' . a:ctrlp_command_end
-        call feedkeys(a:search_text)
-    endfunction
+    "function! CtrlPWithSearchText(search_text, ctrlp_command_end)
+        "execute ':CtrlP' . a:ctrlp_command_end
+        "call feedkeys(a:search_text)
+    "endfunction
     " CtrlP with default text
-    nmap ,wg :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
-    nmap ,wG :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
-    nmap ,wf :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
-    "nmap ,d ,wg
-    "nmap ,D ,wG
-    nmap ,we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
-    nmap ,pe :call CtrlPWithSearchText(expand('<cfile>'), '')<CR>
-    nmap ,wm :call CtrlPWithSearchText(expand('<cword>'), 'MRUFiles')<CR>
+    "nmap <Leader>wg :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
+    "nmap <Leader>wG :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
+    "nmap <Leader>wf :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
+    "nmap <Leader>we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
+    "nmap <Leader>pe :call CtrlPWithSearchText(expand('<cfile>'), '')<CR>
+    "nmap <Leader>wm :call CtrlPWithSearchText(expand('<cword>'), 'MRUFiles')<CR>
     " Don't change working directory
     "let g:ctrlp_working_path_mode = 0
     " Ignore files on fuzzy finder
@@ -1022,15 +1020,6 @@ function! RotateFEnc()
       return ":set fenc=".str
     endif
   endwhile
-endfunction
-
-function! PylintReport()
-    setlocal makeprg=(echo\ '[%]';\ pylint\ %)
-    setlocal efm=%+P[%f],%t:\ %#%l:%m
-    silent make
-    cwindow
-    exe "!clear"
-    exe ":redraw!"
 endfunction
 
 " }
