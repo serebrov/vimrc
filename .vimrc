@@ -616,6 +616,36 @@ ca w!! w !sudo tee "%"
     nmap <Leader>o o<Esc>
     nmap <Leader>O O<Esc>
 
+    nnoremap <C-S-c> "+y
+    vnoremap <C-S-c> "+y
+    nnoremap <C-S-v> "+gP
+    vnoremap <C-S-v> "+gP
+
+    " Use CTRL-S for saving, also in Insert mode
+    " Note: see http://stackoverflow.com/questions/3446320/in-vim-how-to-map-save-to-ctrl-s
+    " Ctrl-S is a common command to terminals to stop updating, it was a way to slow the output
+    " so you could read it on terminals that didn't have a scrollback buffer.
+    " First find out if you can configure your xterm to pass Ctrl-S through to the application.
+    " BTW: if Ctrl-S freezes your terminal, type Ctrl-Q to get it going again.
+    noremap <C-S> :update<CR>
+    vnoremap <C-S> <C-C>:update<CR>gv
+    inoremap <C-S> <C-O>:update<CR>
+    "
+    " Move cursor by display lines when wrapping
+    " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
+    noremap k gk
+    noremap j gj
+    "noremap 0 g0
+    "noremap $ g$
+
+    " Move cursor with Ctrl + hjkl in Insert mode
+    imap <C-h> <C-o>h
+    imap <C-j> <C-o>j
+    imap <C-k> <C-o>k
+    imap <C-l> <C-o>l
+
+    " Shortcut to rapidly toggle `set list` (def leader = \)
+    nmap <leader>l :set list!<CR>
 
     " vim-easymotion
     " _w - words; _f - char
@@ -688,16 +718,6 @@ ca w!! w !sudo tee "%"
     menu Encoding.cp866 :e ++enc=cp866<CR>
     menu Encoding.utf-8 :e ++enc=utf8 <CR>
 
-    " Use CTRL-S for saving, also in Insert mode
-    " Note: see http://stackoverflow.com/questions/3446320/in-vim-how-to-map-save-to-ctrl-s
-    " Ctrl-S is a common command to terminals to stop updating, it was a way to slow the output
-    " so you could read it on terminals that didn't have a scrollback buffer.
-    " First find out if you can configure your xterm to pass Ctrl-S through to the application.
-    " BTW: if Ctrl-S freezes your terminal, type Ctrl-Q to get it going again.
-    noremap <C-S> :update<CR>
-    vnoremap <C-S> <C-C>:update<CR>gv
-    inoremap <C-S> <C-O>:update<CR>
-
     " windows navigation
     " C-W h|j|k|l - move to left|down|up|right win
     " C-W w       - cycle
@@ -748,22 +768,6 @@ ca w!! w !sudo tee "%"
     map <Leader>k     :wincmd K<cr>
     map <Leader>l     :wincmd L<cr>
     map <Leader>j     :wincmd J<cr>
-
-    " Move cursor by display lines when wrapping
-    " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
-    noremap k gk
-    noremap j gj
-    "noremap 0 g0
-    "noremap $ g$
-
-    " Move cursor with Ctrl + hjkl in Insert mode
-    imap <C-h> <C-o>h
-    imap <C-j> <C-o>j
-    imap <C-k> <C-o>k
-    imap <C-l> <C-o>l
-
-    " Shortcut to rapidly toggle `set list` (def leader = \)
-    nmap <leader>l :set list!<CR>
 
     " phpDocumenter
     inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
