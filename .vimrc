@@ -892,6 +892,10 @@ ca w!! w !sudo tee "%"
 
 " }
 
+" Ack with current file's folder {
+  cnoremap <Leader>f Ack <C-r>=expand('%:p:h')<CR>
+" }
+
 " Save as here {
   ""All on one line
   "command! -nargs=1 SaveAsHere exe "saveas " . expand("%:p:h") . "/" .  expand("<args>")
