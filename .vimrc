@@ -894,7 +894,8 @@ ca w!! w !sudo tee "%"
 
 " Save as here {
   ""All on one line
-  command! -nargs=1 SaveAsHere exe "saveas " . expand("%:p:h") . "/" .  expand("<args>")
+  "command! -nargs=1 SaveAsHere exe "saveas " . expand("%:p:h") . "/" .  expand("<args>")
+  "use :saveas CTRL-R %
 " }
 
 
