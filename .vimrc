@@ -159,6 +159,8 @@
 
         ":Open, :Maximize, :Fullscreen
         Bundle 'xolox/vim-shell'
+        ":Rename
+        Bundle 'vim-scripts/Rename'
 
         " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
         Bundle 'bkad/CamelCaseMotion'
@@ -889,6 +891,12 @@ ca w!! w !sudo tee "%"
         " gv - select last visual area and go to visual mode
 
 " }
+
+" Save as here {
+  ""All on one line
+  command! -nargs=1 SaveAsHere exe "saveas " . expand("%:p:h") . "/" .  expand("<args>")
+" }
+
 
 " Visual search {
     " select text and hit * / # to find it
