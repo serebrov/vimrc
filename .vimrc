@@ -93,11 +93,11 @@
         " adopt color schemes for terminal
         Bundle 'godlygeek/csapprox'
         " NERDTree
-        Bundle 'scrooloose/nerdtree'
+         "Bundle 'scrooloose/nerdtree'
         "Ack search support for NERDTree
         " depends on ack - http://betterthangrep.com
         " sudo apt-get install ack-grep
-        Bundle 'tyok/nerdtree-ack'
+        " Bundle 'tyok/nerdtree-ack'
         " Commenting code
         " <Leader>cc - comment line or selected text
         " <Leader>cu - uncomment line or selected text
@@ -473,12 +473,11 @@
     " Ack
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
     " NERDTree
-    let NERDTreeChDirMode=0     " Change CWD to nerd tree root
-    "let NERDTreeShowBookmarks=1 " Show bookmarks panel
-    let NERDTreeShowHidden=1 " Show hidden files
-    let NERDTreeIngore=['\~$', '\.pyc']
-    let NERDTreeQuitOnOpen = 1
-    let NERDTreeHijackNetrw = 1
+    "let NERDTreeChDirMode=0     " Change CWD to nerd tree root
+    "let NERDTreeShowHidden=1 " Show hidden files
+    "let NERDTreeIngore=['\~$', '\.pyc']
+    "let NERDTreeQuitOnOpen = 1
+    "let NERDTreeHijackNetrw = 1
 
 
 " }
