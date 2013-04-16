@@ -159,8 +159,6 @@
 
         ":Open, :Maximize, :Fullscreen
         Bundle 'xolox/vim-shell'
-        ":Rename
-        Bundle 'vim-scripts/Rename'
 
         " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
         Bundle 'bkad/CamelCaseMotion'
@@ -210,6 +208,9 @@
         "Bundle 'git://github.com/tpope/vim-rails.git'
         "Bundle 'git://github.com/tpope/vim-endwise.git'
     " }
+
+    runtime macros/matchit.vim
+
     filetype plugin indent on " load filetype plugins/indent settings
     syntax on               " Turn syntax highlighting on.
 
@@ -484,8 +485,9 @@
 
 " }
 " Syntastic {
-    let g:syntastic_phpcs_conf = "--standard=Seb"
-    map <Leader>csd :let g:syntastic_php_checkers = ['phpmd']<CR>
+    let g:syntastic_php_checkers = ['php','phpmd']
+    "let g:syntastic_phpcs_conf = "--standard=Seb"
+    "map <Leader>csd :let g:syntastic_php_checkers = ['phpmd']<CR>
 " }
 " save as sudo
 ca w!! w !sudo tee "%"
@@ -679,16 +681,40 @@ ca w!! w !sudo tee "%"
         execute ':e ' . fnamemodify(a:file, ':h')
         execute '/' . fnamemodify(a:file, ':t')
     endfunction
-    function! NerdFindDir(dir)
-        echo a:dir
-        execute ':e ' . a:dir
-        execute '/' . escape(a:dir, '/')
+    function! NerdFindDir(cd, find)
+        echo a:cd
+        execute ':e ' . a:cd
+        " search for ..
+        execute '/\.\.'
+        " search for dir
+        execute '/' . escape(a:find, '/')
     endfunction
     "map <Leader>nt :NERDTreeToggle<CR>" ,nt - toggle tree
     "map <Leader>nf :NERDTreeFind<CR>" ,nf - find current file in the tree
     "map <Leader>nt :execute ':e '.getcwd()<CR>
-    map <Leader>nt :call NerdFindDir(getcwd())<CR>
+    map <Leader>nt :call NerdFindDir(getcwd(), '\.\.')<CR>
     map <Leader>nf :call NerdFindFile(expand('%'))<CR>
+
+    augroup netrw_mappings
+        autocmd!
+        autocmd filetype netrw call RegisterNetrwMaps()
+    augroup END
+    function! RegisterNetrwMaps()
+        nmap <buffer> - :call CdUpAndFocus()<CR>
+    endfunction
+    function! CdUpAndFocus()
+        if expand('%') != ''
+          let l:cd = expand('%:p:h:h')
+          let l:t = expand('%:t')
+          "echo l:cd
+          "echo l:t
+          execute ':e ' . l:cd
+          " search for ..
+          execute '/\.\.'
+          " search for dir
+          execute '/' . escape(l:t, '/')
+      endif
+    endfunction
 
     " Search and replace word under cursor
     "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
@@ -892,8 +918,9 @@ ca w!! w !sudo tee "%"
 
 " }
 
-" Ack with current file's folder {
-  cnoremap <Leader>f Ack <C-r>=expand('%:p:h')<CR>
+" Insert current file's folder {
+  cnoremap <Leader><Leader>fn <C-r>=expand('%')<CR>
+  cnoremap <Leader><Leader>f <C-r>=expand('%:p:h')<CR>
 " }
 
 " Save as here {
