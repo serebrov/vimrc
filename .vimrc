@@ -833,11 +833,9 @@ ca w!! w !sudo tee "%"
         execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
         python debugger.run()
     endfunction
-    " Note: if bootstrap should be used then change vim current folder to the
-    " folder with bootstrap
     " example (open test file first):
     "   :DebugPhpunit --bootstrap tests/unitTests/bootstrap.php
-    command! -nargs=* DebugPhpunit call DebugPhpunit('<args> %')
+    command! -nargs=* -complete=file DebugPhpunit call DebugPhpunit('<args> %')
 
     function! DebugPhpConsole(...)
         let str_args = join(a:000, ' ')
@@ -847,8 +845,6 @@ ca w!! w !sudo tee "%"
         execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
         python debugger.run()
     endfunction
-    " Note: if bootstrap should be used then change vim current folder to the
-    " folder with bootstrap
     command! -nargs=* DebugPhpConsole call DebugPhpConsole('<args>')
 
     let g:vdebug_options= {
