@@ -116,7 +116,7 @@
         "Ack support for vim
         Bundle 'mileszs/ack.vim'
         " Markdown support
-        Bundle 'hallison/vim-markdown'
+        Bundle 'tpope/vim-markdown'
         " Markup files preview
         " <Leader>P
         Bundle 'greyblake/vim-preview'
