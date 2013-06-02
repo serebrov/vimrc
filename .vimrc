@@ -2,39 +2,41 @@
     set nocompatible " explicitly get out of vi-compatible mode
     filetype off
 
-    " vundle {
-        set rtp+=~/.vim/bundle/vundle/
-        call vundle#rc()
+    " neobundle {
+        if has('vim_starting')
+        set runtimepath+=~/.vim/bundle/neobundle.vim/
+        endif
+
+        call neobundle#rc(expand('~/.vim/bundle/'))
+
+        " Let NeoBundle manage NeoBundle
+        NeoBundleFetch 'Shougo/neobundle.vim'
 
         " Brief help
-        " :BundleList          - list configured bundles
-        " :BundleInstall(!)    - install(update) bundles
-        " :BundleSearch(!) foo - search(or refresh cache first) for foo
-        " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-        "
-        " let Vundle manage Vundle
-        Bundle 'gmarik/vundle'
+        " :NeoBundleList          - list configured bundles
+        " :NeoBundleInstall(!)    - install(update) bundles
+        " :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
     " }
-    " https://github.com/mutewinter/dot_vim
+
     " My Bundles here {
         " git support: Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
         " Ggrep, Glog, Gread, Gwrite, Gbrowse
-        Bundle 'tpope/vim-fugitive'
-        " auto adjust tab settings based on current file
-        Bundle 'tpope/vim-sleuth'
+        NeoBundle 'tpope/vim-fugitive'
+        " auto adjust tab/space settings based on current file
+        NeoBundle 'tpope/vim-sleuth'
         " fugitive extension, commit browser - :Extradite
-        Bundle 'int3/vim-extradite'
+        NeoBundle 'int3/vim-extradite'
         " visual guides for indents, default mapping <Leager>ig
-        Bundle 'nathanaelkane/vim-indent-guides'
+        NeoBundle 'nathanaelkane/vim-indent-guides'
         " Powerline - create better-looking, more functional vim statuslines.
-        Bundle 'Lokaltog/vim-powerline'
+        NeoBundle 'Lokaltog/vim-powerline'
         " Simpler way to use some motions in vim.
         " Start motion with <Leader><Leader>
         " Like <Space>w to trigger the word motion w
         " Other triggers: f/t/F/T (find char), w/W/b/B/e/E/ge/gE (word motions), j/k (lines), n/N (searches)
         " Tutorial: http://net.tutsplus.com/tutorials/other/vim-essential-plugin-easymotion/
         " It is similar to vimperator (FireFox extenstion) link select mode
-        Bundle 'Lokaltog/vim-easymotion'
+        NeoBundle 'Lokaltog/vim-easymotion'
         " Change surrounding objects
         " cs<from><to> - change surrounding
         " cs"' - change surround " to '
@@ -46,9 +48,9 @@
         " ysiw] - add surrounding [] for inner word
         " yssb or yss) - surround a line with ()
         " in visual mode S<what> will surround selected text
-        Bundle 'tpope/vim-surround'
+        NeoBundle 'tpope/vim-surround'
         " Required by vim-surround
-        Bundle 'tpope/vim-repeat'
+        NeoBundle 'tpope/vim-repeat'
         " Pair commands, some of them:
         " [q / ]q, [Q / ]Q- :cprevious / :cnext, :cfirst / :clast - errors in quickfix
         " [l / l], [L / L] - :lprevious / :lnext, :lfirst / :llast  - errors in current window (?)
@@ -65,7 +67,7 @@
         "
         " [f / ]f - previous / next file in directory
         " [n / ]b - previous / next conflict marker
-        Bundle 'tpope/vim-unimpaired'
+        NeoBundle 'tpope/vim-unimpaired'
         "Vim sugar for the UNIX shell commands that need it the most. Commands include:
         " :Unlink: Delete a buffer and the file on disk simultaneously.
         " :Remove: Like :Unlink, but doesn't require a neckbeard.
@@ -75,7 +77,7 @@
         " :Locate: Run locate and load the results into the quickfix list.
         " :SudoWrite: Write a privileged file with sudo.
         " :W: Write every open window. Handy for kicking off tools like guard.
-        Bundle 'tpope/vim-eunuch'
+        NeoBundle 'tpope/vim-eunuch'
         " :Tabularize /, - tablarize by ','
         " :Tabularize /,/[r|l|c]0
         "  r - align right, l - left, c - center
@@ -89,129 +91,127 @@
         "  assignment, two_spaces, multiple_spaces, argument_list,
         "  split_declarations, trenary_operator, cpp_io, pascal_assign,
         "  trailing_c_comments
-        Bundle 'godlygeek/tabular'
+        NeoBundle 'godlygeek/tabular'
         " adopt color schemes for terminal
-        Bundle 'godlygeek/csapprox'
+        NeoBundle 'godlygeek/csapprox'
         " NERDTree
-         "Bundle 'scrooloose/nerdtree'
+         "NeoBundle 'scrooloose/nerdtree'
         "Ack search support for NERDTree
         " depends on ack - http://betterthangrep.com
         " sudo apt-get install ack-grep
-        " Bundle 'tyok/nerdtree-ack'
+        " NeoBundle 'tyok/nerdtree-ack'
         " Commenting code
         " <Leader>cc - comment line or selected text
         " <Leader>cu - uncomment line or selected text
         " <Leader>cm - comment with multiline /* */ comments
         " <Leader>cs - 'sexy' comments
         " <Leader>c<space> - toggle comments state, see more in help
-        Bundle 'scrooloose/nerdcommenter'
+        NeoBundle 'scrooloose/nerdcommenter'
         " Syntax checker
-        Bundle 'scrooloose/syntastic'
+        NeoBundle 'scrooloose/syntastic'
         " Supertab is a plugin which allows you to perform all your insert completion
         " (|ins-completion|) using the tab key.
-        " Bundle 'ervandew/supertab'
+        " NeoBundle 'ervandew/supertab'
         " Solarized color scheme
-        Bundle 'altercation/vim-colors-solarized'
-        Bundle 'nelstrom/vim-mac-classic-theme'
+        NeoBundle 'altercation/vim-colors-solarized'
+        NeoBundle 'nelstrom/vim-mac-classic-theme'
         "Ack support for vim
-        Bundle 'mileszs/ack.vim'
+        NeoBundle 'mileszs/ack.vim'
         " Markdown support
-        Bundle 'tpope/vim-markdown'
+        NeoBundle 'tpope/vim-markdown'
         " Markup files preview
         " <Leader>P
-        Bundle 'greyblake/vim-preview'
+        NeoBundle 'greyblake/vim-preview'
         "
-        "Bundle 'UltiSnips'
+        "NeoBundle 'UltiSnips'
         " At every search command, it automatically prints
         " "At match #N out of M matches".
-        Bundle 'IndexedSearch'
+        NeoBundle 'IndexedSearch'
         " CtrlP
-        Bundle 'kien/ctrlp.vim'
+        "NeoBundle 'kien/ctrlp.vim'
 
         " :Multichange and then cw to change word in a whole file (or any
         " other cxx command)
-        Bundle 'AndrewRadev/multichange.vim'
+        NeoBundle 'AndrewRadev/multichange.vim'
         " disable mapping entirely
         let g:multichange_mapping = ''
 
         " PHP
         " ====
         " php completion - it should be copied to autoload/phpcomplete.vim
-        Bundle 'shawncplus/phpcomplete.vim'
+        NeoBundle 'shawncplus/phpcomplete.vim'
         " php 5.3 syntax
-        Bundle 'vim-scripts/php.vim--Garvin'
-        Bundle '2072/PHP-Indenting-for-VIm'
+        NeoBundle 'vim-scripts/php.vim--Garvin'
+        NeoBundle '2072/PHP-Indenting-for-VIm'
         " view php docs with K
-        Bundle 'mudpile45/vim-phpdoc'
-        Bundle 'mikehaertl/yii-api-vim'
+        NeoBundle 'mudpile45/vim-phpdoc'
+        NeoBundle 'mikehaertl/yii-api-vim'
         " php documenter
-        Bundle 'mikehaertl/pdv-standalone'
+        NeoBundle 'mikehaertl/pdv-standalone'
 
-        Bundle 'joonty/vdebug'
-        Bundle 'joonty/vim-phpunitqf'
-        Bundle 'joonty/vim-taggatron'
-        Bundle 'airblade/vim-rooter'
+        NeoBundle 'joonty/vdebug'
+        NeoBundle 'joonty/vim-phpunitqf'
+        NeoBundle 'joonty/vim-taggatron'
+        NeoBundle 'airblade/vim-rooter'
 
         " https://github.com/majutsushi/tagbar/wiki
         " http://majutsushi.github.com/tagbar/
         " :TagbarToggle
-        Bundle 'majutsushi/tagbar'
-
-        ":Open, :Maximize, :Fullscreen
-        Bundle 'xolox/vim-shell'
+        NeoBundle 'majutsushi/tagbar'
 
         " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
-        Bundle 'bkad/CamelCaseMotion'
+        NeoBundle 'bkad/CamelCaseMotion'
 
         " av: around variable
         " iv: inner variable
-        Bundle 'robmiller/vim-movar'
+        NeoBundle 'robmiller/vim-movar'
 
         "" Interface
-        Bundle 'Shougo/neocomplcache'
-        Bundle 'Shougo/neosnippet'
-        Bundle 'Shougo/unite.vim'
+        NeoBundle 'Shougo/vimproc', { 'build': {
+              \   'windows': 'make -f make_mingw32.mak',
+              \   'cygwin': 'make -f make_cygwin.mak',
+              \   'mac': 'make -f make_mac.mak',
+              \   'unix': 'make -f make_unix.mak',
+              \ } }
+        NeoBundle 'Shougo/unite.vim'
+        NeoBundle 'Shougo/unite-outline'
+        NeoBundle 'Shougo/unite-help'
+        NeoBundle 'thinca/vim-unite-history'
+        NeoBundle 'Shougo/neocomplcache'
+        NeoBundle 'Shougo/neosnippet'
+        NeoBundle 'Shougo/vimshell'
 
          " Gundo.vim is Vim plugin to visualize your Vim undo tree.
-        Bundle 'sjl/gundo.vim'
+        NeoBundle 'sjl/gundo.vim'
         " command line results into buffer, like :Clam ls,
         " :1,20Clam python - send first 20 lines into python
-        Bundle 'sjl/clam.vim'
-        Bundle 'Shougo/vimfiler'
+        NeoBundle 'sjl/clam.vim'
+        NeoBundle 'Shougo/vimfiler'
 
         " adds a Bundles menu to Vim, displaying the installed plugins and the features they provide
-        Bundle 'Headlights'
+        NeoBundle 'Headlights'
 
-        "Bundle 'git://github.com/tsaleh/vim-align.git'
-        "Bundle 'git://github.com/sjl/threesome.vim.git'
-        "Bundle 'git://github.com/chrismetcalf/vim-yankring.git'
-    " HTML/HAML
-        "Bundle 'git://github.com/othree/html5.vim.git'
-        "Bundle 'git://github.com/hokaccha/vim-html5validator.git'
-        "Bundle 'git://github.com/tyru/operator-html-escape.vim.git'
-        "Bundle 'git://github.com/tpope/vim-haml.git'
-    " CSS/LESS
-        "Bundle 'git://github.com/hail2u/vim-css3-syntax.git'
-        "Bundle 'git://github.com/skammer/vim-css-color.git'
-        "Bundle 'git://github.com/groenewege/vim-less.git'
-        "Bundle 'git://github.com/miripiruni/vim-better-css-indent.git'
-        "Bundle 'git://github.com/miripiruni/CSScomb-for-Vim.git'
+        "NeoBundle 'git://github.com/sjl/threesome.vim.git'
     " JavaScript
-        Bundle 'pangloss/vim-javascript.git'
-        Bundle 'itspriddle/vim-jquery.git'
+        NeoBundle 'pangloss/vim-javascript.git'
+        NeoBundle 'itspriddle/vim-jquery.git'
         " ejs templates syntax highlight
-        Bundle 'briancollins/vim-jst.git'
-    " JSON
-        "Bundle 'git://github.com/leshill/vim-json.git'
-    " Ruby/Rails
-        "Bundle 'git://github.com/vim-ruby/vim-ruby.git'
-        "Bundle 'git://github.com/tpope/vim-rails.git'
-        "Bundle 'git://github.com/tpope/vim-endwise.git'
+        NeoBundle 'briancollins/vim-jst.git'
     " }
 
     runtime macros/matchit.vim
 
     filetype plugin indent on " load filetype plugins/indent settings
+
+    " Installation check.
+    NeoBundleCheck
+    " This took a while to figure out. Neocomplcache + iTerm + the CursorShape
+    " fix is causing the completion menu popup to flash the first result. Tested it
+    " with AutoComplPop and the behavior doesn't exist, so it's isolated to
+    " Neocomplcache... :( Dug into the source for both and saw that AutoComplPop is
+    " setting lazyredraw to be on during automatic popup...
+    "set lazyredraw
+
     syntax on               " Turn syntax highlighting on.
 
     set nobackup
@@ -644,13 +644,13 @@ ca w!! w !sudo tee "%"
 
     " CtrlP
     "let g:ctrlp_map = ',f'
-    map <Leader>ff :CtrlPMixed<CR>
-    map <Leader>fd :CtrlPDir<CR>
-    map <Leader>fb :CtrlPBuffer<CR>
-    map <Leader>fT :CtrlPBufTag<CR>
-    map <Leader>ft :CtrlPTag<CR>
-    map <Leader>fl :CtrlPLine<CR>
-    map <Leader>fm :CtrlPMRU<CR>
+    "map <Leader>ff :CtrlPMixed<CR>
+    "map <Leader>fd :CtrlPDir<CR>
+    "map <Leader>fb :CtrlPBuffer<CR>
+    "map <Leader>fT :CtrlPBufTag<CR>
+    "map <Leader>ft :CtrlPTag<CR>
+    "map <Leader>fl :CtrlPLine<CR>
+    "map <Leader>fm :CtrlPMRU<CR>
     " to be able to call CtrlP with default search text
     "function! CtrlPWithSearchText(search_text, ctrlp_command_end)
         "execute ':CtrlP' . a:ctrlp_command_end
@@ -1060,6 +1060,172 @@ function! RotateFEnc()
 endfunction
 
 " }
+"
+"https://github.com/terryma/dotfiles/blob/master/.vimrc
+"check
+"https://gist.github.com/beatinaniwa/3332059
+"http://vpaste.net/l1WqE
+"  + https://github.com/thinca/vim-ref
+"  ack - http://vpaste.net/lEBbg
+"https://github.com/Shougo/unite.vim/wiki/unite-plugins
+"http://d.hatena.ne.jp/osyo-manga/20130307/1362621589
+"https://github.com/Shougo/unite.vim/blob/master/doc/unite.txt
+"
+" Map space to the prefix for Unite
+nnoremap [unite] <Nop>
+nmap <space> [unite]
+" Ctrl-r: Command history using Unite, this matches my muscle memory in zsh
+"nmap <c-r> [unite];
+" Ctrl-\: Quick outline
+"nmap <silent> <c-\> [unite]o
+" Ctrl-y: Yanks
+"nmap <c-y> [unite]y
+" Ctrl-ss: (S)earch word under cur(s)or in current directory
+nnoremap <c-s><c-s> :Unite grep:.::<C-r><C-w><CR>
+" Ctrl-sd: (S)earch word in current (d)irectory (prompt for word)
+nnoremap <c-s><c-d> :Unite grep:.<CR>
+" Ctrl-sf: Quickly (s)earch in (f)ile
+"nmap <c-s><c-f> [unite]l
+" Ctrl-sr: Easier (s)earch and (r)eplace
+nnoremap <c-s><c-r> :%s/<c-r><c-w>//gc<left><left><left>
+" Ctrl-r: Easier search and replace
+"vnoremap <c-r> "hy:%s/<c-r>h//gc<left><left><left>
+" Ctrl-s: Easier substitue
+"vnoremap <c-s> :s/\%V//g<left><left><left>
+" Ctrl-fm: (F)ind (M)RU and buffers
+"nmap <c-f><c-m> [unite]u
+" Ctrl-fa: (F)ind (A)all files recursively
+"nmap <c-f><c-a> [unite]f
+" Ctrl-fd: (F)ind (d)irectory. Change directory
+"nmap <c-f><c-d> [unite]d
+" Ctrl-/: A more powerful '/'
+"nmap <c-_> [unite]l
+
+" General fuzzy search
+nnoremap <silent> [unite]ff :<C-u>Unite
+      \ -buffer-name=files buffer file_mru bookmark file_rec/async<CR>
+" Quick registers
+nnoremap <silent> [unite]fr :<C-u>Unite -buffer-name=register register<CR>
+" Quick buffer and mru
+nnoremap <silent> [unite]fm :<C-u>Unite -buffer-name=buffers buffer file_mru<CR>
+" Quick yank history
+nnoremap <silent> [unite]fy :<C-u>Unite -buffer-name=yanks history/yank<CR>
+" Quick outline
+nnoremap <silent> [unite]fo :<C-u>Unite -buffer-name=outline -vertical outline<CR>
+" Quick sessions (projects)
+"nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=sessions session<CR>
+" Quick sources
+nnoremap <silent> [unite]fa :<C-u>Unite -buffer-name=sources source<CR>
+" Quick snippet
+nnoremap <silent> [unite]fs :<C-u>Unite -buffer-name=snippets snippet<CR>
+" Quickly switch lcd
+nnoremap <silent> [unite]fd
+      \ :<C-u>Unite -buffer-name=change-cwd -default-action=lcd directory_mru<CR>
+" Quick file search
+nnoremap <silent> [unite]fff :<C-u>Unite -buffer-name=files file_rec/async file/new<CR>
+" Quick grep from cwd
+nnoremap <silent> [unite]fg :<C-u>Unite -buffer-name=grep grep:.<CR>
+" Quick help
+nnoremap <silent> [unite]fh :<C-u>Unite -buffer-name=help help<CR>
+" Quick line using the word under cursor
+nnoremap <silent> [unite]fl :<C-u>UniteWithCursorWord -buffer-name=search_file line<CR>
+" Quick MRU search
+nnoremap <silent> [unite]ffm :<C-u>Unite -buffer-name=mru file_mru<CR>
+" Quick find
+nnoremap <silent> [unite]fn :<C-u>Unite -buffer-name=find find:.<CR>
+" Quick commands
+nnoremap <silent> [unite]fc :<C-u>Unite -buffer-name=commands command<CR>
+" Quick bookmarks
+nnoremap <silent> [unite]fb :<C-u>Unite -buffer-name=bookmarks bookmark<CR>
+" Fuzzy search from current buffer
+" nnoremap <silent> [unite]b :<C-u>UniteWithBufferDir
+      " \ -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
+" Quick commands
+nnoremap <silent> [unite]f; :<C-u>Unite -buffer-name=history history/command command<CR>
+
+"" Custom Unite settings
+"autocmd MyAutoCmd FileType unite call s:unite_settings()
+"function! s:unite_settings()
+
+  "nmap <buffer> <ESC> <Plug>(unite_exit)
+  "imap <buffer> <ESC> <Plug>(unite_exit)
+  "" imap <buffer> <c-j> <Plug>(unite_select_next_line)
+  "imap <buffer> <c-j> <Plug>(unite_insert_leave)
+  "nmap <buffer> <c-j> <Plug>(unite_loop_cursor_down)
+  "nmap <buffer> <c-k> <Plug>(unite_loop_cursor_up)
+  "imap <buffer> <c-a> <Plug>(unite_choose_action)
+  "imap <buffer> <Tab> <Plug>(unite_exit_insert)
+  "imap <buffer> jj <Plug>(unite_insert_leave)
+  "imap <buffer> <C-w> <Plug>(unite_delete_backward_word)
+  "imap <buffer> <C-u> <Plug>(unite_delete_backward_path)
+  "imap <buffer> '     <Plug>(unite_quick_match_default_action)
+  "nmap <buffer> '     <Plug>(unite_quick_match_default_action)
+  "nmap <buffer> <C-r> <Plug>(unite_redraw)
+  "imap <buffer> <C-r> <Plug>(unite_redraw)
+  "inoremap <silent><buffer><expr> <C-s> unite#do_action('split')
+  "nnoremap <silent><buffer><expr> <C-s> unite#do_action('split')
+  "inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+  "nnoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+
+  "let unite = unite#get_current_unite()
+  "if unite.buffer_name =~# '^search'
+    "nnoremap <silent><buffer><expr> r     unite#do_action('replace')
+  "else
+    "nnoremap <silent><buffer><expr> r     unite#do_action('rename')
+  "endif
+
+  "nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
+
+  "" Using Ctrl-\ to trigger outline, so close it using the same keystroke
+  "if unite.buffer_name =~# '^outline'
+    "imap <buffer> <C-\> <Plug>(unite_exit)
+  "endif
+
+  "" Using Ctrl-/ to trigger line, close it using same keystroke
+  "if unite.buffer_name =~# '^search_file'
+    "imap <buffer> <C-_> <Plug>(unite_exit)
+  "endif
+"endfunction
+
+" Use the fuzzy matcher for everything
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" Use the rank sorter for everything
+call unite#filters#sorter_default#use(['sorter_rank'])
+" Start in insert mode
+let g:unite_enable_start_insert = 1
+" Enable history yank source
+let g:unite_source_history_yank_enable = 1
+" Open in bottom right
+let g:unite_split_rule = "botright"
+" Shorten the default update date of 500ms
+let g:unite_update_time = 200
+
+let g:unite_source_file_mru_limit = 1000
+let g:unite_cursor_line_highlight = 'TabLineSel'
+" let g:unite_abbr_highlight = 'TabLine'
+
+let g:unite_source_file_mru_filename_format = ':~:.'
+let g:unite_source_file_mru_time_format = ''
+
+" For ack.
+if executable('ack-grep')
+  let g:unite_source_grep_command = 'ack-grep'
+  " Match whole word only. This might/might not be a good idea
+  let g:unite_source_grep_default_opts = '--no-heading --no-color -a -w'
+  let g:unite_source_grep_recursive_opt = ''
+elseif executable('ack')
+  let g:unite_source_grep_command = 'ack'
+  let g:unite_source_grep_default_opts = '--no-heading --no-color -a -w'
+  let g:unite_source_grep_recursive_opt = ''
+endif
+
+" Set up some custom ignores
+"call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+      "\ 'ignore_pattern', join([
+      "\ '\.git/',
+      "\ 'git5/.*/review/',
+      "\ 'google/obj/',
+      "\ ], '\|'))
 
 " Launches neocomplcache automatically on vim startup.
 let g:neocomplcache_enable_at_startup = 1
@@ -1072,16 +1238,19 @@ let g:neocomplcache_enable_camel_case_completion = 1
 " Use underscore completion.
 let g:neocomplcache_enable_underbar_completion = 1
 " Sets minimum char length of syntax keyword.
-let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_min_syntax_length = 4
+let g:neocomplcache_min_keyword_length = 4
+" AutoComplPop like behavior.
+let g:neocomplcache_enable_auto_select = 1
 " buffer file name pattern that locks neocomplcache. e.g. ku.vim or fuzzyfinder
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
-" Define file-type dependent dictionaries.
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-    \ }
+"" Define file-type dependent dictionaries.
+"let g:neocomplcache_dictionary_filetype_lists = {
+    "\ 'default' : '',
+    "\ 'vimshell' : $HOME.'/.vimshell_hist',
+    "\ 'scheme' : $HOME.'/.gosh_completions'
+    "\ }
 
 " Define keyword, for minor languages
 if !exists('g:neocomplcache_keyword_patterns')
@@ -1117,9 +1286,6 @@ inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplcache#close_popup()
 inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
-" AutoComplPop like behavior.
-"let g:neocomplcache_enable_auto_select = 1
-
 " Shell like behavior(not recommended).
 "set completeopt+=longest
 "let g:neocomplcache_enable_auto_select = 1
@@ -1143,6 +1309,47 @@ let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+
+"===============================================================================
+" VimShell
+"===============================================================================
+
+let g:vimshell_prompt = "% "
+"let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+"autocmd MyAutoCmd FileType vimshell call s:vimshell_settings()
+"function! s:vimshell_settings()
+  "call vimshell#altercmd#define('g', 'git')
+"endfunction
+
+""===============================================================================
+"" Vimfiler
+""===============================================================================
+
+"" TODO Look into Vimfiler more
+"" Example at: https://github.com/hrsh7th/dotfiles/blob/master/vim/.vimrc
+"nnoremap <expr><F2> g:my_open_explorer_command()
+"function! g:my_open_explorer_command()
+  "return printf(":\<C-u>VimFilerBufferDir -buffer-name=%s -split -auto-cd -toggle -no-quit -winwidth=%s\<CR>",
+        "\ g:my_vimfiler_explorer_name,
+        "\ g:my_vimfiler_winwidth)
+"endfunction
+
+"let g:vimfiler_as_default_explorer = 1
+"let g:vimfiler_tree_leaf_icon = ' '
+"let g:vimfiler_tree_opened_icon = '▾'
+"let g:vimfiler_tree_closed_icon = '▸'
+"" let g:vimfiler_file_icon = ' '
+"let g:vimfiler_marked_file_icon = '✓'
+"" let g:vimfiler_readonly_file_icon = ' '
+"let g:my_vimfiler_explorer_name = 'explorer'
+"let g:my_vimfiler_winwidth = 30
+"let g:vimfiler_safe_mode_by_default = 0
+"" let g:vimfiler_directory_display_top = 1
+
+"autocmd MyAutoCmd FileType vimfiler call s:vimfiler_settings()
+"function! s:vimfiler_settings()
+  "nmap     <buffer><expr><CR>  vimfiler#smart_cursor_map("\<PLUG>(vimfiler_expand_tree)", "e")
+"endfunction
 
 " --------------  links --------------------
 " vimrc {
