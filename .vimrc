@@ -823,6 +823,8 @@ ca w!! w !sudo tee "%"
         execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
         python debugger.run()
     endfunction
+    " example (open test file first):
+    "   :DebugPy -c tests/acceptance/selenuim/dev.cfg
     command! -nargs=* DebugPy call DebugPy('% <args>')
 
     function! DebugPhpunit(...)
