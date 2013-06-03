@@ -825,7 +825,7 @@ ca w!! w !sudo tee "%"
     endfunction
     " example (open test file first):
     "   :DebugPy -c tests/acceptance/selenuim/dev.cfg
-    command! -nargs=* DebugPy call DebugPy('% <args>')
+    command! -nargs=* -complete=file DebugPy call DebugPy('% <args>')
 
     function! DebugPhpunit(...)
         let str_args = join(a:000, ' ')
