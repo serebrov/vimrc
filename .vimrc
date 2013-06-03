@@ -474,7 +474,7 @@
 
 " Plugins {
     " Ack
-    let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+    let g:ackprg="ack-grep -H --nocolor --nogroup --column --type-set tags=.tags --notags"
     " NERDTree
     "let NERDTreeChDirMode=0     " Change CWD to nerd tree root
     "let NERDTreeShowHidden=1 " Show hidden files
@@ -1211,21 +1211,21 @@ let g:unite_source_file_mru_time_format = ''
 if executable('ack-grep')
   let g:unite_source_grep_command = 'ack-grep'
   " Match whole word only. This might/might not be a good idea
-  let g:unite_source_grep_default_opts = '--no-heading --no-color -a -w'
+  let g:unite_source_grep_default_opts = '--no-heading --no-color -a -w --type-set tags=.tags --notags'
   let g:unite_source_grep_recursive_opt = ''
 elseif executable('ack')
   let g:unite_source_grep_command = 'ack'
-  let g:unite_source_grep_default_opts = '--no-heading --no-color -a -w'
+  let g:unite_source_grep_default_opts = '--no-heading --no-color -a -w --type-set tags=.tags --notags'
   let g:unite_source_grep_recursive_opt = ''
 endif
 
 " Set up some custom ignores
-"call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
-      "\ 'ignore_pattern', join([
-      "\ '\.git/',
-      "\ 'git5/.*/review/',
-      "\ 'google/obj/',
-      "\ ], '\|'))
+call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+      \ 'ignore_pattern', join([
+      \ '\.git/',
+      \ '\.svn/',
+      \ '.*\.tags',
+      \ ], '\|'))
 
 " Launches neocomplcache automatically on vim startup.
 let g:neocomplcache_enable_at_startup = 1
