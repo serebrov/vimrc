@@ -94,12 +94,6 @@
         NeoBundle 'godlygeek/tabular'
         " adopt color schemes for terminal
         NeoBundle 'godlygeek/csapprox'
-        " NERDTree
-         "NeoBundle 'scrooloose/nerdtree'
-        "Ack search support for NERDTree
-        " depends on ack - http://betterthangrep.com
-        " sudo apt-get install ack-grep
-        " NeoBundle 'tyok/nerdtree-ack'
         " Commenting code
         " <Leader>cc - comment line or selected text
         " <Leader>cu - uncomment line or selected text
@@ -116,7 +110,7 @@
         NeoBundle 'altercation/vim-colors-solarized'
         NeoBundle 'nelstrom/vim-mac-classic-theme'
         "Ack support for vim
-        NeoBundle 'mileszs/ack.vim'
+        "NeoBundle 'mileszs/ack.vim'
         " Markdown support
         NeoBundle 'tpope/vim-markdown'
         " Markup files preview
@@ -180,13 +174,13 @@
         NeoBundle 'Shougo/neocomplcache'
         NeoBundle 'Shougo/neosnippet'
         NeoBundle 'Shougo/vimshell'
+        NeoBundle 'Shougo/vimfiler'
 
          " Gundo.vim is Vim plugin to visualize your Vim undo tree.
         NeoBundle 'sjl/gundo.vim'
         " command line results into buffer, like :Clam ls,
         " :1,20Clam python - send first 20 lines into python
         NeoBundle 'sjl/clam.vim'
-        NeoBundle 'Shougo/vimfiler'
 
         " adds a Bundles menu to Vim, displaying the installed plugins and the features they provide
         NeoBundle 'Headlights'
@@ -474,7 +468,7 @@
 
 " Plugins {
     " Ack
-    let g:ackprg="ack-grep -H --nocolor --nogroup --column --type-set tags=.tags --notags"
+    "let g:ackprg="ack-grep -H --nocolor --nogroup --column --type-set tags=.tags --notags"
     " NERDTree
     "let NERDTreeChDirMode=0     " Change CWD to nerd tree root
     "let NERDTreeShowHidden=1 " Show hidden files
@@ -489,8 +483,8 @@
     "let g:syntastic_phpcs_conf = "--standard=Seb"
     "map <Leader>csd :let g:syntastic_php_checkers = ['phpmd']<CR>
 " }
-" save as sudo
-ca w!! w !sudo tee "%"
+" save as sudo - use :SudoWrite from tpope/vim-eunuch
+"ca w!! w !sudo tee "%"
 
 " Autocommands {
     au BufRead,BufNewFile *.phps    set filetype=php
@@ -671,12 +665,12 @@ ca w!! w !sudo tee "%"
     "\ 'file': '\.pyc$\|\.pyo$',
     "\ }
     " Don't clear cache on exit
-    let g:ctrlp_clear_cache_on_exit = 0
+    "let g:ctrlp_clear_cache_on_exit = 0
     " by default it is 'Et' which means it will jump to another tab if you
     " open already opened buffer in current tab
-    let g:ctrlp_switch_buffer = 'et'
+    "let g:ctrlp_switch_buffer = 'et'
 
-    " NERDTree
+    " NERDTree inspired functions
     function! NerdFindFile(file)
         execute ':e ' . fnamemodify(a:file, ':h')
         execute '/' . fnamemodify(a:file, ':t')
@@ -924,7 +918,7 @@ ca w!! w !sudo tee "%"
 " Save as here {
   ""All on one line
   "command! -nargs=1 SaveAsHere exe "saveas " . expand("%:p:h") . "/" .  expand("<args>")
-  "use :saveas CTRL-R %
+  "instead use :saveas CTRL-R %
 " }
 
 
