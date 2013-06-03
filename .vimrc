@@ -1073,7 +1073,7 @@ endfunction
 "
 " Map space to the prefix for Unite
 nnoremap [unite] <Nop>
-nmap <space> [unite]
+nmap <space>f [unite]
 " Ctrl-r: Command history using Unite, this matches my muscle memory in zsh
 "nmap <c-r> [unite];
 " Ctrl-\: Quick outline
@@ -1102,46 +1102,46 @@ nnoremap <c-s><c-r> :%s/<c-r><c-w>//gc<left><left><left>
 "nmap <c-_> [unite]l
 
 " General fuzzy search
-nnoremap <silent> [unite]ff :<C-u>Unite
+nnoremap <silent> [unite]f :<C-u>Unite
       \ -buffer-name=files buffer file_mru bookmark file_rec/async<CR>
 " Quick registers
-nnoremap <silent> [unite]fr :<C-u>Unite -buffer-name=register register<CR>
+nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
 " Quick buffer and mru
-nnoremap <silent> [unite]fm :<C-u>Unite -buffer-name=buffers buffer file_mru<CR>
+nnoremap <silent> [unite]m :<C-u>Unite -buffer-name=buffers buffer file_mru<CR>
 " Quick yank history
-nnoremap <silent> [unite]fy :<C-u>Unite -buffer-name=yanks history/yank<CR>
+nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
 " Quick outline
-nnoremap <silent> [unite]fo :<C-u>Unite -buffer-name=outline -vertical outline<CR>
+nnoremap <silent> [unite]o :<C-u>Unite -buffer-name=outline -vertical outline<CR>
 " Quick sessions (projects)
 "nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=sessions session<CR>
 " Quick sources
-nnoremap <silent> [unite]fa :<C-u>Unite -buffer-name=sources source<CR>
+nnoremap <silent> [unite]a :<C-u>Unite -buffer-name=sources source<CR>
 " Quick snippet
-nnoremap <silent> [unite]fs :<C-u>Unite -buffer-name=snippets snippet<CR>
+nnoremap <silent> [unite]s :<C-u>Unite -buffer-name=snippets snippet<CR>
 " Quickly switch lcd
-nnoremap <silent> [unite]fd
+nnoremap <silent> [unite]d
       \ :<C-u>Unite -buffer-name=change-cwd -default-action=lcd directory_mru<CR>
 " Quick file search
-nnoremap <silent> [unite]fff :<C-u>Unite -buffer-name=files file_rec/async file/new<CR>
+nnoremap <silent> [unite]ff :<C-u>Unite -buffer-name=files file_rec/async file/new<CR>
 " Quick grep from cwd
-nnoremap <silent> [unite]fg :<C-u>Unite -buffer-name=grep grep:.<CR>
+nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:.<CR>
 " Quick help
-nnoremap <silent> [unite]fh :<C-u>Unite -buffer-name=help help<CR>
+nnoremap <silent> [unite]h :<C-u>Unite -buffer-name=help help<CR>
 " Quick line using the word under cursor
-nnoremap <silent> [unite]fl :<C-u>UniteWithCursorWord -buffer-name=search_file line<CR>
+nnoremap <silent> [unite]l :<C-u>UniteWithCursorWord -buffer-name=search_file line<CR>
 " Quick MRU search
-nnoremap <silent> [unite]ffm :<C-u>Unite -buffer-name=mru file_mru<CR>
+nnoremap <silent> [unite]fm :<C-u>Unite -buffer-name=mru file_mru<CR>
 " Quick find
-nnoremap <silent> [unite]fn :<C-u>Unite -buffer-name=find find:.<CR>
+nnoremap <silent> [unite]n :<C-u>Unite -buffer-name=find find:.<CR>
 " Quick commands
-nnoremap <silent> [unite]fc :<C-u>Unite -buffer-name=commands command<CR>
+nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands command<CR>
 " Quick bookmarks
-nnoremap <silent> [unite]fb :<C-u>Unite -buffer-name=bookmarks bookmark<CR>
+nnoremap <silent> [unite]b :<C-u>Unite -buffer-name=bookmarks bookmark<CR>
 " Fuzzy search from current buffer
 " nnoremap <silent> [unite]b :<C-u>UniteWithBufferDir
       " \ -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
 " Quick commands
-nnoremap <silent> [unite]f; :<C-u>Unite -buffer-name=history history/command command<CR>
+nnoremap <silent> [unite]; :<C-u>Unite -buffer-name=history history/command command<CR>
 
 "" Custom Unite settings
 "autocmd MyAutoCmd FileType unite call s:unite_settings()
