@@ -144,7 +144,6 @@
         NeoBundle 'mikehaertl/pdv-standalone'
 
         NeoBundle 'joonty/vdebug'
-        NeoBundle 'joonty/vim-phpunitqf'
         NeoBundle 'joonty/vim-taggatron'
         NeoBundle 'airblade/vim-rooter'
 
@@ -168,9 +167,13 @@
               \   'unix': 'make -f make_unix.mak',
               \ } }
         NeoBundle 'Shougo/unite.vim'
+        "https://github.com/Shougo/unite.vim/wiki/unite-plugins
         NeoBundle 'Shougo/unite-outline'
         NeoBundle 'Shougo/unite-help'
         NeoBundle 'thinca/vim-unite-history'
+        "NeoBundle 'thinca/vim-ref'
+        NeoBundle 'sgur/unite-git_grep'
+
         NeoBundle 'Shougo/neocomplcache'
         NeoBundle 'Shougo/neosnippet'
         NeoBundle 'Shougo/vimshell'
@@ -214,8 +217,12 @@
     set history=64
     set undolevels=128
     " try to create undo dir, skip error if exists
-    silent !mkdir ~/.vim_undo > /dev/null 2>&1
-    set undodir=~/.vim_undo/
+    silent !mkdir ~/.vim/tmp > /dev/null 2>&1
+    silent !mkdir ~/.vim/tmp/undo > /dev/null 2>&1
+    silent !mkdir ~/.vim/tmp/vimfiler > /dev/null 2>&1
+    silent !mkdir ~/.vim/tmp/unite > /dev/null 2>&1
+
+    set undodir=~/.vim/tmp/undo/
     set undofile
     set undolevels=1000
     set undoreload=10000
@@ -487,38 +494,43 @@
 "ca w!! w !sudo tee "%"
 
 " Autocommands {
-    au BufRead,BufNewFile *.phps    set filetype=php
-    au BufRead,BufNewFile *.js      set filetype=javascript
-    au BufRead,BufNewFile *.thtml   set filetype=php
-    au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
-    au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
-    au BufRead,BufNewFile {COMMIT_EDITMSG}                                set ft=gitcommit
+    " MyAutoCmd : an augroup for my autocmd {{{1
+    augroup MyAutoCmd
+      autocmd!
 
-    " S-k to open help
-    autocmd BufNewFile,Bufread *.php set keywordprg="help"
+      au BufRead,BufNewFile *.phps    set filetype=php
+      au BufRead,BufNewFile *.js      set filetype=javascript
+      au BufRead,BufNewFile *.thtml   set filetype=php
+      au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
+      au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
+      au BufRead,BufNewFile {COMMIT_EDITMSG}                                set ft=gitcommit
 
-    " Auto Completion
-    autocmd FileType python :set omnifunc=pythoncomplete#Complete
-    "autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+      " S-k to open help
+      autocmd BufNewFile,Bufread *.php set keywordprg="help"
 
-    autocmd FileType php :set omnifunc=phpcomplete#CompletePHP
-    "autocmd FileType php setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+      " Auto Completion
+      autocmd FileType python :set omnifunc=pythoncomplete#Complete
+      "autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 
-    autocmd FileType html :set omnifunc=htmlcomplete@CompleteTags
-    autocmd FileType html :set filetype=xhtml
-    "autocmd FileType html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+      autocmd FileType php :set omnifunc=phpcomplete#CompletePHP
+      "autocmd FileType php setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 
-    autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
-    "autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+      autocmd FileType html :set omnifunc=htmlcomplete@CompleteTags
+      autocmd FileType html :set filetype=xhtml
+      "autocmd FileType html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
-    " autocmd FileType ruby :set omnifunc=javascriptcomplete#CompleteJS
-    "autocmd FileType ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+      autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
+      "autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
-    autocmd FileType css :set omnifunc=csscomplete#CompleteCSS
-    "autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+      " autocmd FileType ruby :set omnifunc=javascriptcomplete#CompleteJS
+      "autocmd FileType ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
-    autocmd FileType c :set omnifunc=ccomplete#Complete
-    "autocmd FileType c setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+      autocmd FileType css :set omnifunc=csscomplete#CompleteCSS
+      "autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+      autocmd FileType c :set omnifunc=ccomplete#Complete
+      "autocmd FileType c setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+    augroup END
 
     " execute a command while preserve the position
     if !exists("*Preserve")
@@ -544,7 +556,7 @@
         endif
     endfunction
 
-    autocmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd BufWritePre <buffer>
+    autocmd MyAutoCmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd MyAutoCmd BufWritePre <buffer>
         \ call CleanTrails()
         "\ call Preserve("%s/\\s\\+$//e")
 
@@ -881,9 +893,9 @@
     \    }
     \}
     let g:taggatron_verbose=0
-    autocmd FileType php call taggatron#SetTags(".php.tags")
-    autocmd FileType python call taggatron#SetTags(".python.tags")
-    autocmd FileType javascript call taggatron#SetTags(".js.tags")
+    autocmd MyAutoCmd FileType php call taggatron#SetTags(".php.tags")
+    autocmd MyAutoCmd FileType python call taggatron#SetTags(".python.tags")
+    autocmd MyAutoCmd FileType javascript call taggatron#SetTags(".js.tags")
 
     " todo: check http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
     "       and https://github.com/tpope/vim-fugitive/issues/104
@@ -944,7 +956,7 @@
 
     map <Leader>s :SessionList<CR>
     " load last session on start
-    autocmd VimEnter *  call RestoreLastSessionMan()
+    autocmd MyAutoCmd VimEnter *  call RestoreLastSessionMan()
 
     function! LoadLocalVimrc()
         " Check for .vimrc.local in the current directory
@@ -1056,24 +1068,15 @@ endfunction
 " }
 "
 "https://github.com/terryma/dotfiles/blob/master/.vimrc
-"check
-"https://gist.github.com/beatinaniwa/3332059
 "http://vpaste.net/l1WqE
+"check
 "  + https://github.com/thinca/vim-ref
-"  ack - http://vpaste.net/lEBbg
-"https://github.com/Shougo/unite.vim/wiki/unite-plugins
 "http://d.hatena.ne.jp/osyo-manga/20130307/1362621589
-"https://github.com/Shougo/unite.vim/blob/master/doc/unite.txt
+"https://github.com/naruyan/nar/blob/master/.vimrc
 "
 " Map space to the prefix for Unite
 nnoremap [unite] <Nop>
 nmap <space>f [unite]
-" Ctrl-r: Command history using Unite, this matches my muscle memory in zsh
-"nmap <c-r> [unite];
-" Ctrl-\: Quick outline
-"nmap <silent> <c-\> [unite]o
-" Ctrl-y: Yanks
-"nmap <c-y> [unite]y
 " Ctrl-ss: (S)earch word under cur(s)or in current directory
 nnoremap <c-s><c-s> :Unite grep:.::<C-r><C-w><CR>
 " Ctrl-sd: (S)earch word in current (d)irectory (prompt for word)
@@ -1086,14 +1089,6 @@ nnoremap <c-s><c-r> :%s/<c-r><c-w>//gc<left><left><left>
 "vnoremap <c-r> "hy:%s/<c-r>h//gc<left><left><left>
 " Ctrl-s: Easier substitue
 "vnoremap <c-s> :s/\%V//g<left><left><left>
-" Ctrl-fm: (F)ind (M)RU and buffers
-"nmap <c-f><c-m> [unite]u
-" Ctrl-fa: (F)ind (A)all files recursively
-"nmap <c-f><c-a> [unite]f
-" Ctrl-fd: (F)ind (d)irectory. Change directory
-"nmap <c-f><c-d> [unite]d
-" Ctrl-/: A more powerful '/'
-"nmap <c-_> [unite]l
 
 " General fuzzy search
 nnoremap <silent> [unite]f :<C-u>Unite
@@ -1108,6 +1103,7 @@ nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
 nnoremap <silent> [unite]o :<C-u>Unite -buffer-name=outline -vertical outline<CR>
 " Quick sessions (projects)
 "nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=sessions session<CR>
+nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=processes process<CR>
 " Quick sources
 nnoremap <silent> [unite]a :<C-u>Unite -buffer-name=sources source<CR>
 " Quick snippet
@@ -1118,7 +1114,9 @@ nnoremap <silent> [unite]d
 " Quick file search
 nnoremap <silent> [unite]ff :<C-u>Unite -buffer-name=files file_rec/async file/new<CR>
 " Quick grep from cwd
-nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:.<CR>
+"nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:. -auto-preview<CR>
+nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep grep:.<CR>
+nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep vcs_grep/git:.<CR>
 " Quick help
 nnoremap <silent> [unite]h :<C-u>Unite -buffer-name=help help<CR>
 " Quick line using the word under cursor
@@ -1138,11 +1136,10 @@ nnoremap <silent> [unite]b :<C-u>Unite -buffer-name=bookmarks bookmark<CR>
 nnoremap <silent> [unite]; :<C-u>Unite -buffer-name=history history/command command<CR>
 
 "" Custom Unite settings
-"autocmd MyAutoCmd FileType unite call s:unite_settings()
-"function! s:unite_settings()
-
-  "nmap <buffer> <ESC> <Plug>(unite_exit)
-  "imap <buffer> <ESC> <Plug>(unite_exit)
+autocmd MyAutoCmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  nmap <buffer> <ESC> <Plug>(unite_exit)
+  imap <buffer> <ESC> <Plug>(unite_exit)
   "" imap <buffer> <c-j> <Plug>(unite_select_next_line)
   "imap <buffer> <c-j> <Plug>(unite_insert_leave)
   "nmap <buffer> <c-j> <Plug>(unite_loop_cursor_down)
@@ -1179,7 +1176,7 @@ nnoremap <silent> [unite]; :<C-u>Unite -buffer-name=history history/command comm
   "if unite.buffer_name =~# '^search_file'
     "imap <buffer> <C-_> <Plug>(unite_exit)
   "endif
-"endfunction
+endfunction
 
 " Use the fuzzy matcher for everything
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
@@ -1200,6 +1197,7 @@ let g:unite_cursor_line_highlight = 'TabLineSel'
 
 let g:unite_source_file_mru_filename_format = ':~:.'
 let g:unite_source_file_mru_time_format = ''
+let g:unite_data_directory = expand('~/.vim/tmp/unite/')
 
 " For ack.
 if executable('ack-grep')
@@ -1220,6 +1218,14 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
       \ '\.svn/',
       \ '.*\.tags',
       \ ], '\|'))
+
+" Enable omni completion. Not required if they are already set elsewhere in .vimrc
+autocmd MyAutoCmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd MyAutoCmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd MyAutoCmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd MyAutoCmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd MyAutoCmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd MyAutoCmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 " Launches neocomplcache automatically on vim startup.
 let g:neocomplcache_enable_at_startup = 1
@@ -1252,12 +1258,25 @@ if !exists('g:neocomplcache_keyword_patterns')
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
+" Enable heavy omni completion, which require computational power and may stall the vim.
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
+let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neocomplcache_snippets_expand)
 smap <C-k>     <Plug>(neocomplcache_snippets_expand)
 inoremap <expr><C-g>     neocomplcache#undo_completion()
 inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 " SuperTab like snippets behavior.
 "imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 " SuperTab like snippets behavior.
@@ -1287,23 +1306,6 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>"
 "inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 
-" Enable omni completion. Not required if they are already set elsewhere in .vimrc
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion, which require computational power and may stall the vim.
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
-let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
-
 "===============================================================================
 " VimShell
 "===============================================================================
@@ -1327,6 +1329,18 @@ let g:vimshell_prompt = "% "
         "\ g:my_vimfiler_explorer_name,
         "\ g:my_vimfiler_winwidth)
 "endfunction
+let g:vimfiler_data_directory = expand('~/.vim/tmp/vimfiler/')
+"let g:vimfiler_safe_mode_by_default = 0
+"let g:vimfiler_execute_file_list = { "_": "vim" }
+"nno ` :<C-u>:VimFilerBufferDir -buffer-name=explorer -toggle<CR>
+function! s:vimfiler_settings()
+    nmap <buffer> - <Plug>(vimfiler_switch_to_parent_directory)
+    "nmap <buffer> % <Plug>(vimfiler_new_file)
+    "nmap <buffer> <Backspace> <C-^>
+    "nmap <buffer> <leader>x <Plug>(vimfiler_exit)
+    "nmap <buffer> <leader>X <Plug>(vimfiler_exit)
+endfunction
+autocmd MyAutoCmd Filetype vimfiler call s:vimfiler_settings()
 
 "let g:vimfiler_as_default_explorer = 1
 "let g:vimfiler_tree_leaf_icon = ' '
@@ -1344,6 +1358,13 @@ let g:vimshell_prompt = "% "
 "function! s:vimfiler_settings()
   "nmap     <buffer><expr><CR>  vimfiler#smart_cursor_map("\<PLUG>(vimfiler_expand_tree)", "e")
 "endfunction
+"
+" Ref {{{
+    "let g:ref_use_vimproc = 1
+    "let g:ref_open = 'vsplit'
+    "let g:ref_cache_dir = expand('~/.vim/tmp/ref_cache/')
+    "nno <leader>K :<C-u>Unite ref/erlang -buffer-name=erlang_docs -start-insert -vertical -default-action=split<CR>
+" }}}
 
 " --------------  links --------------------
 " vimrc {

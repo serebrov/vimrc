@@ -3,6 +3,7 @@ doc/tags
 sessions
 cache
 bundle/*
+tmp/*
 eclim
 plugin/eclim.vim
 vim_phpdebug.sess
