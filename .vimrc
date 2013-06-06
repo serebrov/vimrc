@@ -116,7 +116,8 @@
         " Markup files preview
         " <Leader>P
         NeoBundle 'greyblake/vim-preview'
-        "
+        NeoBundle 'suan/vim-instant-markdown'
+        
         "NeoBundle 'UltiSnips'
         " At every search command, it automatically prints
         " "At match #N out of M matches".
@@ -485,6 +486,7 @@
 
 
 " }
+let g:PreviewBrowsers='google-chrome'
 " Syntastic {
     let g:syntastic_php_checkers = ['php','phpmd']
     "let g:syntastic_phpcs_conf = "--standard=Seb"
