@@ -117,7 +117,7 @@
         " <Leader>P
         NeoBundle 'greyblake/vim-preview'
         NeoBundle 'suan/vim-instant-markdown'
-        
+
         "NeoBundle 'UltiSnips'
         " At every search command, it automatically prints
         " "At match #N out of M matches".
@@ -1095,10 +1095,16 @@ nnoremap <c-s><c-r> :%s/<c-r><c-w>//gc<left><left><left>
 " General fuzzy search
 nnoremap <silent> [unite]f :<C-u>Unite
       \ -buffer-name=files buffer file_mru bookmark file_rec/async<CR>
-" Quick registers
-nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
+" Quick grep from cwd
+"nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:. -auto-preview<CR>
+nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep vcs_grep/git:.<CR>
+nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep grep:.<CR>
 " Quick buffer and mru
 nnoremap <silent> [unite]m :<C-u>Unite -buffer-name=buffers buffer file_mru<CR>
+nnoremap <silent> [unite]mm :<C-u>Unite -buffer-name=buffers -quick-match buffer file_mru<CR>
+
+" Quick registers
+nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
 " Quick yank history
 nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
 " Quick outline
@@ -1115,10 +1121,6 @@ nnoremap <silent> [unite]d
       \ :<C-u>Unite -buffer-name=change-cwd -default-action=lcd directory_mru<CR>
 " Quick file search
 nnoremap <silent> [unite]ff :<C-u>Unite -buffer-name=files file_rec/async file/new<CR>
-" Quick grep from cwd
-"nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:. -auto-preview<CR>
-nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep grep:.<CR>
-nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep vcs_grep/git:.<CR>
 " Quick help
 nnoremap <silent> [unite]h :<C-u>Unite -buffer-name=help help<CR>
 " Quick line using the word under cursor
