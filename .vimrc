@@ -173,7 +173,7 @@
         NeoBundle 'Shougo/unite-help'
         NeoBundle 'thinca/vim-unite-history'
         "NeoBundle 'thinca/vim-ref'
-        NeoBundle 'sgur/unite-git_grep'
+        "NeoBundle 'sgur/unite-git_grep'
 
         NeoBundle 'Shougo/neocomplcache'
         NeoBundle 'Shougo/neosnippet'
@@ -1095,11 +1095,17 @@ nnoremap <c-s><c-r> :%s/<c-r><c-w>//gc<left><left><left>
 
 " General fuzzy search
 nnoremap <silent> [unite]f :<C-u>Unite
-      \ -buffer-name=files buffer file_mru bookmark file_rec/async<CR>
-" Quick registers
-nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
+      \ -buffer-name=files file_rec/async<CR>
+" Quick grep from cwd
+"nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:. -auto-preview<CR>
+nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep vcs_grep/git:.<CR>
+nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:.<CR>
 " Quick buffer and mru
 nnoremap <silent> [unite]m :<C-u>Unite -buffer-name=buffers buffer file_mru<CR>
+nnoremap <silent> [unite]mm :<C-u>Unite -buffer-name=buffers -quick-match buffer file_mru<CR>
+
+" Quick registers
+nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
 " Quick yank history
 nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
 " Quick outline
@@ -1116,16 +1122,10 @@ nnoremap <silent> [unite]d
       \ :<C-u>Unite -buffer-name=change-cwd -default-action=lcd directory_mru<CR>
 " Quick file search
 nnoremap <silent> [unite]ff :<C-u>Unite -buffer-name=files file_rec/async file/new<CR>
-" Quick grep from cwd
-"nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:. -auto-preview<CR>
-nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep grep:.<CR>
-nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep vcs_grep/git:.<CR>
 " Quick help
 nnoremap <silent> [unite]h :<C-u>Unite -buffer-name=help help<CR>
 " Quick line using the word under cursor
 nnoremap <silent> [unite]l :<C-u>UniteWithCursorWord -buffer-name=search_file line<CR>
-" Quick MRU search
-nnoremap <silent> [unite]fm :<C-u>Unite -buffer-name=mru file_mru<CR>
 " Quick find
 nnoremap <silent> [unite]n :<C-u>Unite -buffer-name=find find:.<CR>
 " Quick commands
@@ -1143,13 +1143,13 @@ autocmd MyAutoCmd FileType unite call s:unite_settings()
 function! s:unite_settings()
   nmap <buffer> <ESC> <Plug>(unite_exit)
   imap <buffer> <ESC> <Plug>(unite_exit)
+  imap <buffer> jj <Plug>(unite_insert_leave)
   "" imap <buffer> <c-j> <Plug>(unite_select_next_line)
   "imap <buffer> <c-j> <Plug>(unite_insert_leave)
   "nmap <buffer> <c-j> <Plug>(unite_loop_cursor_down)
   "nmap <buffer> <c-k> <Plug>(unite_loop_cursor_up)
   "imap <buffer> <c-a> <Plug>(unite_choose_action)
   "imap <buffer> <Tab> <Plug>(unite_exit_insert)
-  "imap <buffer> jj <Plug>(unite_insert_leave)
   "imap <buffer> <C-w> <Plug>(unite_delete_backward_word)
   "imap <buffer> <C-u> <Plug>(unite_delete_backward_path)
   "imap <buffer> '     <Plug>(unite_quick_match_default_action)
@@ -1169,16 +1169,6 @@ function! s:unite_settings()
   "endif
 
   "nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
-
-  "" Using Ctrl-\ to trigger outline, so close it using the same keystroke
-  "if unite.buffer_name =~# '^outline'
-    "imap <buffer> <C-\> <Plug>(unite_exit)
-  "endif
-
-  "" Using Ctrl-/ to trigger line, close it using same keystroke
-  "if unite.buffer_name =~# '^search_file'
-    "imap <buffer> <C-_> <Plug>(unite_exit)
-  "endif
 endfunction
 
 " Use the fuzzy matcher for everything
