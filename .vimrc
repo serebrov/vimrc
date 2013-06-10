@@ -117,7 +117,7 @@
         " <Leader>P
         NeoBundle 'greyblake/vim-preview'
         NeoBundle 'suan/vim-instant-markdown'
-        
+
         "NeoBundle 'UltiSnips'
         " At every search command, it automatically prints
         " "At match #N out of M matches".
@@ -816,7 +816,8 @@ let g:PreviewBrowsers='google-chrome'
         else
             let url = url.'&XDEBUG_SESSION_START=vim_debug'
         endif
-        call xolox#shell#open_cmd(url)
+        "call xolox#shell#open_cmd(url)
+        exec "!xdg-open '".url."'"
         python debugger.run()
     endfunction
     " example:
