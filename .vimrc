@@ -710,8 +710,8 @@ let g:PreviewBrowsers='google-chrome'
         autocmd filetype netrw call RegisterNetrwMaps()
     augroup END
     function! RegisterNetrwMaps()
-        " save previous mapping
         if !exists("b:browseup_map")
+          " save previous mapping
           let b:browseup_map = mapcheck('-')
           " saved command is like this:
           " :exe "norm! 0"|call netrw#LocalBrowseCheck(<SNR>172_NetrwBrowseChgDir(1,'../'))<CR>
