@@ -710,15 +710,26 @@ let g:PreviewBrowsers='google-chrome'
         autocmd filetype netrw call RegisterNetrwMaps()
     augroup END
     function! RegisterNetrwMaps()
-        nmap <buffer> - :call CdUpAndFocus()<CR>
+        " save previous mapping
+        if !exists("b:browseup_map")
+          let b:browseup_map = mapcheck('-')
+          " saved command is like this:
+          " :exe "norm! 0"|call netrw#LocalBrowseCheck(<SNR>172_NetrwBrowseChgDir(1,'../'))<CR>
+          " remove <CR> at the end (otherwise raises "E488: Trailing characters")
+          let b:browseup = strpart(b:browseup_map, 0, strlen(b:browseup_map)-4)
+        endif
+        nmap <buffer> - :<c-u>call CdUpAndFocus(b:browseup)<CR>
+        " use Leader-r to refresh (default is Ctrl-L which is used to jump
+        " to the left window)
+        nmap <buffer> <Leader>r <Plug>NetrwRefresh
     endfunction
-    function! CdUpAndFocus()
+    function! CdUpAndFocus(browseup)
+        "normal -
+        execute a:browseup
         if expand('%') != ''
           let l:cd = expand('%:p:h:h')
           let l:t = expand('%:t')
-          "echo l:cd
-          "echo l:t
-          execute ':e ' . l:cd
+          "execute ':e ' . l:cd
           " search for ..
           execute '/\.\.'
           " search for dir
