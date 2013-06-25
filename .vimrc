@@ -514,26 +514,16 @@ let g:PreviewBrowsers='google-chrome'
 
       " Auto Completion
       autocmd FileType python :set omnifunc=pythoncomplete#Complete
-      "autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-
       autocmd FileType php :set omnifunc=phpcomplete#CompletePHP
-      "autocmd FileType php setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-
-      autocmd FileType html :set omnifunc=htmlcomplete@CompleteTags
-      autocmd FileType html :set filetype=xhtml
-      "autocmd FileType html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
+      autocmd FileType html,markdown :set omnifunc=htmlcomplete@CompleteTags
       autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
-      "autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
-      " autocmd FileType ruby :set omnifunc=javascriptcomplete#CompleteJS
-      "autocmd FileType ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
       autocmd FileType css :set omnifunc=csscomplete#CompleteCSS
-      "autocmd FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
       autocmd FileType c :set omnifunc=ccomplete#Complete
-      "autocmd FileType c setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+      autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+
+      autocmd FileType html :set filetype=xhtml
+
     augroup END
 
     " execute a command while preserve the position
@@ -991,8 +981,9 @@ let g:PreviewBrowsers='google-chrome'
         " Check that the user has started Vim without editing any files.
         if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
             :SessionOpenLast
+            ":tabdo filetype detect
+            :Rooter
         endif
-        :Rooter
         call LoadLocalVimrc()
     endfunction
 " }
@@ -1085,8 +1076,7 @@ endfunction
 "
 "https://github.com/terryma/dotfiles/blob/master/.vimrc
 "http://vpaste.net/l1WqE
-"check
-"  + https://github.com/thinca/vim-ref
+"https://github.com/thinca/vim-ref
 "http://d.hatena.ne.jp/osyo-manga/20130307/1362621589
 "https://github.com/naruyan/nar/blob/master/.vimrc
 "
@@ -1097,8 +1087,6 @@ nmap <space>f [unite]
 nnoremap <c-s><c-s> :Unite grep:.::<C-r><C-w><CR>
 " Ctrl-sd: (S)earch word in current (d)irectory (prompt for word)
 nnoremap <c-s><c-d> :Unite grep:.<CR>
-" Ctrl-sf: Quickly (s)earch in (f)ile
-"nmap <c-s><c-f> [unite]l
 " Ctrl-sr: Easier (s)earch and (r)eplace
 nnoremap <c-s><c-r> :%s/<c-r><c-w>//gc<left><left><left>
 " Ctrl-r: Easier search and replace
@@ -1106,50 +1094,50 @@ nnoremap <c-s><c-r> :%s/<c-r><c-w>//gc<left><left><left>
 " Ctrl-s: Easier substitue
 "vnoremap <c-s> :s/\%V//g<left><left><left>
 
-" General fuzzy search
-nnoremap <silent> [unite]f :<C-u>Unite
-      \ -buffer-name=files file_rec/async<CR>
-" Quick grep from cwd
+" General fuzzy search - async recursive directory search + new files
+nnoremap <silent> [unite]f :<C-u>Unite -buffer-name=files file_rec/async file/new<CR>
+" git grep
+nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep vcs_grep/git:.<CR>
+" grep
+nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep grep:.<CR>
+" grep with preview
 "nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:. -auto-preview<CR>
-nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep vcs_grep/git:.<CR>
-nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:.<CR>
+" Fuzzy search from current buffer
+" nnoremap <silent> [unite]b :<C-u>UniteWithBufferDir
+      " \ -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
+" Find files with find
+nnoremap <silent> [unite]n :<C-u>Unite -buffer-name=find find:.<CR>
+
+" Quickly switch lcd
+nnoremap <silent> [unite]d
+      \ :<C-u>Unite -buffer-name=change-cwd -default-action=lcd directory_mru<CR>
+
 " Quick buffer and mru
 nnoremap <silent> [unite]m :<C-u>Unite -buffer-name=buffers buffer file_mru<CR>
 nnoremap <silent> [unite]mm :<C-u>Unite -buffer-name=buffers -quick-match buffer file_mru<CR>
+
+" Quick outline
+nnoremap <silent> [unite]o :<C-u>Unite -buffer-name=outline -vertical outline<CR>
+" Quick line using the word under cursor
+nnoremap <silent> [unite]l :<C-u>UniteWithCursorWord -buffer-name=search_file line<CR>
 
 " Quick registers
 nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
 " Quick yank history
 nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
-" Quick outline
-nnoremap <silent> [unite]o :<C-u>Unite -buffer-name=outline -vertical outline<CR>
-" Quick sessions (projects)
-"nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=sessions session<CR>
-nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=processes process<CR>
-" Quick sources
-nnoremap <silent> [unite]a :<C-u>Unite -buffer-name=sources source<CR>
-" Quick snippet
-nnoremap <silent> [unite]s :<C-u>Unite -buffer-name=snippets snippet<CR>
-" Quickly switch lcd
-nnoremap <silent> [unite]d
-      \ :<C-u>Unite -buffer-name=change-cwd -default-action=lcd directory_mru<CR>
-" Quick file search
-nnoremap <silent> [unite]ff :<C-u>Unite -buffer-name=files file_rec/async file/new<CR>
-" Quick help
-nnoremap <silent> [unite]h :<C-u>Unite -buffer-name=help help<CR>
-" Quick line using the word under cursor
-nnoremap <silent> [unite]l :<C-u>UniteWithCursorWord -buffer-name=search_file line<CR>
-" Quick find
-nnoremap <silent> [unite]n :<C-u>Unite -buffer-name=find find:.<CR>
-" Quick commands
+" Quick vim commands
 nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands command<CR>
+" Quick command history
+nnoremap <silent> [unite]; :<C-u>Unite -buffer-name=history history/command command<CR>
 " Quick bookmarks
 nnoremap <silent> [unite]b :<C-u>Unite -buffer-name=bookmarks bookmark<CR>
-" Fuzzy search from current buffer
-" nnoremap <silent> [unite]b :<C-u>UniteWithBufferDir
-      " \ -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
-" Quick commands
-nnoremap <silent> [unite]; :<C-u>Unite -buffer-name=history history/command command<CR>
+" Quick help
+nnoremap <silent> [unite]h :<C-u>Unite -buffer-name=help help<CR>
+" Quick unite sources
+nnoremap <silent> [unite]a :<C-u>Unite -buffer-name=sources source<CR>
+
+" Quick processes
+nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=processes process<CR>
 
 "" Custom Unite settings
 autocmd MyAutoCmd FileType unite call s:unite_settings()
@@ -1196,6 +1184,7 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_split_rule = "botright"
 " Shorten the default update date of 500ms
 let g:unite_update_time = 200
+let g:unite_source_rec_max_cache_files = 10000
 
 let g:unite_source_file_mru_limit = 1000
 let g:unite_cursor_line_highlight = 'TabLineSel'
@@ -1222,16 +1211,11 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
       \ 'ignore_pattern', join([
       \ '\.git/',
       \ '\.svn/',
+      \ '\.cache/',
       \ '.*\.tags',
+      \ '.*\.pyc',
+      \ '.*\.jpg',
       \ ], '\|'))
-
-" Enable omni completion. Not required if they are already set elsewhere in .vimrc
-autocmd MyAutoCmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd MyAutoCmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd MyAutoCmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd MyAutoCmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd MyAutoCmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd MyAutoCmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 " http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
 let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
