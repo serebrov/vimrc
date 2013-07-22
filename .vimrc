@@ -123,7 +123,6 @@
         NeoBundle 'greyblake/vim-preview'
         NeoBundle 'suan/vim-instant-markdown'
 
-        NeoBundle 'Valloric/YouCompleteMe'
         NeoBundle "Valloric/YouCompleteMe", {"build": {
             \ "mac": "sh install.sh --clang-completer",
             \ "unix": "sh install.sh --clang-completer"
