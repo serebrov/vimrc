@@ -174,7 +174,7 @@
         NeoBundle 'Shougo/unite-help'
         NeoBundle 'thinca/vim-unite-history'
         "NeoBundle 'thinca/vim-ref'
-        "NeoBundle 'sgur/unite-git_grep'
+        NeoBundle 'sgur/unite-git_grep'
 
         "NeoBundle 'Shougo/neocomplcache'
         "NeoBundle 'Shougo/neosnippet'
@@ -708,23 +708,22 @@ let g:PreviewBrowsers='google-chrome'
           " remove <CR> at the end (otherwise raises "E488: Trailing characters")
           let b:browseup = strpart(b:browseup_map, 0, strlen(b:browseup_map)-4)
         endif
-        nmap <buffer> - :<c-u>call CdUpAndFocus(b:browseup)<CR>
+        nmap <buffer> - :call CdUpAndFocus(b:browseup)<CR>
         " use Leader-r to refresh (default is Ctrl-L which is used to jump
         " to the left window)
         nmap <buffer> <Leader>r <Plug>NetrwRefresh
     endfunction
     function! CdUpAndFocus(browseup)
         "normal -
+        let l:cd = expand('%:p:h:h')
+        let l:t = expand('%:t')
         execute a:browseup
         if expand('%') != ''
-          let l:cd = expand('%:p:h:h')
-          let l:t = expand('%:t')
-          "execute ':e ' . l:cd
           " search for ..
           execute '/\.\.'
           " search for dir
           execute '/' . escape(l:t, '/')
-      endif
+        endif
     endfunction
 
     " Search and replace word under cursor
@@ -1094,33 +1093,40 @@ nnoremap <c-s><c-r> :%s/<c-r><c-w>//gc<left><left><left>
 " Ctrl-s: Easier substitue
 "vnoremap <c-s> :s/\%V//g<left><left><left>
 
+""" Search for files
 " General fuzzy search - async recursive directory search + new files
-nnoremap <silent> [unite]f :<C-u>Unite -buffer-name=files file_rec/async file/new<CR>
+nnoremap <silent> [unite]f :<C-u>Unite -buffer-name=files -no-split file_rec/async file/new<CR>
+" Find files with find
+nnoremap <silent> [unite]n :<C-u>Unite -buffer-name=find -no-split find:.<CR>
+" Quick buffer and mru
+nnoremap <silent> [unite]m :<C-u>Unite -buffer-name=buffers -no-split buffer file_mru<CR>
+nnoremap <silent> [unite]mm :<C-u>Unite -buffer-name=buffers -quick-match -no-split buffer file_mru<CR>
+
+""" Search in files
 " git grep
-nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep vcs_grep/git:.<CR>
+nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep -no-quit vcs_grep/git:.<CR>
 " grep
-nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep grep:.<CR>
+nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep -no-quit grep:.<CR>
 " grep with preview
 "nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:. -auto-preview<CR>
 " Fuzzy search from current buffer
 " nnoremap <silent> [unite]b :<C-u>UniteWithBufferDir
       " \ -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
-" Find files with find
-nnoremap <silent> [unite]n :<C-u>Unite -buffer-name=find find:.<CR>
 
-" Quickly switch lcd
-nnoremap <silent> [unite]d
-      \ :<C-u>Unite -buffer-name=change-cwd -default-action=lcd directory_mru<CR>
+" to search specific dir and keep results:
+" :Unite -no-quit grep:some/dir
 
-" Quick buffer and mru
-nnoremap <silent> [unite]m :<C-u>Unite -buffer-name=buffers buffer file_mru<CR>
-nnoremap <silent> [unite]mm :<C-u>Unite -buffer-name=buffers -quick-match buffer file_mru<CR>
+"" Quickly switch lcd
+"nnoremap <silent> [unite]d
+      "\ :<C-u>Unite -buffer-name=change-cwd -default-action=lcd directory_mru<CR>
 
+""" Search inside the file
 " Quick outline
 nnoremap <silent> [unite]o :<C-u>Unite -buffer-name=outline -vertical outline<CR>
 " Quick line using the word under cursor
 nnoremap <silent> [unite]l :<C-u>UniteWithCursorWord -buffer-name=search_file line<CR>
 
+""" Search vim lists
 " Quick registers
 nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
 " Quick yank history
