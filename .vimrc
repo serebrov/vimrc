@@ -31,6 +31,11 @@
         " visual guides for indents, default mapping <Leager>ig
         NeoBundle 'nathanaelkane/vim-indent-guides'
         " rainbow parenthesis
+        " Note: doesn't work for php due some specifics in the syntax file
+        " it doesn't work with default syntax file and with extended versions
+        " (https://github.com/vim-scripts/php.vim--Garvin) and (https://github.com/StanAngeloff/php.vim)
+        " maybe this can be fixed?
+        " see https://defuse.ca/blog/vim-rainbow-parentheses-work-in-php
         NeoBundle 'kien/rainbow_parentheses.vim'
         " Powerline - create better-looking, more functional vim statuslines.
         NeoBundle 'Lokaltog/vim-powerline'
@@ -146,7 +151,8 @@
         " php completion - it should be copied to autoload/phpcomplete.vim
         NeoBundle 'shawncplus/phpcomplete.vim'
         " php 5.3 syntax
-        NeoBundle 'vim-scripts/php.vim--Garvin'
+        "NeoBundle 'vim-scripts/php.vim--Garvin'
+        NeoBundle 'StanAngeloff/php.vim'
         NeoBundle '2072/PHP-Indenting-for-VIm'
         " view php docs with K
         NeoBundle 'mudpile45/vim-phpdoc'
@@ -196,6 +202,7 @@
         " adds a Bundles menu to Vim, displaying the installed plugins and the features they provide
         NeoBundle 'Headlights'
     " JavaScript
+        NeoBundle 'jelera/vim-javascript-syntax'
         NeoBundle 'itspriddle/vim-jquery.git'
         " ejs templates syntax highlight
         NeoBundle 'briancollins/vim-jst.git'
