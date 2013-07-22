@@ -28,6 +28,8 @@
         NeoBundle 'int3/vim-extradite'
         " visual guides for indents, default mapping <Leager>ig
         NeoBundle 'nathanaelkane/vim-indent-guides'
+        " rainbow parenthesis
+        NeoBundle 'kien/rainbow_parentheses.vim'
         " Powerline - create better-looking, more functional vim statuslines.
         NeoBundle 'Lokaltog/vim-powerline'
         " Simpler way to use some motions in vim.
@@ -106,6 +108,8 @@
         " Solarized color scheme
         NeoBundle 'altercation/vim-colors-solarized'
         NeoBundle 'nelstrom/vim-mac-classic-theme'
+        NeoBundle 'morhetz/gruvbox'
+        NeoBundle 'sjl/badwolf'
         "Ack support for vim
         "NeoBundle 'mileszs/ack.vim'
 
@@ -239,20 +243,21 @@
 
    " Colors {
         set background=dark
-        " Solarized {
-            let g:solarized_termcolors=256
-            let g:solarized_contrast="high"    "default value is normal
-            let g:solarized_diffmode="high"    "default value is normal
-            try
-                colorscheme solarized
-            catch /^Vim\%((\a\+)\)\=:E185/
-                echo "Solarized theme not found. Run :BundleInstall"
-            endtry
-        " }
-        if $COLORTERM == 'gnome-terminal'
-            set t_Co=256
-            set background=dark
-        endif
+        "" Solarized {
+            "let g:solarized_termcolors=256
+            "let g:solarized_contrast="high"    "default value is normal
+            "let g:solarized_diffmode="high"    "default value is normal
+            "try
+                "colorscheme solarized
+            "catch /^Vim\%((\a\+)\)\=:E185/
+                "echo "Solarized theme not found. Run :BundleInstall"
+            "endtry
+        "" }
+        "if $COLORTERM == 'gnome-terminal'
+            "set t_Co=256
+            "set background=dark
+        "endif
+        colorscheme gruvbox
    " }
 
     " Font
@@ -330,7 +335,7 @@
     " this allow to treat underscore (_) as word boundary
     "set iskeyword-=_
 
-    highlight lCursor guifg=NONE guibg=Cyan
+    "highlight lCursor guifg=NONE guibg=Cyan
     set iminsert=0              " latin langmap by default when typing
     set imsearch=0              " latin langmap by default when search
 
@@ -368,8 +373,8 @@
          let &sbr = nr2char(8618).' '  " Show ↪ at the beginning of wrapped lines
      endif
      "Invisible character colors
-     highlight NonText guifg=#4a4a59
-     highlight SpecialKey guifg=#4a4a59
+     "highlight NonText guifg=#4a4a59
+     "highlight SpecialKey guifg=#4a4a59
 
      set nostartofline          " leave my cursor where it was
 
@@ -529,6 +534,14 @@ let g:PreviewBrowsers='google-chrome'
 
       autocmd FileType html :set filetype=xhtml
 
+    augroup END
+
+    augroup Rainbow
+      autocmd!
+      au VimEnter * RainbowParenthesesToggle
+      au Syntax * RainbowParenthesesLoadRound
+      au Syntax * RainbowParenthesesLoadSquare
+      au Syntax * RainbowParenthesesLoadBraces
     augroup END
 
     " execute a command while preserve the position
