@@ -30,6 +30,7 @@
         NeoBundle 'nathanaelkane/vim-indent-guides'
         " rainbow parenthesis
         NeoBundle 'kien/rainbow_parentheses.vim'
+
         " Powerline - create better-looking, more functional vim statuslines.
         NeoBundle 'Lokaltog/vim-powerline'
         " Simpler way to use some motions in vim.
@@ -201,7 +202,7 @@
 
         "NeoBundle 'git://github.com/sjl/threesome.vim.git'
     " JavaScript
-        NeoBundle 'pangloss/vim-javascript.git'
+        "NeoBundle 'pangloss/vim-javascript.git'
         NeoBundle 'itspriddle/vim-jquery.git'
         " ejs templates syntax highlight
         NeoBundle 'briancollins/vim-jst.git'
@@ -243,21 +244,22 @@
 
    " Colors {
         set background=dark
-        "" Solarized {
+        " Solarized {
             "let g:solarized_termcolors=256
-            "let g:solarized_contrast="high"    "default value is normal
-            "let g:solarized_diffmode="high"    "default value is normal
-            "try
-                "colorscheme solarized
-            "catch /^Vim\%((\a\+)\)\=:E185/
-                "echo "Solarized theme not found. Run :BundleInstall"
-            "endtry
-        "" }
+            let g:solarized_contrast="high"    "default value is normal
+            let g:solarized_diffmode="high"    "default value is normal
+            try
+                colorscheme solarized
+            catch /^Vim\%((\a\+)\)\=:E185/
+                echo "Solarized theme not found. Run :BundleInstall"
+            endtry
+        " }
         "if $COLORTERM == 'gnome-terminal'
             "set t_Co=256
             "set background=dark
         "endif
-        colorscheme gruvbox
+        "colorscheme gruvbox
+        "colorscheme wombat
    " }
 
     " Font
