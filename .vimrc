@@ -26,13 +26,22 @@
         NeoBundle 'tpope/vim-sleuth'
         " fugitive extension, commit browser - :Extradite
         NeoBundle 'int3/vim-extradite'
+        "NeoBundle 'git://github.com/sjl/threesome.vim.git'
+
         " visual guides for indents, default mapping <Leager>ig
         NeoBundle 'nathanaelkane/vim-indent-guides'
         " rainbow parenthesis
         NeoBundle 'kien/rainbow_parentheses.vim'
-
         " Powerline - create better-looking, more functional vim statuslines.
         NeoBundle 'Lokaltog/vim-powerline'
+        " adopt color schemes for terminal
+        NeoBundle 'godlygeek/csapprox'
+        " Solarized color scheme
+        NeoBundle 'altercation/vim-colors-solarized'
+        NeoBundle 'nelstrom/vim-mac-classic-theme'
+        NeoBundle 'morhetz/gruvbox'
+        NeoBundle 'sjl/badwolf'
+
         " Simpler way to use some motions in vim.
         " Start motion with <Leader><Leader>
         " Like <Space>w to trigger the word motion w
@@ -95,8 +104,7 @@
         "  split_declarations, trenary_operator, cpp_io, pascal_assign,
         "  trailing_c_comments
         NeoBundle 'godlygeek/tabular'
-        " adopt color schemes for terminal
-        NeoBundle 'godlygeek/csapprox'
+
         " Commenting code
         " <Leader>cc - comment line or selected text
         " <Leader>cu - uncomment line or selected text
@@ -104,15 +112,9 @@
         " <Leader>cs - 'sexy' comments
         " <Leader>c<space> - toggle comments state, see more in help
         NeoBundle 'scrooloose/nerdcommenter'
+
         " Syntax checker
         NeoBundle 'scrooloose/syntastic'
-        " Solarized color scheme
-        NeoBundle 'altercation/vim-colors-solarized'
-        NeoBundle 'nelstrom/vim-mac-classic-theme'
-        NeoBundle 'morhetz/gruvbox'
-        NeoBundle 'sjl/badwolf'
-        "Ack support for vim
-        "NeoBundle 'mileszs/ack.vim'
 
         " Markdown support
         NeoBundle 'tpope/vim-markdown'
@@ -133,8 +135,6 @@
         " At every search command, it automatically prints
         " "At match #N out of M matches".
         NeoBundle 'IndexedSearch'
-        " CtrlP
-        "NeoBundle 'kien/ctrlp.vim'
 
         " :Multichange and then cw to change word in a whole file (or any
         " other cxx command)
@@ -183,11 +183,8 @@
         NeoBundle 'Shougo/unite-outline'
         NeoBundle 'Shougo/unite-help'
         NeoBundle 'thinca/vim-unite-history'
-        "NeoBundle 'thinca/vim-ref'
         NeoBundle 'sgur/unite-git_grep'
 
-        "NeoBundle 'Shougo/neocomplcache'
-        "NeoBundle 'Shougo/neosnippet'
         NeoBundle 'Shougo/vimshell'
         NeoBundle 'Shougo/vimfiler'
 
@@ -199,10 +196,7 @@
 
         " adds a Bundles menu to Vim, displaying the installed plugins and the features they provide
         NeoBundle 'Headlights'
-
-        "NeoBundle 'git://github.com/sjl/threesome.vim.git'
     " JavaScript
-        "NeoBundle 'pangloss/vim-javascript.git'
         NeoBundle 'itspriddle/vim-jquery.git'
         " ejs templates syntax highlight
         NeoBundle 'briancollins/vim-jst.git'
@@ -261,14 +255,6 @@
         "colorscheme gruvbox
         "colorscheme wombat
    " }
-
-    " Font
-    "if has('win32') || has('win64')
-        "colorscheme default
-    "elseif has('unix')
-        "set guifont=Monospace\ 10
-        ""set guifont=Inconsolata\ Medium\ 11
-    "endif
 
     " GUI Settings {
     if has("gui_running")
@@ -375,8 +361,8 @@
          let &sbr = nr2char(8618).' '  " Show ↪ at the beginning of wrapped lines
      endif
      "Invisible character colors
-     "highlight NonText guifg=#4a4a59
-     "highlight SpecialKey guifg=#4a4a59
+     highlight NonText guifg=#4a4a59
+     highlight SpecialKey guifg=#4a4a59
 
      set nostartofline          " leave my cursor where it was
 
@@ -425,8 +411,6 @@
     set softtabstop=4           " when hitting tab or backspace, how many spaces
                                 " should a tab be (see expandtab)
     set tabstop=4               " real tabs will show with set list on
-
-    " set textwidth=80
 
     set formatoptions-=t        " Do not automatically wrap text on textwidth
     set formatoptions+=crq      " Automatically insert comment leader on return,
@@ -489,25 +473,18 @@
 " }
 
 " Plugins {
-    " Ack
-    "let g:ackprg="ack-grep -H --nocolor --nogroup --column --type-set tags=.tags --notags"
-    " NERDTree
-    "let NERDTreeChDirMode=0     " Change CWD to nerd tree root
-    "let NERDTreeShowHidden=1 " Show hidden files
-    "let NERDTreeIngore=['\~$', '\.pyc']
-    "let NERDTreeQuitOnOpen = 1
-    "let NERDTreeHijackNetrw = 1
 
+  let g:PreviewBrowsers='google-chrome'
+
+  " Syntastic {
+      let g:syntastic_php_checkers = ['php','phpmd']
+      "let g:syntastic_phpcs_conf = "--standard=Seb"
+      "map <Leader>csd :let g:syntastic_php_checkers = ['phpmd']<CR>
+  " }
+  " save as sudo - use :SudoWrite from tpope/vim-eunuch
+  "ca w!! w !sudo tee "%"
 
 " }
-let g:PreviewBrowsers='google-chrome'
-" Syntastic {
-    let g:syntastic_php_checkers = ['php','phpmd']
-    "let g:syntastic_phpcs_conf = "--standard=Seb"
-    "map <Leader>csd :let g:syntastic_php_checkers = ['phpmd']<CR>
-" }
-" save as sudo - use :SudoWrite from tpope/vim-eunuch
-"ca w!! w !sudo tee "%"
 
 " Autocommands {
     " MyAutoCmd : an augroup for my autocmd {{{1
@@ -587,7 +564,6 @@ let g:PreviewBrowsers='google-chrome'
         \ endif
 " }
 
-
 " Mappings {
     "let mapleader = ","
     let mapleader = "\<space>"
@@ -600,9 +576,11 @@ let g:PreviewBrowsers='google-chrome'
     map <leader>w :w<CR>
     map <leader>q :q<CR>
 
-    " jj as ESC
+    " jj or j+k as ESC
     " other options: Ctrl-[, Ctrl-C
     imap jj <Esc>
+    imap jk <Esc>
+    imap kj <Esc>
 
     " ,vv to re-read .vimrc
     map <Leader>vv :call Preserve("source ~\/\.vimrc")<CR>
@@ -641,6 +619,8 @@ let g:PreviewBrowsers='google-chrome'
     " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
     noremap k gk
     noremap j gj
+    noremap gk k
+    noremap gj j
     "noremap 0 g0
     "noremap $ g$
 
@@ -659,43 +639,74 @@ let g:PreviewBrowsers='google-chrome'
     "let g:EasyMotion_leader_key = '<Space>'
     let g:EasyMotion_leader_key = '\<Leader>\<Leader>'
 
-    " vim-indent-guides
+    " vim-indent-guides - standard mapping
     " <Leader>ig
 
-    " CtrlP
-    "let g:ctrlp_map = ',f'
-    "map <Leader>ff :CtrlPMixed<CR>
-    "map <Leader>fd :CtrlPDir<CR>
-    "map <Leader>fb :CtrlPBuffer<CR>
-    "map <Leader>fT :CtrlPBufTag<CR>
-    "map <Leader>ft :CtrlPTag<CR>
-    "map <Leader>fl :CtrlPLine<CR>
-    "map <Leader>fm :CtrlPMRU<CR>
-    " to be able to call CtrlP with default search text
-    "function! CtrlPWithSearchText(search_text, ctrlp_command_end)
-        "execute ':CtrlP' . a:ctrlp_command_end
-        "call feedkeys(a:search_text)
-    "endfunction
-    " CtrlP with default text
-    "nmap <Leader>wg :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
-    "nmap <Leader>wG :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
-    "nmap <Leader>wf :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
-    "nmap <Leader>we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
-    "nmap <Leader>pe :call CtrlPWithSearchText(expand('<cfile>'), '')<CR>
-    "nmap <Leader>wm :call CtrlPWithSearchText(expand('<cword>'), 'MRUFiles')<CR>
-    " Don't change working directory
-    "let g:ctrlp_working_path_mode = 0
-    " Ignore files on fuzzy finder
-    "let g:ctrlp_custom_ignore = {
-    "\ 'dir':  '\v[\/](\.git|\.hg|\.svn)$',
-    "\ 'file': '\.pyc$\|\.pyo$',
-    "\ }
-    " Don't clear cache on exit
-    "let g:ctrlp_clear_cache_on_exit = 0
-    " by default it is 'Et' which means it will jump to another tab if you
-    " open already opened buffer in current tab
-    "let g:ctrlp_switch_buffer = 'et'
+    " Search and replace word under cursor
+    "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
 
+    " phpDocumenter
+    inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
+    nnoremap <Leader>pd :call PhpDocSingle()<CR>
+    vnoremap <Leader>pd :call PhpDocRange()<CR>
+     " Default values
+    let g:pdv_cfg_Package = "app"
+    let g:pdv_cfg_Version = ""
+    let g:pdv_cfg_Author = "Boris Serebrov"
+    let g:pdv_cfg_Copyright = ""
+    let g:pdv_cfg_License = ""
+
+    " http://technotales.wordpress.com/2010/03/31/preserve-a-vim-function-that-keeps-your-state/
+    " remove trailing spaces
+    nmap _$ :call preserve("%s/\\s\\+$//e")<cr>
+    " autoformat file
+    nmap _= :call preserve("normal gg=g")<cr>
+
+    " Insert current file's folder
+    cnoremap <Leader><Leader>fn <C-r>=expand('%')<CR>
+    cnoremap <Leader><Leader>f <C-r>=expand('%:p:h')<CR>
+
+    " Save as here
+    ""All on one line
+    "command! -nargs=1 SaveAsHere exe "saveas " . expand("%:p:h") . "/" .  expand("<args>")
+    "instead use :saveas CTRL-R %
+
+    " Visual search
+        " select text and hit * / # to find it
+        " http://got-ravings.blogspot.com/2008/07/vim-pr0n-visual-search-mappings.html
+        function! s:VSetSearch()
+            let temp = @@
+            norm! gvy
+            let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+            let @@ = temp
+        endfunction
+
+        vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
+        vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
+
+    " Standard keys
+        " Speller shorcuts {
+            " z= - suggest word
+            " [s - previous wrong word
+            " ]s - next wrong word
+        " }
+        " Folding {
+            " za - open/close current fold
+            " zR - open all folds
+            " zM - close all folds
+        " }
+        " History {
+            " http://vim.wikia.com/wiki/Using_command-line_history
+            " q: for commands
+            " q/ for searches
+            " or type : or / to start entering a command or search,
+            " then press the 'cedit' key (default is Ctrl-f :help 'cedit').
+        " }
+        " gv - select last visual area and go to visual mode
+
+" }
+
+" File browser {
     " NERDTree inspired functions
     function! NerdFindFile(file)
         execute ':e ' . fnamemodify(a:file, ':h')
@@ -709,9 +720,6 @@ let g:PreviewBrowsers='google-chrome'
         " search for dir
         execute '/' . escape(a:find, '/')
     endfunction
-    "map <Leader>nt :NERDTreeToggle<CR>" ,nt - toggle tree
-    "map <Leader>nf :NERDTreeFind<CR>" ,nf - find current file in the tree
-    "map <Leader>nt :execute ':e '.getcwd()<CR>
     map <Leader>nt :call NerdFindDir(getcwd(), '\.\.')<CR>
     map <Leader>nf :call NerdFindFile(expand('%'))<CR>
 
@@ -746,17 +754,10 @@ let g:PreviewBrowsers='google-chrome'
         endif
     endfunction
 
-    " Search and replace word under cursor
-    "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
+" }
 
-    " Text encoding menu (koi8-r, cp1251, cp866, utf8)
-    set wcm=<Tab>
-    menu Encoding.koi8-r :e ++enc=koi8-r<CR>
-    menu Encoding.windows-1251 :e ++enc=cp1251<CR>
-    menu Encoding.cp866 :e ++enc=cp866<CR>
-    menu Encoding.utf-8 :e ++enc=utf8 <CR>
+" Windows navigation {
 
-    " windows navigation
     " C-W h|j|k|l - move to left|down|up|right win
     " C-W w       - cycle
     " C-W s|v     - split current win horiz | vert
@@ -807,24 +808,10 @@ let g:PreviewBrowsers='google-chrome'
     map <Leader>l     :wincmd L<cr>
     map <Leader>j     :wincmd J<cr>
 
-    " phpDocumenter
-    inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
-    nnoremap <Leader>pd :call PhpDocSingle()<CR>
-    vnoremap <Leader>pd :call PhpDocRange()<CR>
-     " Default values
-    let g:pdv_cfg_Package = "app"
-    let g:pdv_cfg_Version = ""
-    let g:pdv_cfg_Author = "Boris Serebrov"
-    let g:pdv_cfg_Copyright = ""
-    let g:pdv_cfg_License = ""
+" }
 
-    " http://technotales.wordpress.com/2010/03/31/preserve-a-vim-function-that-keeps-your-state/
-    " remove trailing spaces
-    nmap _$ :call preserve("%s/\\s\\+$//e")<cr>
-    " autoformat file
-    nmap _= :call preserve("normal gg=g")<cr>
 
-    "Debugger
+" Debugger {
     "http://jaredforsyth.com/projects/vim-debug/
     function! Debug(url)
         let url = a:url
@@ -899,7 +886,9 @@ let g:PreviewBrowsers='google-chrome'
     \    "eval_under_cursor" : "<F4>",
     \}
 
-    "Taggatron
+" }
+
+" Taggatron {
     let g:tagcommands = {
     \    "python" : {
     \        "tagfile": ".python.tags",
@@ -925,52 +914,6 @@ let g:PreviewBrowsers='google-chrome'
     " todo: check http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
     "       and https://github.com/tpope/vim-fugitive/issues/104
 
-    " Standard keys
-        " Speller shorcuts {
-            " z= - suggest word
-            " [s - previous wrong word
-            " ]s - next wrong word
-        " }
-        " Folding {
-            " za - open/close current fold
-            " zR - open all folds
-            " zM - close all folds
-        " }
-        " History {
-            " http://vim.wikia.com/wiki/Using_command-line_history
-            " q: for commands
-            " q/ for searches
-            " or type : or / to start entering a command or search,
-            " then press the 'cedit' key (default is Ctrl-f :help 'cedit').
-        " }
-        " gv - select last visual area and go to visual mode
-
-" }
-
-" Insert current file's folder {
-  cnoremap <Leader><Leader>fn <C-r>=expand('%')<CR>
-  cnoremap <Leader><Leader>f <C-r>=expand('%:p:h')<CR>
-" }
-
-" Save as here {
-  ""All on one line
-  "command! -nargs=1 SaveAsHere exe "saveas " . expand("%:p:h") . "/" .  expand("<args>")
-  "instead use :saveas CTRL-R %
-" }
-
-
-" Visual search {
-    " select text and hit * / # to find it
-    " http://got-ravings.blogspot.com/2008/07/vim-pr0n-visual-search-mappings.html
-    function! s:VSetSearch()
-        let temp = @@
-        norm! gvy
-        let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
-        let @@ = temp
-    endfunction
-
-    vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
-    vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
 " }
 
 " Session manager {
@@ -1005,94 +948,102 @@ let g:PreviewBrowsers='google-chrome'
         endif
         call LoadLocalVimrc()
     endfunction
-" }
-
-" Diff current unsaved file {
-function! s:DiffWithSaved()
-    let filetype=&ft
-    diffthis
-    vnew | r # | normal! 1Gdd
-    diffthis
-    exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
-endfunction
-" }
-
-" Find and replace in multiple files {
-command! -nargs=* -complete=file Fart call FindAndReplace(<f-args>)
-function! FindAndReplace(...)
-    if a:0 < 3
-        echohl Error | echo "Three arguments required: 1. file pattern, 2. search expression and 3. replacement" | echohl None
-        return
-    endif
-    if a:0 > 3
-        echohl Error | echo "Too many arguments, three required: 1. file pattern, 2. search expression and 3. replacement" | echohl None
-        return
-    endif
-    let l:pattern = a:1
-    let l:search = a:2
-    let l:replace = a:3
-    echo "Replacing occurences of '".l:search."' with '".l:replace."' in files matching '".l:pattern."'"
-
-    execute '!find . -name "'.l:pattern.'" -print | xargs -t sed -i "s/'.l:search.'/'.l:replace.'/g"'
-endfunction
 
 " }
 
 " Utils {
-let b:encindex=0
-function! RotateEnc()
-  let y = -1
-  while y == -1
-    let encstring = "#koi8-r#cp1251#8bit-cp866#utf-8#ucs-2le#"
-    let x = match(encstring,"#",b:encindex)
-    let y = match(encstring,"#",x+1)
-    let b:encindex = x+1
-    if y == -1
-      let b:encindex = 0
-    else
-      let str = strpart(encstring,x+1,y-x-1)
-      return ":e ++enc=".str
-    endif
-  endwhile
-endfunction
 
-let b:encindex=0
-function! ForceRotateEnc()
-  let y = -1
-  while y == -1
-    let encstring = "#koi8-r#cp1251#8bit-cp866#utf-8#ucs-2le#"
-    let x = match(encstring,"#",b:encindex)
-    let y = match(encstring,"#",x+1)
-    let b:encindex = x+1
-    if y == -1
-      let b:encindex = 0
-    else
-      let str = strpart(encstring,x+1,y-x-1)
-      :execute "set encoding=".str
-      return ":e ++enc=".str
-    endif
-  endwhile
-endfunction
+    " Diff current unsaved file
+    function! s:DiffWithSaved()
+        let filetype=&ft
+        diffthis
+        vnew | r # | normal! 1Gdd
+        diffthis
+        exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+    endfunction
 
-let b:fencindex=0
-function! RotateFEnc()
-  let y = -1
-  while y == -1
-    let encstring = "#koi8-r#cp1251#8bit-cp866#utf-8#ucs-2le#"
-    let x = match(encstring,"#",b:fencindex)
-    let y = match(encstring,"#",x+1)
-    let b:fencindex = x+1
-    if y == -1
-      let b:fencindex = 0
-    else
-      let str = strpart(encstring,x+1,y-x-1)
-      return ":set fenc=".str
-    endif
-  endwhile
-endfunction
+    " Find and replace in multiple files
+    command! -nargs=* -complete=file Fart call FindAndReplace(<f-args>)
+    function! FindAndReplace(...)
+        if a:0 < 3
+            echohl Error | echo "Three arguments required: 1. file pattern, 2. search expression and 3. replacement" | echohl None
+            return
+        endif
+        if a:0 > 3
+            echohl Error | echo "Too many arguments, three required: 1. file pattern, 2. search expression and 3. replacement" | echohl None
+            return
+        endif
+        let l:pattern = a:1
+        let l:search = a:2
+        let l:replace = a:3
+        echo "Replacing occurences of '".l:search."' with '".l:replace."' in files matching '".l:pattern."'"
+
+        execute '!find . -name "'.l:pattern.'" -print | xargs -t sed -i "s/'.l:search.'/'.l:replace.'/g"'
+    endfunction
+
+    " Text encoding menu (koi8-r, cp1251, cp866, utf8)
+    set wcm=<Tab>
+    menu Encoding.koi8-r :e ++enc=koi8-r<CR>
+    menu Encoding.windows-1251 :e ++enc=cp1251<CR>
+    menu Encoding.cp866 :e ++enc=cp866<CR>
+    menu Encoding.utf-8 :e ++enc=utf8 <CR>
+
+    let b:encindex=0
+    function! RotateEnc()
+      let y = -1
+      while y == -1
+        let encstring = "#koi8-r#cp1251#8bit-cp866#utf-8#ucs-2le#"
+        let x = match(encstring,"#",b:encindex)
+        let y = match(encstring,"#",x+1)
+        let b:encindex = x+1
+        if y == -1
+          let b:encindex = 0
+        else
+          let str = strpart(encstring,x+1,y-x-1)
+          return ":e ++enc=".str
+        endif
+      endwhile
+    endfunction
+
+    let b:encindex=0
+    function! ForceRotateEnc()
+      let y = -1
+      while y == -1
+        let encstring = "#koi8-r#cp1251#8bit-cp866#utf-8#ucs-2le#"
+        let x = match(encstring,"#",b:encindex)
+        let y = match(encstring,"#",x+1)
+        let b:encindex = x+1
+        if y == -1
+          let b:encindex = 0
+        else
+          let str = strpart(encstring,x+1,y-x-1)
+          :execute "set encoding=".str
+          return ":e ++enc=".str
+        endif
+      endwhile
+    endfunction
+
+    let b:fencindex=0
+    function! RotateFEnc()
+      let y = -1
+      while y == -1
+        let encstring = "#koi8-r#cp1251#8bit-cp866#utf-8#ucs-2le#"
+        let x = match(encstring,"#",b:fencindex)
+        let y = match(encstring,"#",x+1)
+        let b:fencindex = x+1
+        if y == -1
+          let b:fencindex = 0
+        else
+          let str = strpart(encstring,x+1,y-x-1)
+          return ":set fenc=".str
+        endif
+      endwhile
+    endfunction
 
 " }
-"
+
+" Unite  {
+
 "https://github.com/terryma/dotfiles/blob/master/.vimrc
 "http://vpaste.net/l1WqE
 "https://github.com/thinca/vim-ref
@@ -1242,163 +1193,74 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
       \ '.*\.pyc',
       \ '.*\.jpg',
       \ ], '\|'))
+" }
 
-" http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
-let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-Tab>'
+" YouCompleteMe, Supertab and Ultisnips {
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+  " http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
+  let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
+  let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
+  let g:SuperTabDefaultCompletionType = '<C-Tab>'
 
- "" Ultisnips
-"let g:UltiSnipsExpandTrigger="<c-tab>"
-"let g:UltiSnipsListSnippets="<c-s-tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-tab>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
+  let g:UltiSnipsExpandTrigger="<tab>"
+  let g:UltiSnipsJumpForwardTrigger="<tab>"
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-"" Launches neocomplcache automatically on vim startup.
-"let g:neocomplcache_enable_at_startup = 1
-""
-"let g:neocomplcache_enable_cursor_hold_i = 1
-"" Use smartcase.
-"let g:neocomplcache_enable_smart_case = 1
-"" Use camel case completion.
-"let g:neocomplcache_enable_camel_case_completion = 1
-"" Use underscore completion.
-"let g:neocomplcache_enable_underbar_completion = 1
-"" Sets minimum char length of syntax keyword.
-"let g:neocomplcache_min_syntax_length = 4
-"let g:neocomplcache_min_keyword_length = 4
-"" AutoComplPop like behavior.
-"let g:neocomplcache_enable_auto_select = 1
-"" buffer file name pattern that locks neocomplcache. e.g. ku.vim or fuzzyfinder
-"let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+  " Ultisnips
+  "let g:UltiSnipsExpandTrigger="<c-tab>"
+  "let g:UltiSnipsListSnippets="<c-s-tab>"
+  "let g:UltiSnipsJumpForwardTrigger="<c-tab>"
+  "let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
 
-""" Define file-type dependent dictionaries.
-""let g:neocomplcache_dictionary_filetype_lists = {
-    ""\ 'default' : '',
-    ""\ 'vimshell' : $HOME.'/.vimshell_hist',
-    ""\ 'scheme' : $HOME.'/.gosh_completions'
-    ""\ }
+" }
 
-"" Define keyword, for minor languages
-"if !exists('g:neocomplcache_keyword_patterns')
-  "let g:neocomplcache_keyword_patterns = {}
-"endif
-"let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+" VimShell {
 
-"" Enable heavy omni completion, which require computational power and may stall the vim.
-"if !exists('g:neocomplcache_omni_patterns')
-  "let g:neocomplcache_omni_patterns = {}
-"endif
-"let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-"let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
-"let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+  let g:vimshell_prompt = "% "
+  "let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+  "autocmd MyAutoCmd FileType vimshell call s:vimshell_settings()
+  "function! s:vimshell_settings()
+    "call vimshell#altercmd#define('g', 'git')
+  "endfunction
 
-"" Plugin key-mappings.
-"imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-"smap <C-k>     <Plug>(neocomplcache_snippets_expand)
-"inoremap <expr><C-g>     neocomplcache#undo_completion()
-"inoremap <expr><C-l>     neocomplcache#complete_common_string()
+" }
 
-"" Plugin key-mappings.
-"imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-"smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-"xmap <C-k>     <Plug>(neosnippet_expand_target)
-"" SuperTab like snippets behavior.
-""imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-"" SuperTab like snippets behavior.
-"imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-"smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" Vimfiler {
+  "" TODO Look into Vimfiler more
+  "" Example at: https://github.com/hrsh7th/dotfiles/blob/master/vim/.vimrc
+  "nnoremap <expr><F2> g:my_open_explorer_command()
+  "function! g:my_open_explorer_command()
+    "return printf(":\<C-u>VimFilerBufferDir -buffer-name=%s -split -auto-cd -toggle -no-quit -winwidth=%s\<CR>",
+          "\ g:my_vimfiler_explorer_name,
+          "\ g:my_vimfiler_winwidth)
+  "endfunction
+  let g:vimfiler_data_directory = expand('~/.vim/tmp/vimfiler/')
+  "let g:vimfiler_safe_mode_by_default = 0
+  "let g:vimfiler_execute_file_list = { "_": "vim" }
+  "nno ` :<C-u>:VimFilerBufferDir -buffer-name=explorer -toggle<CR>
+  function! s:vimfiler_settings()
+      nmap <buffer> - <Plug>(vimfiler_switch_to_parent_directory)
+      "nmap <buffer> % <Plug>(vimfiler_new_file)
+      "nmap <buffer> <Backspace> <C-^>
+      "nmap <buffer> <leader>x <Plug>(vimfiler_exit)
+      "nmap <buffer> <leader>X <Plug>(vimfiler_exit)
+  endfunction
+  autocmd MyAutoCmd Filetype vimfiler call s:vimfiler_settings()
 
-"" For snippet_complete marker.
-"if has('conceal')
-  "set conceallevel=2 concealcursor=i
-"endif
+  "let g:vimfiler_as_default_explorer = 1
+  "let g:vimfiler_tree_leaf_icon = ' '
+  "let g:vimfiler_tree_opened_icon = '▾'
+  "let g:vimfiler_tree_closed_icon = '▸'
+  "" let g:vimfiler_file_icon = ' '
+  "let g:vimfiler_marked_file_icon = '✓'
+  "" let g:vimfiler_readonly_file_icon = ' '
+  "let g:my_vimfiler_explorer_name = 'explorer'
+  "let g:my_vimfiler_winwidth = 30
+  "let g:vimfiler_safe_mode_by_default = 0
+  "" let g:vimfiler_directory_display_top = 1
 
-"" Recommended key-mappings.
-"" <CR>: close popup and save indent.
-"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
-"" <TAB>: completion.
-"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-"" <C-h>, <BS>: close popup and delete backword char.
-"inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-"inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-"inoremap <expr><C-y>  neocomplcache#close_popup()
-"inoremap <expr><C-e>  neocomplcache#cancel_popup()
-
-"" Shell like behavior(not recommended).
-""set completeopt+=longest
-""let g:neocomplcache_enable_auto_select = 1
-""let g:neocomplcache_disable_auto_complete = 1
-""inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>"
-""inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
-
-"===============================================================================
-" VimShell
-"===============================================================================
-
-let g:vimshell_prompt = "% "
-"let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-"autocmd MyAutoCmd FileType vimshell call s:vimshell_settings()
-"function! s:vimshell_settings()
-  "call vimshell#altercmd#define('g', 'git')
-"endfunction
-
-""===============================================================================
-"" Vimfiler
-""===============================================================================
-
-"" TODO Look into Vimfiler more
-"" Example at: https://github.com/hrsh7th/dotfiles/blob/master/vim/.vimrc
-"nnoremap <expr><F2> g:my_open_explorer_command()
-"function! g:my_open_explorer_command()
-  "return printf(":\<C-u>VimFilerBufferDir -buffer-name=%s -split -auto-cd -toggle -no-quit -winwidth=%s\<CR>",
-        "\ g:my_vimfiler_explorer_name,
-        "\ g:my_vimfiler_winwidth)
-"endfunction
-let g:vimfiler_data_directory = expand('~/.vim/tmp/vimfiler/')
-"let g:vimfiler_safe_mode_by_default = 0
-"let g:vimfiler_execute_file_list = { "_": "vim" }
-"nno ` :<C-u>:VimFilerBufferDir -buffer-name=explorer -toggle<CR>
-function! s:vimfiler_settings()
-    nmap <buffer> - <Plug>(vimfiler_switch_to_parent_directory)
-    "nmap <buffer> % <Plug>(vimfiler_new_file)
-    "nmap <buffer> <Backspace> <C-^>
-    "nmap <buffer> <leader>x <Plug>(vimfiler_exit)
-    "nmap <buffer> <leader>X <Plug>(vimfiler_exit)
-endfunction
-autocmd MyAutoCmd Filetype vimfiler call s:vimfiler_settings()
-
-"let g:vimfiler_as_default_explorer = 1
-"let g:vimfiler_tree_leaf_icon = ' '
-"let g:vimfiler_tree_opened_icon = '▾'
-"let g:vimfiler_tree_closed_icon = '▸'
-"" let g:vimfiler_file_icon = ' '
-"let g:vimfiler_marked_file_icon = '✓'
-"" let g:vimfiler_readonly_file_icon = ' '
-"let g:my_vimfiler_explorer_name = 'explorer'
-"let g:my_vimfiler_winwidth = 30
-"let g:vimfiler_safe_mode_by_default = 0
-"" let g:vimfiler_directory_display_top = 1
-
-"autocmd MyAutoCmd FileType vimfiler call s:vimfiler_settings()
-"function! s:vimfiler_settings()
-  "nmap     <buffer><expr><CR>  vimfiler#smart_cursor_map("\<PLUG>(vimfiler_expand_tree)", "e")
-"endfunction
-"
-" Ref {{{
-    "let g:ref_use_vimproc = 1
-    "let g:ref_open = 'vsplit'
-    "let g:ref_cache_dir = expand('~/.vim/tmp/ref_cache/')
-    "nno <leader>K :<C-u>Unite ref/erlang -buffer-name=erlang_docs -start-insert -vertical -default-action=split<CR>
-" }}}
-
-" --------------  links --------------------
-" vimrc {
-"   http://www.vi-improved.org/vimrc.php
-"   http://www.slackorama.com/projects/vim/vimrc.html
+  "autocmd MyAutoCmd FileType vimfiler call s:vimfiler_settings()
+  "function! s:vimfiler_settings()
+    "nmap     <buffer><expr><CR>  vimfiler#smart_cursor_map("\<PLUG>(vimfiler_expand_tree)", "e")
+  "endfunction
 " }
