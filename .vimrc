@@ -494,7 +494,7 @@
   " save as sudo - use :SudoWrite from tpope/vim-eunuch
   "ca w!! w !sudo tee "%"
 
-  let g:airline_theme='dark'
+  let g:airline_theme='badwolf'
   " unicode symbols
   let g:airline_left_sep = '»'
   let g:airline_left_sep = '▶'
