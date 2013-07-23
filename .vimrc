@@ -136,6 +136,9 @@
         NeoBundle 'UltiSnips'
         NeoBundle 'ervandew/supertab'
 
+        " autoinsert pair symbols (such as brackets)
+        NeoBundle 'kana/vim-smartinput'
+
         " At every search command, it automatically prints
         " "At match #N out of M matches".
         NeoBundle 'IndexedSearch'
@@ -244,8 +247,12 @@
 
    " Colors {
         set background=dark
+        if $COLORTERM == 'gnome-terminal'
+            " tell vim that gnome terminal supports 256 colors
+            set t_Co=256
+            let g:solarized_termcolors=256
+        endif
         " Solarized {
-            "let g:solarized_termcolors=256
             let g:solarized_contrast="high"    "default value is normal
             let g:solarized_diffmode="high"    "default value is normal
             try
@@ -254,12 +261,8 @@
                 echo "Solarized theme not found. Run :BundleInstall"
             endtry
         " }
-        "if $COLORTERM == 'gnome-terminal'
-            "set t_Co=256
-            "set background=dark
-        "endif
-        "colorscheme gruvbox
         "colorscheme wombat
+        "colorscheme gruvbox
    " }
 
     " GUI Settings {
