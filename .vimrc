@@ -38,7 +38,8 @@
         " see https://defuse.ca/blog/vim-rainbow-parentheses-work-in-php
         NeoBundle 'kien/rainbow_parentheses.vim'
         " Powerline - create better-looking, more functional vim statuslines.
-        NeoBundle 'Lokaltog/vim-powerline'
+        "NeoBundle 'Lokaltog/vim-powerline'
+        NeoBundle 'bling/vim-airline'
         " adopt color schemes for terminal
         NeoBundle 'godlygeek/csapprox'
         " Solarized color scheme
@@ -492,6 +493,20 @@
   " }
   " save as sudo - use :SudoWrite from tpope/vim-eunuch
   "ca w!! w !sudo tee "%"
+
+  let g:airline_theme='dark'
+  " unicode symbols
+  let g:airline_left_sep = '»'
+  let g:airline_left_sep = '▶'
+  let g:airline_right_sep = '«'
+  let g:airline_right_sep = '◀'
+  let g:airline_linecolumn_prefix = '␊ '
+  let g:airline_linecolumn_prefix = '␤ '
+  let g:airline_linecolumn_prefix = '¶ '
+  let g:airline_fugitive_prefix = '⎇ '
+  let g:airline_paste_symbol = 'ρ'
+  let g:airline_paste_symbol = 'Þ'
+  let g:airline_paste_symbol = '∥'
 
 " }
 
@@ -1059,13 +1074,11 @@
 "http://d.hatena.ne.jp/osyo-manga/20130307/1362621589
 "https://github.com/naruyan/nar/blob/master/.vimrc
 "
-" Map space to the prefix for Unite
+" Map space-f as a prefix for Unite
 nnoremap [unite] <Nop>
 nmap <space>f [unite]
 " Ctrl-ss: (S)earch word under cur(s)or in current directory
 nnoremap <c-s><c-s> :Unite grep:.::<C-r><C-w><CR>
-" Ctrl-sd: (S)earch word in current (d)irectory (prompt for word)
-nnoremap <c-s><c-d> :Unite grep:.<CR>
 " Ctrl-sr: Easier (s)earch and (r)eplace
 nnoremap <c-s><c-r> :%s/<c-r><c-w>//gc<left><left><left>
 " Ctrl-r: Easier search and replace
@@ -1087,6 +1100,8 @@ nnoremap <silent> [unite]mm :<C-u>Unite -buffer-name=buffers -quick-match -no-sp
 nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep -no-quit vcs_grep/git:.<CR>
 " grep
 nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep -no-quit grep:.<CR>
+" grep (specify directory)
+nnoremap <silent> [unite]gd :<C-u>Unite -buffer-name=grep -no-quit grep<CR>
 " grep with preview
 "nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:. -auto-preview<CR>
 " Fuzzy search from current buffer
