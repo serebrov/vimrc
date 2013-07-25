@@ -661,7 +661,7 @@
     " _w - words; _f - char
     " _t - search
     "let g:EasyMotion_leader_key = '<Space>'
-    let g:EasyMotion_leader_key = '\<Leader>\<Leader>'
+    let g:EasyMotion_leader_key = '<Leader><Leader>'
 
     " vim-indent-guides - standard mapping
     " <Leader>ig
