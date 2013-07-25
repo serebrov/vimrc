@@ -47,6 +47,7 @@
         NeoBundle 'nelstrom/vim-mac-classic-theme'
         NeoBundle 'morhetz/gruvbox'
         NeoBundle 'sjl/badwolf'
+        NeoBundle 'lsdr/monokai'
 
         " Simpler way to use some motions in vim.
         " Start motion with <Leader><Leader>
