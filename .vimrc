@@ -155,7 +155,6 @@
         " php completion - it should be copied to autoload/phpcomplete.vim
         NeoBundle 'shawncplus/phpcomplete.vim'
         " php 5.3 syntax
-        "NeoBundle 'vim-scripts/php.vim--Garvin'
         NeoBundle 'StanAngeloff/php.vim'
         NeoBundle '2072/PHP-Indenting-for-VIm'
         " view php docs with K
