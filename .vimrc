@@ -487,9 +487,8 @@
   let g:PreviewBrowsers='google-chrome'
 
   " Syntastic {
-      let g:syntastic_php_checkers = ['php','phpmd']
-      "let g:syntastic_phpcs_conf = "--standard=Seb"
-      "map <Leader>csd :let g:syntastic_php_checkers = ['phpmd']<CR>
+      " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
+      "let g:syntastic_php_checkers = ['php','phpmd']
   " }
   " save as sudo - use :SudoWrite from tpope/vim-eunuch
   "ca w!! w !sudo tee "%"
@@ -774,7 +773,7 @@
           " search for ..
           execute '/\.\.'
           " search for dir
-          execute '/' . escape(l:t, '/')
+          execute '/' . escape(l:t, '/') . '\/$'
         endif
     endfunction
 
