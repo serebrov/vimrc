@@ -11,6 +11,6 @@ hg update
             --enable-perlinterp \
             --enable-luainterp \
             --enable-gui=gtk2 --enable-cscope --prefix=/usr
-make VIMRUNTIMEDIR=/usr/share/vim/vim74a
+make VIMRUNTIMEDIR=/usr/share/vim/vim74b
 
-sudo  checkinstall
+sudo  checkinstall -y
