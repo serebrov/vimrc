@@ -139,7 +139,10 @@
         NeoBundle 'ervandew/supertab'
 
         " autoinsert pair symbols (such as brackets)
-        NeoBundle 'kana/vim-smartinput'
+        " disable because it breaks dot(.) - it repeats only what was entered
+        " inside the paired symbols, not the whole text
+        " https://github.com/kana/vim-smartinput/issues/33
+        "NeoBundle 'kana/vim-smartinput'
 
         " At every search command, it automatically prints
         " "At match #N out of M matches".
