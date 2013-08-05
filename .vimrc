@@ -529,6 +529,11 @@
 
       " Auto Completion
       autocmd FileType python :set omnifunc=pythoncomplete#Complete
+      " there is a problem with hash (#) indentation - it always shifted
+      " to the start of the string
+      " see http://stackoverflow.com/questions/354097/how-to-configure-vim-to-not-put-comments-at-the-beginning-of-lines-while-editing
+      autocmd FileType python :set nosmartindent
+      autocmd FileType python :set cindent
       autocmd FileType php :set omnifunc=phpcomplete#CompletePHP
       autocmd FileType html,markdown :set omnifunc=htmlcomplete@CompleteTags
       autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
