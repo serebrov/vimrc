@@ -505,7 +505,7 @@
   let g:airline_linecolumn_prefix = '␊ '
   let g:airline_linecolumn_prefix = '␤ '
   let g:airline_linecolumn_prefix = '¶ '
-  let g:airline_fugitive_prefix = '⎇ '
+  let g:airline_branch_prefix = '⎇ '
   let g:airline_paste_symbol = 'ρ'
   let g:airline_paste_symbol = 'Þ'
   let g:airline_paste_symbol = '∥'
@@ -872,6 +872,8 @@
         execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
         python debugger.run()
     endfunction
+    " python debugging requires pydbgp
+    " download from http://code.activestate.com/komodo/remotedebugging/ (version 7.1.3 works)
     " example (open test file first):
     "   :DebugPy -c tests/acceptance/selenuim/dev.cfg
     command! -nargs=* -complete=file DebugPy call DebugPy('% <args>')
