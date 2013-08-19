@@ -777,10 +777,11 @@
         let l:cd = expand('%:p:h:h')
         let l:t = expand('%:t')
         execute a:browseup
-        if expand('%') != ''
+        if l:t != ''
           " search for ..
           execute '/\.\.'
           " search for dir
+          "echo escape(l:t, '/')
           execute '/' . escape(l:t, '/') . '\/$'
         endif
     endfunction
