@@ -715,6 +715,12 @@
         vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
         vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
 
+    " Put ending { to the next line
+    function! ClosingBracketToNextLine()
+        normal g$F{i
+    endfunction
+    nmap <leader>bn :call ClosingBracketToNextLine()<CR>
+
     " Standard keys
         " Speller shorcuts {
             " z= - suggest word
@@ -1208,12 +1214,11 @@ let g:unite_data_directory = expand('~/.vim/tmp/unite/')
 " For ack.
 if executable('ack-grep')
   let g:unite_source_grep_command = 'ack-grep'
-  " Match whole word only. This might/might not be a good idea
-  let g:unite_source_grep_default_opts = '--no-heading --no-color -a -w --type-set tags=.tags --notags'
+  let g:unite_source_grep_default_opts = '--no-heading --no-color -a --type-set tags=.tags --notags'
   let g:unite_source_grep_recursive_opt = ''
 elseif executable('ack')
   let g:unite_source_grep_command = 'ack'
-  let g:unite_source_grep_default_opts = '--no-heading --no-color -a -w --type-set tags=.tags --notags'
+  let g:unite_source_grep_default_opts = '--no-heading --no-color -a --type-set tags=.tags --notags'
   let g:unite_source_grep_recursive_opt = ''
 endif
 
