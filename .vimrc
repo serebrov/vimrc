@@ -1118,6 +1118,20 @@ nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep -no-quit vcs_grep/git:.
 nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep -no-quit grep:.<CR>
 " grep (specify directory)
 nnoremap <silent> [unite]gd :<C-u>Unite -buffer-name=grep -no-quit grep<CR>
+
+function! Unext(motion)
+    let l:uwin = bufwinnr("*unite* - grep")
+    echo l:uwin
+    if l:uwin != -1
+        exec "norm! ".l:uwin."\<c-w>\<c-w>"
+        exec "norm! ".a:motion
+        exec "norm \<CR>"
+        call unite#view#_redraw('','','')
+    endif
+endfun
+noremap ]g :<C-U>call Unext("j")<CR>
+noremap [g :<C-U>call Unext("k")<CR>
+
 " grep with preview
 "nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:. -auto-preview<CR>
 " Fuzzy search from current buffer
