@@ -278,6 +278,10 @@
         set guioptions-=T
         set guioptions-=m
         set guioptions-=r
+
+        " set guifont=* to display font chooser
+        set guifont=Inconsolata\ Medium\ 12
+        "set guifont=Liberation\ Mono\ 10
     endif
     " }
 
@@ -902,9 +906,11 @@
         let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && console/yiic ' . str_args
         execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
         execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
-        execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
+        executj 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
         python debugger.run()
     endfunction
+    " example
+    "   :DebugPhpConsole appadd appto.tests@gmail.com "{\"platform\": {\"app\": {\"variation\": \"Enter web link\", \"file\": \"https://itunes.apple.com/ru/app/gmail/id422689480?mt=8\"}}}"
     command! -nargs=* DebugPhpConsole call DebugPhpConsole('<args>')
 
     let g:vdebug_options= {
