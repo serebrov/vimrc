@@ -29,7 +29,10 @@
         "NeoBundle 'git://github.com/sjl/threesome.vim.git'
 
         " visual guides for indents, default mapping <Leager>ig
-        NeoBundle 'nathanaelkane/vim-indent-guides'
+        " :IndentGuidesToggle
+        "NeoBundle 'nathanaelkane/vim-indent-guides'
+        " :IndentLinesToggle
+        NeoBundle 'Yggdroot/indentLine'
         " rainbow parenthesis
         " Note: doesn't work for php due some specifics in the syntax file
         " it doesn't work with default syntax file and with extended versions
@@ -906,7 +909,7 @@
         let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && console/yiic ' . str_args
         execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
         execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
-        executj 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
+        execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
         python debugger.run()
     endfunction
     " example
@@ -1212,9 +1215,9 @@ function! s:unite_settings()
 endfunction
 
 " Use the fuzzy matcher for everything
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-" Use the rank sorter for everything
-call unite#filters#sorter_default#use(['sorter_rank'])
+"call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" Use the rank sorter for everything - fuzzy matcher does not use sorter
+" call unite#filters#sorter_default#use(['sorter_rank'])
 " Start in insert mode
 let g:unite_enable_start_insert = 1
 " Enable history yank source
