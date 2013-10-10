@@ -224,12 +224,8 @@
 
     " Installation check.
     NeoBundleCheck
-    " This took a while to figure out. Neocomplcache + iTerm + the CursorShape
-    " fix is causing the completion menu popup to flash the first result. Tested it
-    " with AutoComplPop and the behavior doesn't exist, so it's isolated to
-    " Neocomplcache... :( Dug into the source for both and saw that AutoComplPop is
-    " setting lazyredraw to be on during automatic popup...
-    "set lazyredraw
+
+    set lazyredraw
 
     syntax on               " Turn syntax highlighting on.
 
@@ -498,7 +494,10 @@
 
   " Syntastic {
       " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
-      "let g:syntastic_php_checkers = ['php','phpmd']
+      " it is also possible to configure options for each checker, see
+      " syntastic helt - "syntastic-config-makeprg"
+      let g:syntastic_check_on_open=1
+      let g:syntastic_css_checkers = ['csslint', 'prettycss']
   " }
   " save as sudo - use :SudoWrite from tpope/vim-eunuch
   "ca w!! w !sudo tee "%"
