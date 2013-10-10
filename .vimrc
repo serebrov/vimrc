@@ -497,7 +497,7 @@
       " it is also possible to configure options for each checker, see
       " syntastic helt - "syntastic-config-makeprg"
       let g:syntastic_check_on_open=1
-      let g:syntastic_css_checkers = ['csslint', 'prettycss']
+      let g:syntastic_css_checkers = ['csslint']
   " }
   " save as sudo - use :SudoWrite from tpope/vim-eunuch
   "ca w!! w !sudo tee "%"
