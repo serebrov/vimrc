@@ -29,7 +29,10 @@
         "NeoBundle 'git://github.com/sjl/threesome.vim.git'
 
         " visual guides for indents, default mapping <Leager>ig
-        NeoBundle 'nathanaelkane/vim-indent-guides'
+        " :IndentGuidesToggle
+        "NeoBundle 'nathanaelkane/vim-indent-guides'
+        " :IndentLinesToggle
+        NeoBundle 'Yggdroot/indentLine'
         " rainbow parenthesis
         " Note: doesn't work for php due some specifics in the syntax file
         " it doesn't work with default syntax file and with extended versions
@@ -221,12 +224,8 @@
 
     " Installation check.
     NeoBundleCheck
-    " This took a while to figure out. Neocomplcache + iTerm + the CursorShape
-    " fix is causing the completion menu popup to flash the first result. Tested it
-    " with AutoComplPop and the behavior doesn't exist, so it's isolated to
-    " Neocomplcache... :( Dug into the source for both and saw that AutoComplPop is
-    " setting lazyredraw to be on during automatic popup...
-    "set lazyredraw
+
+    set lazyredraw
 
     syntax on               " Turn syntax highlighting on.
 
@@ -278,6 +277,10 @@
         set guioptions-=T
         set guioptions-=m
         set guioptions-=r
+
+        " set guifont=* to display font chooser
+        set guifont=Inconsolata\ Medium\ 12
+        "set guifont=Liberation\ Mono\ 10
     endif
     " }
 
@@ -491,7 +494,10 @@
 
   " Syntastic {
       " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
-      "let g:syntastic_php_checkers = ['php','phpmd']
+      " it is also possible to configure options for each checker, see
+      " syntastic helt - "syntastic-config-makeprg"
+      let g:syntastic_check_on_open=1
+      let g:syntastic_css_checkers = ['csslint']
   " }
   " save as sudo - use :SudoWrite from tpope/vim-eunuch
   "ca w!! w !sudo tee "%"
@@ -905,6 +911,8 @@
         execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
         python debugger.run()
     endfunction
+    " example
+    "   :DebugPhpConsole appadd appto.tests@gmail.com "{\"platform\": {\"app\": {\"variation\": \"Enter web link\", \"file\": \"https://itunes.apple.com/ru/app/gmail/id422689480?mt=8\"}}}"
     command! -nargs=* DebugPhpConsole call DebugPhpConsole('<args>')
 
     let g:vdebug_options= {
@@ -1206,9 +1214,9 @@ function! s:unite_settings()
 endfunction
 
 " Use the fuzzy matcher for everything
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-" Use the rank sorter for everything
-call unite#filters#sorter_default#use(['sorter_rank'])
+"call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" Use the rank sorter for everything - fuzzy matcher does not use sorter
+" call unite#filters#sorter_default#use(['sorter_rank'])
 " Start in insert mode
 let g:unite_enable_start_insert = 1
 " Enable history yank source
