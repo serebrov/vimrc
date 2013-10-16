@@ -279,7 +279,7 @@
         set guioptions-=r
 
         " set guifont=* to display font chooser
-        set guifont=Inconsolata\ Medium\ 12
+        "set guifont=Inconsolata\ Medium\ 12
         "set guifont=Liberation\ Mono\ 10
     endif
     " }
@@ -1236,7 +1236,12 @@ let g:unite_source_file_mru_time_format = ''
 let g:unite_data_directory = expand('~/.vim/tmp/unite/')
 
 " For ack.
-if executable('ack-grep')
+if executable('ag')
+  " https://github.com/ggreer/the_silver_searcher
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--noheading --nocolor -a'
+  let g:unite_source_grep_recursive_opt = ''
+elseif executable('ack-grep')
   let g:unite_source_grep_command = 'ack-grep'
   let g:unite_source_grep_default_opts = '--no-heading --no-color -a --type-set tags=.tags --notags'
   let g:unite_source_grep_recursive_opt = ''
