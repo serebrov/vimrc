@@ -27,12 +27,20 @@
         " fugitive extension, commit browser - :Extradite
         NeoBundle 'int3/vim-extradite'
         "NeoBundle 'git://github.com/sjl/threesome.vim.git'
+        "Shows +/- for git changes
+        NeoBundle 'airblade/vim-gitgutter'
 
         " visual guides for indents, default mapping <Leager>ig
         " :IndentGuidesToggle
         "NeoBundle 'nathanaelkane/vim-indent-guides'
         " :IndentLinesToggle
         NeoBundle 'Yggdroot/indentLine'
+        " automatically switches to relative numbers when go to normal mode
+        NeoBundle 'myusuf3/numbers.vim.git'
+        " :Matchmaker to enable dynamic highlighting of the word under the
+        " cursor (move the cursor and it will highlight the different word)
+        " :Matchmaker! to turn it off
+        NeoBundle 'qstrahl/vim-matchmaker'
         " rainbow parenthesis
         " Note: doesn't work for php due some specifics in the syntax file
         " it doesn't work with default syntax file and with extended versions
