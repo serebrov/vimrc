@@ -22,6 +22,7 @@
         " git support: Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
         " Ggrep, Glog, Gread, Gwrite, Gbrowse
         NeoBundle 'tpope/vim-fugitive'
+        NeoBundle 'gregsexton/gitv'
         " auto adjust tab/space settings based on current file
         NeoBundle 'tpope/vim-sleuth'
         " fugitive extension, commit browser - :Extradite
