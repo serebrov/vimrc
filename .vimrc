@@ -19,6 +19,7 @@
     " }
 
     " My Bundles here {
+        """""" Git
         " git support: Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
         " Ggrep, Glog, Gread, Gwrite, Gbrowse
         NeoBundle 'tpope/vim-fugitive'
@@ -30,6 +31,7 @@
         "Shows +/- for git changes
         NeoBundle 'airblade/vim-gitgutter'
 
+        """""" UI
         " visual guides for indents, default mapping <Leager>ig
         " :IndentGuidesToggle
         "NeoBundle 'nathanaelkane/vim-indent-guides'
@@ -41,6 +43,9 @@
         " cursor (move the cursor and it will highlight the different word)
         " :Matchmaker! to turn it off
         NeoBundle 'qstrahl/vim-matchmaker'
+        " At every search command, it automatically prints
+        " "At match #N out of M matches".
+        NeoBundle 'IndexedSearch'
         " rainbow parenthesis
         " Note: doesn't work for php due some specifics in the syntax file
         " it doesn't work with default syntax file and with extended versions
@@ -60,6 +65,7 @@
         NeoBundle 'sjl/badwolf'
         NeoBundle 'lsdr/monokai'
 
+        """""" Motions / normal mode commands
         " Simpler way to use some motions in vim.
         " Start motion with <Leader><Leader>
         " Like <Space>w to trigger the word motion w
@@ -67,6 +73,11 @@
         " Tutorial: http://net.tutsplus.com/tutorials/other/vim-essential-plugin-easymotion/
         " It is similar to vimperator (FireFox extenstion) link select mode
         NeoBundle 'Lokaltog/vim-easymotion'
+        " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
+        NeoBundle 'bkad/CamelCaseMotion'
+        " av: around variable
+        " iv: inner variable
+        NeoBundle 'robmiller/vim-movar'
         " Change surrounding objects
         " cs<from><to> - change surrounding
         " cs"' - change surround " to '
@@ -98,6 +109,16 @@
         " [f / ]f - previous / next file in directory
         " [n / ]b - previous / next conflict marker
         NeoBundle 'tpope/vim-unimpaired'
+        " Commenting code
+        " <Leader>cc - comment line or selected text
+        " <Leader>cu - uncomment line or selected text
+        " <Leader>cm - comment with multiline /* */ comments
+        " <Leader>cs - 'sexy' comments
+        " <Leader>c<space> - toggle comments state, see more in help
+        NeoBundle 'scrooloose/nerdcommenter'
+
+
+        """""" Commands
         "Vim sugar for the UNIX shell commands that need it the most. Commands include:
         " :Unlink: Delete a buffer and the file on disk simultaneously.
         " :Remove: Like :Unlink, but doesn't require a neckbeard.
@@ -122,14 +143,12 @@
         "  split_declarations, trenary_operator, cpp_io, pascal_assign,
         "  trailing_c_comments
         NeoBundle 'godlygeek/tabular'
+        " :Multichange and then cw to change word in a whole file (or any
+        " other cxx command)
+        NeoBundle 'AndrewRadev/multichange.vim'
+        " disable mapping entirely
+        let g:multichange_mapping = ''
 
-        " Commenting code
-        " <Leader>cc - comment line or selected text
-        " <Leader>cu - uncomment line or selected text
-        " <Leader>cm - comment with multiline /* */ comments
-        " <Leader>cs - 'sexy' comments
-        " <Leader>c<space> - toggle comments state, see more in help
-        NeoBundle 'scrooloose/nerdcommenter'
 
         " Syntax checker
         NeoBundle 'scrooloose/syntastic'
@@ -149,21 +168,21 @@
         NeoBundle 'UltiSnips'
         NeoBundle 'ervandew/supertab'
 
+        NeoBundle 'joonty/vdebug'
+        NeoBundle 'joonty/vim-taggatron'
+        NeoBundle 'airblade/vim-rooter'
+
+        " https://github.com/majutsushi/tagbar/wiki
+        " http://majutsushi.github.com/tagbar/
+        " :TagbarToggle
+        NeoBundle 'majutsushi/tagbar'
+
         " autoinsert pair symbols (such as brackets)
         " disable because it breaks dot(.) - it repeats only what was entered
         " inside the paired symbols, not the whole text
         " https://github.com/kana/vim-smartinput/issues/33
         "NeoBundle 'kana/vim-smartinput'
 
-        " At every search command, it automatically prints
-        " "At match #N out of M matches".
-        NeoBundle 'IndexedSearch'
-
-        " :Multichange and then cw to change word in a whole file (or any
-        " other cxx command)
-        NeoBundle 'AndrewRadev/multichange.vim'
-        " disable mapping entirely
-        let g:multichange_mapping = ''
 
         " PHP
         " ====
@@ -177,22 +196,6 @@
         NeoBundle 'mikehaertl/yii-api-vim'
         " php documenter
         NeoBundle 'mikehaertl/pdv-standalone'
-
-        NeoBundle 'joonty/vdebug'
-        NeoBundle 'joonty/vim-taggatron'
-        NeoBundle 'airblade/vim-rooter'
-
-        " https://github.com/majutsushi/tagbar/wiki
-        " http://majutsushi.github.com/tagbar/
-        " :TagbarToggle
-        NeoBundle 'majutsushi/tagbar'
-
-        " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
-        NeoBundle 'bkad/CamelCaseMotion'
-
-        " av: around variable
-        " iv: inner variable
-        NeoBundle 'robmiller/vim-movar'
 
         "" Interface
         NeoBundle 'Shougo/vimproc', { 'build': {
