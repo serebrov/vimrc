@@ -1225,7 +1225,7 @@ function! s:unite_settings()
 endfunction
 
 " Use the fuzzy matcher for everything
-"call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
 " Use the rank sorter for everything - fuzzy matcher does not use sorter
 " call unite#filters#sorter_default#use(['sorter_rank'])
 " Start in insert mode
