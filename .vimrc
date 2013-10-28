@@ -157,9 +157,12 @@
         """""" Programming / tags / autocomplete
         " Syntax checker
         NeoBundle 'scrooloose/syntastic'
+        " fetching can take a long time causing the timeout
+        " to manually install it
+        "   git clone --recursive https://github.com/Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe
         NeoBundle "Valloric/YouCompleteMe", {"build": {
-            \ "mac": "sh install.sh --clang-completer",
-            \ "unix": "sh install.sh --clang-completer"
+            \ "mac": "./install.sh --clang-completer",
+            \ "unix": "./install.sh --clang-completer"
             \ }}
         NeoBundle 'UltiSnips'
         NeoBundle 'ervandew/supertab'
