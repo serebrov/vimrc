@@ -23,6 +23,7 @@
         " git support: Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
         " Ggrep, Glog, Gread, Gwrite, Gbrowse
         NeoBundle 'tpope/vim-fugitive'
+        NeoBundle 'gregsexton/gitv'
         " auto adjust tab/space settings based on current file
         NeoBundle 'tpope/vim-sleuth'
         " fugitive extension, commit browser - :Extradite
@@ -32,10 +33,7 @@
         NeoBundle 'airblade/vim-gitgutter'
 
         """""" UI
-        " visual guides for indents, default mapping <Leager>ig
-        " :IndentGuidesToggle
-        "NeoBundle 'nathanaelkane/vim-indent-guides'
-        " :IndentLinesToggle
+        " visual guides for indents, :IndentLinesToggle
         NeoBundle 'Yggdroot/indentLine'
         " automatically switches to relative numbers when go to normal mode
         NeoBundle 'myusuf3/numbers.vim.git'
@@ -117,7 +115,6 @@
         " <Leader>c<space> - toggle comments state, see more in help
         NeoBundle 'scrooloose/nerdcommenter'
 
-
         """""" Commands
         "Vim sugar for the UNIX shell commands that need it the most. Commands include:
         " :Unlink: Delete a buffer and the file on disk simultaneously.
@@ -145,59 +142,41 @@
         NeoBundle 'godlygeek/tabular'
         " :Multichange and then cw to change word in a whole file (or any
         " other cxx command)
+        " command line results into buffer, like :Clam ls,
+        " :1,20Clam python - send first 20 lines into python
+        NeoBundle 'sjl/clam.vim'
+         " Gundo.vim is Vim plugin to visualize your Vim undo tree.
+        NeoBundle 'sjl/gundo.vim'
+        " adds a Bundles menu to Vim, displaying the installed plugins and the features they provide
+        NeoBundle 'Headlights'
+        " :Multichange to enter multichange mode (cw will affect the whole file)
         NeoBundle 'AndrewRadev/multichange.vim'
         " disable mapping entirely
         let g:multichange_mapping = ''
 
-
+        """""" Programming / tags / autocomplete
         " Syntax checker
         NeoBundle 'scrooloose/syntastic'
-
-        " Markdown support
-        NeoBundle 'tpope/vim-markdown'
-        " Markup files preview
-        " <Leader>P
-        NeoBundle 'greyblake/vim-preview'
-        NeoBundle 'suan/vim-instant-markdown'
-
         NeoBundle "Valloric/YouCompleteMe", {"build": {
             \ "mac": "sh install.sh --clang-completer",
             \ "unix": "sh install.sh --clang-completer"
             \ }}
-
         NeoBundle 'UltiSnips'
         NeoBundle 'ervandew/supertab'
-
         NeoBundle 'joonty/vdebug'
         NeoBundle 'joonty/vim-taggatron'
         NeoBundle 'airblade/vim-rooter'
-
         " https://github.com/majutsushi/tagbar/wiki
         " http://majutsushi.github.com/tagbar/
         " :TagbarToggle
         NeoBundle 'majutsushi/tagbar'
-
         " autoinsert pair symbols (such as brackets)
         " disable because it breaks dot(.) - it repeats only what was entered
         " inside the paired symbols, not the whole text
         " https://github.com/kana/vim-smartinput/issues/33
         "NeoBundle 'kana/vim-smartinput'
 
-
-        " PHP
-        " ====
-        " php completion - it should be copied to autoload/phpcomplete.vim
-        NeoBundle 'shawncplus/phpcomplete.vim'
-        " php 5.3 syntax
-        NeoBundle 'StanAngeloff/php.vim'
-        NeoBundle '2072/PHP-Indenting-for-VIm'
-        " view php docs with K
-        NeoBundle 'mudpile45/vim-phpdoc'
-        NeoBundle 'mikehaertl/yii-api-vim'
-        " php documenter
-        NeoBundle 'mikehaertl/pdv-standalone'
-
-        "" Interface
+        """""" Unite and vimproc
         NeoBundle 'Shougo/vimproc', { 'build': {
               \   'windows': 'make -f make_mingw32.mak',
               \   'cygwin': 'make -f make_cygwin.mak',
@@ -214,15 +193,25 @@
         NeoBundle 'Shougo/vimshell'
         NeoBundle 'Shougo/vimfiler'
 
-         " Gundo.vim is Vim plugin to visualize your Vim undo tree.
-        NeoBundle 'sjl/gundo.vim'
-        " command line results into buffer, like :Clam ls,
-        " :1,20Clam python - send first 20 lines into python
-        NeoBundle 'sjl/clam.vim'
+        """""" Markdown
+        NeoBundle 'tpope/vim-markdown'
+        " Markup files preview: <Leader>P
+        NeoBundle 'greyblake/vim-preview'
+        NeoBundle 'suan/vim-instant-markdown'
 
-        " adds a Bundles menu to Vim, displaying the installed plugins and the features they provide
-        NeoBundle 'Headlights'
-    " JavaScript
+        """""" PHP
+        " php completion - it should be copied to autoload/phpcomplete.vim
+        NeoBundle 'shawncplus/phpcomplete.vim'
+        " php 5.3 syntax
+        NeoBundle 'StanAngeloff/php.vim'
+        NeoBundle '2072/PHP-Indenting-for-VIm'
+        " view php docs with K
+        NeoBundle 'mudpile45/vim-phpdoc'
+        NeoBundle 'mikehaertl/yii-api-vim'
+        " php documenter
+        NeoBundle 'mikehaertl/pdv-standalone'
+
+        """""" Javascript
         NeoBundle 'jelera/vim-javascript-syntax'
         NeoBundle 'itspriddle/vim-jquery.git'
         " ejs templates syntax highlight
