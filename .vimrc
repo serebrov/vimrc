@@ -30,7 +30,7 @@
         NeoBundle 'int3/vim-extradite'
         "NeoBundle 'git://github.com/sjl/threesome.vim.git'
         "Shows +/- for git changes
-        NeoBundle 'airblade/vim-gitgutter'
+        "NeoBundle 'airblade/vim-gitgutter'
 
         """""" UI
         " visual guides for indents, :IndentLinesToggle
@@ -499,7 +499,7 @@
       " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
       " it is also possible to configure options for each checker, see
       " syntastic helt - "syntastic-config-makeprg"
-      let g:syntastic_check_on_open=1
+      let g:syntastic_check_on_open=0
       let g:syntastic_css_checkers = ['csslint']
   " }
   " save as sudo - use :SudoWrite from tpope/vim-eunuch
@@ -1129,6 +1129,8 @@ nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep -no-quit vcs_grep/git:.
 nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep -no-quit grep:.<CR>
 " grep (specify directory)
 nnoremap <silent> [unite]gd :<C-u>Unite -buffer-name=grep -no-quit grep<CR>
+" grep (current file directory)
+nnoremap <silent> [unite]gf :<C-u>Unite -buffer-name=grep -no-quit grep:<C-r>=expand('%:p:h')<CR><CR>
 
 function! Unext(motion)
     let l:uwin = bufwinnr("*unite* - grep")
