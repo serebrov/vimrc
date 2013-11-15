@@ -58,10 +58,10 @@
         NeoBundle 'godlygeek/csapprox'
         " Solarized color scheme
         NeoBundle 'altercation/vim-colors-solarized'
-        NeoBundle 'nelstrom/vim-mac-classic-theme'
-        NeoBundle 'morhetz/gruvbox'
-        NeoBundle 'sjl/badwolf'
-        NeoBundle 'lsdr/monokai'
+        "NeoBundle 'nelstrom/vim-mac-classic-theme'
+        "NeoBundle 'morhetz/gruvbox'
+        "NeoBundle 'sjl/badwolf'
+        "NeoBundle 'lsdr/monokai'
 
         """""" Motions / normal mode commands
         " Simpler way to use some motions in vim.
@@ -519,6 +519,9 @@
   let g:airline_paste_symbol = 'Þ'
   let g:airline_paste_symbol = '∥'
 
+  " it is too slow to have it enabled by default, use :IndentLinesToggle
+  let g:indentLine_enabled = 0
+
 " }
 
 " Autocommands {
@@ -906,6 +909,18 @@
     "   :DebugPhpunit --bootstrap tests/unitTests/bootstrap.php
     command! -nargs=* -complete=file DebugPhpunit call DebugPhpunit('<args> %')
 
+    function! DebugPhpScript(...)
+        let str_args = join(a:000, ' ')
+        let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && php ' . str_args
+        execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
+        execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
+        execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
+        python debugger.run()
+    endfunction
+    " example (open test file first):
+    "   :DebugPhpScript %
+    command! -nargs=* -complete=file DebugPhpScript call DebugPhpScript('<args>')
+
     function! DebugPhpConsole(...)
         let str_args = join(a:000, ' ')
         let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && console/yiic ' . str_args
@@ -1131,6 +1146,15 @@ nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep -no-quit grep:.<CR>
 nnoremap <silent> [unite]gd :<C-u>Unite -buffer-name=grep -no-quit grep<CR>
 " grep (current file directory)
 nnoremap <silent> [unite]gf :<C-u>Unite -buffer-name=grep -no-quit grep:<C-r>=expand('%:p:h')<CR><CR>
+
+" Note: searches with :Ggrep are fast and populate quickfix, so it is
+" convenient to go over results without switching back to unite buffer
+" :cnext / :cprev or unimpaired's mapplings ]q / [q
+" Examples:
+"   Ggrep 'text' | copen - find text and open quick fix buffer
+"   Ggrep -i 'someothertext' - ignore case
+"   Ggrep 'text' -- '*.php' | copen - search only php files
+"   Ggrep 'text' -- '*.[ch]' | copen - search only *.c and *.h files
 
 function! Unext(motion)
     let l:uwin = bufwinnr("*unite* - grep")
