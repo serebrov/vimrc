@@ -11,6 +11,8 @@
 
         " Let NeoBundle manage NeoBundle
         NeoBundleFetch 'Shougo/neobundle.vim'
+        " for YouCompleteMe - it takes a long time to install
+        let g:neobundle#install_process_timeout = 600
 
         " Brief help
         " :NeoBundleList          - list configured bundles
