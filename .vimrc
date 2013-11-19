@@ -558,6 +558,16 @@
 
     augroup END
 
+    " autowrite on leave the insert mode
+    augroup MyAutoCmdAutosave
+      autocmd!
+
+      autocmd InsertLeave * if expand('%') != '' | update | endif
+    augroup END
+    " another way
+    " inoremap <Esc> <Esc>:w<CR>
+    " autocmd InsertLeave * if expand('%') != '' | update | endif
+
     augroup Rainbow
       autocmd!
       au VimEnter * RainbowParenthesesToggle
