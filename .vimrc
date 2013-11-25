@@ -221,6 +221,7 @@
         NeoBundle 'itspriddle/vim-jquery.git'
         " ejs templates syntax highlight
         NeoBundle 'briancollins/vim-jst.git'
+        NeoBundle 'heavenshell/vim-jsdoc'
     " }
 
     runtime macros/matchit.vim
@@ -493,39 +494,6 @@
     " set tags=tags;/
 " }
 
-" Plugins {
-
-  let g:PreviewBrowsers='google-chrome'
-
-  " Syntastic {
-      " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
-      " it is also possible to configure options for each checker, see
-      " syntastic helt - "syntastic-config-makeprg"
-      let g:syntastic_check_on_open=0
-      let g:syntastic_css_checkers = ['csslint']
-  " }
-  " save as sudo - use :SudoWrite from tpope/vim-eunuch
-  "ca w!! w !sudo tee "%"
-
-  let g:airline_theme='badwolf'
-  " unicode symbols
-  let g:airline_left_sep = '»'
-  let g:airline_left_sep = '▶'
-  let g:airline_right_sep = '«'
-  let g:airline_right_sep = '◀'
-  let g:airline_linecolumn_prefix = '␊ '
-  let g:airline_linecolumn_prefix = '␤ '
-  let g:airline_linecolumn_prefix = '¶ '
-  let g:airline_branch_prefix = '⎇ '
-  let g:airline_paste_symbol = 'ρ'
-  let g:airline_paste_symbol = 'Þ'
-  let g:airline_paste_symbol = '∥'
-
-  " it is too slow to have it enabled by default, use :IndentLinesToggle
-  let g:indentLine_enabled = 0
-
-" }
-
 " Autocommands {
     " MyAutoCmd : an augroup for my autocmd {{{1
     augroup MyAutoCmd
@@ -619,6 +587,60 @@
         \ endif
 " }
 
+" Plugins {
+
+  let g:PreviewBrowsers='google-chrome'
+
+  " Syntastic {
+      " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
+      " it is also possible to configure options for each checker, see
+      " syntastic helt - "syntastic-config-makeprg"
+      let g:syntastic_check_on_open=0
+      let g:syntastic_css_checkers = ['csslint']
+  " }
+  " save as sudo - use :SudoWrite from tpope/vim-eunuch
+  "ca w!! w !sudo tee "%"
+
+  let g:airline_theme='badwolf'
+  " unicode symbols
+  let g:airline_left_sep = '»'
+  let g:airline_left_sep = '▶'
+  let g:airline_right_sep = '«'
+  let g:airline_right_sep = '◀'
+  let g:airline_linecolumn_prefix = '␊ '
+  let g:airline_linecolumn_prefix = '␤ '
+  let g:airline_linecolumn_prefix = '¶ '
+  let g:airline_branch_prefix = '⎇ '
+  let g:airline_paste_symbol = 'ρ'
+  let g:airline_paste_symbol = 'Þ'
+  let g:airline_paste_symbol = '∥'
+
+  " it is too slow to have it enabled by default, use :IndentLinesToggle
+  let g:indentLine_enabled = 0
+
+  " phpDocumenter
+  let g:pdv_cfg_Package = "app"
+  let g:pdv_cfg_Version = ""
+  let g:pdv_cfg_Author = "Boris Serebrov"
+  let g:pdv_cfg_Copyright = ""
+  let g:pdv_cfg_License = ""
+
+  "JSDoc
+  g:jsdoc_default_mapping = 0
+
+  augroup DocMap
+    autocmd!
+
+    autocmd FileType php inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
+    autocmd FileType php nnoremap <Leader>pd :call PhpDocSingle()<CR>
+    autocmd FileType php vnoremap <Leader>pd :call PhpDocRange()<CR>
+
+    autocmd FileType javascript nnoremap <Leader>pd <Plug>(jsdoc)
+
+  augroup END
+
+" }
+
 " Mappings {
     "let mapleader = ","
     let mapleader = "\<space>"
@@ -699,17 +721,6 @@
 
     " Search and replace word under cursor
     "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
-
-    " phpDocumenter
-    inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
-    nnoremap <Leader>pd :call PhpDocSingle()<CR>
-    vnoremap <Leader>pd :call PhpDocRange()<CR>
-     " Default values
-    let g:pdv_cfg_Package = "app"
-    let g:pdv_cfg_Version = ""
-    let g:pdv_cfg_Author = "Boris Serebrov"
-    let g:pdv_cfg_Copyright = ""
-    let g:pdv_cfg_License = ""
 
     " http://technotales.wordpress.com/2010/03/31/preserve-a-vim-function-that-keeps-your-state/
     " remove trailing spaces
