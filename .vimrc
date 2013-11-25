@@ -532,7 +532,7 @@
     augroup MyAutoCmdAutosave
       autocmd!
 
-      autocmd InsertLeave * if expand('%') != '' | update | endif
+      autocmd InsertLeave * if expand('%') != '' && expand('%') != '[Command Line]' | update | endif
     augroup END
     " another way
     " inoremap <Esc> <Esc>:w<CR>
