@@ -626,7 +626,7 @@
   let g:pdv_cfg_License = ""
 
   "JSDoc
-  g:jsdoc_default_mapping = 0
+  let g:jsdoc_default_mapping = 0
 
   augroup DocMap
     autocmd!
