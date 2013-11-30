@@ -635,7 +635,7 @@
     autocmd FileType php nnoremap <Leader>pd :call PhpDocSingle()<CR>
     autocmd FileType php vnoremap <Leader>pd :call PhpDocRange()<CR>
 
-    autocmd FileType javascript nnoremap <Leader>pd <Plug>(jsdoc)
+    autocmd FileType javascript nnoremap <Leader>pd :JsDoc<CR>
 
   augroup END
 
