@@ -65,6 +65,10 @@
         "NeoBundle 'sjl/badwolf'
         "NeoBundle 'lsdr/monokai'
 
+        "ensure dir exists before save the file
+        "so :e some_new_dir/some_new_file and then :w will work
+        NeoBundle 'dockyard/vim-easydir'
+
         """""" Motions / normal mode commands
         " Simpler way to use some motions in vim.
         " Start motion with <Leader><Leader>
