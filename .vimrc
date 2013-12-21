@@ -737,6 +737,9 @@
     "command! -nargs=1 SaveAsHere exe "saveas " . expand("%:p:h") . "/" .  expand("<args>")
     "instead use :saveas CTRL-R %
 
+    " will expand %% to current file path
+    cabbr <expr> %% expand('%:p:h')
+
     " Visual search
         " select text and hit * / # to find it
         " http://got-ravings.blogspot.com/2008/07/vim-pr0n-visual-search-mappings.html
