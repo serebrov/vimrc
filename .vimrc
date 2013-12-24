@@ -743,7 +743,8 @@
     "instead use :saveas CTRL-R %
 
     " will expand %% to current file path
-    cabbr <expr> %% expand('%:p:h')
+    "cabbr <expr> %% expand('%:p:h')
+    cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<CR>
 
     " Visual search
         " select text and hit * / # to find it
