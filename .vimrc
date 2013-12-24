@@ -785,6 +785,9 @@
         " }
         " gv - select last visual area and go to visual mode
 
+    " Visually select the text that was last edited/pasted
+    nmap gV `[v`]
+
     nnoremap gl :call ToggleRelativeAbsoluteNumber()<CR>
 
     function! ToggleRelativeAbsoluteNumber()
