@@ -30,7 +30,8 @@
         NeoBundle 'tpope/vim-sleuth'
         " fugitive extension, commit browser - :Extradite
         NeoBundle 'int3/vim-extradite'
-        "NeoBundle 'git://github.com/sjl/threesome.vim.git'
+        " see http://sjl.bitbucket.org/splice.vim/
+        "NeoBundle 'sjl/splice.vim'
         "Shows +/- for git changes
         "NeoBundle 'airblade/vim-gitgutter'
 
@@ -38,7 +39,7 @@
         " visual guides for indents, :IndentLinesToggle
         NeoBundle 'Yggdroot/indentLine'
         " automatically switches to relative numbers when go to normal mode
-        NeoBundle 'myusuf3/numbers.vim.git'
+        "NeoBundle 'myusuf3/numbers.vim.git'
         " :Matchmaker to enable dynamic highlighting of the word under the
         " cursor (move the cursor and it will highlight the different word)
         " :Matchmaker! to turn it off
@@ -783,6 +784,15 @@
         " }
         " gv - select last visual area and go to visual mode
 
+    nnoremap gl :call ToggleRelativeAbsoluteNumber()<CR>
+
+    function! ToggleRelativeAbsoluteNumber()
+    if &relativenumber
+        set norelativenumber
+    else
+        set relativenumber
+    endif
+    endfunction
 " }
 
 " File browser {
