@@ -26,8 +26,6 @@
         " Ggrep, Glog, Gread, Gwrite, Gbrowse
         NeoBundle 'tpope/vim-fugitive'
         NeoBundle 'gregsexton/gitv'
-        " auto adjust tab/space settings based on current file
-        NeoBundle 'tpope/vim-sleuth'
         " fugitive extension, commit browser - :Extradite
         NeoBundle 'int3/vim-extradite'
         "NeoBundle 'git://github.com/sjl/threesome.vim.git'
@@ -35,6 +33,14 @@
         "NeoBundle 'airblade/vim-gitgutter'
 
         """""" UI
+        " auto adjust tab/space settings based on current file
+        NeoBundle 'tpope/vim-sleuth'
+        " Additional features for netrw
+        " - to open browser focused on current file, - again to go upper
+        " . to put selected file name to the end of command line; ! to do the
+        " same and start command line with !
+        " ~ - go home; cd/cl - :cd / :lcd
+        NeoBundle 'tpope/vim-vinegar'
         " visual guides for indents, :IndentLinesToggle
         NeoBundle 'Yggdroot/indentLine'
         " automatically switches to relative numbers when go to normal mode
@@ -786,53 +792,53 @@
 " }
 
 " File browser {
-    " NERDTree inspired functions
-    function! NerdFindFile(file)
-        execute ':e ' . fnamemodify(a:file, ':h')
-        execute '/' . fnamemodify(a:file, ':t')
-    endfunction
-    function! NerdFindDir(cd, find)
-        echo a:cd
-        execute ':e ' . a:cd
-        " search for ..
-        execute '/\.\.'
-        " search for dir
-        execute '/' . escape(a:find, '/')
-    endfunction
-    map <Leader>nt :call NerdFindDir(getcwd(), '\.\.')<CR>
-    map <Leader>nf :call NerdFindFile(expand('%'))<CR>
+    "" NERDTree inspired functions
+    "function! NerdFindFile(file)
+        "execute ':e ' . fnamemodify(a:file, ':h')
+        "execute '/' . fnamemodify(a:file, ':t')
+    "endfunction
+    "function! NerdFindDir(cd, find)
+        "echo a:cd
+        "execute ':e ' . a:cd
+        "" search for ..
+        "execute '/\.\.'
+        "" search for dir
+        "execute '/' . escape(a:find, '/')
+    "endfunction
+    "map <Leader>nt :call NerdFindDir(getcwd(), '\.\.')<CR>
+    "map <Leader>nf :call NerdFindFile(expand('%'))<CR>
 
-    augroup netrw_mappings
-        autocmd!
-        autocmd filetype netrw call RegisterNetrwMaps()
-    augroup END
-    function! RegisterNetrwMaps()
-        if !exists("b:browseup_map")
-          " save previous mapping
-          let b:browseup_map = mapcheck('-')
-          " saved command is like this:
-          " :exe "norm! 0"|call netrw#LocalBrowseCheck(<SNR>172_NetrwBrowseChgDir(1,'../'))<CR>
-          " remove <CR> at the end (otherwise raises "E488: Trailing characters")
-          let b:browseup = strpart(b:browseup_map, 0, strlen(b:browseup_map)-4)
-        endif
-        nmap <buffer> - :call CdUpAndFocus(b:browseup)<CR>
-        " use Leader-r to refresh (default is Ctrl-L which is used to jump
-        " to the left window)
-        nmap <buffer> <Leader>r <Plug>NetrwRefresh
-    endfunction
-    function! CdUpAndFocus(browseup)
-        "normal -
-        let l:cd = expand('%:p:h:h')
-        let l:t = expand('%:t')
-        execute a:browseup
-        if l:t != ''
-          " search for ..
-          execute '/\.\.'
-          " search for dir
-          "echo escape(l:t, '/')
-          execute '/' . escape(l:t, '/') . '\/$'
-        endif
-    endfunction
+    "augroup netrw_mappings
+        "autocmd!
+        "autocmd filetype netrw call RegisterNetrwMaps()
+    "augroup END
+    "function! RegisterNetrwMaps()
+        "if !exists("b:browseup_map")
+          "" save previous mapping
+          "let b:browseup_map = mapcheck('-')
+          "" saved command is like this:
+          "" :exe "norm! 0"|call netrw#LocalBrowseCheck(<SNR>172_NetrwBrowseChgDir(1,'../'))<CR>
+          "" remove <CR> at the end (otherwise raises "E488: Trailing characters")
+          "let b:browseup = strpart(b:browseup_map, 0, strlen(b:browseup_map)-4)
+        "endif
+        "nmap <buffer> - :call CdUpAndFocus(b:browseup)<CR>
+        "" use Leader-r to refresh (default is Ctrl-L which is used to jump
+        "" to the left window)
+        "nmap <buffer> <Leader>r <Plug>NetrwRefresh
+    "endfunction
+    "function! CdUpAndFocus(browseup)
+        ""normal -
+        "let l:cd = expand('%:p:h:h')
+        "let l:t = expand('%:t')
+        "execute a:browseup
+        "if l:t != ''
+          "" search for ..
+          "execute '/\.\.'
+          "" search for dir
+          ""echo escape(l:t, '/')
+          "execute '/' . escape(l:t, '/') . '\/$'
+        "endif
+    "endfunction
 
 " }
 
