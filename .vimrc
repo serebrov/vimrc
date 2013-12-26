@@ -125,7 +125,11 @@
         " <Leader>cm - comment with multiline /* */ comments
         " <Leader>cs - 'sexy' comments
         " <Leader>c<space> - toggle comments state, see more in help
-        NeoBundle 'scrooloose/nerdcommenter'
+        "NeoBundle 'scrooloose/nerdcommenter'
+
+        " gcc - comment out line
+        " gc<motion> - comment out lines defined by motion
+        NeoBundle 'tpope/vim-commentary'
 
         """""" Commands
         "Vim sugar for the UNIX shell commands that need it the most. Commands include:
