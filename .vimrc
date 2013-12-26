@@ -21,18 +21,9 @@
     " }
 
     " My Bundles here {
-        """""" Git
-        " git support: Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
-        " Ggrep, Glog, Gread, Gwrite, Gbrowse
-        NeoBundle 'tpope/vim-fugitive'
-        NeoBundle 'gregsexton/gitv'
-        " fugitive extension, commit browser - :Extradite
-        NeoBundle 'int3/vim-extradite'
-        "NeoBundle 'git://github.com/sjl/threesome.vim.git'
-        "Shows +/- for git changes
-        "NeoBundle 'airblade/vim-gitgutter'
-
         """""" UI
+        " sensible defaults
+        NeoBundle 'tpope/vim-sensible'
         " auto adjust tab/space settings based on current file
         NeoBundle 'tpope/vim-sleuth'
         " Additional features for netrw
@@ -74,6 +65,17 @@
         "ensure dir exists before save the file
         "so :e some_new_dir/some_new_file and then :w will work
         NeoBundle 'dockyard/vim-easydir'
+
+        """""" Git
+        " git support: Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
+        " Ggrep, Glog, Gread, Gwrite, Gbrowse
+        NeoBundle 'tpope/vim-fugitive'
+        NeoBundle 'gregsexton/gitv'
+        " fugitive extension, commit browser - :Extradite
+        NeoBundle 'int3/vim-extradite'
+        "NeoBundle 'git://github.com/sjl/threesome.vim.git'
+        "Shows +/- for git changes
+        "NeoBundle 'airblade/vim-gitgutter'
 
         """""" Motions / normal mode commands
         " Simpler way to use some motions in vim.
@@ -238,8 +240,6 @@
         NeoBundle 'heavenshell/vim-jsdoc'
     " }
 
-    runtime macros/matchit.vim
-
     filetype plugin indent on " load filetype plugins/indent settings
 
     " Installation check.
@@ -252,7 +252,6 @@
     set nobackup
     set noswapfile
 
-    set history=64
     set undolevels=128
     " try to create undo dir, skip error if exists
     silent !mkdir ~/.vim/tmp > /dev/null 2>&1
@@ -265,7 +264,6 @@
     set undolevels=1000
     set undoreload=10000
 
-    set autoread
     set autowrite
 
    " Colors {
@@ -328,7 +326,6 @@
     set novisualbell            " don't blink
     set t_vb=
 
-    set wildmenu                " turn on command line completion wild style
     " ignore these list file extensions
     set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,
                     \*.jpg,*.gif,*.png
@@ -368,7 +365,6 @@
 " }
 
 " Search {
-     set incsearch              " do highlight as you type you search phrase
      set hlsearch               " highlight search
      set ignorecase             " case insensitive by default
      set smartcase              " if there are caps, go case-sensitive
@@ -381,18 +377,16 @@
      set wrap                   " wrap text, see http://vimcasts.org/episodes/soft-wrapping-text/
      set linebreak              " do not wrap in the middle of the word
 
-     set laststatus=2           " always show the status line
-
      set list                   " we do what to show tabs, to ensure we get them
                                 " out of my files
-     set listchars=tab:>-,trail:- " show tabs and trailing
-     if has("gui_running")
-         set listchars=tab:▸\ ,trail:·",eol:¶,extends:»,precedes:«
-         set showbreak=-
-     else
-         set listchars=tab:»\ ,trail:·",eol:¬,extends:❯,precedes:❮
-         set showbreak=↪
-     endif
+     "set listchars=tab:>-,trail:- " show tabs and trailing
+     "if has("gui_running")
+         "set listchars=tab:▸\ ,trail:·",eol:¶,extends:»,precedes:«
+         "set showbreak=-
+     "else
+         "set listchars=tab:»\ ,trail:·",eol:¬,extends:❯,precedes:❮
+         "set showbreak=↪
+     "endif
      if has("linebreak")
          let &sbr = nr2char(8618).' '  " Show ↪ at the beginning of wrapped lines
      endif
@@ -405,7 +399,6 @@
      set number                 " turn on line numbers
      set numberwidth=5          " We are good up to 99999 lines
      set report=0               " tell us when anything is changed via :...
-     set ruler                  " Always show current positions along the bottom
      set showmode               " Show editing mode
 
      "set scrolloff=10          " Keep 10 lines (top/bottom) for scope
@@ -415,8 +408,6 @@
 
      set shortmess=aOstT        " shortens messages to avoid
                                 " 'press a key' prompt
-     set showcmd                " show the command being typed
-     set showmatch             " show matching brackets (slow)
      set statusline=[%n]%{fugitive#statusline()}%F\ %m%r%h%w\ [%L]\ [%{&ff}]%y%=[%p%%][%04l,%04v]
      "                |                         |   | | | |    |     |      |     |     |    |
      "                |                         |   | | | |    |     |      |     |     |    + current
@@ -438,10 +429,7 @@
 
 " Text Formatting/Layout {
     set expandtab               " expand tabs to spaces
-    set smarttab                " When on, a <Tab> in front of a line inserts
-                                " blanks according to 'shiftwidth'
 
-    set shiftround              " when at 3 spaces, and I hit > ... go to 4, not 5
     set shiftwidth=4            " auto-indent amount when using cindent,
                                 " >>, << and stuff like that
     set softtabstop=4           " when hitting tab or backspace, how many spaces
@@ -454,10 +442,7 @@
 
     set infercase               " case inferred by default
 
-    set autoindent              " indent next line like previous
     set smartindent             " smart indenting when starting a new line (after {, before }, etc)
-    " allow to use backspace instead of "x"
-    set backspace=indent,eol,start whichwrap+=<,>,[,]
     " Virtual editing means that the cursor can be positioned where there is
     " no actual character.  This can be halfway into a tab or beyond the end
     " of the line.  Useful for selecting a rectangle in Visual mode and
@@ -915,7 +900,6 @@
         else
             let url = url.'&XDEBUG_SESSION_START=vim_debug'
         endif
-        "call xolox#shell#open_cmd(url)
         exec "!xdg-open '".url."'"
         python debugger.run()
     endfunction
@@ -1354,11 +1338,6 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
 " VimShell {
 
   let g:vimshell_prompt = "% "
-  "let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-  "autocmd MyAutoCmd FileType vimshell call s:vimshell_settings()
-  "function! s:vimshell_settings()
-    "call vimshell#altercmd#define('g', 'git')
-  "endfunction
 
 " }
 
