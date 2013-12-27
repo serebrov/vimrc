@@ -380,14 +380,14 @@
 
      set list                   " we do what to show tabs, to ensure we get them
                                 " out of my files
-     "set listchars=tab:>-,trail:- " show tabs and trailing
-     "if has("gui_running")
-         "set listchars=tab:▸\ ,trail:·",eol:¶,extends:»,precedes:«
-         "set showbreak=-
-     "else
-         "set listchars=tab:»\ ,trail:·",eol:¬,extends:❯,precedes:❮
-         "set showbreak=↪
-     "endif
+     set listchars=tab:>-,trail:- " show tabs and trailing
+     if has("gui_running")
+         set listchars=tab:▸\ ,trail:·",eol:¶,extends:»,precedes:«
+         set showbreak=-
+     else
+         set listchars=tab:»\ ,trail:·",eol:¬,extends:❯,precedes:❮
+         set showbreak=↪
+     endif
      if has("linebreak")
          let &sbr = nr2char(8618).' '  " Show ↪ at the beginning of wrapped lines
      endif
@@ -502,6 +502,7 @@
       au BufRead,BufNewFile *.phps    set filetype=php
       au BufRead,BufNewFile *.js      set filetype=javascript
       au BufRead,BufNewFile *.thtml   set filetype=php
+      au BufRead,BufNewFile *.ejs     set filetype=html
       au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
       au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
       au BufRead,BufNewFile {COMMIT_EDITMSG}                                set ft=gitcommit
