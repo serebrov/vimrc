@@ -248,12 +248,13 @@
 
     set lazyredraw
 
-    syntax on               " Turn syntax highlighting on.
+    syntax on                  " Turn syntax highlighting on.
+
+    set hidden                 " Can change buffers without saving
 
     set nobackup
     set noswapfile
 
-    set undolevels=128
     " try to create undo dir, skip error if exists
     silent !mkdir ~/.vim/tmp > /dev/null 2>&1
     silent !mkdir ~/.vim/tmp/undo > /dev/null 2>&1
@@ -317,8 +318,6 @@
 " }
 
 " General {
-    set hidden                  " you can change buffers without saving
-
     set mouse=a                 " use mouse everywhere
     set mousemodel=popup        " right mouse btn=popup, select=Shift+left btn
     set mousehide               " hide mouse when typing
@@ -328,9 +327,9 @@
     set t_vb=
 
     " ignore these list file extensions
-    set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,
-                    \*.jpg,*.gif,*.png
-    set wildmode=longest,list
+    set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
+    " set wildmode=longest,list
+    set wildmode=longest:full,full
 " }
 
 " Langs and encodings {
@@ -339,10 +338,8 @@
     " Default text encoding
     if has('win32') || has('win64')
         set encoding=utf8
-        "set termencoding=cp1251
     elseif has('unix')
         set encoding=utf8
-        "set termencoding=utf-8
     endif
 
     set fileencodings=utf-8,cp1251,8bit-cp866
@@ -357,7 +354,6 @@
     " this allow to treat underscore (_) as word boundary
     "set iskeyword-=_
 
-    "highlight lCursor guifg=NONE guibg=Cyan
     set iminsert=0              " latin langmap by default when typing
     set imsearch=0              " latin langmap by default when search
 
@@ -390,6 +386,9 @@
      endif
      if has("linebreak")
          let &sbr = nr2char(8618).' '  " Show ↪ at the beginning of wrapped lines
+     endif
+     if has("balloon_eval") && has("unix")
+       set ballooneval
      endif
      "Invisible character colors
      highlight NonText guifg=#4a4a59
@@ -526,6 +525,9 @@
       autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
       autocmd FileType html :set filetype=xhtml
+
+      autocmd FileType git,gitcommit setlocal foldmethod=syntax foldlevel=1
+      autocmd FileType gitcommit setlocal spell
 
     augroup END
 
@@ -795,139 +797,156 @@
     endfunction
 " }
 
-" File browser {
-    "" NERDTree inspired functions
-    "function! NerdFindFile(file)
-        "execute ':e ' . fnamemodify(a:file, ':h')
-        "execute '/' . fnamemodify(a:file, ':t')
-    "endfunction
-    "function! NerdFindDir(cd, find)
-        "echo a:cd
-        "execute ':e ' . a:cd
-        "" search for ..
-        "execute '/\.\.'
-        "" search for dir
-        "execute '/' . escape(a:find, '/')
-    "endfunction
-    "map <Leader>nt :call NerdFindDir(getcwd(), '\.\.')<CR>
-    "map <Leader>nf :call NerdFindFile(expand('%'))<CR>
+command! -bar -nargs=? -bang Scratch :silent enew<bang>|set buftype=nofile bufhidden=hide noswapfile buflisted filetype=<args> modifiable
+function! s:scratch_maps() abort
+    nnoremap <silent> <buffer> == :Scratch<CR>
+    nnoremap <silent> <buffer> =" :Scratch<Bar>put<Bar>1delete _<Bar>filetype detect<CR>
+    nnoremap <silent> <buffer> =* :Scratch<Bar>put *<Bar>1delete _<Bar>filetype detect<CR>
+    nnoremap          <buffer> =f :Scratch<Bar>setfiletype<Space>
+endfunction
+ augroup Misc " {{{2
+    autocmd!
 
-    "augroup netrw_mappings
-        "autocmd!
-        "autocmd filetype netrw call RegisterNetrwMaps()
-    "augroup END
-    "function! RegisterNetrwMaps()
-        "if !exists("b:browseup_map")
-          "" save previous mapping
-          "let b:browseup_map = mapcheck('-')
-          "" saved command is like this:
-          "" :exe "norm! 0"|call netrw#LocalBrowseCheck(<SNR>172_NetrwBrowseChgDir(1,'../'))<CR>
-          "" remove <CR> at the end (otherwise raises "E488: Trailing characters")
-          "let b:browseup = strpart(b:browseup_map, 0, strlen(b:browseup_map)-4)
-        "endif
-        "nmap <buffer> - :call CdUpAndFocus(b:browseup)<CR>
-        "" use Leader-r to refresh (default is Ctrl-L which is used to jump
-        "" to the left window)
-        "nmap <buffer> <Leader>r <Plug>NetrwRefresh
-    "endfunction
-    "function! CdUpAndFocus(browseup)
-        ""normal -
-        "let l:cd = expand('%:p:h:h')
-        "let l:t = expand('%:t')
-        "execute a:browseup
-        "if l:t != ''
-          "" search for ..
-          "execute '/\.\.'
-          "" search for dir
-          ""echo escape(l:t, '/')
-          "execute '/' . escape(l:t, '/') . '\/$'
-        "endif
-    "endfunction
+    autocmd FileType netrw nnoremap <buffer> gr :grep <C-R>=shellescape(fnamemodify(expand('%').'/'.getline('.'),':.'),1)<CR><Home><C-Right> -r<Space>
+    autocmd FileType netrw call s:scratch_maps()
+    autocmd FileType gitcommit if getline(1)[0] ==# '#' | call s:scratch_maps() | endif
+    autocmd FocusLost   * silent! wall
+    autocmd FocusGained * if !has('win32') | silent! call fugitive#reload_status() | endif
+augroup END " }}}2
+
+" File browser {
+"" NERDTree inspired functions
+"function! NerdFindFile(file)
+"execute ':e ' . fnamemodify(a:file, ':h')
+"execute '/' . fnamemodify(a:file, ':t')
+"endfunction
+"function! NerdFindDir(cd, find)
+"echo a:cd
+"execute ':e ' . a:cd
+"" search for ..
+"execute '/\.\.'
+"" search for dir
+"execute '/' . escape(a:find, '/')
+"endfunction
+"map <Leader>nt :call NerdFindDir(getcwd(), '\.\.')<CR>
+"map <Leader>nf :call NerdFindFile(expand('%'))<CR>
+
+"augroup netrw_mappings
+"autocmd!
+"autocmd filetype netrw call RegisterNetrwMaps()
+"augroup END
+"function! RegisterNetrwMaps()
+"if !exists("b:browseup_map")
+"" save previous mapping
+"let b:browseup_map = mapcheck('-')
+"" saved command is like this:
+"" :exe "norm! 0"|call netrw#LocalBrowseCheck(<SNR>172_NetrwBrowseChgDir(1,'../'))<CR>
+"" remove <CR> at the end (otherwise raises "E488: Trailing characters")
+"let b:browseup = strpart(b:browseup_map, 0, strlen(b:browseup_map)-4)
+"endif
+"nmap <buffer> - :call CdUpAndFocus(b:browseup)<CR>
+"" use Leader-r to refresh (default is Ctrl-L which is used to jump
+"" to the left window)
+"nmap <buffer> <Leader>r <Plug>NetrwRefresh
+"endfunction
+"function! CdUpAndFocus(browseup)
+""normal -
+"let l:cd = expand('%:p:h:h')
+"let l:t = expand('%:t')
+"execute a:browseup
+"if l:t != ''
+"" search for ..
+"execute '/\.\.'
+"" search for dir
+""echo escape(l:t, '/')
+"execute '/' . escape(l:t, '/') . '\/$'
+"endif
+"endfunction
 
 " }
 
 " Windows navigation {
 
-    " C-W h|j|k|l - move to left|down|up|right win
-    " C-W w       - cycle
-    " C-W s|v     - split current win horiz | vert
-    " :on[ly]     - leave only current win
-    " C-W +|-     - height +|- 1 px
-    " C-W _||     - maximize height|width
-    " moving windows:
-    " C-W H|J|K|L - move win to the left|down|up|right
-    " C-W r       - rotate
-    " C-W x       - exchange with neighbour
-    " C-W T       - move window to separate tab
+" C-W h|j|k|l - move to left|down|up|right win
+" C-W w       - cycle
+" C-W s|v     - split current win horiz | vert
+" :on[ly]     - leave only current win
+" C-W +|-     - height +|- 1 px
+" C-W _||     - maximize height|width
+" moving windows:
+" C-W H|J|K|L - move win to the left|down|up|right
+" C-W r       - rotate
+" C-W x       - exchange with neighbour
+" C-W T       - move window to separate tab
 
-    " move to and open if not exists
-    " http://www.agillo.net/simple-vim-window-management/
-    function! WinMove(key)
-        let t:curwin = winnr()
-        exec "wincmd ".a:key
-        if (t:curwin == winnr()) "we havent moved
-            if (match(a:key,'[jk]')) "were we going up/down
-                wincmd v
-            else
-                wincmd s
-            endif
-                exec "wincmd ".a:key
+" move to and open if not exists
+" http://www.agillo.net/simple-vim-window-management/
+function! WinMove(key)
+    let t:curwin = winnr()
+    exec "wincmd ".a:key
+    if (t:curwin == winnr()) "we havent moved
+        if (match(a:key,'[jk]')) "were we going up/down
+            wincmd v
+        else
+            wincmd s
         endif
-    endfunction
+        exec "wincmd ".a:key
+    endif
+endfunction
 
-    " move to and open if not exists
-    map <c-j> :call WinMove('j')<CR>
-    map <c-k> :call WinMove('k')<CR>
-    map <c-l> :call WinMove('l')<CR>
-    map <c-h> :call WinMove('h')<CR>
+" move to and open if not exists
+map <c-j> :call WinMove('j')<CR>
+map <c-k> :call WinMove('k')<CR>
+map <c-l> :call WinMove('l')<CR>
+map <c-h> :call WinMove('h')<CR>
 
-    "close
-    map <leader>wc :wincmd q<cr>
-    "rotate
-    map <leader>wr <C-W>r
+"close
+map <leader>wc :wincmd q<cr>
+"rotate
+map <leader>wr <C-W>r
 
-    "arrows to resize
-    nmap <left>  :3wincmd <<cr>
-    nmap <right> :3wincmd ><cr>
-    nmap <up>    :3wincmd +<cr>
-    nmap <down>  :3wincmd -<cr>
+"arrows to resize
+nmap <left>  :3wincmd <<cr>
+nmap <right> :3wincmd ><cr>
+nmap <up>    :3wincmd +<cr>
+nmap <down>  :3wincmd -<cr>
 
-    "move windows
-    map <Leader>h     :wincmd H<cr>
-    map <Leader>k     :wincmd K<cr>
-    map <Leader>l     :wincmd L<cr>
-    map <Leader>j     :wincmd J<cr>
+"move windows
+map <Leader>h     :wincmd H<cr>
+map <Leader>k     :wincmd K<cr>
+map <Leader>l     :wincmd L<cr>
+map <Leader>j     :wincmd J<cr>
 
 " }
 
 
 " Debugger {
-    "http://jaredforsyth.com/projects/vim-debug/
-    function! Debug(url)
-        let url = a:url
-        let http_pos = stridx(url, 'http')
-        if http_pos != 0
-            let url = 'http://'.url
-        endif
-        let q_pos = stridx(url, '?')
-        if q_pos == -1
-            let url = url.'?XDEBUG_SESSION_START=vim_debug'
-        else
-            let url = url.'&XDEBUG_SESSION_START=vim_debug'
-        endif
-        exec "!xdg-open '".url."'"
-        python debugger.run()
-    endfunction
-    " example:
-    "   :Debug localsite.com
-    command! -nargs=1 Debug call Debug('<args>')
+"http://jaredforsyth.com/projects/vim-debug/
+function! Debug(url)
+    let url = a:url
+    let http_pos = stridx(url, 'http')
+    if http_pos != 0
+        let url = 'http://'.url
+    endif
+    let q_pos = stridx(url, '?')
+    if q_pos == -1
+        let url = url.'?XDEBUG_SESSION_START=vim_debug'
+    else
+        let url = url.'&XDEBUG_SESSION_START=vim_debug'
+    endif
+    exec "!xdg-open '".url."'"
+    python debugger.run()
+endfunction
+" example:
+"   :Debug localsite.com
+command! -nargs=1 Debug call Debug('<args>')
 
-    function! DebugPy(...)
-        let str_args = join(a:000, ' ')
-        let last_cmd = '!python -S ~/pydbgp/bin/pydbgp -d localhost:9000 -k vim_debug ' . str_args
-        execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
-        execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
-        execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
+function! DebugPy(...)
+    let str_args = join(a:000, ' ')
+    let last_cmd = '!python -S ~/pydbgp/bin/pydbgp -d localhost:9000 -k vim_debug ' . str_args
+    execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
+    execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
+    execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
         python debugger.run()
     endfunction
     " python debugging requires pydbgp
