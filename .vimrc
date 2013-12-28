@@ -536,10 +536,10 @@
       autocmd!
 
       autocmd InsertLeave * if expand('%') != '' && expand('%') != '[Command Line]' | update | endif
+      autocmd FocusLost   * silent! wall
     augroup END
     " another way
     " inoremap <Esc> <Esc>:w<CR>
-    " autocmd InsertLeave * if expand('%') != '' | update | endif
 
     augroup Rainbow
       autocmd!
@@ -804,13 +804,12 @@ function! s:scratch_maps() abort
     nnoremap <silent> <buffer> =* :Scratch<Bar>put *<Bar>1delete _<Bar>filetype detect<CR>
     nnoremap          <buffer> =f :Scratch<Bar>setfiletype<Space>
 endfunction
- augroup Misc " {{{2
+ augroup TpopeMisc " {{{2
     autocmd!
 
     autocmd FileType netrw nnoremap <buffer> gr :grep <C-R>=shellescape(fnamemodify(expand('%').'/'.getline('.'),':.'),1)<CR><Home><C-Right> -r<Space>
     autocmd FileType netrw call s:scratch_maps()
     autocmd FileType gitcommit if getline(1)[0] ==# '#' | call s:scratch_maps() | endif
-    autocmd FocusLost   * silent! wall
     autocmd FocusGained * if !has('win32') | silent! call fugitive#reload_status() | endif
 augroup END " }}}2
 
