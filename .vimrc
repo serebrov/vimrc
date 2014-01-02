@@ -1045,7 +1045,7 @@ function! DebugPy(...)
 
 " Session manager {
     " default: blank,buffers,curdir,folds,help,options,tabpages,winsize"
-    set sessionoptions=buffers,curdir,help,tabpages,winsize " localoptions,
+    set sessionoptions=buffers,curdir,help,winsize " localoptions,
     " default: '100,<50,s10,h
     set viminfo=!,'100,/50,:50,<50,@50,h,s10
 
