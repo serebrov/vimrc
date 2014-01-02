@@ -198,6 +198,10 @@
         " https://github.com/kana/vim-smartinput/issues/33
         "NeoBundle 'kana/vim-smartinput'
 
+        """""" Db
+        NeoBundle 'loki-nkl/vim-mysql-mode'
+        NeoBundle 'vim-scripts/dbext.vim'
+
         """""" Unite and vimproc
         NeoBundle 'Shougo/vimproc', { 'build': {
               \   'windows': 'make -f make_mingw32.mak',
