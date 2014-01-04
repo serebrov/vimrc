@@ -1047,11 +1047,12 @@ function! DebugPy(...)
     " default: blank,buffers,curdir,folds,help,options,tabpages,winsize"
     set sessionoptions=buffers,curdir,help,winsize " localoptions,
     " default: '100,<50,s10,h
+    " NOTE: ! is necessary in order to be able to restore last session
     set viminfo=!,'100,/50,:50,<50,@50,h,s10
 
     map <Leader>s :SessionList<CR>
-    " load last session on start
-    autocmd MyAutoCmd VimEnter *  call RestoreLastSessionMan()
+
+    autocmd MyAutoCmd VimEnter *  call LoadLocalVimrc()
 
     function! LoadLocalVimrc()
         " Check for .vimrc.local in the current directory
@@ -1064,16 +1065,7 @@ function! DebugPy(...)
                 exe 'source' custom_config_file
             endif
         endif
-    endfunction
-
-    function! RestoreLastSessionMan()
-        " Check that the user has started Vim without editing any files.
-        if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
-            :SessionOpenLast
-            ":tabdo filetype detect
-            :Rooter
-        endif
-        call LoadLocalVimrc()
+        :Rooter
     endfunction
 
 " }
@@ -1417,3 +1409,4 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
     "nmap     <buffer><expr><CR>  vimfiler#smart_cursor_map("\<PLUG>(vimfiler_expand_tree)", "e")
   "endfunction
 " }
+
