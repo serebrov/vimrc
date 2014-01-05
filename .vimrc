@@ -500,9 +500,7 @@
     augroup MyAutoCmd
       autocmd!
 
-      au BufRead,BufNewFile *.phps    set filetype=php
       au BufRead,BufNewFile *.js      set filetype=javascript
-      au BufRead,BufNewFile *.thtml   set filetype=php
       au BufRead,BufNewFile *.ejs     set filetype=html
       au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
       au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
@@ -511,25 +509,21 @@
       " S-k to open help
       autocmd BufNewFile,Bufread *.php set keywordprg="help"
 
-      " Auto Completion
-      autocmd FileType python :set omnifunc=pythoncomplete#Complete
       " there is a problem with hash (#) indentation - it always shifted
       " to the start of the string
       " see http://stackoverflow.com/questions/354097/how-to-configure-vim-to-not-put-comments-at-the-beginning-of-lines-while-editing
       autocmd FileType python :set nosmartindent
       autocmd FileType python :set cindent
-      autocmd FileType php :set omnifunc=phpcomplete#CompletePHP
-      autocmd FileType html,markdown :set omnifunc=htmlcomplete@CompleteTags
-      autocmd FileType javascript :set omnifunc=javascriptcomplete#CompleteJS
-      autocmd FileType css :set omnifunc=csscomplete#CompleteCSS
-      autocmd FileType c :set omnifunc=ccomplete#Complete
-      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-      autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
       autocmd FileType html :set filetype=xhtml
 
       autocmd FileType git,gitcommit setlocal foldmethod=syntax foldlevel=1
       autocmd FileType gitcommit setlocal spell
+      autocmd FileType markdown setlocal spell
+
+      "" use Leader-r to refresh (default is Ctrl-L which is used to jump
+      "" to the left window)
+      autocmd FileType netrw nnoremap <buffer> <Leader>r <Plug>NetrwRefresh
 
     augroup END
 
@@ -665,7 +659,7 @@
     inoremap kj <Esc>
 
     " ,vv to re-read .vimrc
-    nnoremap <Leader>vv :call Preserve("source ~\/\.vimrc")<CR>
+    nnoremap <Leader>vv :call Preserve("source ".$MYVIMRC)<CR>
     " ,vc to edit .vimrc
     nnoremap <leader>vc :tabedit $MYVIMRC<CR>
 
@@ -846,9 +840,6 @@ augroup END " }}}2
 "let b:browseup = strpart(b:browseup_map, 0, strlen(b:browseup_map)-4)
 "endif
 "nmap <buffer> - :call CdUpAndFocus(b:browseup)<CR>
-"" use Leader-r to refresh (default is Ctrl-L which is used to jump
-"" to the left window)
-"nmap <buffer> <Leader>r <Plug>NetrwRefresh
 "endfunction
 "function! CdUpAndFocus(browseup)
 ""normal -
