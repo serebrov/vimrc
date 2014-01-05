@@ -217,7 +217,6 @@
         NeoBundle 'sgur/unite-git_grep'
 
         NeoBundle 'Shougo/vimshell'
-        NeoBundle 'Shougo/vimfiler'
 
         """""" Markdown
         NeoBundle 'tpope/vim-markdown'
@@ -262,7 +261,6 @@
     " try to create undo dir, skip error if exists
     silent !mkdir ~/.vim/tmp > /dev/null 2>&1
     silent !mkdir ~/.vim/tmp/undo > /dev/null 2>&1
-    silent !mkdir ~/.vim/tmp/vimfiler > /dev/null 2>&1
     silent !mkdir ~/.vim/tmp/unite > /dev/null 2>&1
 
     set undodir=~/.vim/tmp/undo/
@@ -1369,44 +1367,3 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
   let g:vimshell_prompt = "% "
 
 " }
-
-" Vimfiler {
-  "" TODO Look into Vimfiler more
-  "" Example at: https://github.com/hrsh7th/dotfiles/blob/master/vim/.vimrc
-  "nnoremap <expr><F2> g:my_open_explorer_command()
-  "function! g:my_open_explorer_command()
-    "return printf(":\<C-u>VimFilerBufferDir -buffer-name=%s -split -auto-cd -toggle -no-quit -winwidth=%s\<CR>",
-          "\ g:my_vimfiler_explorer_name,
-          "\ g:my_vimfiler_winwidth)
-  "endfunction
-  let g:vimfiler_data_directory = expand('~/.vim/tmp/vimfiler/')
-  "let g:vimfiler_safe_mode_by_default = 0
-  "let g:vimfiler_execute_file_list = { "_": "vim" }
-  "nno ` :<C-u>:VimFilerBufferDir -buffer-name=explorer -toggle<CR>
-  function! s:vimfiler_settings()
-      nmap <buffer> - <Plug>(vimfiler_switch_to_parent_directory)
-      "nmap <buffer> % <Plug>(vimfiler_new_file)
-      "nmap <buffer> <Backspace> <C-^>
-      "nmap <buffer> <leader>x <Plug>(vimfiler_exit)
-      "nmap <buffer> <leader>X <Plug>(vimfiler_exit)
-  endfunction
-  autocmd MyAutoCmd Filetype vimfiler call s:vimfiler_settings()
-
-  "let g:vimfiler_as_default_explorer = 1
-  "let g:vimfiler_tree_leaf_icon = ' '
-  "let g:vimfiler_tree_opened_icon = '▾'
-  "let g:vimfiler_tree_closed_icon = '▸'
-  "" let g:vimfiler_file_icon = ' '
-  "let g:vimfiler_marked_file_icon = '✓'
-  "" let g:vimfiler_readonly_file_icon = ' '
-  "let g:my_vimfiler_explorer_name = 'explorer'
-  "let g:my_vimfiler_winwidth = 30
-  "let g:vimfiler_safe_mode_by_default = 0
-  "" let g:vimfiler_directory_display_top = 1
-
-  "autocmd MyAutoCmd FileType vimfiler call s:vimfiler_settings()
-  "function! s:vimfiler_settings()
-    "nmap     <buffer><expr><CR>  vimfiler#smart_cursor_map("\<PLUG>(vimfiler_expand_tree)", "e")
-  "endfunction
-" }
-
