@@ -1,6 +1,5 @@
-"============================================================================"
-"
 "  Vim tab session manager.
+"
 "  Based on sessionman.vim by Yuri Klubakov (see
 "  http://www.vim.org/scripts/script.php?script_id=2010)
 "
@@ -29,8 +28,6 @@
 "    "$HOME/.vim/sessions"
 "  If this directory does not exist, it will be created by the :SessionSave
 "  command.
-"
-"============================================================================"
 
 if !has('mksession') || exists('loaded_sessionman')
     finish
@@ -38,6 +35,22 @@ endif
 let loaded_sessionman = 1
 let s:num_sessions = 0
 let s:sessions = {}
+
+command! -nargs=1 -complete=custom,s:session_open_complete SessionOpen call s:session_open(<f-args>)
+command! -nargs=0 SessionClose call s:session_close()
+command! -nargs=0 SessionList call s:session_list()
+command! -nargs=0 SessionSave call s:session_save()
+command! -nargs=? SessionSaveAs call s:session_save_as(<f-args>)
+command! -nargs=0 SessionShow call s:session_show()
+command! -nargs=0 SessionRestore call s:session_restore_all()
+
+aug sessionman
+    " autosave session
+    au TabLeave * call s:session_save()
+    au VimLeave * call s:session_save_all()
+    " load last session on start
+    autocmd VimEnter * nested call s:session_vim_enter()
+aug END
 
 if !exists('sessionman_path')
     if has("win32") || has("dos32") || has("dos16") || has("os2")
@@ -51,8 +64,6 @@ else
 endif
 let s:sessions_file = s:sessions_path . '/_sessions.vim'
 
-
-"============================================================================"
 function! s:session_open(name)
     if s:has_session()
         call s:session_save()
@@ -212,7 +223,6 @@ function! s:session_show()
     echon ', sessions are "' . string(s:sessions) . '"'
 endfunction
 
-"============================================================================"
 " function! s:is_empty_tab()
 "     let buflist = tabpagebuflist()
 "     for i in buflist
@@ -316,13 +326,6 @@ function! s:_wipe_tab_buffers()
     return delete_count
 endfunction
 
-function! s:session_restore()
-    " Check that the user has started Vim without editing any files.
-    if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
-        :SessionOpenLast
-    endif
-endfunction
-
 function! s:session_restore_all()
     if filereadable(s:sessions_file)
         exec ":source " . s:sessions_file
@@ -342,22 +345,3 @@ function! s:session_vim_enter()
     endif
 endfunction
 
-"============================================================================"
-
-command! -nargs=1 -complete=custom,s:session_open_complete SessionOpen call s:session_open(<f-args>)
-command! -nargs=0 SessionClose call s:session_close()
-command! -nargs=0 SessionList call s:session_list()
-command! -nargs=0 SessionSave call s:session_save()
-command! -nargs=? SessionSaveAs call s:session_save_as(<f-args>)
-command! -nargs=0 SessionShow call s:session_show()
-command! -nargs=0 SessionRestore call s:session_restore_all()
-
-"============================================================================"
-
-aug sessionman
-    au TabLeave * call s:session_save()
-    au VimLeave * call s:session_save_all()
-
-    " load last session on start
-    autocmd VimEnter * nested call s:session_vim_enter()
-aug END
