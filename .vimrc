@@ -655,19 +655,19 @@
     "nnoremap ;; ;
 
     " map double leader to save
-    map <leader>w :w<CR>
-    map <leader>q :q<CR>
+    noremap <leader>w :w<CR>
+    noremap <leader>q :q<CR>
 
     " jj or j+k as ESC
     " other options: Ctrl-[, Ctrl-C
-    imap jj <Esc>
-    imap jk <Esc>
-    imap kj <Esc>
+    inoremap jj <Esc>
+    inoremap jk <Esc>
+    inoremap kj <Esc>
 
     " ,vv to re-read .vimrc
-    map <Leader>vv :call Preserve("source ~\/\.vimrc")<CR>
+    nnoremap <Leader>vv :call Preserve("source ~\/\.vimrc")<CR>
     " ,vc to edit .vimrc
-    nmap <leader>vc :tabedit $MYVIMRC<CR>
+    nnoremap <leader>vc :tabedit $MYVIMRC<CR>
 
     " Use CTRL-N to remove search highlight
     noremap <C-N> :noh<CR>
@@ -676,11 +676,11 @@
     " inoremap <C-N> <C-O>:noh<CR>
 
     " Make last word uppercase
-    imap <C-F> <Esc>gUiw`]a
+    inoremap <C-F> <Esc>gUiw`]a
 
     " ,o to insert a new line below, ,O - above (in normal mode)
-    nmap <Leader>o o<Esc>
-    nmap <Leader>O O<Esc>
+    nnoremap <Leader>o o<Esc>
+    nnoremap <Leader>O O<Esc>
 
     nnoremap <Leader>y "+y
     vnoremap <Leader>y "+y
@@ -707,13 +707,13 @@
     "noremap $ g$
 
     " Move cursor with Ctrl + hjkl in Insert mode
-    imap <C-h> <C-o>h
-    imap <C-j> <C-o>j
-    imap <C-k> <C-o>k
-    imap <C-l> <C-o>l
+    inoremap <C-h> <C-o>h
+    inoremap <C-j> <C-o>j
+    inoremap <C-k> <C-o>k
+    inoremap <C-l> <C-o>l
 
     " Shortcut to rapidly toggle `set list` (def leader = \)
-    nmap <leader>l :set list!<CR>
+    nnoremap <leader>l :set list!<CR>
 
     " vim-easymotion
     " _w - words; _f - char
@@ -725,13 +725,13 @@
     " <Leader>ig
 
     " Search and replace word under cursor
-    "nmap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
+    "nnoremap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
 
     " http://technotales.wordpress.com/2010/03/31/preserve-a-vim-function-that-keeps-your-state/
     " remove trailing spaces
-    nmap _$ :call preserve("%s/\\s\\+$//e")<cr>
+    nnoremap _$ :call preserve("%s/\\s\\+$//e")<cr>
     " autoformat file
-    nmap _= :call preserve("normal gg=g")<cr>
+    nnoremap _= :call preserve("normal gg=g")<cr>
 
     " Insert current file's folder
     cnoremap <Leader><Leader>fn <C-r>=expand('%')<CR>
