@@ -1,4 +1,4 @@
-" Basics {
+" Basis {
     set nocompatible " explicitly get out of vi-compatible mode
     filetype off
 
