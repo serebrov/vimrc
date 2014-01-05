@@ -496,54 +496,68 @@
 " }
 
 " Autocommands {
-    " MyAutoCmd : an augroup for my autocmd {{{1
-    augroup MyAutoCmd
-      autocmd!
+  " MyAutoCmd : an augroup for my autocmd {{{1
+  augroup MyAutoCmd
+    autocmd!
 
-      au BufRead,BufNewFile *.js      set filetype=javascript
-      au BufRead,BufNewFile *.ejs     set filetype=html
-      au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
-      au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
-      au BufRead,BufNewFile {COMMIT_EDITMSG}                                set ft=gitcommit
+    autocmd BufRead,BufNewFile *.js      set filetype=javascript
+    autocmd BufRead,BufNewFile *.ejs     set filetype=html
+    autocmd BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
+    autocmd BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
+    autocmd BufRead,BufNewFile {COMMIT_EDITMSG}                                set ft=gitcommit
 
-      " S-k to open help
-      autocmd BufNewFile,Bufread *.php set keywordprg="help"
+    " S-k to open help
+    autocmd BufNewFile,Bufread *.php set keywordprg="help"
 
-      " there is a problem with hash (#) indentation - it always shifted
-      " to the start of the string
-      " see http://stackoverflow.com/questions/354097/how-to-configure-vim-to-not-put-comments-at-the-beginning-of-lines-while-editing
-      autocmd FileType python :set nosmartindent
-      autocmd FileType python :set cindent
+    " there is a problem with hash (#) indentation - it always shifted
+    " to the start of the string
+    " see http://stackoverflow.com/questions/354097/how-to-configure-vim-to-not-put-comments-at-the-beginning-of-lines-while-editing
+    autocmd FileType python :set nosmartindent
+    autocmd FileType python :set cindent
 
-      autocmd FileType html :set filetype=xhtml
+    autocmd FileType html :set filetype=xhtml
 
-      autocmd FileType git,gitcommit setlocal foldmethod=syntax foldlevel=1
-      autocmd FileType gitcommit setlocal spell
-      autocmd FileType markdown setlocal spell
+    autocmd FileType git,gitcommit setlocal foldmethod=syntax foldlevel=1
+    autocmd FileType gitcommit setlocal spell
+    autocmd FileType markdown setlocal spell
 
-      "" use Leader-r to refresh (default is Ctrl-L which is used to jump
-      "" to the left window)
-      autocmd FileType netrw nnoremap <buffer> <Leader>r <Plug>NetrwRefresh
+    "" use Leader-r to refresh (default is Ctrl-L which is used to jump
+    "" to the left window)
+    autocmd FileType netrw nnoremap <buffer> <Leader>r <Plug>NetrwRefresh
+  augroup END
 
-    augroup END
+  " autowrite on leave the insert mode
+  augroup MyAutoCmdAutosave
+    autocmd!
 
-    " autowrite on leave the insert mode
-    augroup MyAutoCmdAutosave
-      autocmd!
+    autocmd InsertLeave * if expand('%') != '' && expand('%') != '[Command Line]' | update | endif
+    autocmd FocusLost   * silent! wall
+  augroup END
 
-      autocmd InsertLeave * if expand('%') != '' && expand('%') != '[Command Line]' | update | endif
-      autocmd FocusLost   * silent! wall
-    augroup END
-    " another way
-    " inoremap <Esc> <Esc>:w<CR>
+  augroup Rainbow
+    autocmd!
+    autocmd VimEnter * RainbowParenthesesToggle
+    autocmd Syntax * RainbowParenthesesLoadRound
+    autocmd Syntax * RainbowParenthesesLoadSquare
+    autocmd Syntax * RainbowParenthesesLoadBraces
+  augroup END
 
-    augroup Rainbow
-      autocmd!
-      au VimEnter * RainbowParenthesesToggle
-      au Syntax * RainbowParenthesesLoadRound
-      au Syntax * RainbowParenthesesLoadSquare
-      au Syntax * RainbowParenthesesLoadBraces
-    augroup END
+  command! -bar -nargs=? -bang Scratch :silent enew<bang>|set buftype=nofile bufhidden=hide noswapfile buflisted filetype=<args> modifiable
+  function! s:scratch_maps() abort
+      nnoremap <silent> <buffer> == :Scratch<CR>
+      nnoremap <silent> <buffer> =" :Scratch<Bar>put<Bar>1delete _<Bar>filetype detect<CR>
+      nnoremap <silent> <buffer> =* :Scratch<Bar>put *<Bar>1delete _<Bar>filetype detect<CR>
+      nnoremap          <buffer> =f :Scratch<Bar>setfiletype<Space>
+  endfunction
+
+  augroup TpopeMisc
+    autocmd!
+
+    autocmd FileType netrw nnoremap <buffer> gr :grep <C-R>=shellescape(fnamemodify(expand('%').'/'.getline('.'),':.'),1)<CR><Home><C-Right> -r<Space>
+    autocmd FileType netrw call s:scratch_maps()
+    autocmd FileType gitcommit if getline(1)[0] ==# '#' | call s:scratch_maps() | endif
+    autocmd FocusGained * if !has('win32') | silent! call fugitive#reload_status() | endif
+  augroup END
 
     " execute a command while preserve the position
     if !exists("*Preserve")
@@ -576,7 +590,7 @@
     " When editing a file, always jump to the last known cursor porition.
     " Don't do it when the position is invalid or when inside an event
     " handler.
-    au BufReadPost *
+    autocmd MyAutoCmd BufReadPost *
         \ if line("'\"") > 0 |
         \     if line("'\"") <= line("$") |
         \         exe("norm '\"") |
@@ -791,70 +805,6 @@
         set relativenumber
     endif
     endfunction
-" }
-
-command! -bar -nargs=? -bang Scratch :silent enew<bang>|set buftype=nofile bufhidden=hide noswapfile buflisted filetype=<args> modifiable
-function! s:scratch_maps() abort
-    nnoremap <silent> <buffer> == :Scratch<CR>
-    nnoremap <silent> <buffer> =" :Scratch<Bar>put<Bar>1delete _<Bar>filetype detect<CR>
-    nnoremap <silent> <buffer> =* :Scratch<Bar>put *<Bar>1delete _<Bar>filetype detect<CR>
-    nnoremap          <buffer> =f :Scratch<Bar>setfiletype<Space>
-endfunction
- augroup TpopeMisc " {{{2
-    autocmd!
-
-    autocmd FileType netrw nnoremap <buffer> gr :grep <C-R>=shellescape(fnamemodify(expand('%').'/'.getline('.'),':.'),1)<CR><Home><C-Right> -r<Space>
-    autocmd FileType netrw call s:scratch_maps()
-    autocmd FileType gitcommit if getline(1)[0] ==# '#' | call s:scratch_maps() | endif
-    autocmd FocusGained * if !has('win32') | silent! call fugitive#reload_status() | endif
-augroup END " }}}2
-
-" File browser {
-"" NERDTree inspired functions
-"function! NerdFindFile(file)
-"execute ':e ' . fnamemodify(a:file, ':h')
-"execute '/' . fnamemodify(a:file, ':t')
-"endfunction
-"function! NerdFindDir(cd, find)
-"echo a:cd
-"execute ':e ' . a:cd
-"" search for ..
-"execute '/\.\.'
-"" search for dir
-"execute '/' . escape(a:find, '/')
-"endfunction
-"map <Leader>nt :call NerdFindDir(getcwd(), '\.\.')<CR>
-"map <Leader>nf :call NerdFindFile(expand('%'))<CR>
-
-"augroup netrw_mappings
-"autocmd!
-"autocmd filetype netrw call RegisterNetrwMaps()
-"augroup END
-"function! RegisterNetrwMaps()
-"if !exists("b:browseup_map")
-"" save previous mapping
-"let b:browseup_map = mapcheck('-')
-"" saved command is like this:
-"" :exe "norm! 0"|call netrw#LocalBrowseCheck(<SNR>172_NetrwBrowseChgDir(1,'../'))<CR>
-"" remove <CR> at the end (otherwise raises "E488: Trailing characters")
-"let b:browseup = strpart(b:browseup_map, 0, strlen(b:browseup_map)-4)
-"endif
-"nmap <buffer> - :call CdUpAndFocus(b:browseup)<CR>
-"endfunction
-"function! CdUpAndFocus(browseup)
-""normal -
-"let l:cd = expand('%:p:h:h')
-"let l:t = expand('%:t')
-"execute a:browseup
-"if l:t != ''
-"" search for ..
-"execute '/\.\.'
-"" search for dir
-""echo escape(l:t, '/')
-"execute '/' . escape(l:t, '/') . '\/$'
-"endif
-"endfunction
-
 " }
 
 " Windows navigation {
