@@ -310,7 +310,7 @@ function! s:_wipe_tab_buffers()
     let delete_count = 0
     for i in buflist
         if buflisted(i)
-            if getbufvar(i, '&modified')
+            if getbufvar(i, '&modified') && getbufvar(i, '&filetype') != "netrw"
                 echohl ErrorMsg
                 echomsg 'No write since last change for buffer'
                 echohl None
