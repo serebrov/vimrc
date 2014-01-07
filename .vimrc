@@ -526,11 +526,12 @@
     autocmd FileType netrw nnoremap <buffer> <Leader>r <Plug>NetrwRefresh
   augroup END
 
-  function! IsAutosave()
-    if expand('%') != '' && expand('%') != '[Command Line]'
-       return 1
-    else
-       return 0
+  function! DoAutosave()
+    " expand('%') != '' - if this is new buffer without name
+    " filereadable(expand('%')) - if this is new not saved buffer (like :e newfile)
+    " expand('%') != '[Command Line]' - command line buffer
+    if expand('%') != '' && filereadable(expand('%')) && expand('%') != '[Command Line]'
+      update
     endif
   endfunction
 
@@ -538,8 +539,9 @@
   augroup MyAutoCmdAutosave
     autocmd!
 
-    autocmd InsertLeave * if expand('%') != '' && expand('%') != '[Command Line]' | update | endif
-    autocmd FocusLost   * silent! wall
+    autocmd InsertLeave * call DoAutosave()
+    " autocmd FocusLost   * silent! wall test
+    autocmd FocusLost   * call DoAutosave()
   augroup END
 
   augroup Rainbow
