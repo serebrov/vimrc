@@ -526,6 +526,14 @@
     autocmd FileType netrw nnoremap <buffer> <Leader>r <Plug>NetrwRefresh
   augroup END
 
+  function! IsAutosave()
+    if expand('%') != '' && expand('%') != '[Command Line]'
+       return 1
+    else
+       return 0
+    endif
+  endfunction
+
   " autowrite on leave the insert mode
   augroup MyAutoCmdAutosave
     autocmd!
@@ -794,17 +802,27 @@
         " gv - select last visual area and go to visual mode
 
     " Visually select the text that was last edited/pasted
-    nmap gV `[v`]
+    nnoremap gV `[v`]
 
     nnoremap gl :call ToggleRelativeAbsoluteNumber()<CR>
 
     function! ToggleRelativeAbsoluteNumber()
-    if &relativenumber
+      if &relativenumber
         set norelativenumber
-    else
+      else
         set relativenumber
-    endif
+      endif
     endfunction
+
+    " inside next (
+    " note: C-U removes the '<,'> when mapping is used in visual mode
+    onoremap in( :<c-u>normal! f(vi(<cr>
+    " inside last (
+    onoremap il( :<c-u>normal! F)vi(<cr>
+    " around next (
+    onoremap an( :<c-u>normal! f(va(<cr>
+    " around last (
+    onoremap al( :<c-u>normal! F)va(<cr>
 " }
 
 " Windows navigation {
