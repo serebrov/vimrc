@@ -30,7 +30,8 @@
   " . to put selected file name to the end of command line; ! to do the
   " same and start command line with !
   " ~ - go home; cd/cl - :cd / :lcd
-  NeoBundle 'tpope/vim-vinegar'
+  " NeoBundle 'tpope/vim-vinegar'
+  NeoBundle 'serebrov/vim-vinegar'
   " visual guides for indents, :IndentLinesToggle
   NeoBundle 'Yggdroot/indentLine'
   " automatically switches to relative numbers when go to normal mode
