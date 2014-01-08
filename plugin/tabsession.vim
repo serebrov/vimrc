@@ -10,8 +10,7 @@
 "
 "  Plugin wraps ':mksession' to add following features:
 "
-"  * :SessionSave command to create and name a new session
-"  * :SessionSaveAs to rename existiong session
+"  * :SessionSave command to create and name a new session or rename existing
 "  * :SessionOpen to open session
 "  * :SessionList to show the list of sessions
 "  * Keep list of sessions (see default locations below)
@@ -62,11 +61,10 @@ if !exists('sessionman_path')
 else
     let s:sessions_path = g:sessionman_path
 endif
-let s:sessions_file = s:sessions_path . '/_sessions.vim'
+let s:sessions_file = s:sessions_path . '/.sessions.vim'
 
 function! s:session_open(name)
     if s:has_session()
-        echom 'Session open has: '.s:get_session()
         call s:session_save()
         call s:remove_session()
     endif
@@ -181,24 +179,25 @@ function! s:session_list()
 endfunction
 
 function! s:session_save_ask(...)
-    let name = a:0
-    if empty(name)
-        let name = s:get_session()
-    endif
-    if !empty(name)
-        let name = input('Save session as: ', name)
+    if a:0 != 0
+        let name = a:1
     else
-        let name = input('Save session as: ')
+        let name = s:get_session()
+        if !empty(name)
+            let name = input('Save session as: ', name)
+        else
+            let name = input('Save session as: ')
+        endif
     endif
     call s:session_save(name)
 endfunction
 
 function! s:session_save(...)
-    let name = a:0
-    if empty(name)
+    if a:0 != 0
+        let name = a:1
+    elseif s:has_session()
         let name = s:get_session()
-    endif
-    if empty(name)
+    else
         return
     endif
 
