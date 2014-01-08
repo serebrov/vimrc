@@ -65,6 +65,7 @@ let s:sessions_file = s:sessions_path . '/.sessions.vim'
 
 function! s:session_open(name)
     if s:has_session()
+        echom 'Session open has: '.s:get_session()
         call s:session_save()
         call s:remove_session()
     endif
@@ -379,4 +380,3 @@ function! s:session_vim_enter()
         call s:session_restore_all()
     endif
 endfunction
-
