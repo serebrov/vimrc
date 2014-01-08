@@ -4,7 +4,7 @@
 "  http://www.vim.org/scripts/script.php?script_id=2010)
 "
 "  Author:      Boris Serebrov <serebrov at gmail dot com>
-"  License:     Same as VIM
+"  License:     GPL (same as original plugin)
 "
 "  Description:
 "
@@ -39,18 +39,18 @@ let s:sessions = {}
 command! -nargs=1 -complete=custom,s:session_open_complete SessionOpen call s:session_open(<f-args>)
 command! -nargs=0 SessionClose call s:session_close()
 command! -nargs=0 SessionList call s:session_list()
-command! -nargs=0 SessionSave call s:session_save()
-command! -nargs=? SessionSaveAs call s:session_save_as(<f-args>)
+command! -nargs=? SessionSave call s:session_save_ask(<f-args>)
 command! -nargs=0 SessionShow call s:session_show()
 command! -nargs=0 SessionRestore call s:session_restore_all()
 
-aug sessionman
+augroup tabsession
+    autocmd!
     " autosave session
-    au TabLeave * call s:session_save()
-    au VimLeave * call s:session_save_all()
+    autocmd TabLeave * call s:session_save()
+    autocmd VimLeave * call s:session_save_all()
     " load last session on start
     autocmd VimEnter * nested call s:session_vim_enter()
-aug END
+augroup END
 
 if !exists('sessionman_path')
     if has("win32") || has("dos32") || has("dos16") || has("os2")
@@ -66,6 +66,7 @@ let s:sessions_file = s:sessions_path . '/_sessions.vim'
 
 function! s:session_open(name)
     if s:has_session()
+        echom 'Session open has: '.s:get_session()
         call s:session_save()
         call s:remove_session()
     endif
@@ -98,12 +99,17 @@ function! s:session_delete(name)
         let save_go = &guioptions
         set guioptions+=c
         if confirm('Are you sure you want to delete "' . a:name . '" session?', "&Yes\n&No", 2) == 1
+            let session_tabnr = s:find_session(a:name)
+            if session_tabnr
+                call remove(s:sessions, session_tabnr)
+            endif
             setlocal modifiable
             d
             setlocal nomodifiable
             if delete(s:sessions_path . '/' . a:name) != 0
                 redraw | echohl ErrorMsg | echo 'Error deleting "' . a:name . '" session file' | echohl None
             endif
+            call s:write_sessions()
         endif
         let &guioptions = save_go
     endif
@@ -174,42 +180,58 @@ function! s:session_list()
     setlocal nospell
 endfunction
 
-function! s:session_save_as(...)
-    if a:0 == 0 || a:1 == ''
-        let name = input('Save session as: ', substitute(s:get_session(), '.*\(/\|\\\)', '', ''))
+function! s:session_save_ask(...)
+    let name = a:0
+    if empty(name)
+        let name = s:get_session()
+    endif
+    if !empty(name)
+        let name = input('Save session as: ', name)
     else
-        let name = a:1
+        let name = input('Save session as: ')
     endif
-    if name != ''
-        if v:version >= 700 && finddir(s:sessions_path, '/') == ''
-            call mkdir(s:sessions_path, 'p')
-        endif
-        silent! argdel *
-        call s:set_session(name)
-        let sessionoptions = &sessionoptions
-        try
-            set sessionoptions-=options
-            set sessionoptions-=tabpages
-            execute 'mksession! ' . s:sessions_path . '/' . name
-            "call writefile(insert(readfile(g:this_obsession), 'let g:this_obsession = v:this_session', -2), g:this_obsession)
-            call s:write_sessions()
-            redraw | echo 'Saved session "' . name . '"'
-        catch
-            redraw | echo 'Error saving session "' . string(v:exception) . '"'
-        finally
-            let &sessionoptions = sessionoptions
-        endtry
-    endif
+    call s:session_save(name)
 endfunction
 
-function! s:session_save()
-    if s:has_session()
+function! s:session_save(...)
+    let name = a:0
+    if empty(name)
         let name = s:get_session()
-        if !empty(name)
-            call s:session_save_as(substitute(name, '.*\(/\|\\\)', '', ''))
-        endif
     endif
+    if empty(name)
+        return
+    endif
+
+    if v:version >= 700 && finddir(s:sessions_path, '/') == ''
+        call mkdir(s:sessions_path, 'p')
+    endif
+    silent! argdel *
+    call s:set_session(name)
+    let sessionoptions = &sessionoptions
+    try
+        set sessionoptions-=options
+        set sessionoptions-=tabpages
+        execute 'mksession! ' . s:sessions_path . '/' . name
+        "call writefile(insert(readfile(g:this_obsession), 'let g:this_obsession = v:this_session', -2), g:this_obsession)
+        call s:write_sessions()
+        redraw | echo 'Saved session "' . name . '"'
+    catch
+        redraw | echo 'Error saving session "' . string(v:exception) . '"'
+    finally
+        let &sessionoptions = sessionoptions
+    endtry
 endfunction
+
+" function! s:session_save(do_save_as)
+"     let name = s:get_session()
+"     if name != 0 && name != ''
+"         call s:session_save_as(substitute(name, '.*\(/\|\\\)', '', ''))
+"     else
+"         if a:do_save_as
+"             call s:session_save_as()
+"         endif
+"     endif
+" endfunction
 
 function! s:session_save_all()
     for key in keys(s:sessions)
@@ -219,7 +241,11 @@ function! s:session_save_all()
 endfunction
 
 function! s:session_show()
-    echon 'Current session is "' . substitute(s:get_session(), '.*\(/\|\\\)', '', '') . '"'
+    if s:has_session()
+        echon 'Current session is "' . substitute(s:get_session(), '.*\(/\|\\\)', '', '') . '"'
+    else
+        echon 'Current session is empty'
+    endif
     echon ', sessions are "' . string(s:sessions) . '"'
 endfunction
 
@@ -237,6 +263,14 @@ function! s:set_session(name)
     let s:sessions[tabpagenr()] = a:name
 endfunction
 
+function! s:find_session(name)
+    for key in keys(s:sessions)
+        if s:sessions[key] ==? a:name
+            return key
+        endif
+    endfor
+endfunction
+
 function! s:has_session()
     return has_key(s:sessions, tabpagenr())
 endfunction
@@ -246,7 +280,9 @@ function! s:remove_session()
 endfunction
 
 function! s:get_session()
-    return s:sessions[tabpagenr()]
+    if s:has_session()
+        return s:sessions[tabpagenr()]
+    endif
 endfunction
 
 function! s:check_sessions()
