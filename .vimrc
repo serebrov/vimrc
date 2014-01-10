@@ -50,6 +50,7 @@
   " maybe this can be fixed?
   " see https://defuse.ca/blog/vim-rainbow-parentheses-work-in-php
   NeoBundle 'kien/rainbow_parentheses.vim'
+  NeoBundle 'kien/ctrlp.vim'
   " Powerline - create better-looking, more functional vim statuslines.
   "NeoBundle 'Lokaltog/vim-powerline'
   NeoBundle 'bling/vim-airline'
@@ -203,20 +204,20 @@
   NeoBundle 'vim-scripts/dbext.vim'
 
   """""" Unite and vimproc
-  NeoBundle 'Shougo/vimproc', { 'build': {
-        \   'windows': 'make -f make_mingw32.mak',
-        \   'cygwin': 'make -f make_cygwin.mak',
-        \   'mac': 'make -f make_mac.mak',
-        \   'unix': 'make -f make_unix.mak',
-        \ } }
-  NeoBundle 'Shougo/unite.vim'
-  "https://github.com/Shougo/unite.vim/wiki/unite-plugins
-  NeoBundle 'Shougo/unite-outline'
-  NeoBundle 'Shougo/unite-help'
-  NeoBundle 'thinca/vim-unite-history'
-  NeoBundle 'sgur/unite-git_grep'
+  " NeoBundle 'Shougo/vimproc', { 'build': {
+  "       \   'windows': 'make -f make_mingw32.mak',
+  "       \   'cygwin': 'make -f make_cygwin.mak',
+  "       \   'mac': 'make -f make_mac.mak',
+  "       \   'unix': 'make -f make_unix.mak',
+  "       \ } }
+  " NeoBundle 'Shougo/unite.vim'
+  " "https://github.com/Shougo/unite.vim/wiki/unite-plugins
+  " NeoBundle 'Shougo/unite-outline'
+  " NeoBundle 'Shougo/unite-help'
+  " NeoBundle 'thinca/vim-unite-history'
+  " NeoBundle 'sgur/unite-git_grep'
 
-  NeoBundle 'Shougo/vimshell'
+  " NeoBundle 'Shougo/vimshell'
 
   """""" Markdown
   NeoBundle 'tpope/vim-markdown'
@@ -260,7 +261,7 @@
   " try to create undo dir, skip error if exists
   silent !mkdir ~/.vim/tmp > /dev/null 2>&1
   silent !mkdir ~/.vim/tmp/undo > /dev/null 2>&1
-  silent !mkdir ~/.vim/tmp/unite > /dev/null 2>&1
+  "silent !mkdir ~/.vim/tmp/unite > /dev/null 2>&1
 
   set undodir=~/.vim/tmp/undo/
   set undofile
@@ -742,6 +743,9 @@
   " Shortcut to rapidly toggle `set list` (def leader = \)
   nnoremap <leader>l :set list!<CR>
 
+  " auto insert verymagic flag when search
+  nnoremap / /\v
+
   " vim-easymotion
   " _w - words; _f - char
   " _t - search
@@ -1122,189 +1126,189 @@
 
 " }}}
 
-" Unite  {{{
+" " Unite  {{{
 
-"https://github.com/terryma/dotfiles/blob/master/.vimrc
-"http://vpaste.net/l1WqE
-"https://github.com/thinca/vim-ref
-"http://d.hatena.ne.jp/osyo-manga/20130307/1362621589
-"https://github.com/naruyan/nar/blob/master/.vimrc
-"
-" Map space-f as a prefix for Unite
-nnoremap [unite] <Nop>
-nmap <space>f [unite]
-" Ctrl-ss: (S)earch word under cur(s)or in current directory
-nnoremap <c-s><c-s> :Unite grep:.::<C-r><C-w><CR>
-" Ctrl-sr: Easier (s)earch and (r)eplace
-nnoremap <c-s><c-r> :%s/<c-r><c-w>//gc<left><left><left>
-" Ctrl-r: Easier search and replace
-"vnoremap <c-r> "hy:%s/<c-r>h//gc<left><left><left>
-" Ctrl-s: Easier substitue
-"vnoremap <c-s> :s/\%V//g<left><left><left>
+" "https://github.com/terryma/dotfiles/blob/master/.vimrc
+" "http://vpaste.net/l1WqE
+" "https://github.com/thinca/vim-ref
+" "http://d.hatena.ne.jp/osyo-manga/20130307/1362621589
+" "https://github.com/naruyan/nar/blob/master/.vimrc
+" "
+" " Map space-f as a prefix for Unite
+" nnoremap [unite] <Nop>
+" nmap <space>f [unite]
+" " Ctrl-ss: (S)earch word under cur(s)or in current directory
+" nnoremap <c-s><c-s> :Unite grep:.::<C-r><C-w><CR>
+" " Ctrl-sr: Easier (s)earch and (r)eplace
+" nnoremap <c-s><c-r> :%s/<c-r><c-w>//gc<left><left><left>
+" " Ctrl-r: Easier search and replace
+" "vnoremap <c-r> "hy:%s/<c-r>h//gc<left><left><left>
+" " Ctrl-s: Easier substitue
+" "vnoremap <c-s> :s/\%V//g<left><left><left>
 
-""" Search for files
-" General fuzzy search - async recursive directory search + new files
-nnoremap <silent> [unite]f :<C-u>Unite -buffer-name=files -no-split file_rec/async file/new<CR>
-" Find files with find
-nnoremap <silent> [unite]n :<C-u>Unite -buffer-name=find -no-split find:.<CR>
-" Quick buffer and mru
-nnoremap <silent> [unite]m :<C-u>Unite -buffer-name=buffers -no-split buffer file_mru<CR>
-nnoremap <silent> [unite]mm :<C-u>Unite -buffer-name=buffers -quick-match -no-split buffer file_mru<CR>
+" """ Search for files
+" " General fuzzy search - async recursive directory search + new files
+" nnoremap <silent> [unite]f :<C-u>Unite -buffer-name=files -no-split file_rec/async file/new<CR>
+" " Find files with find
+" nnoremap <silent> [unite]n :<C-u>Unite -buffer-name=find -no-split find:.<CR>
+" " Quick buffer and mru
+" nnoremap <silent> [unite]m :<C-u>Unite -buffer-name=buffers -no-split buffer file_mru<CR>
+" nnoremap <silent> [unite]mm :<C-u>Unite -buffer-name=buffers -quick-match -no-split buffer file_mru<CR>
 
-""" Search in files
-" git grep
-nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep -no-quit vcs_grep/git:.<CR>
-" grep
-nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep -no-quit grep:.<CR>
-" grep (specify directory)
-nnoremap <silent> [unite]gd :<C-u>Unite -buffer-name=grep -no-quit grep<CR>
-" grep (current file directory)
-nnoremap <silent> [unite]gf :<C-u>Unite -buffer-name=grep -no-quit grep:<C-r>=expand('%:p:h')<CR><CR>
+" """ Search in files
+" " git grep
+" nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep -no-quit vcs_grep/git:.<CR>
+" " grep
+" nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep -no-quit grep:.<CR>
+" " grep (specify directory)
+" nnoremap <silent> [unite]gd :<C-u>Unite -buffer-name=grep -no-quit grep<CR>
+" " grep (current file directory)
+" nnoremap <silent> [unite]gf :<C-u>Unite -buffer-name=grep -no-quit grep:<C-r>=expand('%:p:h')<CR><CR>
 
-" Note: searches with :Ggrep are fast and populate quickfix, so it is
-" convenient to go over results without switching back to unite buffer
-" :cnext / :cprev or unimpaired's mapplings ]q / [q
-" Examples:
-"   Ggrep 'text' | copen - find text and open quick fix buffer
-"   Ggrep -i 'someothertext' - ignore case
-"   Ggrep 'text' -- '*.php' | copen - search only php files
-"   Ggrep 'text' -- '*.[ch]' | copen - search only *.c and *.h files
+" " Note: searches with :Ggrep are fast and populate quickfix, so it is
+" " convenient to go over results without switching back to unite buffer
+" " :cnext / :cprev or unimpaired's mapplings ]q / [q
+" " Examples:
+" "   Ggrep 'text' | copen - find text and open quick fix buffer
+" "   Ggrep -i 'someothertext' - ignore case
+" "   Ggrep 'text' -- '*.php' | copen - search only php files
+" "   Ggrep 'text' -- '*.[ch]' | copen - search only *.c and *.h files
 
-function! Unext(motion)
-    let l:uwin = bufwinnr("*unite* - grep")
-    echo l:uwin
-    if l:uwin != -1
-        exec "norm! ".l:uwin."\<c-w>\<c-w>"
-        exec "norm! ".a:motion
-        exec "norm \<CR>"
-        call unite#view#_redraw('','','')
-    endif
-endfun
-noremap ]g :<C-U>call Unext("j")<CR>
-noremap [g :<C-U>call Unext("k")<CR>
+" function! Unext(motion)
+"     let l:uwin = bufwinnr("*unite* - grep")
+"     echo l:uwin
+"     if l:uwin != -1
+"         exec "norm! ".l:uwin."\<c-w>\<c-w>"
+"         exec "norm! ".a:motion
+"         exec "norm \<CR>"
+"         call unite#view#_redraw('','','')
+"     endif
+" endfun
+" noremap ]g :<C-U>call Unext("j")<CR>
+" noremap [g :<C-U>call Unext("k")<CR>
 
-" grep with preview
-"nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:. -auto-preview<CR>
-" Fuzzy search from current buffer
-" nnoremap <silent> [unite]b :<C-u>UniteWithBufferDir
-      " \ -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
+" " grep with preview
+" "nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:. -auto-preview<CR>
+" " Fuzzy search from current buffer
+" " nnoremap <silent> [unite]b :<C-u>UniteWithBufferDir
+"       " \ -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
 
-" to search specific dir and keep results:
-" :Unite -no-quit grep:some/dir
+" " to search specific dir and keep results:
+" " :Unite -no-quit grep:some/dir
 
-"" Quickly switch lcd
-"nnoremap <silent> [unite]d
-      "\ :<C-u>Unite -buffer-name=change-cwd -default-action=lcd directory_mru<CR>
+" "" Quickly switch lcd
+" "nnoremap <silent> [unite]d
+"       "\ :<C-u>Unite -buffer-name=change-cwd -default-action=lcd directory_mru<CR>
 
-""" Search inside the file
-" Quick outline
-nnoremap <silent> [unite]o :<C-u>Unite -buffer-name=outline -vertical outline<CR>
-" Quick line using the word under cursor
-nnoremap <silent> [unite]l :<C-u>UniteWithCursorWord -buffer-name=search_file line<CR>
+" """ Search inside the file
+" " Quick outline
+" nnoremap <silent> [unite]o :<C-u>Unite -buffer-name=outline -vertical outline<CR>
+" " Quick line using the word under cursor
+" nnoremap <silent> [unite]l :<C-u>UniteWithCursorWord -buffer-name=search_file line<CR>
 
-""" Search vim lists
-" Quick registers
-nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
-" Quick yank history
-nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
-" Quick vim commands
-nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands command<CR>
-" Quick command history
-nnoremap <silent> [unite]; :<C-u>Unite -buffer-name=history history/command command<CR>
-" Quick bookmarks
-nnoremap <silent> [unite]b :<C-u>Unite -buffer-name=bookmarks bookmark<CR>
-" Quick help
-nnoremap <silent> [unite]h :<C-u>Unite -buffer-name=help help<CR>
-" Quick unite sources
-nnoremap <silent> [unite]a :<C-u>Unite -buffer-name=sources source<CR>
+" """ Search vim lists
+" " Quick registers
+" nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
+" " Quick yank history
+" nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
+" " Quick vim commands
+" nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands command<CR>
+" " Quick command history
+" nnoremap <silent> [unite]; :<C-u>Unite -buffer-name=history history/command command<CR>
+" " Quick bookmarks
+" nnoremap <silent> [unite]b :<C-u>Unite -buffer-name=bookmarks bookmark<CR>
+" " Quick help
+" nnoremap <silent> [unite]h :<C-u>Unite -buffer-name=help help<CR>
+" " Quick unite sources
+" nnoremap <silent> [unite]a :<C-u>Unite -buffer-name=sources source<CR>
 
-" Quick processes
-nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=processes process<CR>
+" " Quick processes
+" nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=processes process<CR>
 
-"" Custom Unite settings
-autocmd MyAutoCmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-  nmap <buffer> <ESC> <Plug>(unite_exit)
-  imap <buffer> <ESC> <Plug>(unite_exit)
-  imap <buffer> jj <Plug>(unite_insert_leave)
-  imap <buffer> jk <Plug>(unite_insert_leave)
-  imap <buffer> kj <Plug>(unite_insert_leave)
-  "" imap <buffer> <c-j> <Plug>(unite_select_next_line)
-  "imap <buffer> <c-j> <Plug>(unite_insert_leave)
-  "nmap <buffer> <c-j> <Plug>(unite_loop_cursor_down)
-  "nmap <buffer> <c-k> <Plug>(unite_loop_cursor_up)
-  "imap <buffer> <c-a> <Plug>(unite_choose_action)
-  "imap <buffer> <Tab> <Plug>(unite_exit_insert)
-  "imap <buffer> <C-w> <Plug>(unite_delete_backward_word)
-  "imap <buffer> <C-u> <Plug>(unite_delete_backward_path)
-  "imap <buffer> '     <Plug>(unite_quick_match_default_action)
-  "nmap <buffer> '     <Plug>(unite_quick_match_default_action)
-  "nmap <buffer> <C-r> <Plug>(unite_redraw)
-  "imap <buffer> <C-r> <Plug>(unite_redraw)
-  "inoremap <silent><buffer><expr> <C-s> unite#do_action('split')
-  "nnoremap <silent><buffer><expr> <C-s> unite#do_action('split')
-  "inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-  "nnoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+" "" Custom Unite settings
+" autocmd MyAutoCmd FileType unite call s:unite_settings()
+" function! s:unite_settings()
+"   nmap <buffer> <ESC> <Plug>(unite_exit)
+"   imap <buffer> <ESC> <Plug>(unite_exit)
+"   imap <buffer> jj <Plug>(unite_insert_leave)
+"   imap <buffer> jk <Plug>(unite_insert_leave)
+"   imap <buffer> kj <Plug>(unite_insert_leave)
+"   "" imap <buffer> <c-j> <Plug>(unite_select_next_line)
+"   "imap <buffer> <c-j> <Plug>(unite_insert_leave)
+"   "nmap <buffer> <c-j> <Plug>(unite_loop_cursor_down)
+"   "nmap <buffer> <c-k> <Plug>(unite_loop_cursor_up)
+"   "imap <buffer> <c-a> <Plug>(unite_choose_action)
+"   "imap <buffer> <Tab> <Plug>(unite_exit_insert)
+"   "imap <buffer> <C-w> <Plug>(unite_delete_backward_word)
+"   "imap <buffer> <C-u> <Plug>(unite_delete_backward_path)
+"   "imap <buffer> '     <Plug>(unite_quick_match_default_action)
+"   "nmap <buffer> '     <Plug>(unite_quick_match_default_action)
+"   "nmap <buffer> <C-r> <Plug>(unite_redraw)
+"   "imap <buffer> <C-r> <Plug>(unite_redraw)
+"   "inoremap <silent><buffer><expr> <C-s> unite#do_action('split')
+"   "nnoremap <silent><buffer><expr> <C-s> unite#do_action('split')
+"   "inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+"   "nnoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
 
-  "let unite = unite#get_current_unite()
-  "if unite.buffer_name =~# '^search'
-    "nnoremap <silent><buffer><expr> r     unite#do_action('replace')
-  "else
-    "nnoremap <silent><buffer><expr> r     unite#do_action('rename')
-  "endif
+"   "let unite = unite#get_current_unite()
+"   "if unite.buffer_name =~# '^search'
+"     "nnoremap <silent><buffer><expr> r     unite#do_action('replace')
+"   "else
+"     "nnoremap <silent><buffer><expr> r     unite#do_action('rename')
+"   "endif
 
-  "nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
-endfunction
+"   "nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
+" endfunction
 
-" Use the fuzzy matcher for everything
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-" Use the rank sorter for everything - fuzzy matcher does not use sorter
-" call unite#filters#sorter_default#use(['sorter_rank'])
-" Start in insert mode
-let g:unite_enable_start_insert = 1
-" Enable history yank source
-let g:unite_source_history_yank_enable = 1
-" Open in bottom right
-let g:unite_split_rule = "botright"
-" Shorten the default update date of 500ms
-let g:unite_update_time = 200
-let g:unite_source_rec_max_cache_files = 10000
+" " Use the fuzzy matcher for everything
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" " Use the rank sorter for everything - fuzzy matcher does not use sorter
+" " call unite#filters#sorter_default#use(['sorter_rank'])
+" " Start in insert mode
+" let g:unite_enable_start_insert = 1
+" " Enable history yank source
+" let g:unite_source_history_yank_enable = 1
+" " Open in bottom right
+" let g:unite_split_rule = "botright"
+" " Shorten the default update date of 500ms
+" let g:unite_update_time = 200
+" let g:unite_source_rec_max_cache_files = 10000
 
-let g:unite_source_file_mru_limit = 1000
-let g:unite_cursor_line_highlight = 'TabLineSel'
-" let g:unite_abbr_highlight = 'TabLine'
+" let g:unite_source_file_mru_limit = 1000
+" let g:unite_cursor_line_highlight = 'TabLineSel'
+" " let g:unite_abbr_highlight = 'TabLine'
 
-let g:unite_source_file_mru_filename_format = ':~:.'
-let g:unite_source_file_mru_time_format = ''
-let g:unite_data_directory = expand('~/.vim/tmp/unite/')
+" let g:unite_source_file_mru_filename_format = ':~:.'
+" let g:unite_source_file_mru_time_format = ''
+" let g:unite_data_directory = expand('~/.vim/tmp/unite/')
 
-" For ack.
-if executable('ag')
-  " https://github.com/ggreer/the_silver_searcher
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--noheading --nocolor -a'
-  let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack-grep')
-  let g:unite_source_grep_command = 'ack-grep'
-  let g:unite_source_grep_default_opts = '--no-heading --no-color -a --type-set tags=.tags --notags'
-  let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack')
-  let g:unite_source_grep_command = 'ack'
-  let g:unite_source_grep_default_opts = '--no-heading --no-color -a --type-set tags=.tags --notags'
-  let g:unite_source_grep_recursive_opt = ''
-endif
+" " For ack.
+" if executable('ag')
+"   " https://github.com/ggreer/the_silver_searcher
+"   let g:unite_source_grep_command = 'ag'
+"   let g:unite_source_grep_default_opts = '--noheading --nocolor -a'
+"   let g:unite_source_grep_recursive_opt = ''
+" elseif executable('ack-grep')
+"   let g:unite_source_grep_command = 'ack-grep'
+"   let g:unite_source_grep_default_opts = '--no-heading --no-color -a --type-set tags=.tags --notags'
+"   let g:unite_source_grep_recursive_opt = ''
+" elseif executable('ack')
+"   let g:unite_source_grep_command = 'ack'
+"   let g:unite_source_grep_default_opts = '--no-heading --no-color -a --type-set tags=.tags --notags'
+"   let g:unite_source_grep_recursive_opt = ''
+" endif
 
-" Set up some custom ignores
-call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
-      \ 'ignore_pattern', join([
-      \ '\.git/',
-      \ '\.svn/',
-      \ '\.cache/',
-      \ '.*\.tags',
-      \ '.*\.pyc',
-      \ '.*\.jpg',
-      \ ], '\|'))
-" }}}
+" " Set up some custom ignores
+" call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+"       \ 'ignore_pattern', join([
+"       \ '\.git/',
+"       \ '\.svn/',
+"       \ '\.cache/',
+"       \ '.*\.tags',
+"       \ '.*\.pyc',
+"       \ '.*\.jpg',
+"       \ ], '\|'))
+" " }}}
 
 " YouCompleteMe, Supertab and Ultisnips {{{
 
@@ -1326,5 +1330,5 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
 " }}}
 
 " VimShell {{{
-  let g:vimshell_prompt = "% "
+  " let g:vimshell_prompt = "% "
 " }}}
