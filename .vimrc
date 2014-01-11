@@ -1033,6 +1033,18 @@
       :Rooter
   endfunction
 
+  function! QuitNetrw()
+    for i in range(1, bufnr($))
+      if buflisted(i)
+        if getbufvar(i, '&filetype') != "netrw"
+          silent exe 'bwipeout ' . i
+        endif
+      endif
+    endfor
+  endfunction
+
+  autocmd MyAutoCmd VimLeavePre *  call QuitNetrw()
+
 " }}}
 
 " Utils {{{
