@@ -746,6 +746,9 @@
   " auto insert verymagic flag when search
   nnoremap / /\v
 
+  " <Leader>a to toggle current fold (more convenient then za)
+  nnoremap <Leader>a za
+
   " vim-easymotion
   " _w - words; _f - char
   " _t - search
