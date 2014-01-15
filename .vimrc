@@ -243,6 +243,8 @@
   " ejs templates syntax highlight
   NeoBundle 'briancollins/vim-jst.git'
   NeoBundle 'heavenshell/vim-jsdoc'
+
+  set runtimepath+=~/.vim/bundle/potion
 " }}}
 
 " Basics {{{
