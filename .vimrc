@@ -650,6 +650,9 @@
   let g:airline_paste_symbol = 'Þ'
   let g:airline_paste_symbol = '∥'
 
+  " let g:airline_section_y       (fileencoding, fileformat)
+  " let g:airline_section_y = vdebug:statusline()
+
   " it is too slow to have it enabled by default, use :IndentLinesToggle
   let g:indentLine_enabled = 0
 
@@ -969,6 +972,7 @@
     \    "break_on_open" : 1,
     \    "ide_key" : 'vim_debug',
     \    "continuous_mode" : 1,
+    \    "auto_start" : 0,
     \}
     let g:vdebug_keymap = {
     \    "run" : "<F5>",
@@ -1022,6 +1026,9 @@
 
   map <Leader>s :SessionList<CR>
 
+  let g:debug_tabsession = 1
+  let g:debug_tabsession_file = '~/vim.tabsession.log'
+
   autocmd MyAutoCmd VimEnter *  call LoadLocalVimrc()
 
   function! LoadLocalVimrc()
@@ -1041,7 +1048,7 @@
   function! QuitNetrw()
     for i in range(1, bufnr($))
       if buflisted(i)
-        if getbufvar(i, '&filetype') != "netrw"
+        if getbufvar(i, '&filetype') == "netrw"
           silent exe 'bwipeout ' . i
         endif
       endif
