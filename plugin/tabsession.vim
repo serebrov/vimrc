@@ -28,12 +28,17 @@
 "  If this directory does not exist, it will be created by the :SessionSave
 "  command.
 
-if !has('mksession') || exists('loaded_sessionman')
+if !has('mksession') || exists('loaded_tabsession')
     finish
 endif
-let loaded_sessionman = 1
+if !exists('debug_tabsession')
+    let debug_tabsession = 0
+    let debug_tabsession_file = ''
+endif
+let loaded_tabsession = 1
 let s:num_sessions = 0
 let s:sessions = {}
+let s:tab_leave_enabled = 0
 
 command! -nargs=1 -complete=custom,s:session_open_complete SessionOpen call s:session_open(<f-args>)
 command! -nargs=0 SessionClose call s:session_close()
@@ -43,15 +48,15 @@ command! -nargs=0 SessionShow call s:session_show()
 command! -nargs=0 SessionRestore call s:session_restore_all()
 
 augroup tabsession
-    autocmd!
+    "autocmd!
     " autosave session
-    autocmd TabLeave * call s:session_save() | call s:write_sessions()
-    autocmd VimLeave * call s:session_save_all()
+    autocmd TabLeave,BufEnter * call s:session_tab_leave()
+    autocmd VimLeavePre * call s:session_vim_leave()
     " load last session on start
-    autocmd VimEnter * nested call s:session_vim_enter()
+    autocmd VimEnter * call s:session_vim_enter()
 augroup END
 
-if !exists('sessionman_path')
+if !exists('tabsession_path')
     if has("win32") || has("dos32") || has("dos16") || has("os2")
         let s:sessions_path = ($HOME != '') ? $HOME . '/vimfiles' : ($APPDATA != '') ? $APPDATA . '/Vim' : $VIM
         let s:sessions_path = substitute(s:sessions_path, '\\', '/', 'g') . '/sessions'
@@ -59,16 +64,42 @@ if !exists('sessionman_path')
         let s:sessions_path = $HOME . '/.vim/sessions'
     endif
 else
-    let s:sessions_path = g:sessionman_path
+    let s:sessions_path = g:tabsession_path
 endif
 let s:sessions_file = s:sessions_path . '/.sessions.vim'
 
+function! s:session_vim_enter()
+    let s:tab_leave_enabled = 0
+    if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
+        call s:session_debug_message('vim enter - restore all')
+        call s:session_restore_all()
+    endif
+    let s:tab_leave_enabled = 1
+endfunction
+
+function! s:session_vim_leave()
+    call s:session_debug_message('vim leave - save all'))
+    call s:session_save_all()
+endfunction
+
+function! s:session_tab_leave()
+    if s:tab_leave_enabled
+        if s:has_session()
+            call s:session_debug_message('tab leave')
+            call s:session_save()
+        endif
+    else
+        call s:session_debug_message('tab leave disabled')
+    endif
+endfunction
+
 function! s:session_open(name)
     if s:has_session()
-        echom 'Session open has: '.s:get_session()
+        call s:session_debug_message('Session open has: '.s:get_session())
         call s:session_save()
         call s:remove_session()
     endif
+    call s:session_debug_message('Session open wipe buffers ')
     let buf_count = s:_wipe_buffers()
     if buf_count == -1
         "if there is a modified buffer - exit
@@ -87,6 +118,7 @@ endfunction
 
 function! s:session_close()
     if s:has_session()
+        call s:session_debug_message('Session close has: '.s:get_session())
         call s:session_save()
         call s:remove_session()
         call s:_wipe_buffers()
@@ -107,7 +139,7 @@ function! s:session_delete(name)
             d
             setlocal nomodifiable
             if delete(s:sessions_path . '/' . a:name) != 0
-                redraw | echohl ErrorMsg | echo 'Error deleting "' . a:name . '" session file' | echohl None
+                redraw | echohl ErrorMsg | echom 'Error deleting "' . a:name . '" session file' | echohl None
             endif
             call s:write_sessions()
         endif
@@ -197,9 +229,12 @@ endfunction
 function! s:session_save(...)
     if a:0 != 0
         let name = a:1
+        call s:session_debug_message('Will save session : ' . name)
     elseif s:has_session()
         let name = s:get_session()
+        call s:session_debug_message('Will save current session : ' . name)
     else
+        call s:session_debug_message('Will not save session')
         return
     endif
 
@@ -212,12 +247,14 @@ function! s:session_save(...)
     try
         set sessionoptions-=options
         set sessionoptions-=tabpages
+        call s:session_debug_message('Saving a session')
+
         execute 'mksession! ' . s:sessions_path . '/' . name
         "call writefile(insert(readfile(g:this_obsession), 'let g:this_obsession = v:this_session', -2), g:this_obsession)
         call s:write_sessions()
-        redraw | echo 'Saved session "' . name . '"'
+        redraw | echom 'Saved session "' . name . '"'
     catch
-        redraw | echo 'Error saving session "' . string(v:exception) . '"'
+        redraw | echom 'Error saving session "' . string(v:exception) . '"'
     finally
         let &sessionoptions = sessionoptions
     endtry
@@ -235,19 +272,21 @@ endfunction
 " endfunction
 
 function! s:session_save_all()
+    let s:tab_leave_enabled = 0
     for key in keys(s:sessions)
         exe ":tabnext ".key
         call s:session_save()
     endfor
+    let s:tab_leave_enabled = 1
 endfunction
 
 function! s:session_show()
     if s:has_session()
-        echon 'Current session is "' . substitute(s:get_session(), '.*\(/\|\\\)', '', '') . '"'
+        echom 'Current session is "' . substitute(s:get_session(), '.*\(/\|\\\)', '', '') . '"'
     else
-        echon 'Current session is empty'
+        echom 'Current session is empty'
     endif
-    echon ', sessions are "' . string(s:sessions) . '"'
+    echom ', sessions are "' . string(s:sessions) . '"'
 endfunction
 
 " function! s:is_empty_tab()
@@ -296,6 +335,7 @@ function! s:check_sessions()
 endfunction
 
 function! s:write_sessions()
+    call s:session_debug_message('Write sessions')
     call s:check_sessions()
     let res = writefile(['let g:__sessions_list__ = ' . string(s:sessions)], s:sessions_file)
     if res == -1
@@ -309,6 +349,7 @@ function! s:session_open_complete(A, L, P)
 endfunction
 
 function! s:_wipe_buffers()
+    call s:session_debug_message('Wipe buffers')
     " if index(split(&sessionoptions,','), 'tabpages') == -1
     "     " tabpages are not saved into the session, so
     "     " we assume that sessions will be loaded inside tabs
@@ -368,16 +409,30 @@ function! s:session_restore_all()
         exec ":source " . s:sessions_file
         let sessions = g:__sessions_list__
         for key in keys(sessions)
+            call s:session_debug_message('restore all - loading '.sessions[key])
             call s:session_load(sessions[key])
             tabnew
         endfor
         unlet! g:__sessions_list__
         tabclose
     endif
+    call s:session_debug_message('restore all complete')
 endfunction
 
-function! s:session_vim_enter()
-    if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
-        call s:session_restore_all()
+function! s:session_debug_message(message)
+    " can log messages to file if run vim as vim - V0/home/user/vim.log
+    " or set debug_tabsession_file to log file name
+    if !g:debug_tabsession
+        return
+    endif
+    let sess = ''
+    if s:has_session()
+        let sess = '. Current session: ' . s:get_session()
+    endif
+    let buflist = tabpagebuflist()
+    let msg = 'tsdebug: ' . a:message . sess . ' , tab: ' . tabpagenr() . ' number of buffers: ' . len(buflist)
+    echom msg
+    if !empty(g:debug_tabsession_file)
+        execute 'silent !echo "' . msg . '" >> '. g:debug_tabsession_file .' &'
     endif
 endfunction
