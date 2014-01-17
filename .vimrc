@@ -186,7 +186,7 @@
       \ }}
   NeoBundle 'UltiSnips'
   NeoBundle 'ervandew/supertab'
-  NeoBundle 'joonty/vdebug'
+  NeoBundle 'joonty/vdebug', 'bg-connection'
   NeoBundle 'joonty/vim-taggatron'
   NeoBundle 'airblade/vim-rooter'
   " https://github.com/majutsushi/tagbar/wiki
@@ -243,6 +243,8 @@
   " ejs templates syntax highlight
   NeoBundle 'briancollins/vim-jst.git'
   NeoBundle 'heavenshell/vim-jsdoc'
+
+  set runtimepath+=~/.vim/bundle/potion
 " }}}
 
 " Basics {{{
