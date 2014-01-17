@@ -78,7 +78,7 @@ function! s:session_vim_enter()
 endfunction
 
 function! s:session_vim_leave()
-    call s:session_debug_message('vim leave - save all'))
+    call s:session_debug_message('vim leave - save all')
     call s:session_save_all()
 endfunction
 
@@ -241,7 +241,7 @@ function! s:session_save(...)
     if v:version >= 700 && finddir(s:sessions_path, '/') == ''
         call mkdir(s:sessions_path, 'p')
     endif
-    silent! argdel *
+    "silent! argdel *
     call s:set_session(name)
     let sessionoptions = &sessionoptions
     try
