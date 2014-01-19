@@ -681,7 +681,11 @@
 
 " Mappings {{{
   "let mapleader = ","
-  let mapleader = "\<space>"
+  "let mapleader = "\<space>"
+  " Better then let mapleader because vim command line will still
+  " display leader-based mappings as \s
+  " From http://www.reddit.com/r/vim/comments/1vdrxg/space_is_a_big_key_what_do_you_map_it_to/
+  map <space> <leader>
 
   " Swap ; and :, use ;; as ;
   "nnoremap ; :
