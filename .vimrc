@@ -160,9 +160,7 @@
   "  split_declarations, trenary_operator, cpp_io, pascal_assign,
   "  trailing_c_comments
   NeoBundle 'godlygeek/tabular'
-  " :Multichange and then cw to change word in a whole file (or any
-  " other cxx command)
-  " command line results into buffer, like :Clam ls,
+  " Send command line results into buffer, like :Clam ls,
   " :1,20Clam python - send first 20 lines into python
   NeoBundle 'sjl/clam.vim'
     " Gundo.vim is Vim plugin to visualize your Vim undo tree.
