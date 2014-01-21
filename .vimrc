@@ -160,9 +160,6 @@
   "  split_declarations, trenary_operator, cpp_io, pascal_assign,
   "  trailing_c_comments
   NeoBundle 'godlygeek/tabular'
-  " Send command line results into buffer, like :Clam ls,
-  " :1,20Clam python - send first 20 lines into python
-  NeoBundle 'sjl/clam.vim'
     " Gundo.vim is Vim plugin to visualize your Vim undo tree.
   NeoBundle 'sjl/gundo.vim'
   " adds a Bundles menu to Vim, displaying the installed plugins and the features they provide
