@@ -1,0 +1,17 @@
+# factorial
+factorial = (n):
+  total = 1
+  n to 1 (i):
+    # Multiply the total.
+    total *= i.
+  total.
+
+10 times (i):
+  (i string, '! is: ', factorial(i)) join print
+  "\n" print.
+
+p3 = 1e-2
+p4 = 1.9956e+2
+p = 10 / 3
+p1 = 0xffaf 
+p2 = 123.23
