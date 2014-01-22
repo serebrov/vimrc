@@ -1028,7 +1028,7 @@
 
   map <Leader>s :SessionList<CR>
 
-  let g:debug_tabsession = 1
+  let g:debug_tabsession = 0
   let g:debug_tabsession_file = '~/vim.tabsession.log'
 
   autocmd MyAutoCmd VimEnter *  call LoadLocalVimrc()
