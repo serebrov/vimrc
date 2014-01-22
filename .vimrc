@@ -58,10 +58,7 @@
   NeoBundle 'godlygeek/csapprox'
   " Solarized color scheme
   NeoBundle 'altercation/vim-colors-solarized'
-  "NeoBundle 'nelstrom/vim-mac-classic-theme'
-  "NeoBundle 'morhetz/gruvbox'
-  "NeoBundle 'sjl/badwolf'
-  "NeoBundle 'lsdr/monokai'
+  NeoBundle 'sjl/badwolf'
 
   "ensure dir exists before save the file
   "so :e some_new_dir/some_new_file and then :w will work
@@ -283,8 +280,10 @@
               echo "Solarized theme not found. Run :BundleInstall"
           endtry
       " }}}
-      "colorscheme wombat
-      "colorscheme gruvbox
+      if &diff
+        set background=light
+        colorscheme github
+      endif
   " }}}
 
   " GUI Settings {{{
