@@ -51,6 +51,7 @@
   " see https://defuse.ca/blog/vim-rainbow-parentheses-work-in-php
   NeoBundle 'kien/rainbow_parentheses.vim'
   NeoBundle 'kien/ctrlp.vim'
+  NeoBundle 'rking/ag.vim'
   " Powerline - create better-looking, more functional vim statuslines.
   "NeoBundle 'Lokaltog/vim-powerline'
   NeoBundle 'bling/vim-airline'
@@ -670,6 +671,12 @@
     autocmd FileType javascript nnoremap <Leader>pd :JsDoc<CR>
 
   augroup END
+
+  " http://stackoverflow.com/questions/18285751/use-ag-in-ctrlp-vim
+  if executable("ag")
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  endif
 
 " }}}
 
