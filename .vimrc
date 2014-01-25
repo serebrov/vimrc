@@ -225,8 +225,8 @@
   NeoBundle 'StanAngeloff/php.vim'
   NeoBundle '2072/PHP-Indenting-for-VIm'
   " view php docs with K
-  NeoBundle 'mudpile45/vim-phpdoc'
-  NeoBundle 'mikehaertl/yii-api-vim'
+  " NeoBundle 'mudpile45/vim-phpdoc'
+  " NeoBundle 'mikehaertl/yii-api-vim'
   " php documenter
   NeoBundle 'mikehaertl/pdv-standalone'
 
@@ -327,8 +327,8 @@
 
   " ignore these list file extensions
   set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
-  " set wildmode=longest,list
-  set wildmode=longest:full,full
+  set wildmode=longest,list
+  "set wildmode=longest:full,full
 " }}}
 
 " Langs and encodings {{{
