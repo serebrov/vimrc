@@ -899,6 +899,8 @@
   map <Leader>l     :wincmd L<cr>
   map <Leader>j     :wincmd J<cr>
 
+  noremap <Leader>f :CtrlPMRUFiles<CR>
+
 " }}}
 
 " Debugger {{{
@@ -974,10 +976,10 @@
 
     let g:vdebug_options= {
     \    "timeout" : 200,
-    \    "break_on_open" : 1,
+    \    "break_on_open" : 0,
     \    "ide_key" : 'vim_debug',
     \    "continuous_mode" : 1,
-    \    "auto_start" : 0,
+    \    "auto_start" : 1,
     \}
     let g:vdebug_keymap = {
     \    "run" : "<F5>",
@@ -1029,7 +1031,7 @@
   " NOTE: ! is necessary in order to be able to restore last session
   set viminfo=!,'100,/50,:50,<50,@50,h,s10
 
-  map <Leader>s :SessionList<CR>
+  noremap <Leader>s :SessionList<CR>
 
   let g:debug_tabsession = 0
   let g:debug_tabsession_file = '~/vim.tabsession.log'
