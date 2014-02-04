@@ -231,8 +231,12 @@
   NeoBundle 'mikehaertl/pdv-standalone'
 
   """""" Javascript
-  NeoBundle 'jelera/vim-javascript-syntax'
-  NeoBundle 'itspriddle/vim-jquery.git'
+  "NeoBundle 'jelera/vim-javascript-syntax'
+  "NeoBundle 'itspriddle/vim-jquery.git'
+  NeoBundle 'pangloss/vim-javascript'
+  let g:javascript_conceal = 1
+  NeoBundle 'othree/javascript-libraries-syntax.vim'
+  let g:used_javascript_libs = 'jquery,underscore,angularjs'
   " ejs templates syntax highlight
   NeoBundle 'briancollins/vim-jst.git'
   NeoBundle 'heavenshell/vim-jsdoc'
