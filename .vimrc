@@ -696,6 +696,11 @@
   "nnoremap ; :
   "nnoremap ;; ;
 
+  " * and # will stay on the first match
+  " nnoremap * *<C-O>
+  nnoremap * *N
+  nnoremap # #N
+
   " map double leader to save
   noremap <leader>w :w<CR>
   noremap <leader>q :q<CR>
