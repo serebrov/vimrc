@@ -455,10 +455,10 @@
   " zM - close all folds
 
   " enable folding by marker for vimrc
-  augroup fold_vim
-    autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
-  augroup END
+  " augroup fold_vim
+  "   autocmd!
+  "   autocmd FileType vim setlocal foldmethod=marker
+  " augroup END
 
   " set foldenable              " Turn on folding
   " set foldmarker={,}          " Fold C style code (only use this as default
