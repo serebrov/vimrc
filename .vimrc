@@ -144,6 +144,13 @@
   " :SudoWrite: Write a privileged file with sudo.
   " :W: Write every open window. Handy for kicking off tools like guard.
   NeoBundle 'tpope/vim-eunuch'
+  " Add abbreviations for all combinations
+  " :Abolish {despa,sepe}rat{e,es,ed,ing,ely,ion,ions,or}  {despe,sepa}rat{}
+  " Replace combinations + smart case (Facility -> Building, facilities -> buildings)
+  " :%Subvert/facilit{y,ies}/building{,s}/g
+  " Coercion: crs - coerce to snake case, crm - mixed case, crc - camel, cru - upper
+  " fooBar (crs)-> foo_bar
+  NeoBundle 'tpope/vim-abolish'
   " :Tabularize /, - tablarize by ','
   " :Tabularize /,/[r|l|c]0
   "  r - align right, l - left, c - center
@@ -164,6 +171,8 @@
   NeoBundle 'Headlights'
   " :Multichange to enter multichange mode (cw will affect the whole file)
   NeoBundle 'AndrewRadev/multichange.vim'
+  " gS / gJ to split / join multiline / single lines forms of code
+  NeoBundle 'AndrewRadev/splitjoin.vim'
   " disable mapping entirely
   let g:multichange_mapping = ''
 
