@@ -243,7 +243,7 @@
   "NeoBundle 'jelera/vim-javascript-syntax'
   "NeoBundle 'itspriddle/vim-jquery.git'
   NeoBundle 'pangloss/vim-javascript'
-  let g:javascript_conceal = 1
+  let g:javascript_conceal = 0
   NeoBundle 'othree/javascript-libraries-syntax.vim'
   let g:used_javascript_libs = 'jquery,underscore,angularjs'
   " ejs templates syntax highlight
