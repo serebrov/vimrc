@@ -202,7 +202,7 @@
   "NeoBundle 'kana/vim-smartinput'
 
   """""" Db
-  NeoBundle 'loki-nkl/vim-mysql-mode'
+  " see https://mutelight.org/dbext-the-last-sql-client-youll-ever-need
   NeoBundle 'vim-scripts/dbext.vim'
 
   """""" Unite and vimproc
@@ -1057,6 +1057,7 @@
   autocmd MyAutoCmd VimEnter *  call LoadLocalVimrc()
 
   function! LoadLocalVimrc()
+      :Rooter
       " Check for .vimrc.local in the current directory
       let custom_config_file = getcwd() . '/.vimrc.local'
       if filereadable(custom_config_file)
@@ -1067,7 +1068,6 @@
           exe 'source' custom_config_file
         endif
       endif
-      :Rooter
   endfunction
 
   function! QuitNetrw()
