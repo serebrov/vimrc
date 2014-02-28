@@ -697,6 +697,7 @@
     set grepprg=ag\ --nogroup\ --nocolor
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   endif
+  let g:ctrlp_switch_buffer = 'vt'
 
 " }}}
 
@@ -930,7 +931,8 @@
 
 " Debugger {{{
   "http://jaredforsyth.com/projects/vim-debug/
-  function! Debug(url)
+  function! DebugWeb(url)
+    let g:vdebug_options['break_on_open'] = 0
     let url = a:url
     let http_pos = stridx(url, 'http')
     if http_pos != 0
@@ -947,77 +949,65 @@
   endfunction
   " example:
   "   :Debug localsite.com
-  command! -nargs=1 Debug call Debug('<args>')
+  command! -nargs=1 DebugWeb call DebugWeb('<args>')
 
   function! DebugPy(...)
+    let g:vdebug_options['break_on_open'] = 1
     let str_args = join(a:000, ' ')
     let last_cmd = '!python -S ~/pydbgp/bin/pydbgp -d localhost:9000 -k vim_debug ' . str_args
     execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
     execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
     execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
-      python debugger.run()
-    endfunction
-    " python debugging requires pydbgp
-    " download from http://code.activestate.com/komodo/remotedebugging/ (version 7.1.3 works)
-    " example (open test file first):
-    "   :DebugPy -c tests/acceptance/selenuim/dev.cfg
-    command! -nargs=* -complete=file DebugPy call DebugPy('% <args>')
+    python debugger.run()
+  endfunction
+  " python debugging requires pydbgp
+  " download from http://code.activestate.com/komodo/remotedebugging/ (version 7.1.3 works)
+  " example (open test file first):
+  "   :DebugPy -c tests/acceptance/selenuim/dev.cfg
+  command! -nargs=* -complete=file DebugPy call DebugPy('% <args>')
 
-    function! DebugPhpunit(...)
-      let str_args = join(a:000, ' ')
-      let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && phpunit ' . str_args
-      execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
-      execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
-      execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
-      python debugger.run()
-    endfunction
-    " example (open test file first):
-    "   :DebugPhpunit --bootstrap tests/unitTests/bootstrap.php
-    command! -nargs=* -complete=file DebugPhpunit call DebugPhpunit('<args> %')
+  function! DebugPhp(command, ...)
+    let g:vdebug_options['break_on_open'] = 1
+    let str_args = join(a:000, ' ')
+    let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && ' . a:command . ' ' . str_args
+    execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
+    execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
+    execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
+    python debugger.run()
+  endfunction
 
-    function! DebugPhpScript(...)
-      let str_args = join(a:000, ' ')
-      let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && php ' . str_args
-      execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
-      execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
-      execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
-      python debugger.run()
-    endfunction
-    " example (open test file first):
-    "   :DebugPhpScript %
-    command! -nargs=* -complete=file DebugPhpScript call DebugPhpScript('<args>')
+  " example (runtests.sh invokes phpunit):
+  "   :DebugPhp wordpress-tests/runtests.sh --filter test_export_book_new --bootstrap wordpress-tests/bootstrap.php %
+  command! -nargs=* -complete=file DebugPhp call DebugPhp('<args>')
+  " example (open test file first):
+  "   :DebugPhpunit --bootstrap tests/unitTests/bootstrap.php
+  command! -nargs=* -complete=file DebugPhpunit call DebugPhp('phpunit', '<args> %')
+  " example (open test file first):
+  "   :DebugPhpScript %
+  command! -nargs=* -complete=file DebugPhpScript call DebugPhp('php', '<args>')
+  " example
+  "   :DebugPhpConsole appadd appto.tests@gmail.com "{\"platform\": {\"app\": ...}}"
+  command! -nargs=* DebugYiiConsole call DebugPhp('console/yiic', '<args>')
 
-    function! DebugPhpConsole(...)
-      let str_args = join(a:000, ' ')
-      let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && console/yiic ' . str_args
-      execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
-      execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
-      execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
-      python debugger.run()
-    endfunction
-    " example
-    "   :DebugPhpConsole appadd appto.tests@gmail.com "{\"platform\": {\"app\": ...}}"
-    command! -nargs=* DebugPhpConsole call DebugPhpConsole('<args>')
-
-    let g:vdebug_options= {
-    \    "timeout" : 200,
-    \    "break_on_open" : 0,
-    \    "ide_key" : 'vim_debug',
-    \    "continuous_mode" : 1,
-    \    "auto_start" : 1,
-    \}
-    let g:vdebug_keymap = {
-    \    "run" : "<F5>",
-    \    "run_to_cursor" : "<F9>",
-    \    "step_over" : "<F10>",
-    \    "step_into" : "<F11>",
-    \    "step_out" : "<F12>",
-    \    "close" : "<F6>",
-    \    "detach" : "<F7>",
-    \    "set_breakpoint" : "<F8>",
-    \    "get_context" : "<F3>",
-    \    "eval_under_cursor" : "<F4>",
-    \}
+  let g:vdebug_options = {
+  \    "timeout" : 200,
+  \    "break_on_open" : 0,
+  \    "ide_key" : 'vim_debug',
+  \    "continuous_mode" : 1,
+  \    "auto_start" : 1,
+  \}
+  let g:vdebug_keymap = {
+  \    "run" : "<F5>",
+  \    "run_to_cursor" : "<F9>",
+  \    "step_over" : "<F10>",
+  \    "step_into" : "<F11>",
+  \    "step_out" : "<F12>",
+  \    "close" : "<F6>",
+  \    "detach" : "<F7>",
+  \    "set_breakpoint" : "<F8>",
+  \    "get_context" : "<F3>",
+  \    "eval_under_cursor" : "<F4>",
+  \}
 
 " }}}
 
