@@ -933,6 +933,7 @@
   "http://jaredforsyth.com/projects/vim-debug/
   function! DebugWeb(url)
     let g:vdebug_options['break_on_open'] = 0
+    let g:vdebug_options['continuous_mode'] = 1
     let url = a:url
     let http_pos = stridx(url, 'http')
     if http_pos != 0
@@ -953,6 +954,7 @@
 
   function! DebugPy(...)
     let g:vdebug_options['break_on_open'] = 1
+    let g:vdebug_options['continuous_mode'] = 0
     let str_args = join(a:000, ' ')
     let last_cmd = '!python -S ~/pydbgp/bin/pydbgp -d localhost:9000 -k vim_debug ' . str_args
     execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
@@ -968,6 +970,7 @@
 
   function! DebugPhp(command, ...)
     let g:vdebug_options['break_on_open'] = 1
+    let g:vdebug_options['continuous_mode'] = 0
     let str_args = join(a:000, ' ')
     let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && ' . a:command . ' ' . str_args
     execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
