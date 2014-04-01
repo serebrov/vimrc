@@ -88,11 +88,11 @@
   Plugin 'robmiller/vim-movar'
   " Change surrounding objects
   " cs<from><to> - change surrounding
-  " cs"' - change surround " to '
+  " cs"' - change " surround " to '
   " cs'<q> - change surround ' to <q>..</q>
   " cst" - chage surrounding tag to "
   " ds<what> - remove surrounding
-  " ds" - remove surrounding "
+  " ds" - remove surrounding
   " ys<motion><what> - add surrounding
   " ysiw] - add surrounding [] for inner word
   " yssb or yss) - surround a line with ()
@@ -111,8 +111,7 @@
   "
   " [Space - add [count] blank lines before cursor
   " ]Space - add [count] blank lines after cursor
-  " [e - move line up
-  " ]e - move line down
+  " [e - move line up ]e - move line down
   "
   " [f / ]f - previous / next file in directory
   " [n / ]b - previous / next conflict marker
@@ -130,7 +129,8 @@
   Plugin 'tpope/vim-commentary'
 
   """""" Commands
-  "Vim sugar for the UNIX shell commands that need it the most. Commands include:
+  "Vim sugar for the UNIX shell commands that need it the most. Commands
+  "include:
   " :Unlink: Delete a buffer and the file on disk simultaneously.
   " :Remove: Like :Unlink, but doesn't require a neckbeard.
   " :Move: Rename a buffer and the file on disk simultaneously.
@@ -144,15 +144,14 @@
   " :Abolish {despa,sepe}rat{e,es,ed,ing,ely,ion,ions,or}  {despe,sepa}rat{}
   " Replace combinations + smart case (Facility -> Building, facilities -> buildings)
   " :%Subvert/facilit{y,ies}/building{,s}/g
-  " Coercion: crs - coerce to snake case, crm - mixed case, crc - camel, cru - upper
-  " fooBar (crs)-> foo_bar
+  " Coercion: crs - coerce to snake case, crm - mixed case, crc - camel, cru - upper fooBar (crs)-> foo_bar
   Plugin 'tpope/vim-abolish'
   " :Tabularize /, - tablarize by ','
   " :Tabularize /,/[r|l|c]0
-  "  r - align right, l - left, c - center
-  "  0 (or other number) - number of spaces between fields
+  " r - align right, l - left, c - center
+  " 0 (or other number) - number of spaces between fields
   " :Tabularize /,/r1c1l0
-  "  formatters will be applied in the specified order
+  " formatters will be applied in the specified order
   " :Tabularize /^[^,]*\zs,/r0c0l0 - use regex ^[^,]*\zs, (match only first comma)
   " :AddTabularPattern first_comma /^[^,]*\zs,/r0c0l0 - save pattern
   " (:Tab first_comma)
@@ -177,16 +176,15 @@
   Plugin 'scrooloose/syntastic'
   " fetching can take a long time causing the timeout
   " to manually install it
-  "   git clone --recursive https://github.com/Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe
-  Plugin "Valloric/YouCompleteMe"
+  "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
+  Plugin 'Valloric/YouCompleteMe'
   Plugin 'UltiSnips'
   Plugin 'ervandew/supertab'
-  Plugin 'joonty/vdebug', 'bg-connection'
+  Plugin 'joonty/vdebug'
   Plugin 'joonty/vim-taggatron'
   Plugin 'airblade/vim-rooter'
   " https://github.com/majutsushi/tagbar/wiki
-  " http://majutsushi.github.com/tagbar/
-  " :TagbarToggle
+  " http://majutsushi.github.com/tagbar/ :TagbarToggle
   Plugin 'majutsushi/tagbar'
   " autoinsert pair symbols (such as brackets)
   " disable because it breaks dot(.) - it repeats only what was entered
@@ -244,7 +242,6 @@
   " try to create undo dir, skip error if exists
   silent !mkdir ~/.vim/tmp > /dev/null 2>&1
   silent !mkdir ~/.vim/tmp/undo > /dev/null 2>&1
-  "silent !mkdir ~/.vim/tmp/unite > /dev/null 2>&1
 
   set undodir=~/.vim/tmp/undo/
   set undofile
