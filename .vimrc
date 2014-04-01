@@ -1,81 +1,77 @@
-" Bundles {{{
+" Plugins {{{
   set nocompatible " explicitly get out of vi-compatible mode
   filetype off
 
-  " neobundle {{{
-    if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
+  " setup Vundle {{{
+    let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+    if !filereadable(vundle_readme)
+        echo "Installing Vundle.."
+        echo ""
+        silent !mkdir -p ~/.vim/bundle
+        silent !git clone https://github.com/gmarik/Vundle.vim ~/.vim/bundle/vundle
     endif
+    set rtp+=~/.vim/bundle/vundle/
+    call vundle#rc()
 
-    call neobundle#rc(expand('~/.vim/bundle/'))
-
-    " Let NeoBundle manage NeoBundle
-    NeoBundleFetch 'Shougo/neobundle.vim'
-    " for YouCompleteMe - it takes a long time to install
-    let g:neobundle#install_process_timeout = 600
-
-    " Brief help
-    " :NeoBundleList          - list configured bundles
-    " :NeoBundleInstall(!)    - install(update) bundles
-    " :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+    Plugin 'gmarik/vundle'
   " }}}
 
   """""" UI
   " sensible defaults
-  NeoBundle 'tpope/vim-sensible'
+  Plugin 'tpope/vim-sensible'
   " auto adjust tab/space settings based on current file
-  NeoBundle 'tpope/vim-sleuth'
+  Plugin 'tpope/vim-sleuth'
   " Additional features for netrw
   " - to open browser focused on current file, - again to go upper
   " . to put selected file name to the end of command line; ! to do the
   " same and start command line with !
   " ~ - go home; cd/cl - :cd / :lcd
-  NeoBundle 'tpope/vim-vinegar'
-  "NeoBundle 'serebrov/vim-vinegar'
+  Plugin 'tpope/vim-vinegar'
+  "Plugin 'serebrov/vim-vinegar'
   " visual guides for indents, :IndentLinesToggle
-  NeoBundle 'Yggdroot/indentLine'
+  Plugin 'Yggdroot/indentLine'
   " automatically switches to relative numbers when go to normal mode
-  "NeoBundle 'myusuf3/numbers.vim.git'
+  "Plugin 'myusuf3/numbers.vim.git'
   " :Matchmaker to enable dynamic highlighting of the word under the
   " cursor (move the cursor and it will highlight the different word)
   " :Matchmaker! to turn it off
-  NeoBundle 'qstrahl/vim-matchmaker'
+  Plugin 'qstrahl/vim-matchmaker'
   " At every search command, it automatically prints
   " "At match #N out of M matches".
-  NeoBundle 'IndexedSearch'
+  Plugin 'IndexedSearch'
   " rainbow parenthesis
   " Note: doesn't work for php due some specifics in the syntax file
   " it doesn't work with default syntax file and with extended versions
   " (https://github.com/vim-scripts/php.vim--Garvin) and (https://github.com/StanAngeloff/php.vim)
   " maybe this can be fixed?
   " see https://defuse.ca/blog/vim-rainbow-parentheses-work-in-php
-  NeoBundle 'kien/rainbow_parentheses.vim'
-  NeoBundle 'kien/ctrlp.vim'
-  NeoBundle 'rking/ag.vim'
+  Plugin 'kien/rainbow_parentheses.vim'
+  Plugin 'kien/ctrlp.vim'
+  Plugin 'rking/ag.vim'
   " Powerline - create better-looking, more functional vim statuslines.
-  "NeoBundle 'Lokaltog/vim-powerline'
-  NeoBundle 'bling/vim-airline'
+  "Plugin 'Lokaltog/vim-powerline'
+  Plugin 'bling/vim-airline'
   " adopt color schemes for terminal
-  NeoBundle 'godlygeek/csapprox'
+  Plugin 'godlygeek/csapprox'
   " Solarized color scheme
-  NeoBundle 'altercation/vim-colors-solarized'
-  NeoBundle 'sjl/badwolf'
+  Plugin 'altercation/vim-colors-solarized'
+  Plugin 'sjl/badwolf'
 
   "ensure dir exists before save the file
   "so :e some_new_dir/some_new_file and then :w will work
-  NeoBundle 'dockyard/vim-easydir'
+  Plugin 'dockyard/vim-easydir'
 
   """""" Git
   " git support: Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
   " Ggrep, Glog, Gread, Gwrite, Gbrowse
-  NeoBundle 'tpope/vim-fugitive'
-  NeoBundle 'gregsexton/gitv'
+  Plugin 'tpope/vim-fugitive'
+  Plugin 'gregsexton/gitv'
   " fugitive extension, commit browser - :Extradite
-  NeoBundle 'int3/vim-extradite'
+  Plugin 'int3/vim-extradite'
   " see http://sjl.bitbucket.org/splice.vim/
-  "NeoBundle 'sjl/splice.vim'
+  "Plugin 'sjl/splice.vim'
   "Shows +/- for git changes
-  "NeoBundle 'airblade/vim-gitgutter'
+  "Plugin 'airblade/vim-gitgutter'
 
   """""" Motions / normal mode commands
   " Simpler way to use some motions in vim.
@@ -84,12 +80,12 @@
   " Other triggers: f/t/F/T (find char), w/W/b/B/e/E/ge/gE (word motions), j/k (lines), n/N (searches)
   " Tutorial: http://net.tutsplus.com/tutorials/other/vim-essential-plugin-easymotion/
   " It is similar to vimperator (FireFox extenstion) link select mode
-  NeoBundle 'Lokaltog/vim-easymotion'
+  Plugin 'Lokaltog/vim-easymotion'
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
-  NeoBundle 'bkad/CamelCaseMotion'
+  Plugin 'bkad/CamelCaseMotion'
   " av: around variable
   " iv: inner variable
-  NeoBundle 'robmiller/vim-movar'
+  Plugin 'robmiller/vim-movar'
   " Change surrounding objects
   " cs<from><to> - change surrounding
   " cs"' - change surround " to '
@@ -101,9 +97,9 @@
   " ysiw] - add surrounding [] for inner word
   " yssb or yss) - surround a line with ()
   " in visual mode S<what> will surround selected text
-  NeoBundle 'tpope/vim-surround'
+  Plugin 'tpope/vim-surround'
   " Required by vim-surround
-  NeoBundle 'tpope/vim-repeat'
+  Plugin 'tpope/vim-repeat'
   " Pair commands, some of them:
   " [q / ]q, [Q / ]Q- :cprevious / :cnext, :cfirst / :clast - errors in quickfix
   " [l / l], [L / L] - :lprevious / :lnext, :lfirst / :llast  - errors in current window (?)
@@ -120,18 +116,18 @@
   "
   " [f / ]f - previous / next file in directory
   " [n / ]b - previous / next conflict marker
-  NeoBundle 'tpope/vim-unimpaired'
+  Plugin 'tpope/vim-unimpaired'
   " Commenting code
   " <Leader>cc - comment line or selected text
   " <Leader>cu - uncomment line or selected text
   " <Leader>cm - comment with multiline /* */ comments
   " <Leader>cs - 'sexy' comments
   " <Leader>c<space> - toggle comments state, see more in help
-  "NeoBundle 'scrooloose/nerdcommenter'
+  "Plugin 'scrooloose/nerdcommenter'
 
   " gcc - comment out line
   " gc<motion> - comment out lines defined by motion
-  NeoBundle 'tpope/vim-commentary'
+  Plugin 'tpope/vim-commentary'
 
   """""" Commands
   "Vim sugar for the UNIX shell commands that need it the most. Commands include:
@@ -143,14 +139,14 @@
   " :Locate: Run locate and load the results into the quickfix list.
   " :SudoWrite: Write a privileged file with sudo.
   " :W: Write every open window. Handy for kicking off tools like guard.
-  NeoBundle 'tpope/vim-eunuch'
+  Plugin 'tpope/vim-eunuch'
   " Add abbreviations for all combinations
   " :Abolish {despa,sepe}rat{e,es,ed,ing,ely,ion,ions,or}  {despe,sepa}rat{}
   " Replace combinations + smart case (Facility -> Building, facilities -> buildings)
   " :%Subvert/facilit{y,ies}/building{,s}/g
   " Coercion: crs - coerce to snake case, crm - mixed case, crc - camel, cru - upper
   " fooBar (crs)-> foo_bar
-  NeoBundle 'tpope/vim-abolish'
+  Plugin 'tpope/vim-abolish'
   " :Tabularize /, - tablarize by ','
   " :Tabularize /,/[r|l|c]0
   "  r - align right, l - left, c - center
@@ -164,91 +160,72 @@
   "  assignment, two_spaces, multiple_spaces, argument_list,
   "  split_declarations, trenary_operator, cpp_io, pascal_assign,
   "  trailing_c_comments
-  NeoBundle 'godlygeek/tabular'
-    " Gundo.vim is Vim plugin to visualize your Vim undo tree.
-  NeoBundle 'sjl/gundo.vim'
-  " adds a Bundles menu to Vim, displaying the installed plugins and the features they provide
-  NeoBundle 'Headlights'
+  Plugin 'godlygeek/tabular'
+  " Gundo.vim is Vim plugin to visualize your Vim undo tree.
+  Plugin 'sjl/gundo.vim'
+  " adds a Plugins menu to Vim, displaying the installed plugins and the features they provide
+  Plugin 'Headlights'
   " :Multichange to enter multichange mode (cw will affect the whole file)
-  NeoBundle 'AndrewRadev/multichange.vim'
+  Plugin 'AndrewRadev/multichange.vim'
   " gS / gJ to split / join multiline / single lines forms of code
-  NeoBundle 'AndrewRadev/splitjoin.vim'
+  Plugin 'AndrewRadev/splitjoin.vim'
   " disable mapping entirely
   let g:multichange_mapping = ''
 
   """""" Programming / tags / autocomplete
   " Syntax checker
-  NeoBundle 'scrooloose/syntastic'
+  Plugin 'scrooloose/syntastic'
   " fetching can take a long time causing the timeout
   " to manually install it
   "   git clone --recursive https://github.com/Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe
-  NeoBundle "Valloric/YouCompleteMe", {"build": {
-      \ "mac": "./install.sh --clang-completer",
-      \ "unix": "./install.sh --clang-completer"
-      \ }}
-  NeoBundle 'UltiSnips'
-  NeoBundle 'ervandew/supertab'
-  NeoBundle 'joonty/vdebug', 'bg-connection'
-  NeoBundle 'joonty/vim-taggatron'
-  NeoBundle 'airblade/vim-rooter'
+  Plugin "Valloric/YouCompleteMe"
+  Plugin 'UltiSnips'
+  Plugin 'ervandew/supertab'
+  Plugin 'joonty/vdebug', 'bg-connection'
+  Plugin 'joonty/vim-taggatron'
+  Plugin 'airblade/vim-rooter'
   " https://github.com/majutsushi/tagbar/wiki
   " http://majutsushi.github.com/tagbar/
   " :TagbarToggle
-  NeoBundle 'majutsushi/tagbar'
+  Plugin 'majutsushi/tagbar'
   " autoinsert pair symbols (such as brackets)
   " disable because it breaks dot(.) - it repeats only what was entered
   " inside the paired symbols, not the whole text
   " https://github.com/kana/vim-smartinput/issues/33
-  "NeoBundle 'kana/vim-smartinput'
+  "Plugin 'kana/vim-smartinput'
 
   """""" Db
   " see https://mutelight.org/dbext-the-last-sql-client-youll-ever-need
-  NeoBundle 'vim-scripts/dbext.vim'
-
-  """""" Unite and vimproc
-  " NeoBundle 'Shougo/vimproc', { 'build': {
-  "       \   'windows': 'make -f make_mingw32.mak',
-  "       \   'cygwin': 'make -f make_cygwin.mak',
-  "       \   'mac': 'make -f make_mac.mak',
-  "       \   'unix': 'make -f make_unix.mak',
-  "       \ } }
-  " NeoBundle 'Shougo/unite.vim'
-  " "https://github.com/Shougo/unite.vim/wiki/unite-plugins
-  " NeoBundle 'Shougo/unite-outline'
-  " NeoBundle 'Shougo/unite-help'
-  " NeoBundle 'thinca/vim-unite-history'
-  " NeoBundle 'sgur/unite-git_grep'
-
-  " NeoBundle 'Shougo/vimshell'
+  Plugin 'vim-scripts/dbext.vim'
 
   """""" Markdown
-  NeoBundle 'tpope/vim-markdown'
+  Plugin 'tpope/vim-markdown'
   " Markup files preview: <Leader>P
-  NeoBundle 'greyblake/vim-preview'
-  NeoBundle 'suan/vim-instant-markdown'
+  Plugin 'greyblake/vim-preview'
+  Plugin 'suan/vim-instant-markdown'
 
   """""" PHP
   " php completion - it should be copied to autoload/phpcomplete.vim
-  NeoBundle 'shawncplus/phpcomplete.vim'
+  Plugin 'shawncplus/phpcomplete.vim'
   " php 5.3 syntax
-  NeoBundle 'StanAngeloff/php.vim'
-  NeoBundle '2072/PHP-Indenting-for-VIm'
+  Plugin 'StanAngeloff/php.vim'
+  Plugin '2072/PHP-Indenting-for-VIm'
   " view php docs with K
-  " NeoBundle 'mudpile45/vim-phpdoc'
-  " NeoBundle 'mikehaertl/yii-api-vim'
+  " Plugin 'mudpile45/vim-phpdoc'
+  " Plugin 'mikehaertl/yii-api-vim'
   " php documenter
-  NeoBundle 'mikehaertl/pdv-standalone'
+  Plugin 'mikehaertl/pdv-standalone'
 
   """""" Javascript
-  "NeoBundle 'jelera/vim-javascript-syntax'
-  "NeoBundle 'itspriddle/vim-jquery.git'
-  NeoBundle 'pangloss/vim-javascript'
+  "Plugin 'jelera/vim-javascript-syntax'
+  "Plugin 'itspriddle/vim-jquery.git'
+  Plugin 'pangloss/vim-javascript'
   let g:javascript_conceal = 0
-  NeoBundle 'othree/javascript-libraries-syntax.vim'
+  Plugin 'othree/javascript-libraries-syntax.vim'
   let g:used_javascript_libs = 'jquery,underscore,angularjs'
   " ejs templates syntax highlight
-  NeoBundle 'briancollins/vim-jst.git'
-  NeoBundle 'heavenshell/vim-jsdoc'
+  Plugin 'briancollins/vim-jst.git'
+  Plugin 'heavenshell/vim-jsdoc'
 
   set runtimepath+=~/.vim/bundle/potion
 " }}}
@@ -256,8 +233,6 @@
 " Basics {{{
 
   filetype plugin indent on " load filetype plugins/indent settings
-  " Installation check.
-  NeoBundleCheck
 
   set lazyredraw
   syntax on                  " Turn syntax highlighting on.
@@ -291,7 +266,7 @@
           try
               colorscheme solarized
           catch /^Vim\%((\a\+)\)\=:E185/
-              echo "Solarized theme not found. Run :BundleInstall"
+              echo "Solarized theme not found. Run :PluginInstall"
           endtry
       " }}}
       if &diff
@@ -1175,190 +1150,6 @@
 
 " }}}
 
-" " Unite  {{{
-
-" "https://github.com/terryma/dotfiles/blob/master/.vimrc
-" "http://vpaste.net/l1WqE
-" "https://github.com/thinca/vim-ref
-" "http://d.hatena.ne.jp/osyo-manga/20130307/1362621589
-" "https://github.com/naruyan/nar/blob/master/.vimrc
-" "
-" " Map space-f as a prefix for Unite
-" nnoremap [unite] <Nop>
-" nmap <space>f [unite]
-" " Ctrl-ss: (S)earch word under cur(s)or in current directory
-" nnoremap <c-s><c-s> :Unite grep:.::<C-r><C-w><CR>
-" " Ctrl-sr: Easier (s)earch and (r)eplace
-" nnoremap <c-s><c-r> :%s/<c-r><c-w>//gc<left><left><left>
-" " Ctrl-r: Easier search and replace
-" "vnoremap <c-r> "hy:%s/<c-r>h//gc<left><left><left>
-" " Ctrl-s: Easier substitue
-" "vnoremap <c-s> :s/\%V//g<left><left><left>
-
-" """ Search for files
-" " General fuzzy search - async recursive directory search + new files
-" nnoremap <silent> [unite]f :<C-u>Unite -buffer-name=files -no-split file_rec/async file/new<CR>
-" " Find files with find
-" nnoremap <silent> [unite]n :<C-u>Unite -buffer-name=find -no-split find:.<CR>
-" " Quick buffer and mru
-" nnoremap <silent> [unite]m :<C-u>Unite -buffer-name=buffers -no-split buffer file_mru<CR>
-" nnoremap <silent> [unite]mm :<C-u>Unite -buffer-name=buffers -quick-match -no-split buffer file_mru<CR>
-
-" """ Search in files
-" " git grep
-" nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep -no-quit vcs_grep/git:.<CR>
-" " grep
-" nnoremap <silent> [unite]gg :<C-u>Unite -buffer-name=grep -no-quit grep:.<CR>
-" " grep (specify directory)
-" nnoremap <silent> [unite]gd :<C-u>Unite -buffer-name=grep -no-quit grep<CR>
-" " grep (current file directory)
-" nnoremap <silent> [unite]gf :<C-u>Unite -buffer-name=grep -no-quit grep:<C-r>=expand('%:p:h')<CR><CR>
-
-" " Note: searches with :Ggrep are fast and populate quickfix, so it is
-" " convenient to go over results without switching back to unite buffer
-" " :cnext / :cprev or unimpaired's mapplings ]q / [q
-" " Examples:
-" "   Ggrep 'text' | copen - find text and open quick fix buffer
-" "   Ggrep -i 'someothertext' - ignore case
-" "   Ggrep 'text' -- '*.php' | copen - search only php files
-" "   Ggrep 'text' -- '*.[ch]' | copen - search only *.c and *.h files
-
-" function! Unext(motion)
-"     let l:uwin = bufwinnr("*unite* - grep")
-"     echo l:uwin
-"     if l:uwin != -1
-"         exec "norm! ".l:uwin."\<c-w>\<c-w>"
-"         exec "norm! ".a:motion
-"         exec "norm \<CR>"
-"         call unite#view#_redraw('','','')
-"     endif
-" endfun
-" noremap ]g :<C-U>call Unext("j")<CR>
-" noremap [g :<C-U>call Unext("k")<CR>
-
-" " grep with preview
-" "nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep:. -auto-preview<CR>
-" " Fuzzy search from current buffer
-" " nnoremap <silent> [unite]b :<C-u>UniteWithBufferDir
-"       " \ -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
-
-" " to search specific dir and keep results:
-" " :Unite -no-quit grep:some/dir
-
-" "" Quickly switch lcd
-" "nnoremap <silent> [unite]d
-"       "\ :<C-u>Unite -buffer-name=change-cwd -default-action=lcd directory_mru<CR>
-
-" """ Search inside the file
-" " Quick outline
-" nnoremap <silent> [unite]o :<C-u>Unite -buffer-name=outline -vertical outline<CR>
-" " Quick line using the word under cursor
-" nnoremap <silent> [unite]l :<C-u>UniteWithCursorWord -buffer-name=search_file line<CR>
-
-" """ Search vim lists
-" " Quick registers
-" nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
-" " Quick yank history
-" nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
-" " Quick vim commands
-" nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands command<CR>
-" " Quick command history
-" nnoremap <silent> [unite]; :<C-u>Unite -buffer-name=history history/command command<CR>
-" " Quick bookmarks
-" nnoremap <silent> [unite]b :<C-u>Unite -buffer-name=bookmarks bookmark<CR>
-" " Quick help
-" nnoremap <silent> [unite]h :<C-u>Unite -buffer-name=help help<CR>
-" " Quick unite sources
-" nnoremap <silent> [unite]a :<C-u>Unite -buffer-name=sources source<CR>
-
-" " Quick processes
-" nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=processes process<CR>
-
-" "" Custom Unite settings
-" autocmd MyAutoCmd FileType unite call s:unite_settings()
-" function! s:unite_settings()
-"   nmap <buffer> <ESC> <Plug>(unite_exit)
-"   imap <buffer> <ESC> <Plug>(unite_exit)
-"   imap <buffer> jj <Plug>(unite_insert_leave)
-"   imap <buffer> jk <Plug>(unite_insert_leave)
-"   imap <buffer> kj <Plug>(unite_insert_leave)
-"   "" imap <buffer> <c-j> <Plug>(unite_select_next_line)
-"   "imap <buffer> <c-j> <Plug>(unite_insert_leave)
-"   "nmap <buffer> <c-j> <Plug>(unite_loop_cursor_down)
-"   "nmap <buffer> <c-k> <Plug>(unite_loop_cursor_up)
-"   "imap <buffer> <c-a> <Plug>(unite_choose_action)
-"   "imap <buffer> <Tab> <Plug>(unite_exit_insert)
-"   "imap <buffer> <C-w> <Plug>(unite_delete_backward_word)
-"   "imap <buffer> <C-u> <Plug>(unite_delete_backward_path)
-"   "imap <buffer> '     <Plug>(unite_quick_match_default_action)
-"   "nmap <buffer> '     <Plug>(unite_quick_match_default_action)
-"   "nmap <buffer> <C-r> <Plug>(unite_redraw)
-"   "imap <buffer> <C-r> <Plug>(unite_redraw)
-"   "inoremap <silent><buffer><expr> <C-s> unite#do_action('split')
-"   "nnoremap <silent><buffer><expr> <C-s> unite#do_action('split')
-"   "inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-"   "nnoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-
-"   "let unite = unite#get_current_unite()
-"   "if unite.buffer_name =~# '^search'
-"     "nnoremap <silent><buffer><expr> r     unite#do_action('replace')
-"   "else
-"     "nnoremap <silent><buffer><expr> r     unite#do_action('rename')
-"   "endif
-
-"   "nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
-" endfunction
-
-" " Use the fuzzy matcher for everything
-" call unite#filters#matcher_default#use(['matcher_fuzzy'])
-" " Use the rank sorter for everything - fuzzy matcher does not use sorter
-" " call unite#filters#sorter_default#use(['sorter_rank'])
-" " Start in insert mode
-" let g:unite_enable_start_insert = 1
-" " Enable history yank source
-" let g:unite_source_history_yank_enable = 1
-" " Open in bottom right
-" let g:unite_split_rule = "botright"
-" " Shorten the default update date of 500ms
-" let g:unite_update_time = 200
-" let g:unite_source_rec_max_cache_files = 10000
-
-" let g:unite_source_file_mru_limit = 1000
-" let g:unite_cursor_line_highlight = 'TabLineSel'
-" " let g:unite_abbr_highlight = 'TabLine'
-
-" let g:unite_source_file_mru_filename_format = ':~:.'
-" let g:unite_source_file_mru_time_format = ''
-" let g:unite_data_directory = expand('~/.vim/tmp/unite/')
-
-" " For ack.
-" if executable('ag')
-"   " https://github.com/ggreer/the_silver_searcher
-"   let g:unite_source_grep_command = 'ag'
-"   let g:unite_source_grep_default_opts = '--noheading --nocolor -a'
-"   let g:unite_source_grep_recursive_opt = ''
-" elseif executable('ack-grep')
-"   let g:unite_source_grep_command = 'ack-grep'
-"   let g:unite_source_grep_default_opts = '--no-heading --no-color -a --type-set tags=.tags --notags'
-"   let g:unite_source_grep_recursive_opt = ''
-" elseif executable('ack')
-"   let g:unite_source_grep_command = 'ack'
-"   let g:unite_source_grep_default_opts = '--no-heading --no-color -a --type-set tags=.tags --notags'
-"   let g:unite_source_grep_recursive_opt = ''
-" endif
-
-" " Set up some custom ignores
-" call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
-"       \ 'ignore_pattern', join([
-"       \ '\.git/',
-"       \ '\.svn/',
-"       \ '\.cache/',
-"       \ '.*\.tags',
-"       \ '.*\.pyc',
-"       \ '.*\.jpg',
-"       \ ], '\|'))
-" " }}}
-
 " YouCompleteMe, Supertab and Ultisnips {{{
 
   " http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
@@ -1376,8 +1167,4 @@
   "let g:UltiSnipsJumpForwardTrigger="<c-tab>"
   "let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
 
-" }}}
-
-" VimShell {{{
-  " let g:vimshell_prompt = "% "
 " }}}
