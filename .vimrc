@@ -57,6 +57,8 @@
   Plugin 'altercation/vim-colors-solarized'
   Plugin 'sjl/badwolf'
 
+  Plugin 'terryma/vim-expand-region'
+
   "ensure dir exists before save the file
   "so :e some_new_dir/some_new_file and then :w will work
   Plugin 'dockyard/vim-easydir'
@@ -272,6 +274,7 @@
       endif
       " From: http://sunaku.github.io/vim-256color-bce.html
       if &term =~ '256color'
+          " Fix for tmux
           " disable Background Color Erase (BCE) so that color schemes
           " render properly when inside 256-color tmux and GNU screen.
           " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
@@ -823,6 +826,15 @@
   " gv - select last visual area and go to visual mode
   " Visually select the text that was last edited/pasted
   nnoremap gV `[v`]
+
+  "  http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
+  "  Hit v to select one character
+  "  Hit vagain to expand selection to word
+  "  Hit v again to expand to paragraph
+  "  ...
+  "  Hit <C-v> go back to previous selection if I went too far
+  vmap v <Plug>(expand_region_expand)
+  vmap <C-v> <Plug>(expand_region_shrink)
 
   nnoremap gl :call ToggleRelativeAbsoluteNumber()<CR>
 
