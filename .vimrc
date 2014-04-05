@@ -29,7 +29,7 @@
   Plugin 'tpope/vim-vinegar'
   "Plugin 'serebrov/vim-vinegar'
   " visual guides for indents, :IndentLinesToggle
-  Plugin 'Yggdroot/indentLine'
+  "Plugin 'Yggdroot/indentLine'
   " automatically switches to relative numbers when go to normal mode
   "Plugin 'myusuf3/numbers.vim.git'
   " :Matchmaker to enable dynamic highlighting of the word under the
