@@ -59,6 +59,15 @@
 
   Plugin 'terryma/vim-expand-region'
 
+  "This plugin provides the following mappings which allow
+  "you to move between Vim panes and tmux splits seamlessly.
+  "<ctrl-h> => Left
+  "<ctrl-j> => Down
+  "<ctrl-k> => Up
+  "<ctrl-l> => Right
+  "<ctrl-\> => Previous split
+  Plugin 'christoomey/vim-tmux-navigator'
+
   "ensure dir exists before save the file
   "so :e some_new_dir/some_new_file and then :w will work
   Plugin 'dockyard/vim-easydir'
@@ -859,17 +868,18 @@
 
 " Windows navigation {{{
 
-  " C-W h|j|k|l - move to left|down|up|right win
-  " C-W w       - cycle
-  " C-W s|v     - split current win horiz | vert
-  " :on[ly]     - leave only current win
-  " C-W +|-     - height +|- 1 px
-  " C-W _||     - maximize height|width
+  " C-W h|j|k|l   - move to left|down|up|right win
+  " v C-W h|j|k|l - split to left|down|up|right win
+  " C-W w         - cycle
+  " C-W s|v       - split current win horiz | vert
+  " :on[ly]       - leave only current win
+  " C-W +|-       - height +|- 1 px
+  " C-W _||       - maximize height|width
   " moving windows:
-  " C-W H|J|K|L - move win to the left|down|up|right
-  " C-W r       - rotate
-  " C-W x       - exchange with neighbour
-  " C-W T       - move window to separate tab
+  " C-W H|J|K|L   - move win to the left|down|up|right
+  " C-W r         - rotate
+  " C-W x         - exchange with neighbour
+  " C-W T         - move window to separate tab
 
   " move to and open if not exists
   " http://www.agillo.net/simple-vim-window-management/
@@ -887,10 +897,10 @@
   endfunction
 
   " move to and open if not exists
-  map <c-j> :call WinMove('j')<CR>
-  map <c-k> :call WinMove('k')<CR>
-  map <c-l> :call WinMove('l')<CR>
-  map <c-h> :call WinMove('h')<CR>
+  vmap <c-j> :call WinMove('j')<CR>
+  vmap <c-k> :call WinMove('k')<CR>
+  vmap <c-l> :call WinMove('l')<CR>
+  vmap <c-h> :call WinMove('h')<CR>
 
   "close
   map <leader>wc :wincmd q<cr>
