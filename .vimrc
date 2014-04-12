@@ -926,6 +926,10 @@
 
   noremap <Leader>f :CtrlPMRUFiles<CR>
 
+  " format json, see https://coderwall.com/p/faceag
+  " :%!python -m json.tool
+  " check also http://stedolan.github.io/jq/
+
 " }}}
 
 " Debugger {{{
