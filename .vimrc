@@ -931,7 +931,7 @@
 " Debugger {{{
   "http://jaredforsyth.com/projects/vim-debug/
   function! DebugWeb(url)
-    let g:vdebug_options['break_on_open'] = 0
+    let g:vdebug_options['break_on_open'] = 1
     let g:vdebug_options['continuous_mode'] = 1
     let url = a:url
     let http_pos = stridx(url, 'http')
