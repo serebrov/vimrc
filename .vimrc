@@ -1005,14 +1005,14 @@
   let g:vdebug_keymap = {
   \    "run" : "<F5>",
   \    "run_to_cursor" : "<F9>",
-  \    "step_over" : "<F10>",
-  \    "step_into" : "<F11>",
+  \    "step_over" : "<F3>",
+  \    "step_into" : "<F4>",
   \    "step_out" : "<F12>",
   \    "close" : "<F6>",
   \    "detach" : "<F7>",
   \    "set_breakpoint" : "<F8>",
-  \    "get_context" : "<F3>",
-  \    "eval_under_cursor" : "<F4>",
+  \    "get_context" : "<F10>",
+  \    "eval_under_cursor" : "<F11>",
   \}
 
 " }}}
