@@ -928,7 +928,9 @@
 
   " format json, see https://coderwall.com/p/faceag
   " :%!python -m json.tool
-  " check also http://stedolan.github.io/jq/
+  " or with jq http://stedolan.github.io/jq/
+  "   download, mv to ~/bin/jq, chmod +x ~/bin/jq
+  " :%!jq '.'
 
 " }}}
 
