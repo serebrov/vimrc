@@ -928,14 +928,16 @@
 
   " format json, see https://coderwall.com/p/faceag
   " :%!python -m json.tool
-  " check also http://stedolan.github.io/jq/
+  " or with jq http://stedolan.github.io/jq/
+  "   download, mv to ~/bin/jq, chmod +x ~/bin/jq
+  " :%!jq '.'
 
 " }}}
 
 " Debugger {{{
   "http://jaredforsyth.com/projects/vim-debug/
   function! DebugWeb(url)
-    let g:vdebug_options['break_on_open'] = 0
+    let g:vdebug_options['break_on_open'] = 1
     let g:vdebug_options['continuous_mode'] = 1
     let url = a:url
     let http_pos = stridx(url, 'http')
