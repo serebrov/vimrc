@@ -984,9 +984,21 @@
     python debugger.run()
   endfunction
 
+  " function! DebugPhpTemp(command, ...)
+  "   let g:vdebug_options['break_on_open'] = 1
+  "   let g:vdebug_options['continuous_mode'] = 0
+  "   let str_args = join(a:000, ' ')
+  "   let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug_temp" && sleep 2 && ' . a:command . ' ' . str_args
+  "   execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
+  "   execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
+  "   execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
+  "   python debugger.run()
+  " endfunction
+
   " example (runtests.sh invokes phpunit):
   "   :DebugPhp wordpress-tests/runtests.sh --filter test_export_book_new --bootstrap wordpress-tests/bootstrap.php %
   command! -nargs=* -complete=file DebugPhp call DebugPhp('<args>')
+  "command! -nargs=* -complete=file DebugPhpTemp call DebugPhpTemp('<args>')
   " example (open test file first):
   "   :DebugPhpunit --bootstrap tests/unitTests/bootstrap.php
   command! -nargs=* -complete=file DebugPhpunit call DebugPhp('phpunit', '<args> %')
@@ -1007,14 +1019,14 @@
   let g:vdebug_keymap = {
   \    "run" : "<F5>",
   \    "run_to_cursor" : "<F9>",
-  \    "step_over" : "<F3>",
-  \    "step_into" : "<F4>",
-  \    "step_out" : "<F12>",
+  \    "step_over" : "<F8>",
+  \    "step_into" : "<F7>",
+  \    "step_out" : "<F4>",
   \    "close" : "<F6>",
-  \    "detach" : "<F7>",
-  \    "set_breakpoint" : "<F8>",
+  \    "detach" : "<F11>",
+  \    "set_breakpoint" : "<F12>",
   \    "get_context" : "<F10>",
-  \    "eval_under_cursor" : "<F11>",
+  \    "eval_under_cursor" : "<F3>",
   \}
 
 " }}}
