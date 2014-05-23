@@ -80,6 +80,10 @@
   """""" Git
   " git support: Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
   " Ggrep, Glog, Gread, Gwrite, Gbrowse
+  " Search in a specific directory:
+  " :Ggrep searchterm -- foldername | copen
+  " Search specific file types:
+  " :Ggrep searchterm -- '*.ext' | copen
   Plugin 'tpope/vim-fugitive'
   Plugin 'gregsexton/gitv'
   " fugitive extension, commit browser - :Extradite
