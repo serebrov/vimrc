@@ -199,7 +199,8 @@
   "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
   Plugin 'Valloric/YouCompleteMe'
   Plugin 'UltiSnips'
-  Plugin 'ervandew/supertab'
+  Plugin 'honza/vim-snippets'
+  "Plugin 'ervandew/supertab'
   Plugin 'joonty/vdebug'
   Plugin 'joonty/vim-taggatron'
   Plugin 'airblade/vim-rooter'
@@ -1092,7 +1093,7 @@
   endfunction
 
   function! QuitNetrw()
-    for i in range(1, bufnr($))
+    for i in range(1, bufnr("$"))
       if buflisted(i)
         if getbufvar(i, '&filetype') == "netrw"
           silent exe 'bwipeout ' . i
@@ -1199,9 +1200,11 @@
 " YouCompleteMe, Supertab and Ultisnips {{{
 
   " http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
-  let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
-  let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
-  let g:SuperTabDefaultCompletionType = '<C-Tab>'
+  " let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
+  " let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
+  " let g:SuperTabDefaultCompletionType = '<C-Tab>'
+  let g:ycm_key_list_select_completion = []
+  let g:ycm_key_list_previous_completion = []
 
   let g:UltiSnipsExpandTrigger="<tab>"
   let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -1212,5 +1215,33 @@
   "let g:UltiSnipsListSnippets="<c-s-tab>"
   "let g:UltiSnipsJumpForwardTrigger="<c-tab>"
   "let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
+
+" }}}
+
+" Xiki {{{
+  function! XikiLaunch()
+    ruby << EOF
+
+      #xiki_dir = ENV['XIKI_DIR']
+      xiki_dir = '/home/seb/xiki'
+      ['core/ol', 'vim/line', 'vim/tree'].each {|o| load "#{xiki_dir}/lib/xiki/#{o}.rb"}
+      include Xiki
+
+      line = Line.value
+      next_line = Line.value 2
+
+      indent = line[/^ +/]
+      command = "xiki '#{line}'"
+      result = `#{command}`
+      Tree << result
+EOF
+  endfunction
+
+  imap <silent> <2-LeftMouse> <C-c>:call XikiLaunch()<CR>i
+  nmap <silent> <2-LeftMouse> :call XikiLaunch()<CR>
+  imap <silent> <C-CR> <C-c>:call XikiLaunch()<CR>i
+  nmap <silent> <C-CR> :call XikiLaunch()<CR>
+  imap <silent> <C-@> <C-c>:call XikiLaunch()<CR>i
+  nmap <silent> <C-@> :call XikiLaunch()<CR>
 
 " }}}
