@@ -89,9 +89,12 @@
   " fugitive extension, commit browser - :Extradite
   Plugin 'int3/vim-extradite'
   " see http://sjl.bitbucket.org/splice.vim/
-  "Plugin 'sjl/splice.vim'
+  Plugin 'sjl/splice.vim'
   "Shows +/- for git changes
-  "Plugin 'airblade/vim-gitgutter'
+  "off :GitGutterDisable, on :GitGutterEnable, toggle :GitGutterToggle
+  "Jump between diffs: ]c/[c
+  Plugin 'airblade/vim-gitgutter'
+  Plugin 'TyeMcQueen/vim-merge-windows'
 
   """""" Motions / normal mode commands
   " Simpler way to use some motions in vim.
@@ -186,10 +189,12 @@
   Plugin 'Headlights'
   " :Multichange to enter multichange mode (cw will affect the whole file)
   Plugin 'AndrewRadev/multichange.vim'
-  " gS / gJ to split / join multiline / single lines forms of code
-  Plugin 'AndrewRadev/splitjoin.vim'
   " disable mapping entirely
   let g:multichange_mapping = ''
+  " gS / gJ to split / join multiline / single lines forms of code
+  Plugin 'AndrewRadev/splitjoin.vim'
+  " always highlight matching html tags
+  Plugin 'Valloric/MatchTagAlways'
 
   """""" Programming / tags / autocomplete
   " Syntax checker
@@ -270,6 +275,7 @@
   set undoreload=10000
 
   set autowrite
+  set autoread
 
   " Colors {{{
       set background=dark
@@ -406,6 +412,10 @@
   "Invisible character colors
   highlight NonText guifg=#4a4a59
   highlight SpecialKey guifg=#4a4a59
+
+  "For gitgutter, to make the sign column to be the same as line numbers
+  "column
+  highlight clear SignColumn
 
   set nostartofline          " leave my cursor where it was
 
