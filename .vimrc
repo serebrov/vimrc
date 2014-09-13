@@ -95,6 +95,17 @@
   "Jump between diffs: ]c/[c
   Plugin 'airblade/vim-gitgutter'
   Plugin 'TyeMcQueen/vim-merge-windows'
+  function! PDiffOn()
+    source ~/.vim/bundle/vim-merge-windows/patience-diff.vim
+    "source ~/.vim/bundle/vim-merge-windows/vim-merge-windows.vim
+    diffupdate
+  endfunction
+  command! PDiffOn call PDiffOn()
+  function! PDiffOff()
+    set diffexpr=
+    diffupdate
+  endfunction
+  command! PDiffOff call PDiffOff()
 
   """""" Motions / normal mode commands
   " Simpler way to use some motions in vim.
