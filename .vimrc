@@ -56,6 +56,8 @@
   " Solarized color scheme
   Plugin 'altercation/vim-colors-solarized'
   Plugin 'sjl/badwolf'
+  Plugin 'nanotech/jellybeans'
+  Plugin 'noahfrederick/vim-hemisu'
 
   Plugin 'terryma/vim-expand-region'
 
@@ -94,17 +96,48 @@
   "off :GitGutterDisable, on :GitGutterEnable, toggle :GitGutterToggle
   "Jump between diffs: ]c/[c
   Plugin 'airblade/vim-gitgutter'
+
   Plugin 'TyeMcQueen/vim-merge-windows'
-  function! PDiffOn()
-    source ~/.vim/bundle/vim-merge-windows/patience-diff.vim
+  let s:diff_algo = "patience"
+  function! PDiff()
+      let opt = ""
+      if &diffopt =~ "icase"
+          let opt = opt . "-i "
+      endif
+      if &diffopt =~ "iwhite"
+          let opt = opt . "-b -B "
+      endif
+      " pdiff script has --patience option, but our options come at the end,
+      " so we will overwrite the algorithm
+      " supported are:
+      "  default, myers
+      "      The basic greedy diff algorithm. Currently, this is the default.
+      "  minimal
+      "      Spend extra time to make sure the smallest possible diff is produced.
+      "  patience
+      "      Use ""patience diff"" algorithm when generating patches.
+      "  histogram
+      "      This algorithm extends the patience algorithm to
+      "      support low-occurrence common elements
+      let opt = opt . "--diff-algorithm=" . s:diff_algo . " "
+      silent execute "!pdiff -a " . opt . v:fname_in . " " .
+          \ v:fname_new . " > " . v:fname_out
+  endfunction
+  function! PDiffOn(algorithm)
+    let s:diff_algo = a:algorithm
+    set diffexpr=PDiff()
+    "source ~/.vim/bundle/vim-merge-windows/patience-diff.vim
     "source ~/.vim/bundle/vim-merge-windows/vim-merge-windows.vim
     diffupdate
   endfunction
-  command! PDiffOn call PDiffOn()
   function! PDiffOff()
     set diffexpr=
     diffupdate
   endfunction
+  command! PDiffOnMyers call PDiffOn('myers')
+  command! PDiffOnPatience call PDiffOn('patience')
+  command! PDiffOnMinimal call PDiffOn('minimal')
+  command! PDiffOnHistogram call PDiffOn('histogram')
   command! PDiffOff call PDiffOff()
 
   """""" Motions / normal mode commands
@@ -285,9 +318,6 @@
   set undolevels=1000
   set undoreload=10000
 
-  set autowrite
-  set autoread
-
   " Colors {{{
       set background=dark
       if $COLORTERM == 'gnome-terminal'
@@ -334,6 +364,43 @@
   endif
   " }}}
 
+" }}}
+
+" Auto-read and auto-write {{{
+  set autoread
+  "See http://stackoverflow.com/questions/2490227/how-does-vims-autoread-work
+  augroup checktime
+    au!
+    if !has("gui_running")
+        "silent! necessary otherwise throws errors when using command
+        "line window.
+        autocmd BufEnter        * silent! checktime
+        autocmd CursorHold      * silent! checktime
+        autocmd CursorHoldI     * silent! checktime
+        "these two _may_ slow things down. Remove if they do.
+        "autocmd CursorMoved     * silent! checktime
+        "autocmd CursorMovedI    * silent! checktime
+    endif
+  augroup END
+  au FocusGained,BufEnter * :silent! !
+
+  set autowrite
+  "au FocusLost,WinLeave * :silent! w
+  " See https://github.com/907th/vim-auto-save/
+  function! DoAutosave()
+    " expand('%') != '' - if this is new buffer without name
+    " filereadable(expand('%')) - if this is new not saved buffer (like :e newfile)
+    " expand('%') != '[Command Line]' - command line buffer
+    if expand('%') != '' && filereadable(expand('%')) && expand('%') != '[Command Line]'
+      update
+    endif
+  endfunction
+  " autowrite on leave the insert mode, focus load and cursor hold
+  augroup MyAutoCmdAutosave
+    autocmd!
+    autocmd InsertLeave,CursorHold,CursorHoldI * call DoAutosave()
+    autocmd FocusLost,WinLeave   * call DoAutosave()
+  augroup END
 " }}}
 
 " Spell {{{
@@ -566,24 +633,6 @@
     "" use Leader-r to refresh (default is Ctrl-L which is used to jump
     "" to the left window)
     autocmd FileType netrw nnoremap <buffer> <Leader>r <Plug>NetrwRefresh
-  augroup END
-
-  function! DoAutosave()
-    " expand('%') != '' - if this is new buffer without name
-    " filereadable(expand('%')) - if this is new not saved buffer (like :e newfile)
-    " expand('%') != '[Command Line]' - command line buffer
-    if expand('%') != '' && filereadable(expand('%')) && expand('%') != '[Command Line]'
-      update
-    endif
-  endfunction
-
-  " autowrite on leave the insert mode
-  augroup MyAutoCmdAutosave
-    autocmd!
-
-    autocmd InsertLeave * call DoAutosave()
-    " autocmd FocusLost   * silent! wall test
-    autocmd FocusLost   * call DoAutosave()
   augroup END
 
   augroup Rainbow
