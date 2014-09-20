@@ -56,8 +56,10 @@
   " Solarized color scheme
   Plugin 'altercation/vim-colors-solarized'
   Plugin 'sjl/badwolf'
-  Plugin 'nanotech/jellybeans'
+  Plugin 'nanotech/jellybeans.vim'
   Plugin 'noahfrederick/vim-hemisu'
+  "Colorschemes, see http://chriskempson.github.io/base16/
+  Plugin 'chriskempson/base16-vim'
 
   Plugin 'terryma/vim-expand-region'
 
