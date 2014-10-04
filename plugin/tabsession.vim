@@ -35,6 +35,9 @@ if !exists('debug_tabsession')
     let debug_tabsession = 0
     let debug_tabsession_file = ''
 endif
+if !exists('tabsession_load_after')
+    let tabsession_load_after = ''
+endif
 let loaded_tabsession = 1
 let s:num_sessions = 0
 let s:sessions = {}
@@ -73,6 +76,8 @@ function! s:session_vim_enter()
     if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
         call s:session_debug_message('vim enter - restore all')
         call s:session_restore_all()
+        "execute 'windo filtype detect'
+        redraw | echom 'Loaded last session(s)'
     endif
     let s:tab_leave_enabled = 1
 endfunction
@@ -113,8 +118,18 @@ function! s:session_load(name)
         execute 'silent so ' . s:sessions_path . '/' . a:name
         call s:set_session(a:name)
         call s:write_sessions()
+        call s:session_call_load_after()
     endif
 endfunction
+
+function! s:session_call_load_after()
+    echom 'Session load after ' . g:tabsession_load_after
+    if empty(g:tabsession_load_after)
+        return
+    endif
+    execute 'call '.g:tabsession_load_after
+endfunction
+
 
 function! s:session_close()
     if s:has_session()

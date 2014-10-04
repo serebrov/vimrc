@@ -1147,22 +1147,33 @@
 
   let g:debug_tabsession = 0
   let g:debug_tabsession_file = '~/vim.tabsession.log'
+  let g:tabsession_load_after = 'LoadLocalVimrc()'
 
-  autocmd MyAutoCmd VimEnter *  call LoadLocalVimrc()
+  function! TestEcho(test)
+    echom 'Test: ' . a:test
+  endfunction
 
   function! LoadLocalVimrc()
-      :Rooter
-      " Check for .vimrc.local in the current directory
-      let custom_config_file = getcwd() . '/.vimrc.local'
+    :Rooter
+    echom 'Loading local in: ' . getcwd()
+    " Check for .vimrc.local in the current directory
+    let custom_config_file = getcwd() . '/.vimrc.local'
+    if filereadable(custom_config_file)
+      exe 'source' custom_config_file
+      echom 'Loaded local vimrc: ' . custom_config_file
+    else
+      let custom_config_file = getcwd() . '/.git/.vimrc.local'
       if filereadable(custom_config_file)
         exe 'source' custom_config_file
-      else
-        let custom_config_file = getcwd() . '/.git/.vimrc.local'
-        if filereadable(custom_config_file)
-          exe 'source' custom_config_file
-        endif
+        echom 'Loaded local vimrc: ' . custom_config_file
       endif
+    endif
   endfunction
+
+  autocmd MyAutoCmd BufWinEnter *  call LoadLocalVimrc()
+  " autocmd MyAutoCmd BufWinEnter *  call TestEcho('BufWinEnter')
+  " autocmd MyAutoCmd VimEnter *  call TestEcho('TabEnter')
+  " autocmd MyAutoCmd VimEnter *  call TestEcho('VimEnter')
 
   function! QuitNetrw()
     for i in range(1, bufnr("$"))
