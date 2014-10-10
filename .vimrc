@@ -297,6 +297,9 @@
   Plugin 'briancollins/vim-jst.git'
   Plugin 'heavenshell/vim-jsdoc'
 
+  """""" Go
+  Plugin 'fatih/vim-go'
+
   set runtimepath+=~/.vim/bundle/potion
 " }}}
 
@@ -1155,19 +1158,20 @@
 
   function! LoadLocalVimrc()
     :Rooter
-    echom 'Loading local in: ' . getcwd()
+    "echom 'Loading local in: ' . getcwd()
     " Check for .vimrc.local in the current directory
     let custom_config_file = getcwd() . '/.vimrc.local'
     if filereadable(custom_config_file)
       exe 'source' custom_config_file
-      echom 'Loaded local vimrc: ' . custom_config_file
+      "echom 'Loaded local vimrc: ' . custom_config_file
     else
       let custom_config_file = getcwd() . '/.git/.vimrc.local'
       if filereadable(custom_config_file)
         exe 'source' custom_config_file
-        echom 'Loaded local vimrc: ' . custom_config_file
+        "echom 'Loaded local vimrc: ' . custom_config_file
       endif
     endif
+    "execute ':windo filtype detect'
   endfunction
 
   autocmd MyAutoCmd BufWinEnter *  call LoadLocalVimrc()
