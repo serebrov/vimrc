@@ -58,8 +58,6 @@
   Plugin 'sjl/badwolf'
   Plugin 'nanotech/jellybeans.vim'
   Plugin 'noahfrederick/vim-hemisu'
-  "Colorschemes, see http://chriskempson.github.io/base16/
-  Plugin 'chriskempson/base16-vim'
 
   Plugin 'terryma/vim-expand-region'
 
@@ -141,6 +139,8 @@
   command! PDiffOnMinimal call PDiffOn('minimal')
   command! PDiffOnHistogram call PDiffOn('histogram')
   command! PDiffOff call PDiffOff()
+
+  set diffopt=filler,iwhite
 
   """""" Motions / normal mode commands
   " Simpler way to use some motions in vim.
@@ -341,7 +341,17 @@
       " }}}
       if &diff
         set background=light
+        set guifont=Liberation\ Mono\ 9
         colorscheme github
+        " A bit modified diff colors from github scheme
+        hi DiffAdd         guifg=#003300 guibg=#DDFFDD gui=none
+        hi DiffChange                    guibg=#ececec gui=none
+        hi DiffText        guifg=#000033 guibg=#A6F3A6 gui=none
+        hi DiffDelete      guifg=#DDCCCC guibg=#FFDDDD gui=none
+        " highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+        " highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+        " highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+        " highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
       endif
       " From: http://sunaku.github.io/vim-256color-bce.html
       if &term =~ '256color'
@@ -800,7 +810,8 @@
   " ,vv to re-read .vimrc
   nnoremap <Leader>vv :call Preserve("source ".$MYVIMRC)<CR>
   " ,vc to edit .vimrc
-  nnoremap <leader>vc :tabedit $MYVIMRC<CR>
+  "nnoremap <leader>vc :tabedit $MYVIMRC<CR>
+  nnoremap <leader>vc :tabedit $HOME/.vim/.vimrc<CR>
 
   " Use CTRL-N to remove search highlight
   noremap <C-N> :noh<CR>
@@ -1324,8 +1335,8 @@
 EOF
   endfunction
 
-  imap <silent> <2-LeftMouse> <C-c>:call XikiLaunch()<CR>i
-  nmap <silent> <2-LeftMouse> :call XikiLaunch()<CR>
+  " imap <silent> <2-LeftMouse> <C-c>:call XikiLaunch()<CR>i
+  " nmap <silent> <2-LeftMouse> :call XikiLaunch()<CR>
   imap <silent> <C-CR> <C-c>:call XikiLaunch()<CR>i
   nmap <silent> <C-CR> :call XikiLaunch()<CR>
   imap <silent> <C-@> <C-c>:call XikiLaunch()<CR>i
