@@ -75,6 +75,11 @@
   ":Tattach lets you use a specific tmux session from outside of it.
   Plugin 'tpope/vim-tbone'
 
+  " Manage files and directories in vim
+  " :Vimdir [directory] - To list files and folders
+  " :VimdirR [directory] - To list files and folders recursive
+  Plugin 'c0r73x/vimdir.vim'
+
   "ensure dir exists before save the file
   "so :e some_new_dir/some_new_file and then :w will work
   Plugin 'dockyard/vim-easydir'
