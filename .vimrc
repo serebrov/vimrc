@@ -305,6 +305,9 @@
   """""" Go
   Plugin 'fatih/vim-go'
 
+  """""" Wakatime: https://wakatime.com
+  Plugin 'wakatime/vim-wakatime'
+
   set runtimepath+=~/.vim/bundle/potion
 " }}}
 
