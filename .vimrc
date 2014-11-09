@@ -805,7 +805,7 @@
   nnoremap * *N
   nnoremap # #N
 
-  " map double leader to save
+  " save
   noremap <leader>w :w<CR>
   noremap <leader>q :q<CR>
 
@@ -814,6 +814,15 @@
   inoremap jj <Esc>
   inoremap jk <Esc>
   inoremap kj <Esc>
+
+  " Tab to move between matches
+  "runtime macros/matchit.vim
+  map <tab> %
+
+  " Go to start / end of line - easier way
+  noremap H ^
+  noremap L $
+  vnoremap L g_
 
   " ,vv to re-read .vimrc
   nnoremap <Leader>vv :call Preserve("source ".$MYVIMRC)<CR>
@@ -830,7 +839,8 @@
   " Make last word uppercase
   inoremap <C-F> <Esc>gUiw`]a
 
-  " ,o to insert a new line below, ,O - above (in normal mode)
+  " ,o to insert a new line below, ,O - above 
+  " (in normal mode and go back to normal)
   nnoremap <Leader>o o<Esc>
   nnoremap <Leader>O O<Esc>
 
