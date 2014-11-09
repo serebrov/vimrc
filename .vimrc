@@ -1242,65 +1242,6 @@
     execute '!find . -name "'.l:pattern.'" -print | xargs -t sed -i "s/'.l:search.'/'.l:replace.'/g"'
   endfunction
 
-    " Text encoding menu (koi8-r, cp1251, cp866, utf8)
-    set wcm=<Tab>
-    menu Encoding.koi8-r :e ++enc=koi8-r<CR>
-    menu Encoding.windows-1251 :e ++enc=cp1251<CR>
-    menu Encoding.cp866 :e ++enc=cp866<CR>
-    menu Encoding.utf-8 :e ++enc=utf8 <CR>
-
-    let b:encindex=0
-    function! RotateEnc()
-      let y = -1
-      while y == -1
-        let encstring = "#koi8-r#cp1251#8bit-cp866#utf-8#ucs-2le#"
-        let x = match(encstring,"#",b:encindex)
-        let y = match(encstring,"#",x+1)
-        let b:encindex = x+1
-        if y == -1
-          let b:encindex = 0
-        else
-          let str = strpart(encstring,x+1,y-x-1)
-          return ":e ++enc=".str
-        endif
-      endwhile
-    endfunction
-
-    let b:encindex=0
-    function! ForceRotateEnc()
-      let y = -1
-      while y == -1
-        let encstring = "#koi8-r#cp1251#8bit-cp866#utf-8#ucs-2le#"
-        let x = match(encstring,"#",b:encindex)
-        let y = match(encstring,"#",x+1)
-        let b:encindex = x+1
-        if y == -1
-          let b:encindex = 0
-        else
-          let str = strpart(encstring,x+1,y-x-1)
-          :execute "set encoding=".str
-          return ":e ++enc=".str
-        endif
-      endwhile
-    endfunction
-
-    let b:fencindex=0
-    function! RotateFEnc()
-      let y = -1
-      while y == -1
-        let encstring = "#koi8-r#cp1251#8bit-cp866#utf-8#ucs-2le#"
-        let x = match(encstring,"#",b:fencindex)
-        let y = match(encstring,"#",x+1)
-        let b:fencindex = x+1
-        if y == -1
-          let b:fencindex = 0
-        else
-          let str = strpart(encstring,x+1,y-x-1)
-          return ":set fenc=".str
-        endif
-      endwhile
-    endfunction
-
 " }}}
 
 " YouCompleteMe, Supertab and Ultisnips {{{
