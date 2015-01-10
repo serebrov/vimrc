@@ -27,11 +27,10 @@
   " same and start command line with !
   " ~ - go home; cd/cl - :cd / :lcd
   Plugin 'tpope/vim-vinegar'
-  "Plugin 'serebrov/vim-vinegar'
   " visual guides for indents, :IndentLinesToggle
   "Plugin 'Yggdroot/indentLine'
-  " automatically switches to relative numbers when go to normal mode
-  "Plugin 'myusuf3/numbers.vim.git'
+  " it is too slow to have it enabled by default, use :IndentLinesToggle
+  "let g:indentLine_enabled = 0
   " :Matchmaker to enable dynamic highlighting of the word under the
   " cursor (move the cursor and it will highlight the different word)
   " :Matchmaker! to turn it off
@@ -40,6 +39,29 @@
   " "At match #N out of M matches".
   Plugin 'henrik/vim-indexed-search'
   Plugin 'haya14busa/incsearch.vim'
+  "incsearch
+  map /  <Plug>(incsearch-forward)
+  map ?  <Plug>(incsearch-backward)
+  "map /  <Plug>(incsearch-forward)
+  "map g/ <Plug>(incsearch-stay)
+  " Setup for vim-indexed-search
+  " See: https://github.com/haya14busa/incsearch.vim/issues/21
+  let g:indexed_search_mappings = 0
+  augroup incsearch-indexed
+    autocmd!
+    autocmd User IncSearchLeave ShowSearchIndex
+  augroup END
+  nnoremap <silent>n nzv:ShowSearchIndex<CR>
+  nnoremap <silent>N Nzv:ShowSearchIndex<CR>
+  "set hlsearch
+  let g:incsearch#auto_nohlsearch = 1
+  map n  <Plug>(incsearch-nohl-n)zv:ShowSearchIndex<CR>
+  map N  <Plug>(incsearch-nohl-N)zv:ShowSearchIndex<CR>
+  map *  <Plug>(incsearch-nohl-*)
+  map #  <Plug>(incsearch-nohl-#)
+  map g* <Plug>(incsearch-nohl-g*)
+  map g# <Plug>(incsearch-nohl-g#)
+
   " rainbow parenthesis
   " Note: doesn't work for php due some specifics in the syntax file
   " it doesn't work with default syntax file and with extended versions
@@ -47,9 +69,33 @@
   " maybe this can be fixed?
   " see https://defuse.ca/blog/vim-rainbow-parentheses-work-in-php
   Plugin 'kien/rainbow_parentheses.vim'
+
   Plugin 'kien/ctrlp.vim'
+  noremap <Leader>f :CtrlPMRUFiles<CR>
+  " http://stackoverflow.com/questions/18285751/use-ag-in-ctrlp-vim
+  if executable("ag")
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  endif
+  let g:ctrlp_switch_buffer = 'vt'
+
   Plugin 'rking/ag.vim'
+
   Plugin 'bling/vim-airline'
+  let g:airline_theme='badwolf'
+  " unicode symbols
+  let g:airline_left_sep = '»'
+  let g:airline_left_sep = '▶'
+  let g:airline_right_sep = '«'
+  let g:airline_right_sep = '◀'
+  let g:airline_linecolumn_prefix = '␊ '
+  let g:airline_linecolumn_prefix = '␤ '
+  let g:airline_linecolumn_prefix = '¶ '
+  let g:airline_branch_prefix = '⎇ '
+  let g:airline_paste_symbol = 'ρ'
+  let g:airline_paste_symbol = 'Þ'
+  let g:airline_paste_symbol = '∥'
+
   " adopt color schemes for terminal
   Plugin 'godlygeek/csapprox'
   " Solarized color scheme
@@ -108,54 +154,6 @@
   "off :GitGutterDisable, on :GitGutterEnable, toggle :GitGutterToggle
   "Jump between diffs: ]c/[c
   Plugin 'airblade/vim-gitgutter'
-
-  Plugin 'TyeMcQueen/vim-merge-windows'
-  let s:diff_algo = "patience"
-  function! PDiff()
-      let opt = ""
-      if &diffopt =~ "icase"
-          let opt = opt . "-i "
-      endif
-      if &diffopt =~ "iwhite"
-          let opt = opt . "-b -B "
-      endif
-      " pdiff script has --patience option, but our options come at the end,
-      " so we will overwrite the algorithm
-      " supported are:
-      "  default, myers
-      "      The basic greedy diff algorithm. Currently, this is the default.
-      "  minimal
-      "      Spend extra time to make sure the smallest possible diff is produced.
-      "  patience
-      "      Use ""patience diff"" algorithm when generating patches.
-      "  histogram
-      "      This algorithm extends the patience algorithm to
-      "      support low-occurrence common elements
-      let opt = opt . "--diff-algorithm=" . s:diff_algo . " "
-      silent execute "!pdiff -a " . opt . v:fname_in . " " .
-          \ v:fname_new . " > " . v:fname_out
-  endfunction
-  function! PDiffOn(algorithm)
-    let s:diff_algo = a:algorithm
-    set diffexpr=PDiff()
-    "source ~/.vim/bundle/vim-merge-windows/patience-diff.vim
-    "source ~/.vim/bundle/vim-merge-windows/vim-merge-windows.vim
-    diffupdate
-  endfunction
-  function! PDiffOff()
-    set diffexpr=
-    diffupdate
-  endfunction
-  command! PDiffOnMyers call PDiffOn('myers')
-  command! PDiffOnPatience call PDiffOn('patience')
-  command! PDiffOnMinimal call PDiffOn('minimal')
-  command! PDiffOnHistogram call PDiffOn('histogram')
-  command! PDiffOff call PDiffOff()
-
-  set diffopt=filler,iwhite
-
-  " Highlight VCS conflict markers
-  match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
   """""" Motions / normal mode commands
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
@@ -244,14 +242,19 @@
   """""" Programming / tags / autocomplete
   " Syntax checker
   Plugin 'scrooloose/syntastic'
+  " Syntastic
+  " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
+  " it is also possible to configure options for each checker, see
+  " syntastic helt - "syntastic-config-makeprg"
+  let g:syntastic_check_on_open=0
+  let g:syntastic_css_checkers = ['csslint']
+
   " fetching can take a long time causing the timeout
   " to manually install it
   "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
   Plugin 'Valloric/YouCompleteMe'
   Plugin 'UltiSnips'
   Plugin 'honza/vim-snippets'
-  Plugin 'joonty/vdebug'
-  Plugin 'joonty/vim-taggatron'
   Plugin 'airblade/vim-rooter'
   " https://github.com/majutsushi/tagbar/wiki
   " http://majutsushi.github.com/tagbar/ :TagbarToggle
@@ -265,6 +268,8 @@
   Plugin 'tpope/vim-markdown'
   " Markup files preview: <Leader>P
   Plugin 'greyblake/vim-preview'
+  let g:PreviewBrowsers='google-chrome'
+
   Plugin 'suan/vim-instant-markdown'
 
   """""" PHP
@@ -273,8 +278,6 @@
   " php 5.3 syntax
   Plugin 'StanAngeloff/php.vim'
   Plugin '2072/PHP-Indenting-for-VIm'
-  " php documenter
-  Plugin 'mikehaertl/pdv-standalone'
 
   """""" Javascript
   Plugin 'pangloss/vim-javascript'
@@ -283,8 +286,29 @@
   let g:used_javascript_libs = 'jquery,underscore,angularjs'
   " ejs templates syntax highlight
   Plugin 'briancollins/vim-jst.git'
-  Plugin 'heavenshell/vim-jsdoc'
 
+  """""" Documentation
+  " php documenter
+  Plugin 'mikehaertl/pdv-standalone'
+  " phpDocumenter
+  let g:pdv_cfg_Package = "app"
+  let g:pdv_cfg_Version = ""
+  let g:pdv_cfg_Author = "Boris Serebrov"
+  let g:pdv_cfg_Copyright = ""
+  let g:pdv_cfg_License = ""
+  Plugin 'heavenshell/vim-jsdoc'
+  "JSDoc
+  let g:jsdoc_default_mapping = 0
+  augroup DocMap
+    autocmd!
+
+    autocmd FileType php inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
+    autocmd FileType php nnoremap <Leader>pd :call PhpDocSingle()<CR>
+    autocmd FileType php vnoremap <Leader>pd :call PhpDocRange()<CR>
+
+    autocmd FileType javascript nnoremap <Leader>pd :JsDoc<CR>
+
+  augroup END
   """""" Go
   Plugin 'fatih/vim-go'
 
@@ -724,93 +748,6 @@
     \ endif
 " }}}
 
-" Plugins {{{
-
-  let g:PreviewBrowsers='google-chrome'
-
-  "incsearch
-  map /  <Plug>(incsearch-forward)
-  map ?  <Plug>(incsearch-backward)
-  "map /  <Plug>(incsearch-forward)
-  "map g/ <Plug>(incsearch-stay)
-  " Setup for vim-indexed-search
-  " See: https://github.com/haya14busa/incsearch.vim/issues/21
-  let g:indexed_search_mappings = 0
-  augroup incsearch-indexed
-    autocmd!
-    autocmd User IncSearchLeave ShowSearchIndex
-  augroup END
-  nnoremap <silent>n nzv:ShowSearchIndex<CR>
-  nnoremap <silent>N Nzv:ShowSearchIndex<CR>
-  "set hlsearch
-  let g:incsearch#auto_nohlsearch = 1
-  map n  <Plug>(incsearch-nohl-n)zv:ShowSearchIndex<CR>
-  map N  <Plug>(incsearch-nohl-N)zv:ShowSearchIndex<CR>
-  map *  <Plug>(incsearch-nohl-*)
-  map #  <Plug>(incsearch-nohl-#)
-  map g* <Plug>(incsearch-nohl-g*)
-  map g# <Plug>(incsearch-nohl-g#)
-
-  " Syntastic
-  " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
-  " it is also possible to configure options for each checker, see
-  " syntastic helt - "syntastic-config-makeprg"
-  let g:syntastic_check_on_open=0
-  let g:syntastic_css_checkers = ['csslint']
-
-  " save as sudo - use :SudoWrite from tpope/vim-eunuch
-  "ca w!! w !sudo tee "%"
-
-  let g:airline_theme='badwolf'
-  " unicode symbols
-  let g:airline_left_sep = '»'
-  let g:airline_left_sep = '▶'
-  let g:airline_right_sep = '«'
-  let g:airline_right_sep = '◀'
-  let g:airline_linecolumn_prefix = '␊ '
-  let g:airline_linecolumn_prefix = '␤ '
-  let g:airline_linecolumn_prefix = '¶ '
-  let g:airline_branch_prefix = '⎇ '
-  let g:airline_paste_symbol = 'ρ'
-  let g:airline_paste_symbol = 'Þ'
-  let g:airline_paste_symbol = '∥'
-
-  " let g:airline_section_y       (fileencoding, fileformat)
-  " let g:airline_section_y = vdebug:statusline()
-
-  " it is too slow to have it enabled by default, use :IndentLinesToggle
-  let g:indentLine_enabled = 0
-
-  " phpDocumenter
-  let g:pdv_cfg_Package = "app"
-  let g:pdv_cfg_Version = ""
-  let g:pdv_cfg_Author = "Boris Serebrov"
-  let g:pdv_cfg_Copyright = ""
-  let g:pdv_cfg_License = ""
-
-  "JSDoc
-  let g:jsdoc_default_mapping = 0
-
-  augroup DocMap
-    autocmd!
-
-    autocmd FileType php inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
-    autocmd FileType php nnoremap <Leader>pd :call PhpDocSingle()<CR>
-    autocmd FileType php vnoremap <Leader>pd :call PhpDocRange()<CR>
-
-    autocmd FileType javascript nnoremap <Leader>pd :JsDoc<CR>
-
-  augroup END
-
-  " http://stackoverflow.com/questions/18285751/use-ag-in-ctrlp-vim
-  if executable("ag")
-    set grepprg=ag\ --nogroup\ --nocolor
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  endif
-  let g:ctrlp_switch_buffer = 'vt'
-
-" }}}
-
 " Mappings {{{
   "let mapleader = ","
   "let mapleader = "\<space>"
@@ -819,12 +756,7 @@
   " From http://www.reddit.com/r/vim/comments/1vdrxg/space_is_a_big_key_what_do_you_map_it_to/
   map <space> <leader>
 
-  " Swap ; and :, use ;; as ;
-  "nnoremap ; :
-  "nnoremap ;; ;
-
   " * and # will stay on the first match
-  " nnoremap * *<C-O>
   nnoremap * *N
   nnoremap # #N
 
@@ -876,17 +808,6 @@
   nnoremap <Leader>p "+p
   vnoremap <Leader>p "+p
 
-
-  " Use CTRL-S for saving, also in Insert mode
-  " Note: see http://stackoverflow.com/questions/3446320/in-vim-how-to-map-save-to-ctrl-s
-  " Ctrl-S is a common command to terminals to stop updating, it was a way to slow the output
-  " so you could read it on terminals that didn't have a scrollback buffer.
-  " First find out if you can configure your xterm to pass Ctrl-S through to the application.
-  " BTW: if Ctrl-S freezes your terminal, type Ctrl-Q to get it going again.
-  noremap <C-S> :update<CR>
-  vnoremap <C-S> <C-C>:update<CR>gv
-  inoremap <C-S> <C-O>:update<CR>
-  "
   " Move cursor by display lines when wrapping
   " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
   noremap k gk
@@ -908,15 +829,6 @@
   " <Leader>a to toggle current fold (more convenient then za)
   nnoremap <Leader>a za
 
-  " vim-easymotion
-  " _w - words; _f - char
-  " _t - search
-  "let g:EasyMotion_leader_key = '<Space>'
-  let g:EasyMotion_leader_key = '<Leader><Leader>'
-
-  " vim-indent-guides - standard mapping
-  " <Leader>ig
-
   " Search and replace word under cursor
   "nnoremap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
 
@@ -929,11 +841,6 @@
   " Insert current file's folder
   cnoremap <Leader><Leader>fn <C-r>=expand('%')<CR>
   cnoremap <Leader><Leader>f <C-r>=expand('%:p:h')<CR>
-
-  " Save as here
-  ""All on one line
-  "command! -nargs=1 SaveAsHere exe "saveas " . expand("%:p:h") . "/" .  expand("<args>")
-  "instead use :saveas CTRL-R %
 
   " will expand %% to current file path
   "cabbr <expr> %% expand('%:p:h')
@@ -948,7 +855,6 @@
       let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
       let @@ = temp
   endfunction
-
   vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
   vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
 
@@ -975,9 +881,7 @@
   " Visually select the text that was last edited/pasted
   nnoremap gV `[v`]
 
-
   nnoremap gl :call ToggleRelativeAbsoluteNumber()<CR>
-
   function! ToggleRelativeAbsoluteNumber()
     if &relativenumber
       set norelativenumber
@@ -1050,8 +954,6 @@
   map <Leader>l     :wincmd L<cr>
   map <Leader>j     :wincmd J<cr>
 
-  noremap <Leader>f :CtrlPMRUFiles<CR>
-
   " format json, see https://coderwall.com/p/faceag
   " :%!python -m json.tool
   " or with jq http://stedolan.github.io/jq/
@@ -1061,6 +963,7 @@
 " }}}
 
 " Debugger {{{
+  Plugin 'joonty/vdebug'
   "http://jaredforsyth.com/projects/vim-debug/
   function! DebugWeb(url)
     let g:vdebug_options['break_on_open'] = 1
@@ -1110,17 +1013,6 @@
     python debugger.run()
   endfunction
 
-  " function! DebugPhpTemp(command, ...)
-  "   let g:vdebug_options['break_on_open'] = 1
-  "   let g:vdebug_options['continuous_mode'] = 0
-  "   let str_args = join(a:000, ' ')
-  "   let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug_temp" && sleep 2 && ' . a:command . ' ' . str_args
-  "   execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
-  "   execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
-  "   execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
-  "   python debugger.run()
-  " endfunction
-
   " example (runtests.sh invokes phpunit):
   "   :DebugPhp wordpress-tests/runtests.sh --filter test_export_book_new --bootstrap wordpress-tests/bootstrap.php %
   command! -nargs=* -complete=file DebugPhp call DebugPhp('<args>')
@@ -1158,6 +1050,7 @@
 " }}}
 
 " Taggatron {{{
+  Plugin 'joonty/vim-taggatron'
   let g:tagcommands = {
   \    "python" : {
   \        "tagfile": ".python.tags",
@@ -1249,6 +1142,61 @@
     diffthis
     exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
   endfunction
+
+  " Actually I only need 'pdiff' script from there which converts
+  " between git diff format and vim diff
+  Plugin 'TyeMcQueen/vim-merge-windows'
+  let s:diff_algo = "patience"
+  function! PDiff()
+      let opt = ""
+      if &diffopt =~ "icase"
+          let opt = opt . "-i "
+      endif
+      if &diffopt =~ "iwhite"
+          let opt = opt . "-b -B "
+      endif
+      " pdiff script has --patience option, but our options come at the end,
+      " so we will overwrite the algorithm
+      " supported are:
+      "  default, myers
+      "      The basic greedy diff algorithm. Currently, this is the default.
+      "  minimal
+      "      Spend extra time to make sure the smallest possible diff is produced.
+      "  patience
+      "      Use ""patience diff"" algorithm when generating patches.
+      "  histogram
+      "      This algorithm extends the patience algorithm to
+      "      support low-occurrence common elements
+      let opt = opt . "--diff-algorithm=" . s:diff_algo . " "
+      silent execute "!pdiff -a " . opt . v:fname_in . " " .
+          \ v:fname_new . " > " . v:fname_out
+  endfunction
+  function! PDiffOn(algorithm)
+    let s:diff_algo = a:algorithm
+    set diffexpr=PDiff()
+    "source ~/.vim/bundle/vim-merge-windows/patience-diff.vim
+    "source ~/.vim/bundle/vim-merge-windows/vim-merge-windows.vim
+    diffupdate
+  endfunction
+  function! PDiffOff()
+    set diffexpr=
+    diffupdate
+  endfunction
+  "These commands allow to set different diff algorithms
+  "So when vim is in diff / conflict resolution mode
+  "the diff can be switched with
+  "  :PDiffOnPatience
+  "to use patience diff algorithm
+  command! PDiffOnMyers call PDiffOn('myers')
+  command! PDiffOnPatience call PDiffOn('patience')
+  command! PDiffOnMinimal call PDiffOn('minimal')
+  command! PDiffOnHistogram call PDiffOn('histogram')
+  command! PDiffOff call PDiffOff()
+
+  set diffopt=filler,iwhite
+
+  " Highlight VCS conflict markers
+  match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
   " Find and replace in multiple files
   command! -nargs=* -complete=file Fart call FindAndReplace(<f-args>)
