@@ -38,7 +38,8 @@
   Plugin 'qstrahl/vim-matchmaker'
   " At every search command, it automatically prints
   " "At match #N out of M matches".
-  Plugin 'IndexedSearch'
+  Plugin 'henrik/vim-indexed-search'
+  Plugin 'haya14busa/incsearch.vim'
   " rainbow parenthesis
   " Note: doesn't work for php due some specifics in the syntax file
   " it doesn't work with default syntax file and with extended versions
@@ -748,6 +749,29 @@
 
   let g:PreviewBrowsers='google-chrome'
 
+  "incsearch
+  map /  <Plug>(incsearch-forward)
+  map ?  <Plug>(incsearch-backward)
+  "map /  <Plug>(incsearch-forward)
+  "map g/ <Plug>(incsearch-stay)
+  " Setup for vim-indexed-search
+  " See: https://github.com/haya14busa/incsearch.vim/issues/21
+  let g:indexed_search_mappings = 0
+  augroup incsearch-indexed
+    autocmd!
+    autocmd User IncSearchLeave ShowSearchIndex
+  augroup END
+  nnoremap <silent>n nzv:ShowSearchIndex<CR>
+  nnoremap <silent>N Nzv:ShowSearchIndex<CR>
+  "set hlsearch
+  let g:incsearch#auto_nohlsearch = 1
+  map n  <Plug>(incsearch-nohl-n)zv:ShowSearchIndex<CR>
+  map N  <Plug>(incsearch-nohl-N)zv:ShowSearchIndex<CR>
+  map *  <Plug>(incsearch-nohl-*)
+  map #  <Plug>(incsearch-nohl-#)
+  map g* <Plug>(incsearch-nohl-g*)
+  map g# <Plug>(incsearch-nohl-g#)
+
   " Syntastic
   " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
   " it is also possible to configure options for each checker, see
@@ -901,9 +925,6 @@
 
   " Shortcut to rapidly toggle `set list` (def leader = \)
   nnoremap <leader>l :set list!<CR>
-
-  " auto insert verymagic flag when search
-  nnoremap / /\v
 
   " <Leader>a to toggle current fold (more convenient then za)
   nnoremap <Leader>a za
