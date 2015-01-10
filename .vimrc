@@ -147,6 +147,9 @@
 
   set diffopt=filler,iwhite
 
+  " Highlight VCS conflict markers
+  match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
   """""" Motions / normal mode commands
   " Simpler way to use some motions in vim.
   " Start motion with <Leader><Leader>
@@ -382,8 +385,9 @@
       set guioptions-=r
 
       "set guifont=* to display font chooser
-      "set guifont=Inconsolata\ Medium\ 12
-      "set guifont=Liberation\ Mono\ 10
+      set guifont=Droid\ Sans\ Mono\ 11
+      " set guifont=Ubuntu\ Mono\ 13
+      " set guifont=Monospace\ 11
   endif
   " }}}
 
@@ -578,6 +582,21 @@
   " za - open/close current fold
   " zR - open all folds
   " zM - close all folds
+  "
+  " " Make zO recursively open whatever fold we're in, even if it's partially open.
+  " nnoremap zO zczO
+  "
+  " " "Focus" the current line.  Basically:
+  " "
+  " " 1. Close all folds.
+  " " 2. Open just the folds containing the current line.
+  " " 3. Move the line to a little bit (15 lines) above the center of the screen.
+  " " 4. Pulse the cursor line.  My eyes are bad.
+  " "
+  " " This mapping wipes out the z mark, which I never use.
+  " "
+  " " I use :sus for the rare times I want to actually background Vim.
+  " nnoremap <c-z> mzzMzvzz15<c-e>`z:Pulse<cr>
 
   " enable folding by marker for vimrc
   " augroup fold_vim
@@ -652,6 +671,7 @@
     autocmd FileType git,gitcommit setlocal foldmethod=syntax foldlevel=1
     autocmd FileType gitcommit setlocal spell
     autocmd FileType markdown setlocal spell
+    autocmd FileType markdown :set nosmartindent
 
     "" use Leader-r to refresh (default is Ctrl-L which is used to jump
     "" to the left window)
@@ -831,23 +851,28 @@
   nnoremap <leader>vc :tabedit $HOME/.vim/.vimrc<CR>
 
   " Use CTRL-N to remove search highlight
-  noremap <C-N> :noh<CR>
-  vnoremap <C-N> <C-C>:noh<CR>gv
+  noremap <C-N> :noh \| call clearmatches()<CR>
+  vnoremap <C-N> <C-C>:noh \| call clearmatches()<CR>gv
   " CTRL-N in insert mode is a completion!!!
   " inoremap <C-N> <C-O>:noh<CR>
 
   " Make last word uppercase
   inoremap <C-F> <Esc>gUiw`]a
 
-  " ,o to insert a new line below, ,O - above 
+  " ,o to insert a new line below, ,O - above
   " (in normal mode and go back to normal)
   nnoremap <Leader>o o<Esc>
   nnoremap <Leader>O O<Esc>
 
+  "note: "+ - real clipboard, "* - current selection
+  "note: p - paste after cursor, P - before
+  "      gp - cursor will be after pasted text
+  "           with just p - on the last pasted char
   nnoremap <Leader>y "+y
   vnoremap <Leader>y "+y
-  nnoremap <Leader>p "+gP
-  vnoremap <Leader>p "+gP
+  nnoremap <Leader>p "+p
+  vnoremap <Leader>p "+p
+
 
   " Use CTRL-S for saving, also in Insert mode
   " Note: see http://stackoverflow.com/questions/3446320/in-vim-how-to-map-save-to-ctrl-s
@@ -1300,5 +1325,127 @@ EOF
   nmap <silent> <C-CR> :call XikiLaunch()<CR>
   imap <silent> <C-@> <C-c>:call XikiLaunch()<CR>i
   nmap <silent> <C-@> :call XikiLaunch()<CR>
+
+" }}}
+" Highlight Word {{{
+"
+" This mini-plugin provides a few mappings for highlighting words temporarily.
+"
+" Sometimes you're looking at a hairy piece of code and would like a certain
+" word or two to stand out temporarily.  You can search for it, but that only
+" gives you one color of highlighting.  Now you can use <leader>N where N is
+" a number from 1-6 to highlight the current word in a specific color.
+
+function! HiInterestingWord(n) " {{{
+    " Save our location.
+    normal! mz
+
+    " Yank the current word into the z register.
+    normal! "zyiw
+
+    " Calculate an arbitrary match ID.  Hopefully nothing else is using it.
+    let mid = 86750 + a:n
+
+    " Clear existing matches, but don't worry if they don't exist.
+    silent! call matchdelete(mid)
+
+    " Construct a literal pattern that has to match at boundaries.
+    let pat = '\V\<' . escape(@z, '\') . '\>'
+
+    " Actually match the words.
+    call matchadd("InterestingWord" . a:n, pat, 1, mid)
+
+    " Move back to our original location.
+    normal! `z
+endfunction " }}}
+
+" Mappings {{{
+
+nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
+nnoremap <silent> <leader>2 :call HiInterestingWord(2)<cr>
+nnoremap <silent> <leader>3 :call HiInterestingWord(3)<cr>
+nnoremap <silent> <leader>4 :call HiInterestingWord(4)<cr>
+nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
+nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
+
+" }}}
+" Default Highlights {{{
+
+hi def InterestingWord1 guifg=#000000 ctermfg=16 guibg=#ffa724 ctermbg=214
+hi def InterestingWord2 guifg=#000000 ctermfg=16 guibg=#aeee00 ctermbg=154
+hi def InterestingWord3 guifg=#000000 ctermfg=16 guibg=#8cffba ctermbg=121
+hi def InterestingWord4 guifg=#000000 ctermfg=16 guibg=#b88853 ctermbg=137
+hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
+hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
+
+" }}}
+
+" }}}
+" Pulse Line {{{
+
+function! s:Pulse() " {{{
+    redir => old_hi
+        silent execute 'hi CursorLine'
+    redir END
+    let old_hi = split(old_hi, '\n')[0]
+    let old_hi = substitute(old_hi, 'xxx', '', '')
+
+    let steps = 8
+    let width = 1
+    let start = width
+    let end = steps * width
+    let color = 233
+
+    for i in range(start, end, width)
+        execute "hi CursorLine ctermbg=" . (color + i)
+        redraw
+        sleep 6m
+    endfor
+    for i in range(end, start, -1 * width)
+        execute "hi CursorLine ctermbg=" . (color + i)
+        redraw
+        sleep 6m
+    endfor
+
+    execute 'hi ' . old_hi
+endfunction " }}}
+command! -nargs=0 Pulse call s:Pulse()
+
+" }}}
+" Ag motions {{{
+" From https://bitbucket.org/sjl/dotfiles (AckMotions)
+
+" Motions to Ag for things.  Works with pretty much everything, including:
+"
+"   w, W, e, E, b, B, t*, f*, i*, a*, and custom text objects
+"
+" Awesome.
+"
+" Note: If the text covered by a motion contains a newline it won't work.  Ag
+" searches line-by-line.
+
+nnoremap <silent> <leader>A :set opfunc=<SID>AgMotion<CR>g@
+xnoremap <silent> <leader>A :<C-U>call <SID>AgMotion(visualmode())<CR>
+
+nnoremap <bs> :Ag! '\b<c-r><c-w>\b'<cr>
+xnoremap <silent> <bs> :<C-U>call <SID>AgMotion(visualmode())<CR>
+
+function! s:CopyMotionForType(type)
+    if a:type ==# 'v'
+        silent execute "normal! `<" . a:type . "`>y"
+    elseif a:type ==# 'char'
+        silent execute "normal! `[v`]y"
+    endif
+endfunction
+
+function! s:AgMotion(type) abort
+    let reg_save = @@
+
+    call s:CopyMotionForType(a:type)
+
+    execute "normal! :Ag! --literal " . shellescape(@@) . "\<cr>"
+
+    let @@ = reg_save
+endfunction
 
 " }}}
