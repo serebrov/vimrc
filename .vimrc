@@ -49,8 +49,6 @@
   Plugin 'kien/rainbow_parentheses.vim'
   Plugin 'kien/ctrlp.vim'
   Plugin 'rking/ag.vim'
-  " Powerline - create better-looking, more functional vim statuslines.
-  "Plugin 'Lokaltog/vim-powerline'
   Plugin 'bling/vim-airline'
   " adopt color schemes for terminal
   Plugin 'godlygeek/csapprox'
@@ -60,7 +58,15 @@
   Plugin 'nanotech/jellybeans.vim'
   Plugin 'noahfrederick/vim-hemisu'
 
+  "  http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
+  "  Hit v to select one character
+  "  Hit vagain to expand selection to word
+  "  Hit v again to expand to paragraph
+  "  ...
+  "  Hit <C-v> go back to previous selection if I went too far
   Plugin 'terryma/vim-expand-region'
+  vmap v <Plug>(expand_region_expand)
+  vmap <C-v> <Plug>(expand_region_shrink)
 
   "This plugin provides the following mappings which allow
   "you to move between Vim panes and tmux splits seamlessly.
@@ -152,18 +158,8 @@
   match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
   """""" Motions / normal mode commands
-  " Simpler way to use some motions in vim.
-  " Start motion with <Leader><Leader>
-  " Like <Space>w to trigger the word motion w
-  " Other triggers: f/t/F/T (find char), w/W/b/B/e/E/ge/gE (word motions), j/k (lines), n/N (searches)
-  " Tutorial: http://net.tutsplus.com/tutorials/other/vim-essential-plugin-easymotion/
-  " It is similar to vimperator (FireFox extenstion) link select mode
-  Plugin 'Lokaltog/vim-easymotion'
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
   Plugin 'bkad/CamelCaseMotion'
-  " av: around variable
-  " iv: inner variable
-  Plugin 'robmiller/vim-movar'
   " Change surrounding objects
   " cs<from><to> - change surrounding
   " cs"' - change " surround " to '
@@ -194,14 +190,6 @@
   " [f / ]f - previous / next file in directory
   " [n / ]b - previous / next conflict marker
   Plugin 'tpope/vim-unimpaired'
-  " Commenting code
-  " <Leader>cc - comment line or selected text
-  " <Leader>cu - uncomment line or selected text
-  " <Leader>cm - comment with multiline /* */ comments
-  " <Leader>cs - 'sexy' comments
-  " <Leader>c<space> - toggle comments state, see more in help
-  "Plugin 'scrooloose/nerdcommenter'
-
   " gcc - comment out line
   " gc<motion> - comment out lines defined by motion
   Plugin 'tpope/vim-commentary'
@@ -240,8 +228,10 @@
   Plugin 'godlygeek/tabular'
   " Gundo.vim is Vim plugin to visualize your Vim undo tree.
   Plugin 'sjl/gundo.vim'
-  " adds a Plugins menu to Vim, displaying the installed plugins and the features they provide
-  Plugin 'Headlights'
+  " adds a Plugins menu to Vim, displaying the installed plugins and the
+  " features they provide, from console vim:
+  " :menu Bungles
+  Plugin 'mbadran/headlights'
   " :Multichange to enter multichange mode (cw will affect the whole file)
   Plugin 'AndrewRadev/multichange.vim'
   " disable mapping entirely
@@ -260,18 +250,12 @@
   Plugin 'Valloric/YouCompleteMe'
   Plugin 'UltiSnips'
   Plugin 'honza/vim-snippets'
-  "Plugin 'ervandew/supertab'
   Plugin 'joonty/vdebug'
   Plugin 'joonty/vim-taggatron'
   Plugin 'airblade/vim-rooter'
   " https://github.com/majutsushi/tagbar/wiki
   " http://majutsushi.github.com/tagbar/ :TagbarToggle
   Plugin 'majutsushi/tagbar'
-  " autoinsert pair symbols (such as brackets)
-  " disable because it breaks dot(.) - it repeats only what was entered
-  " inside the paired symbols, not the whole text
-  " https://github.com/kana/vim-smartinput/issues/33
-  "Plugin 'kana/vim-smartinput'
 
   """""" Db
   " see https://mutelight.org/dbext-the-last-sql-client-youll-ever-need
@@ -289,15 +273,10 @@
   " php 5.3 syntax
   Plugin 'StanAngeloff/php.vim'
   Plugin '2072/PHP-Indenting-for-VIm'
-  " view php docs with K
-  " Plugin 'mudpile45/vim-phpdoc'
-  " Plugin 'mikehaertl/yii-api-vim'
   " php documenter
   Plugin 'mikehaertl/pdv-standalone'
 
   """""" Javascript
-  "Plugin 'jelera/vim-javascript-syntax'
-  "Plugin 'itspriddle/vim-jquery.git'
   Plugin 'pangloss/vim-javascript'
   let g:javascript_conceal = 0
   Plugin 'othree/javascript-libraries-syntax.vim'
@@ -996,14 +975,6 @@
   " Visually select the text that was last edited/pasted
   nnoremap gV `[v`]
 
-  "  http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
-  "  Hit v to select one character
-  "  Hit vagain to expand selection to word
-  "  Hit v again to expand to paragraph
-  "  ...
-  "  Hit <C-v> go back to previous selection if I went too far
-  vmap v <Plug>(expand_region_expand)
-  vmap <C-v> <Plug>(expand_region_shrink)
 
   nnoremap gl :call ToggleRelativeAbsoluteNumber()<CR>
 
