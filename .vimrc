@@ -1412,6 +1412,7 @@ endfunction " }}}
 command! -nargs=0 Pulse call s:Pulse()
 
 " }}}
+
 " Ag motions {{{
 " From https://bitbucket.org/sjl/dotfiles (AckMotions)
 
@@ -1424,8 +1425,8 @@ command! -nargs=0 Pulse call s:Pulse()
 " Note: If the text covered by a motion contains a newline it won't work.  Ag
 " searches line-by-line.
 
-nnoremap <silent> <leader>A :set opfunc=<SID>AgMotion<CR>g@
-xnoremap <silent> <leader>A :<C-U>call <SID>AgMotion(visualmode())<CR>
+nnoremap <silent> g/ :set opfunc=<SID>AgMotion<CR>g@
+xnoremap <silent> g/ :<C-U>call <SID>AgMotion(visualmode())<CR>
 
 nnoremap <bs> :Ag! '\b<c-r><c-w>\b'<cr>
 xnoremap <silent> <bs> :<C-U>call <SID>AgMotion(visualmode())<CR>
