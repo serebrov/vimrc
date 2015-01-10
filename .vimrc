@@ -22,28 +22,22 @@
   " auto adjust tab/space settings based on current file
   Plugin 'tpope/vim-sleuth'
   " Additional features for netrw
-  " - to open browser focused on current file, - again to go upper
-  " . to put selected file name to the end of command line; ! to do the
-  " same and start command line with !
-  " ~ - go home; cd/cl - :cd / :lcd
+  "  -  to open browser focused on current file, - again to go upper
+  "  .  to put selected file name to the end of command line;
+  "  !  to do the same and start command line with !
+  "  ~  go home; cd/cl - :cd / :lcd
   Plugin 'tpope/vim-vinegar'
-  " visual guides for indents, :IndentLinesToggle
-  "Plugin 'Yggdroot/indentLine'
-  " it is too slow to have it enabled by default, use :IndentLinesToggle
-  "let g:indentLine_enabled = 0
-  " :Matchmaker to enable dynamic highlighting of the word under the
-  " cursor (move the cursor and it will highlight the different word)
+  " :Matchmaker - dynamically highlight word under the cursor,
+  "               move the cursor and it will highlight the different word
   " :Matchmaker! to turn it off
   Plugin 'qstrahl/vim-matchmaker'
-  " At every search command, it automatically prints
-  " "At match #N out of M matches".
+  " On search automatically prints "At match #N out of M matches".
   Plugin 'henrik/vim-indexed-search'
+  " better search hightlights
+  " Tab/S-Tab or Ctrl-J/Ctrl-K to move between matches
   Plugin 'haya14busa/incsearch.vim'
-  "incsearch
   map /  <Plug>(incsearch-forward)
   map ?  <Plug>(incsearch-backward)
-  "map /  <Plug>(incsearch-forward)
-  "map g/ <Plug>(incsearch-stay)
   " Setup for vim-indexed-search
   " See: https://github.com/haya14busa/incsearch.vim/issues/21
   let g:indexed_search_mappings = 0
@@ -79,6 +73,7 @@
   endif
   let g:ctrlp_switch_buffer = 'vt'
 
+  " :Ag  - ag integration
   Plugin 'rking/ag.vim'
 
   Plugin 'bling/vim-airline'
@@ -105,22 +100,21 @@
   Plugin 'noahfrederick/vim-hemisu'
 
   "  http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
-  "  Hit v to select one character
-  "  Hit vagain to expand selection to word
-  "  Hit v again to expand to paragraph
+  "  v to select one character
+  "  v again to expand selection to word
+  "  v again to expand to paragraph
   "  ...
-  "  Hit <C-v> go back to previous selection if I went too far
+  "  <C-v> go back to previous selection if I went too far
   Plugin 'terryma/vim-expand-region'
   vmap v <Plug>(expand_region_expand)
   vmap <C-v> <Plug>(expand_region_shrink)
 
-  "This plugin provides the following mappings which allow
-  "you to move between Vim panes and tmux splits seamlessly.
-  "<ctrl-h> => Left
-  "<ctrl-j> => Down
-  "<ctrl-k> => Up
-  "<ctrl-l> => Right
-  "<ctrl-\> => Previous split
+  " Vim / tmux splits integration
+  " <ctrl-h> => Left
+  " <ctrl-j> => Down
+  " <ctrl-k> => Up
+  " <ctrl-l> => Right
+  " <ctrl-\> => Previous split
   Plugin 'christoomey/vim-tmux-navigator'
   ":Tmux lets you call any old tmux command (with really good tab complete).
   ":Tyank and :Tput give you direct access to tmux buffers.
@@ -133,26 +127,34 @@
   " :VimdirR [directory] - To list files and folders recursive
   Plugin 'c0r73x/vimdir.vim'
 
-  "ensure dir exists before save the file
-  "so :e some_new_dir/some_new_file and then :w will work
+  " Ensure dir exists before save the file
+  " :e some_new_dir/some_new_file and then :w will work
   Plugin 'dockyard/vim-easydir'
 
   """""" Git
-  " git support: Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
-  " Ggrep, Glog, Gread, Gwrite, Gbrowse
+  " git support:
+  " :Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
+  " :Ggrep, Glog, Gread, Gwrite, Gbrowse
   " Search in a specific directory:
   " :Ggrep searchterm -- foldername | copen
   " Search specific file types:
   " :Ggrep searchterm -- '*.ext' | copen
+  " Git setup:
+  "  mergetool.fugitive.cmd=gvim -f -c Gdiff $MERGED
+  "  mergetool.fugitive.trustexitcode=true
   Plugin 'tpope/vim-fugitive'
+  " :Gitv - git history viewer
   Plugin 'gregsexton/gitv'
-  " fugitive extension, commit browser - :Extradite
+  " :Extradite - git browser
   Plugin 'int3/vim-extradite'
-  " see http://sjl.bitbucket.org/splice.vim/
+  " Merge tool, see http://sjl.bitbucket.org/splice.vim/
+  " git setup:
+  "  mergetool.splice.cmd=gvim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'
+  "  mergetool.splice.trustexitcode=true
   Plugin 'sjl/splice.vim'
-  "Shows +/- for git changes
-  "off :GitGutterDisable, on :GitGutterEnable, toggle :GitGutterToggle
-  "Jump between diffs: ]c/[c
+  " Shows +/- for git changes
+  "  off :GitGutterDisable, on :GitGutterEnable, toggle :GitGutterToggle
+  " Jump between diffs: ]c/[c
   Plugin 'airblade/vim-gitgutter'
 
   """""" Motions / normal mode commands
