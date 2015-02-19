@@ -3,6 +3,7 @@ doc/tags
 sessions
 cache
 bundle/*
+plugged/*
 tmp/*
 eclim
 plugin/eclim.vim

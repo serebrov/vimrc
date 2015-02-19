@@ -1,41 +1,43 @@
 " Plugins {{{
-  set nocompatible " explicitly get out of vi-compatible mode
-  filetype off
+  " set nocompatible " explicitly get out of vi-compatible mode
+  " filetype off
 
-  " setup Vundle {{{
-    let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
-    if !filereadable(vundle_readme)
-        echo "Installing Vundle.."
-        echo ""
-        silent !mkdir -p ~/.vim/bundle
-        silent !git clone https://github.com/gmarik/Vundle.vim ~/.vim/bundle/vundle
-    endif
-    set rtp+=~/.vim/bundle/vundle/
-    call vundle#rc()
+  " " setup Vundle {{{
+  "   let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+  "   if !filereadable(vundle_readme)
+  "       echo "Installing Vundle.."
+  "       echo ""
+  "       silent !mkdir -p ~/.vim/bundle
+  "       silent !git clone https://github.com/gmarik/Vundle.vim ~/.vim/bundle/vundle
+  "   endif
+  "   set rtp+=~/.vim/bundle/vundle/
+  "   call vundle#rc()
 
-    Plugin 'gmarik/vundle'
-  " }}}
+  "   Plugin 'gmarik/vundle'
+  " " }}}
+  "
+  call plug#begin('~/.vim/plugged')
 
   """""" UI
   " sensible defaults
-  Plugin 'tpope/vim-sensible'
+  Plug 'tpope/vim-sensible'
   " auto adjust tab/space settings based on current file
-  Plugin 'tpope/vim-sleuth'
+  Plug 'tpope/vim-sleuth'
   " Additional features for netrw
   "  -  to open browser focused on current file, - again to go upper
   "  .  to put selected file name to the end of command line;
   "  !  to do the same and start command line with !
   "  ~  go home; cd/cl - :cd / :lcd
-  Plugin 'tpope/vim-vinegar'
+  Plug 'tpope/vim-vinegar'
   " :Matchmaker - dynamically highlight word under the cursor,
   "               move the cursor and it will highlight the different word
   " :Matchmaker! to turn it off
-  Plugin 'qstrahl/vim-matchmaker'
+  Plug 'qstrahl/vim-matchmaker'
   " On search automatically prints "At match #N out of M matches".
-  Plugin 'henrik/vim-indexed-search'
+  Plug 'henrik/vim-indexed-search'
   " better search hightlights
   " Tab/S-Tab or Ctrl-J/Ctrl-K to move between matches
-  Plugin 'haya14busa/incsearch.vim'
+  Plug 'haya14busa/incsearch.vim'
   map /  <Plug>(incsearch-forward)
   map ?  <Plug>(incsearch-backward)
   " Setup for vim-indexed-search
@@ -62,9 +64,9 @@
   " (https://github.com/vim-scripts/php.vim--Garvin) and (https://github.com/StanAngeloff/php.vim)
   " maybe this can be fixed?
   " see https://defuse.ca/blog/vim-rainbow-parentheses-work-in-php
-  Plugin 'kien/rainbow_parentheses.vim'
+  Plug 'kien/rainbow_parentheses.vim'
 
-  Plugin 'kien/ctrlp.vim'
+  Plug 'kien/ctrlp.vim'
   noremap <Leader>f :CtrlPMRUFiles<CR>
   " http://stackoverflow.com/questions/18285751/use-ag-in-ctrlp-vim
   if executable("ag")
@@ -73,10 +75,14 @@
   endif
   let g:ctrlp_switch_buffer = 'vt'
 
-  " :Ag  - ag integration
-  Plugin 'rking/ag.vim'
+  " Suggest to open existing file instead of creating new one when there
+  " are multiple matches
+  Plug 'EinfachToll/DidYouMean'
 
-  Plugin 'bling/vim-airline'
+  " :Ag  - ag integration
+  Plug 'rking/ag.vim'
+
+  Plug 'bling/vim-airline'
   let g:airline_theme='badwolf'
   " unicode symbols
   let g:airline_left_sep = '»'
@@ -92,12 +98,12 @@
   let g:airline_paste_symbol = '∥'
 
   " adopt color schemes for terminal
-  Plugin 'godlygeek/csapprox'
+  Plug 'godlygeek/csapprox'
   " Solarized color scheme
-  Plugin 'altercation/vim-colors-solarized'
-  Plugin 'sjl/badwolf'
-  Plugin 'nanotech/jellybeans.vim'
-  Plugin 'noahfrederick/vim-hemisu'
+  Plug 'altercation/vim-colors-solarized'
+  Plug 'sjl/badwolf'
+  Plug 'nanotech/jellybeans.vim'
+  Plug 'noahfrederick/vim-hemisu'
 
   "  http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
   "  v to select one character
@@ -105,7 +111,7 @@
   "  v again to expand to paragraph
   "  ...
   "  <C-v> go back to previous selection if I went too far
-  Plugin 'terryma/vim-expand-region'
+  Plug 'terryma/vim-expand-region'
   vmap v <Plug>(expand_region_expand)
   vmap <C-v> <Plug>(expand_region_shrink)
 
@@ -115,21 +121,31 @@
   " <ctrl-k> => Up
   " <ctrl-l> => Right
   " <ctrl-\> => Previous split
-  Plugin 'christoomey/vim-tmux-navigator'
+  Plug 'christoomey/vim-tmux-navigator'
   ":Tmux lets you call any old tmux command (with really good tab complete).
   ":Tyank and :Tput give you direct access to tmux buffers.
   ":Twrite sends a chunk of text to another pane. Give an argument like windowtitle.2, top-right, or last, or let it default to the previously given argument.
   ":Tattach lets you use a specific tmux session from outside of it.
-  Plugin 'tpope/vim-tbone'
+  Plug 'tpope/vim-tbone'
+
+  " Note: compare with tbone - :Twrite 1.2 also sends text to another
+  "       tmux pane
+  " Repl for vim
+  " Ctrl-c c - run code in other tmux pane (set :1.2 for win 1 pane 2)
+  " See: http://vimeo.com/34184155 and https://technotales.wordpress.com/2007/10/03/like-slime-for-vim/
+  " Can be used for anything: python, node, bash, mysql, etc
+  "Plug 'jpalardy/vim-slime'
+  "let g:slime_target = "tmux"
+  "let g:slime_python_ipython = 1
 
   " Manage files and directories in vim
   " :Vimdir [directory] - To list files and folders
   " :VimdirR [directory] - To list files and folders recursive
-  Plugin 'c0r73x/vimdir.vim'
+  Plug 'c0r73x/vimdir.vim'
 
   " Ensure dir exists before save the file
   " :e some_new_dir/some_new_file and then :w will work
-  Plugin 'dockyard/vim-easydir'
+  Plug 'dockyard/vim-easydir'
 
   """""" Git
   " git support:
@@ -142,24 +158,36 @@
   " Git setup:
   "  mergetool.fugitive.cmd=gvim -f -c Gdiff $MERGED
   "  mergetool.fugitive.trustexitcode=true
-  Plugin 'tpope/vim-fugitive'
+  Plug 'tpope/vim-fugitive'
   " :Gitv - git history viewer
-  Plugin 'gregsexton/gitv'
+  Plug 'gregsexton/gitv'
   " :Extradite - git browser
-  Plugin 'int3/vim-extradite'
+  Plug 'int3/vim-extradite'
   " Merge tool, see http://sjl.bitbucket.org/splice.vim/
   " git setup:
   "  mergetool.splice.cmd=gvim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'
   "  mergetool.splice.trustexitcode=true
-  Plugin 'sjl/splice.vim'
+  Plug 'sjl/splice.vim'
   " Shows +/- for git changes
   "  off :GitGutterDisable, on :GitGutterEnable, toggle :GitGutterToggle
   " Jump between diffs: ]c/[c
-  Plugin 'airblade/vim-gitgutter'
+  Plug 'airblade/vim-gitgutter'
+  "   :DirDiff <A:Src Directory> <B:Src Directory>
+  "   see http://www.vim.org/scripts/script.php?script_id=102
+  Plug 'zhaocai/DirDiff.vim'
 
   """""" Motions / normal mode commands
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
-  Plugin 'bkad/CamelCaseMotion'
+  Plug 'bkad/CamelCaseMotion'
+  "  VimTextObj provides a text object for function arguments.
+  " aa – an argument, ia – inner argumentp
+  Plug 'vim-scripts/argtextobj.vim'
+  " Python indent object
+  " ai – the current indentation level and the line above
+  " ii – the current indentation level excluding the line above
+  Plug 'michaeljsmith/vim-indent-object'
+  " Required by vim-surround
+  Plug 'tpope/vim-repeat'
   " Change surrounding objects
   " cs<from><to> - change surrounding
   " cs"' - change " surround " to '
@@ -171,9 +199,7 @@
   " ysiw] - add surrounding [] for inner word
   " yssb or yss) - surround a line with ()
   " in visual mode S<what> will surround selected text
-  Plugin 'tpope/vim-surround'
-  " Required by vim-surround
-  Plugin 'tpope/vim-repeat'
+  Plug 'tpope/vim-surround'
   " Pair commands, some of them:
   " [q / ]q, [Q / ]Q- :cprevious / :cnext, :cfirst / :clast - errors in quickfix
   " [l / l], [L / L] - :lprevious / :lnext, :lfirst / :llast  - errors in current window (?)
@@ -189,10 +215,21 @@
   "
   " [f / ]f - previous / next file in directory
   " [n / ]b - previous / next conflict marker
-  Plugin 'tpope/vim-unimpaired'
+  Plug 'tpope/vim-unimpaired'
   " gcc - comment out line
   " gc<motion> - comment out lines defined by motion
-  Plugin 'tpope/vim-commentary'
+  Plug 'tpope/vim-commentary'
+  " Having the quickfix list execute :EnMasse to edit the
+  " list content and back-sync edits to source files
+  Plug 'Wolfy87/vim-enmasse'
+  " find and replace occurences in many buffers being aware of the context
+  " :Swoop pattern - run for singe buffer
+  " :Swoop! pattern - for all buffers
+  " For all buffers it is convenient to :CloseSession and :BufOnly and then
+  " for example, :args **/*.py to load all python files
+  " and then we can review/edit results
+  Plug 'pelodelfuego/vim-swoop'
+  let g:swoopUseDefaultKeyMap = 0
 
   """""" Commands
   "Vim sugar for the UNIX shell commands that need it the most. Commands
@@ -205,13 +242,13 @@
   " :Locate: Run locate and load the results into the quickfix list.
   " :SudoWrite: Write a privileged file with sudo.
   " :W: Write every open window. Handy for kicking off tools like guard.
-  Plugin 'tpope/vim-eunuch'
+  Plug 'tpope/vim-eunuch'
   " Add abbreviations for all combinations
   " :Abolish {despa,sepe}rat{e,es,ed,ing,ely,ion,ions,or}  {despe,sepa}rat{}
   " Replace combinations + smart case (Facility -> Building, facilities -> buildings)
   " :%Subvert/facilit{y,ies}/building{,s}/g
   " Coercion: crs - coerce to snake case, crm - mixed case, crc - camel, cru - upper fooBar (crs)-> foo_bar
-  Plugin 'tpope/vim-abolish'
+  Plug 'tpope/vim-abolish'
   " :Tabularize /, - tablarize by ','
   " :Tabularize /,/[r|l|c]0
   " r - align right, l - left, c - center
@@ -225,80 +262,115 @@
   "  assignment, two_spaces, multiple_spaces, argument_list,
   "  split_declarations, trenary_operator, cpp_io, pascal_assign,
   "  trailing_c_comments
-  Plugin 'godlygeek/tabular'
+  Plug 'godlygeek/tabular'
   " Gundo.vim is Vim plugin to visualize your Vim undo tree.
-  Plugin 'sjl/gundo.vim'
-  " adds a Plugins menu to Vim, displaying the installed plugins and the
-  " features they provide, from console vim:
-  " :menu Bungles
-  Plugin 'mbadran/headlights'
+  Plug 'sjl/gundo.vim'
   " :Multichange to enter multichange mode (cw will affect the whole file)
-  Plugin 'AndrewRadev/multichange.vim'
+  Plug 'AndrewRadev/multichange.vim'
   " disable mapping entirely
   let g:multichange_mapping = ''
   " gS / gJ to split / join multiline / single lines forms of code
-  Plugin 'AndrewRadev/splitjoin.vim'
+  Plug 'AndrewRadev/splitjoin.vim'
   " always highlight matching html tags
-  Plugin 'Valloric/MatchTagAlways'
+  Plug 'Valloric/MatchTagAlways'
 
   """""" Programming / tags / autocomplete
   " Syntax checker
-  Plugin 'scrooloose/syntastic'
+  Plug 'scrooloose/syntastic'
   " Syntastic
+  " PHP - PHPCS
   " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
   " it is also possible to configure options for each checker, see
   " syntastic helt - "syntastic-config-makeprg"
   let g:syntastic_check_on_open=0
   let g:syntastic_css_checkers = ['csslint']
+  " Python - pip install flake8 (pyflakes + pep8)
+  "          pip install pep257 - docstring conventions
 
   " fetching can take a long time causing the timeout
   " to manually install it
   "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
-  Plugin 'Valloric/YouCompleteMe'
-  Plugin 'UltiSnips'
-  Plugin 'honza/vim-snippets'
-  Plugin 'airblade/vim-rooter'
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+  Plug 'UltiSnips'
+  Plug 'honza/vim-snippets'
+  Plug 'airblade/vim-rooter'
   " https://github.com/majutsushi/tagbar/wiki
   " http://majutsushi.github.com/tagbar/ :TagbarToggle
-  Plugin 'majutsushi/tagbar'
+  Plug 'majutsushi/tagbar'
 
   """""" Db
   " see https://mutelight.org/dbext-the-last-sql-client-youll-ever-need
-  Plugin 'vim-scripts/dbext.vim'
+  " <Leader>sel - execute line, slt - list tables, sdt - describe table under
+  " cursor, se - execute multiline (up to ;), st - select * from table,
+  " sT - select from table, prompt for limit, stw - prompts for where,
+  " sta - prompts for table name, slc - copy column names
+  " Results buffer: R - rerun command; q - close.
+  " Connection - :DBPromptForBufferParameters or sbp
+  " Define profiles:
+  "  let g:dbext_default_profile_mySqlProject = 'type=MYSQL:user=root:passwd=:dbname=mydb'
+  "  let g:dbext_default_profile_mySqlProjectTest = 'type=MYSQL:user=root:passwd=:dbname=mydb_test'
+  " Set db param (name, user, pw, etc) - :DBSetOption dbname=mydb
+  " visual se - execute
+  Plug 'vim-scripts/dbext.vim'
 
   """""" Markdown
-  Plugin 'tpope/vim-markdown'
+  Plug 'tpope/vim-markdown'
   " Markup files preview: <Leader>P
-  Plugin 'greyblake/vim-preview'
+  Plug 'greyblake/vim-preview'
   let g:PreviewBrowsers='google-chrome'
 
-  Plugin 'suan/vim-instant-markdown'
+  Plug 'suan/vim-instant-markdown'
 
   """""" PHP
   " php completion - it should be copied to autoload/phpcomplete.vim
-  Plugin 'shawncplus/phpcomplete.vim'
+  Plug 'shawncplus/phpcomplete.vim'
   " php 5.3 syntax
-  Plugin 'StanAngeloff/php.vim'
-  Plugin '2072/PHP-Indenting-for-VIm'
+  Plug 'StanAngeloff/php.vim'
+  Plug '2072/PHP-Indenting-for-VIm'
 
   """""" Javascript
-  Plugin 'pangloss/vim-javascript'
+  Plug 'pangloss/vim-javascript'
   let g:javascript_conceal = 0
-  Plugin 'othree/javascript-libraries-syntax.vim'
+  Plug 'othree/javascript-libraries-syntax.vim'
   let g:used_javascript_libs = 'jquery,underscore,angularjs'
   " ejs templates syntax highlight
-  Plugin 'briancollins/vim-jst.git'
+  Plug 'briancollins/vim-jst'
+
+  """""" Python
+  " Install: cd ~/.vim/bundle/ropevim
+  "          python setup.py install
+  " See: https://github.com/python-rope/ropevim
+  Plug 'python-rope/ropevim'
+  "Plug 'klen/python-mode'
+
+  " disables certain vim features to speedup large file editing
+  " g:LargeFile (by default, its 100) - 100Mb
+  Plug 'vim-scripts/LargeFile'
+  " drawing in vim
+  " \di - start \ds - stop
+  " left-right-up-down - draw and move; with shift - just move
+  " > < ^ v - draw an arrow; pgdb / end / pgup / home - move by diagonal
+  " \> \< \^ \v - draw a fat arrow;
+  " visual block: \a - arrow; \b - box; \e - ellipse; \f - fill; \h - canvas; \l - line;
+  "               \s - add spaces to canvas
+  " leftmouse - select visual block; s-leftmouse - drag and draw with current brush (register)
+  " \ra ... \rz - replace text with given brush (register); \pa ... - like \ra.., blanks are transparent
+  Plug 'vim-scripts/DrawIt'
+
+  " Highlight patterns when do :s/... in cmd window (Ctrl-f in cmd mode)
+  " also has own cmd line :OverCommandLine
+  Plug 'osyo-manga/vim-over'
 
   """""" Documentation
   " php documenter
-  Plugin 'mikehaertl/pdv-standalone'
+  Plug 'mikehaertl/pdv-standalone'
   " phpDocumenter
   let g:pdv_cfg_Package = "app"
   let g:pdv_cfg_Version = ""
   let g:pdv_cfg_Author = "Boris Serebrov"
   let g:pdv_cfg_Copyright = ""
   let g:pdv_cfg_License = ""
-  Plugin 'heavenshell/vim-jsdoc'
+  Plug 'heavenshell/vim-jsdoc'
   "JSDoc
   let g:jsdoc_default_mapping = 0
   augroup DocMap
@@ -312,12 +384,20 @@
 
   augroup END
   """""" Go
-  Plugin 'fatih/vim-go'
+  Plug 'fatih/vim-go'
 
   """""" Wakatime: https://wakatime.com
-  Plugin 'wakatime/vim-wakatime'
+  Plug 'wakatime/vim-wakatime'
 
-  set runtimepath+=~/.vim/bundle/potion
+  Plug '~/.vim/bundle/potion'
+
+  Plug 'joonty/vdebug'
+  Plug 'joonty/vim-taggatron'
+  Plug 'TyeMcQueen/vim-merge-windows'
+
+  call plug#end()
+
+  "set runtimepath+=~/.vim/bundle/potion
 " }}}
 
 " Basics {{{
@@ -965,7 +1045,6 @@
 " }}}
 
 " Debugger {{{
-  Plugin 'joonty/vdebug'
   "http://jaredforsyth.com/projects/vim-debug/
   function! DebugWeb(url)
     let g:vdebug_options['break_on_open'] = 1
@@ -992,7 +1071,9 @@
     let g:vdebug_options['break_on_open'] = 1
     let g:vdebug_options['continuous_mode'] = 0
     let str_args = join(a:000, ' ')
-    let last_cmd = '!python -S ~/pydbgp/bin/pydbgp -d localhost:9000 -k vim_debug ' . str_args
+    "with -S it doesn't work in virtual env
+    "let last_cmd = '!python -S ~/pydbgp/bin/pydbgp -d localhost:9000 -k vim_debug ' . str_args
+    let last_cmd = '!python ~/pydbgp/bin/pydbgp -d localhost:9000 -k vim_debug ' . str_args
     execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
     execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
     execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
@@ -1052,7 +1133,6 @@
 " }}}
 
 " Taggatron {{{
-  Plugin 'joonty/vim-taggatron'
   let g:tagcommands = {
   \    "python" : {
   \        "tagfile": ".python.tags",
@@ -1132,6 +1212,8 @@
 
   autocmd MyAutoCmd VimLeavePre *  call QuitNetrw()
 
+  let g:netrw_altfile = 1
+
 " }}}
 
 " Utils {{{
@@ -1147,7 +1229,7 @@
 
   " Actually I only need 'pdiff' script from there which converts
   " between git diff format and vim diff
-  Plugin 'TyeMcQueen/vim-merge-windows'
+  " Plugin 'TyeMcQueen/vim-merge-windows'
   let s:diff_algo = "patience"
   function! PDiff()
       let opt = ""
