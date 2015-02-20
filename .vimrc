@@ -186,6 +186,12 @@
   " ai – the current indentation level and the line above
   " ii – the current indentation level excluding the line above
   Plug 'michaeljsmith/vim-indent-object'
+  " ic, ac, iC, aC text object for columns
+  " ic / iC based on inner word / WORD (iw / iW),
+  " ac / aC - on "a word" / "a WORD" (aw / aW)
+  " like vic - select a col / dic - delete a col / cic - change a col
+  "      vicI - prepend text to col / vicA - append text
+  Plug 'coderifous/textobj-word-column.vim'
   " Required by vim-surround
   Plug 'tpope/vim-repeat'
   " Change surrounding objects
