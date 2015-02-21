@@ -115,6 +115,25 @@
   vmap v <Plug>(expand_region_expand)
   vmap <C-v> <Plug>(expand_region_shrink)
 
+  " Move / duplicate text
+  " space + d / D - duplicate down/up
+  " visual mode - arrows - move selection
+  " F10 - toggle replace/insert
+  Plug 't9md/vim-textmanip'
+  xmap <Space>d <Plug>(textmanip-duplicate-down)
+  nmap <Space>d <Plug>(textmanip-duplicate-down)
+  xmap <Space>D <Plug>(textmanip-duplicate-up)
+  nmap <Space>D <Plug>(textmanip-duplicate-up)
+
+  xmap <Down> <Plug>(textmanip-move-down)
+  xmap <Up> <Plug>(textmanip-move-up)
+  xmap <Left> <Plug>(textmanip-move-left)
+  xmap <Right> <Plug>(textmanip-move-right)
+
+  " toggle insert/replace with <F10>
+  nmap <F10> <Plug>(textmanip-toggle-mode)
+  xmap <F10> <Plug>(textmanip-toggle-mode)
+
   " Vim / tmux splits integration
   " <ctrl-h> => Left
   " <ctrl-j> => Down
@@ -180,8 +199,19 @@
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
   Plug 'bkad/CamelCaseMotion'
   "  VimTextObj provides a text object for function arguments.
-  " aa – an argument, ia – inner argumentp
-  Plug 'vim-scripts/argtextobj.vim'
+  " aa – an argument, ia – inner argument
+  " Plug 'vim-scripts/argtextobj.vim'
+  " :SidewaysLeft and :SidewaysRight - move the item under the cursor left or right, where an "item" is defined by a delimiter
+  Plug 'AndrewRadev/sideways.vim'
+  " note: for now define to h/l to get rid of by char movement habbit
+  nnoremap h :SidewaysLeft<cr>
+  nnoremap l :SidewaysRight<cr>
+  " aa – an argument, ia – inner argument
+  omap aa <Plug>SidewaysArgumentTextobjA
+  xmap aa <Plug>SidewaysArgumentTextobjA
+  omap ia <Plug>SidewaysArgumentTextobjI
+  xmap ia <Plug>SidewaysArgumentTextobjI
+
   " Python indent object
   " ai – the current indentation level and the line above
   " ii – the current indentation level excluding the line above
@@ -254,6 +284,7 @@
   " Replace combinations + smart case (Facility -> Building, facilities -> buildings)
   " :%Subvert/facilit{y,ies}/building{,s}/g
   " Coercion: crs - coerce to snake case, crm - mixed case, crc - camel, cru - upper fooBar (crs)-> foo_bar
+  " See also: http://www.reddit.com/r/vim/comments/1weenn/oh_thats_why_abolish_is_useful_subvert/
   Plug 'tpope/vim-abolish'
   " :Tabularize /, - tablarize by ','
   " :Tabularize /,/[r|l|c]0
