@@ -457,6 +457,9 @@
   set undolevels=1000
   set undoreload=10000
 
+  " $ - show '$' at the end of text we are going to change with 'c' command
+  set cpoptions+=$
+
   " Colors {{{
       set background=dark
       if $COLORTERM == 'gnome-terminal'
