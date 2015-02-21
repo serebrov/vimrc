@@ -583,10 +583,17 @@
   set novisualbell            " don't blink
   set t_vb=
 
+  " Key to expand cmd completion inside macros / mappings
+  set wildcharm=<C-Z>
   " ignore these list file extensions
-  set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
+  set wildignore+=*.swp,*.bak
+  set wildignore+=*.pyc,*.class,*.sln,*.Master,*.csproj,*.csproj.user,*.cache,*.dll,*.pdb,*.min.*
+  set wildignore+=*/.git/**/*,*/.hg/**/*,*/.svn/**/*
+  set wildignore+=*/min/*,*/vendor/*
+  set wildignore+=tags,cscope.*
+  set wildignore+=*.tar.*
+  set wildignorecase
   set wildmode=longest,list
-  "set wildmode=longest:full,full
 " }}}
 
 " Langs and encodings {{{
@@ -958,9 +965,6 @@
   " <Leader>a to toggle current fold (more convenient then za)
   nnoremap <Leader>a za
 
-  " Search and replace word under cursor
-  "nnoremap ; :%s/\<<c-r>=expand("<cword>")<cr>\>/
-
   " http://technotales.wordpress.com/2010/03/31/preserve-a-vim-function-that-keeps-your-state/
   " remove trailing spaces
   nnoremap _$ :call preserve("%s/\\s\\+$//e")<cr>
@@ -975,23 +979,11 @@
   "cabbr <expr> %% expand('%:p:h')
   cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<CR>
 
-  " Visual search
-  " select text and hit * / # to find it
-  " http://got-ravings.blogspot.com/2008/07/vim-pr0n-visual-search-mappings.html
-  function! s:VSetSearch()
-      let temp = @@
-      norm! gvy
-      let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
-      let @@ = temp
-  endfunction
-  vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
-  vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
-
   " Put ending { to the next line
   function! ClosingBracketToNextLine()
     normal g$F{i
   endfunction
-  nmap <leader>bn :call ClosingBracketToNextLine()<CR>
+  "nmap <leader>bn :call ClosingBracketToNextLine()<CR>
 
   " Standard keys
   " Speller shorcuts
@@ -1028,6 +1020,16 @@
   onoremap an( :<c-u>normal! f(va(<cr>
   " around last (
   onoremap al( :<c-u>normal! F)va(<cr>
+" }}}
+
+" Buffers navigation {{{
+    " list buffers and start completion
+    nnoremap <Leader>b :buffer <C-z>
+    nnoremap <Leader>B :sbuffer <C-z>
+
+    " list buffers with ls and start completion
+    nnoremap gb :ls<CR>:buffer<Space>
+    nnoremap gB :ls<CR>:sbuffer<Space>
 " }}}
 
 " Windows navigation {{{
@@ -1329,25 +1331,6 @@
   " Highlight VCS conflict markers
   match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-  " Find and replace in multiple files
-  command! -nargs=* -complete=file Fart call FindAndReplace(<f-args>)
-  function! FindAndReplace(...)
-    if a:0 < 3
-      echohl Error | echo "Three arguments required: 1. file pattern, 2. search expression and 3. replacement" | echohl None
-      return
-    endif
-    if a:0 > 3
-      echohl Error | echo "Too many arguments, three required: 1. file pattern, 2. search expression and 3. replacement" | echohl None
-      return
-    endif
-    let l:pattern = a:1
-    let l:search = a:2
-    let l:replace = a:3
-    echo "Replacing occurences of '".l:search."' with '".l:replace."' in files matching '".l:pattern."'"
-
-    execute '!find . -name "'.l:pattern.'" -print | xargs -t sed -i "s/'.l:search.'/'.l:replace.'/g"'
-  endfunction
-
 " }}}
 
 " YouCompleteMe, Supertab and Ultisnips {{{
@@ -1484,7 +1467,26 @@ command! -nargs=0 Pulse call s:Pulse()
 
 " }}}
 
-" Ag motions {{{
+" Search {{{
+
+  " Visual search
+  " select text and hit * / # to find it
+  " http://got-ravings.blogspot.com/2008/07/vim-pr0n-visual-search-mappings.html
+  function! s:VSetSearch()
+      let temp = @@
+      norm! gvy
+      let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+      let @@ = temp
+  endfunction
+  vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
+  vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
+
+  " Search for keyword under cursor and start result selection mode
+  nnoremap [I [I:
+  " Search in the file, display a list of results
+  nnoremap <Leader>I :ilist /
+
+" Ag Motions
 " From https://bitbucket.org/sjl/dotfiles (AckMotions)
 
 " Motions to Ag for things.  Works with pretty much everything, including:
