@@ -906,8 +906,17 @@
   inoremap jk <Esc>
   inoremap kj <Esc>
 
-  " Tab to move between matches
   "runtime macros/matchit.vim
+  " Tab to move between matches
+  " Notes regarding %:
+  " - for parentesis () it works for next pair on the current line, so
+  "     function name(arg1, arg2)
+  "               ^--- cursor here, % will jump to )
+  " - and c% will change to the ), useful in such case:
+  "     my_fun(arg1, func2(arg1, arg2, fun3(arg3)))
+  "                  ^- cursor here, c% will change inside the my_fun brackets
+  " See: http://www.viemu.com/a-why-vi-vim.html
+  "      http://thepugautomatic.com/2014/03/vims-life-changing-c-percent/
   map <tab> %
 
   " Go to start / end of line - easier way
@@ -1482,6 +1491,8 @@ command! -nargs=0 Pulse call s:Pulse()
   vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
 
   " Search for keyword under cursor and start result selection mode
+  " Note: result is similar to :g/C-RC-W (it uses 'p' - print command by
+  " default)
   nnoremap [I [I:
   " Search in the file, display a list of results
   nnoremap <Leader>I :ilist /
