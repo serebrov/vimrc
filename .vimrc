@@ -169,7 +169,7 @@
   """""" Git
   " git support:
   " :Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
-  " :Ggrep, Glog, Gread, Gwrite, Gbrowse
+  " :Ggrep, Glgrep, Glog, Gread, Gwrite, Gbrowse
   " Search in a specific directory:
   " :Ggrep searchterm -- foldername | copen
   " Search specific file types:
@@ -238,7 +238,14 @@
   Plug 'tpope/vim-surround'
   " Pair commands, some of them:
   " [q / ]q, [Q / ]Q- :cprevious / :cnext, :cfirst / :clast - errors in quickfix
-  " [l / l], [L / L] - :lprevious / :lnext, :lfirst / :llast  - errors in current window (?)
+  " [<C-Q> / ]<C-Q> - :cpfile / :cnfile - prev / next file in quickfix list
+  " [l / l], [L / L] - :lprevious / :lnext, :lfirst / :llast  - location list
+  " [<C-L> / ]<C-L> - :lpfile / :lnfile - prev / next file in location list
+  " Quickfix notes:
+  "  - (superuseful) :cold / :cnew - display older / newer quckfix state
+  "  - location list is the same as quickfix, but local to window (we can
+  "    have different location lists for different windows),
+  "    lol / lnew for older / newer states
   " [<C-Q> / ]<C-Q> - :cpfile / :cnfile - errors in files (?)
   " [<C-L] / ]<C-L> - :lpfile / :lnfile - errors in files, use current window (?)
   " [t / ]t, [T / ]T - :tprevious / :tnext, :tfirst / :tlast - tags
