@@ -1492,8 +1492,8 @@ command! -nargs=0 Pulse call s:Pulse()
 nnoremap <silent> g/ :set opfunc=<SID>AgMotion<CR>g@
 xnoremap <silent> g/ :<C-U>call <SID>AgMotion(visualmode())<CR>
 
-nnoremap <bs> :Ag! '\b<c-r><c-w>\b'<cr>
-xnoremap <silent> <bs> :<C-U>call <SID>AgMotion(visualmode())<CR>
+nnoremap <space><space> :Ag! '\b<c-r><c-w>\b'<cr>
+xnoremap <silent> <space><space>call <SID>AgMotion(visualmode())<CR>
 
 function! s:CopyMotionForType(type)
     if a:type ==# 'v'
