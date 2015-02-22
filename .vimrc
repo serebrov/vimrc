@@ -2,20 +2,6 @@
   " set nocompatible " explicitly get out of vi-compatible mode
   " filetype off
 
-  " " setup Vundle {{{
-  "   let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
-  "   if !filereadable(vundle_readme)
-  "       echo "Installing Vundle.."
-  "       echo ""
-  "       silent !mkdir -p ~/.vim/bundle
-  "       silent !git clone https://github.com/gmarik/Vundle.vim ~/.vim/bundle/vundle
-  "   endif
-  "   set rtp+=~/.vim/bundle/vundle/
-  "   call vundle#rc()
-
-  "   Plugin 'gmarik/vundle'
-  " " }}}
-  "
   call plug#begin('~/.vim/plugged')
 
   """""" UI
@@ -67,13 +53,34 @@
   Plug 'kien/rainbow_parentheses.vim'
 
   Plug 'kien/ctrlp.vim'
+  Plug 'FelikZ/ctrlp-py-matcher'
   noremap <Leader>f :CtrlPMRUFiles<CR>
+  " PyMatcher for CtrlP
+  if !has('python')
+    echo 'In order to use pymatcher plugin, you need +python compiled vim'
+  else
+    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+  endif
   " http://stackoverflow.com/questions/18285751/use-ag-in-ctrlp-vim
   if executable("ag")
     set grepprg=ag\ --nogroup\ --nocolor
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    " --hidden to search dot files, but it also reveals .git, so ignore
+    "  it explicitly
+    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --ignore ''node_modules'' --hidden -g ""'
   endif
   let g:ctrlp_switch_buffer = 'vt'
+  " Set delay to prevent extra search
+  let g:ctrlp_lazy_update = 350
+  " Do not clear filenames cache, to improve CtrlP startup
+  " You can manualy clear it by <F5>
+  let g:ctrlp_clear_cache_on_exit = 0
+  " Set no file limit, we are building a big project
+  let g:ctrlp_max_files = 0
+
+  " If ag is available use it as filename list generator instead of 'find'
+  if executable("ag")
+      set grepprg=ag\ --nogroup\ --nocolor
+  endif
 
   " Suggest to open existing file instead of creating new one when there
   " are multiple matches
@@ -379,6 +386,8 @@
   let g:used_javascript_libs = 'jquery,underscore,angularjs'
   " ejs templates syntax highlight
   Plug 'briancollins/vim-jst'
+  " better json highlighting
+  Plug 'elzr/vim-json'
 
   """""" Python
   " Install: cd ~/.vim/bundle/ropevim
@@ -1020,7 +1029,7 @@
     endif
   endfunction
 
-  " inside next (
+  " inside next ( text object
   " note: C-U removes the '<,'> when mapping is used in visual mode
   onoremap in( :<c-u>normal! f(vi(<cr>
   " inside last (
@@ -1491,6 +1500,7 @@ command! -nargs=0 Pulse call s:Pulse()
   vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
 
   " Search for keyword under cursor and start result selection mode
+  " (this is :help include-search)
   " Note: result is similar to :g/C-RC-W (it uses 'p' - print command by
   " default)
   nnoremap [I [I:
