@@ -602,7 +602,8 @@
   set wildignore+=tags,cscope.*
   set wildignore+=*.tar.*
   set wildignorecase
-  set wildmode=longest,list
+  "set wildmode=longest,list
+  set wildmode=list,full
 " }}}
 
 " Langs and encodings {{{
