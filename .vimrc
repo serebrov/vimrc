@@ -54,7 +54,9 @@
 
   Plug 'kien/ctrlp.vim'
   Plug 'FelikZ/ctrlp-py-matcher'
+  Plug 'tacahiroy/ctrlp-funky'
   noremap <Leader>f :CtrlPMRUFiles<CR>
+  noremap <Leader>u :CtrlPMRUFiles<CR>
   " PyMatcher for CtrlP
   if !has('python')
     echo 'In order to use pymatcher plugin, you need +python compiled vim'
