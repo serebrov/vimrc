@@ -52,6 +52,21 @@
   " see https://defuse.ca/blog/vim-rainbow-parentheses-work-in-php
   Plug 'kien/rainbow_parentheses.vim'
 
+  " Semantic highlighting
+  " See: http://www.reddit.com/r/vim/comments/23qy7j/semantic_highlighting/
+  "      https://medium.com/@evnbr/coding-in-color-3a6db2743a1e
+  "      http://stackoverflow.com/questions/21425279/is-there-a-vim-plugin-for-semantics-syntax-highlighting
+  "      http://stackoverflow.com/questions/21383532/vim-variable-syntax-highlighting
+  "      https://github.com/bigfish/vim-js-context-coloring
+  "      https://plus.google.com/+DouglasCrockfordEsq/posts/FzKnHk96m2C
+  "
+  " :SemanticHighlightToggle - on/off
+  Plug 'jaxbot/semantic-highlight.vim'
+
+  " :NR to move selected text into scratch buffer, :w to put modified text
+  " back
+  Plug 'chrisbra/NrrwRgn'
+
   Plug 'kien/ctrlp.vim'
   Plug 'FelikZ/ctrlp-py-matcher'
   Plug 'tacahiroy/ctrlp-funky'
@@ -70,11 +85,18 @@
     "  it explicitly
     let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --ignore ''node_modules'' --hidden -g ""'
   endif
+  " Note: per-project config can look like this (add to .vimrc.local):
+  " let g:ctrlp_custom_ignore = {
+  " \ 'dir': '\v[\/](' . join([
+  "       \ 'build',
+  "       \ ], '|') . ')$',
+  " \ 'file': '\v\.(exe|so|dll)$',
+  " \ }
   let g:ctrlp_switch_buffer = 'vt'
   " Set delay to prevent extra search
   let g:ctrlp_lazy_update = 350
   " Do not clear filenames cache, to improve CtrlP startup
-  " You can manualy clear it by <F5>
+  " You can manualy clear it by <F5> when ctrlp is opened, <F7> to clear MRU
   let g:ctrlp_clear_cache_on_exit = 0
   " Set no file limit, we are building a big project
   let g:ctrlp_max_files = 0
@@ -195,6 +217,7 @@
   " git setup:
   "  mergetool.splice.cmd=gvim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'
   "  mergetool.splice.trustexitcode=true
+  " Splice commands are called via 'g:splice_previx' ('-' by default)
   Plug 'sjl/splice.vim'
   " Shows +/- for git changes
   "  off :GitGutterDisable, on :GitGutterEnable, toggle :GitGutterToggle
@@ -351,6 +374,24 @@
   " http://majutsushi.github.com/tagbar/ :TagbarToggle
   Plug 'majutsushi/tagbar'
 
+  " disables certain vim features to speedup large file editing
+  " g:LargeFile (by default, its 100) - 100Mb
+  Plug 'vim-scripts/LargeFile'
+  " drawing in vim
+  " \di - start \ds - stop
+  " left-right-up-down - draw and move; with shift - just move
+  " > < ^ v - draw an arrow; pgdb / end / pgup / home - move by diagonal
+  " \> \< \^ \v - draw a fat arrow;
+  " visual block: \a - arrow; \b - box; \e - ellipse; \f - fill; \h - canvas; \l - line;
+  "               \s - add spaces to canvas
+  " leftmouse - select visual block; s-leftmouse - drag and draw with current brush (register)
+  " \ra ... \rz - replace text with given brush (register); \pa ... - like \ra.., blanks are transparent
+  Plug 'vim-scripts/DrawIt'
+
+  " Highlight patterns when do :s/... in cmd window (Ctrl-f in cmd mode)
+  " also has own cmd line :OverCommandLine
+  Plug 'osyo-manga/vim-over'
+
   """""" Db
   " see https://mutelight.org/dbext-the-last-sql-client-youll-ever-need
   " <Leader>sel - execute line, slt - list tables, sdt - describe table under
@@ -359,7 +400,7 @@
   " sta - prompts for table name, slc - copy column names
   " Results buffer: R - rerun command; q - close.
   " Connection - :DBPromptForBufferParameters or sbp
-  " Define profiles:
+  " Define profiles (can be done per-project in .vimrc.local):
   "  let g:dbext_default_profile_mySqlProject = 'type=MYSQL:user=root:passwd=:dbname=mydb'
   "  let g:dbext_default_profile_mySqlProjectTest = 'type=MYSQL:user=root:passwd=:dbname=mydb_test'
   " Set db param (name, user, pw, etc) - :DBSetOption dbname=mydb
@@ -392,29 +433,27 @@
   Plug 'elzr/vim-json'
 
   """""" Python
+  " Add the virtualenv's site-packages to vim path
+  if has("python")
+python << EOF
+import os.path
+import sys
+import vim
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  sys.path.insert(0, project_base_dir)
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+  endif
+
   " Install: cd ~/.vim/bundle/ropevim
   "          python setup.py install
   " See: https://github.com/python-rope/ropevim
   Plug 'python-rope/ropevim'
   "Plug 'klen/python-mode'
-
-  " disables certain vim features to speedup large file editing
-  " g:LargeFile (by default, its 100) - 100Mb
-  Plug 'vim-scripts/LargeFile'
-  " drawing in vim
-  " \di - start \ds - stop
-  " left-right-up-down - draw and move; with shift - just move
-  " > < ^ v - draw an arrow; pgdb / end / pgup / home - move by diagonal
-  " \> \< \^ \v - draw a fat arrow;
-  " visual block: \a - arrow; \b - box; \e - ellipse; \f - fill; \h - canvas; \l - line;
-  "               \s - add spaces to canvas
-  " leftmouse - select visual block; s-leftmouse - drag and draw with current brush (register)
-  " \ra ... \rz - replace text with given brush (register); \pa ... - like \ra.., blanks are transparent
-  Plug 'vim-scripts/DrawIt'
-
-  " Highlight patterns when do :s/... in cmd window (Ctrl-f in cmd mode)
-  " also has own cmd line :OverCommandLine
-  Plug 'osyo-manga/vim-over'
+  " Correct python code indenting
+  Plug 'hynek/vim-python-pep8-indent'
 
   """""" Documentation
   " php documenter
@@ -478,6 +517,23 @@
   " $ - show '$' at the end of text we are going to change with 'c' command
   set cpoptions+=$
 
+  " GUI Settings {{{
+  if has("gui_running")
+      " use simple dialogs rather than pop-ups
+      set guioptions+=c
+      " do not use GUI tabs, use console style tabs
+      set guioptions-=e
+      set guioptions-=T
+      set guioptions-=m
+      set guioptions-=r
+
+      "set guifont=* to display font chooser
+      set guifont=Droid\ Sans\ Mono\ 11
+      " set guifont=Ubuntu\ Mono\ 13
+      " set guifont=Monospace\ 11
+  endif
+  " }}}
+
   " Colors {{{
       set background=dark
       if $COLORTERM == 'gnome-terminal'
@@ -518,60 +574,45 @@
       endif
   " }}}
 
-  " GUI Settings {{{
-  if has("gui_running")
-      " use simple dialogs rather than pop-ups
-      set guioptions+=c
-      " do not use GUI tabs, use console style tabs
-      set guioptions-=e
-      set guioptions-=T
-      set guioptions-=m
-      set guioptions-=r
-
-      "set guifont=* to display font chooser
-      set guifont=Droid\ Sans\ Mono\ 11
-      " set guifont=Ubuntu\ Mono\ 13
-      " set guifont=Monospace\ 11
-  endif
-  " }}}
-
 " }}}
 
 " Auto-read and auto-write {{{
-  set autoread
-  "See http://stackoverflow.com/questions/2490227/how-does-vims-autoread-work
-  augroup checktime
-    au!
-    if !has("gui_running")
-        "silent! necessary otherwise throws errors when using command
-        "line window.
-        autocmd BufEnter        * silent! checktime
-        autocmd CursorHold      * silent! checktime
-        autocmd CursorHoldI     * silent! checktime
-        "these two _may_ slow things down. Remove if they do.
-        "autocmd CursorMoved     * silent! checktime
-        "autocmd CursorMovedI    * silent! checktime
-    endif
-  augroup END
-  au FocusGained,BufEnter * :silent! !
+  if !&diff
+    set autoread
+    "See http://stackoverflow.com/questions/2490227/how-does-vims-autoread-work
+    augroup checktime
+      au!
+      if !has("gui_running")
+          "silent! necessary otherwise throws errors when using command
+          "line window.
+          autocmd BufEnter        * silent! checktime
+          autocmd CursorHold      * silent! checktime
+          autocmd CursorHoldI     * silent! checktime
+          "these two _may_ slow things down. Remove if they do.
+          "autocmd CursorMoved     * silent! checktime
+          "autocmd CursorMovedI    * silent! checktime
+      endif
+    augroup END
+    au FocusGained,BufEnter * :silent! !
 
-  set autowrite
-  "au FocusLost,WinLeave * :silent! w
-  " See https://github.com/907th/vim-auto-save/
-  function! DoAutosave()
-    " expand('%') != '' - if this is new buffer without name
-    " filereadable(expand('%')) - if this is new not saved buffer (like :e newfile)
-    " expand('%') != '[Command Line]' - command line buffer
-    if expand('%') != '' && filereadable(expand('%')) && expand('%') != '[Command Line]'
-      update
-    endif
-  endfunction
-  " autowrite on leave the insert mode, focus load and cursor hold
-  augroup MyAutoCmdAutosave
-    autocmd!
-    autocmd InsertLeave,CursorHold,CursorHoldI * call DoAutosave()
-    autocmd FocusLost,WinLeave   * call DoAutosave()
-  augroup END
+    set autowrite
+    "au FocusLost,WinLeave * :silent! w
+    " See https://github.com/907th/vim-auto-save/
+    function! DoAutosave()
+      " expand('%') != '' - if this is new buffer without name
+      " filereadable(expand('%')) - if this is new not saved buffer (like :e newfile)
+      " expand('%') != '[Command Line]' - command line buffer
+      if expand('%') != '' && filereadable(expand('%')) && expand('%') != '[Command Line]'
+        update
+      endif
+    endfunction
+    " autowrite on leave the insert mode, focus load and cursor hold
+    augroup MyAutoCmdAutosave
+      autocmd!
+      autocmd InsertLeave,CursorHold,CursorHoldI * call DoAutosave()
+      autocmd FocusLost,WinLeave   * call DoAutosave()
+    augroup END
+  endif
 " }}}
 
 " Spell {{{
@@ -907,6 +948,11 @@
   " * and # will stay on the first match
   nnoremap * *N
   nnoremap # #N
+
+  " Repeat change on word
+  " Set cursor over a word, <leader>c - change it,
+  " now '.' will repeat the change on the next word, n - skip the next word
+  nnoremap <leader>c *Ncgn
 
   " save
   noremap <leader>w :w<CR>
