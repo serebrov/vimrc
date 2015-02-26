@@ -17,7 +17,7 @@ function! Wipeout(bang)
   endfor
   " close any buffer that are loaded and not visible
   let l:tally = 0
-  let l:cmd = 'bw'
+  let l:cmd = 'silent bw'
   if a:bang
     let l:cmd .= '!'
   endif
