@@ -70,8 +70,10 @@
   Plug 'kien/ctrlp.vim'
   Plug 'FelikZ/ctrlp-py-matcher'
   Plug 'tacahiroy/ctrlp-funky'
+  " Also need `set path=.,**` (see below) to search recursively
+  noremap <Leader>i :find<SPACE>
   noremap <Leader>f :CtrlPMRUFiles<CR>
-  noremap <Leader>u :CtrlPMRUFiles<CR>
+  noremap <Leader>u :CtrlPFunky<CR>
   " PyMatcher for CtrlP
   if !has('python')
     echo 'In order to use pymatcher plugin, you need +python compiled vim'
@@ -1295,6 +1297,8 @@ EOF
 
   function! LoadLocalVimrc()
     :Rooter
+    " Use with :find - it will search subdirectories
+    set path=.,**
     "echom 'Loading local in: ' . getcwd()
     " Check for .vimrc.local in the current directory
     let custom_config_file = getcwd() . '/.vimrc.local'
