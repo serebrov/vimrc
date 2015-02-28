@@ -22,10 +22,9 @@
   " On search automatically prints "At match #N out of M matches".
   Plug 'henrik/vim-indexed-search'
   " better search hightlights
-  " Tab/S-Tab or Ctrl-J/Ctrl-K to move between matches
   Plug 'haya14busa/incsearch.vim'
-  map /  <Plug>(incsearch-forward)
-  map ?  <Plug>(incsearch-backward)
+  map /  <Plug>(incsearch-forward)\v
+  map ?  <Plug>(incsearch-backward)\v
   " Setup for vim-indexed-search
   " See: https://github.com/haya14busa/incsearch.vim/issues/21
   let g:indexed_search_mappings = 0
@@ -293,6 +292,10 @@
   " [f / ]f - previous / next file in directory
   " [n / ]b - previous / next conflict marker
   Plug 'tpope/vim-unimpaired'
+  " Allows to populate vim's args from the quickfix, so we can:
+  "  :Ggrep findme
+  "  :Qargs | argdo %s/findme/replacement/gc | update
+  Plug 'nelstrom/vim-qargs'
   " gcc - comment out line
   " gc<motion> - comment out lines defined by motion
   Plug 'tpope/vim-commentary'
@@ -1080,15 +1083,44 @@ EOF
     endif
   endfunction
 
-  " inside next ( text object
+  " plugins/next-object.vim
+  " Motion for "next/last object"
+  " Currently works for (, [, {, and their shortcuts b, r, B.
+  " Some examples (C marks cursor positions, V means visually selected):
+  "
+  " din'  -> delete in next single quotes                foo = bar('spam')
+  "                                                      C
+  "                                                      foo = bar('')
+  "                                                                C
+  "
+  " canb  -> change around next parens                   foo = bar('spam')
+  "                                                      C
+  "                                                      foo = bar
+  "                                                               C
+  "
+  " vin"  -> select inside next double quotes            print "hello ", name
+  "                                                       C
+  "                                                      print "hello ", name
+  "                                                             VVVVVV
+  onoremap an :<c-u>call NextTextObject('a', '/')<cr>
+  xnoremap an :<c-u>call NextTextObject('a', '/')<cr>
+  onoremap in :<c-u>call NextTextObject('i', '/')<cr>
+  xnoremap in :<c-u>call NextTextObject('i', '/')<cr>
+
+  onoremap al :<c-u>call NextTextObject('a', '?')<cr>
+  xnoremap al :<c-u>call NextTextObject('a', '?')<cr>
+  onoremap il :<c-u>call NextTextObject('i', '?')<cr>
+  xnoremap il :<c-u>call NextTextObject('i', '?')<cr>
+
+  " inside next ( text object (just a simple example of omap)
   " note: C-U removes the '<,'> when mapping is used in visual mode
-  onoremap in( :<c-u>normal! f(vi(<cr>
-  " inside last (
-  onoremap il( :<c-u>normal! F)vi(<cr>
-  " around next (
-  onoremap an( :<c-u>normal! f(va(<cr>
-  " around last (
-  onoremap al( :<c-u>normal! F)va(<cr>
+  " onoremap in( :<c-u>normal! f(vi(<cr>
+  " " inside last (
+  " onoremap il( :<c-u>normal! F)vi(<cr>
+  " " around next (
+  " onoremap an( :<c-u>normal! f(va(<cr>
+  " " around last (
+  " onoremap al( :<c-u>normal! F)va(<cr>
 " }}}
 
 " Buffers navigation {{{
@@ -1559,6 +1591,10 @@ command! -nargs=0 Pulse call s:Pulse()
   nnoremap [I [I:
   " Search in the file, display a list of results
   nnoremap <Leader>I :ilist /
+
+  " Search the last search (@/ - '/' register content, last search text)
+  " using vimgrep and show in quickfix
+  nnoremap <Leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " Ag Motions
 " From https://bitbucket.org/sjl/dotfiles (AckMotions)
