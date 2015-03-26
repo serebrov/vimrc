@@ -7,6 +7,12 @@
   """""" UI
   " sensible defaults
   Plug 'tpope/vim-sensible'
+  " Hard mode - no jjjjj and kkkkk, :HardTimeToggle to toggle
+  let g:hardtime_allow_different_key = 1
+  let g:list_of_normal_keys = ["h", "j", "k", "l"]
+  let g:list_of_visual_keys = ["h", "j", "k", "l"]
+  Plug 'takac/vim-hardtime'
+  autocmd BufEnter * HardTimeOn
   " auto adjust tab/space settings based on current file
   Plug 'tpope/vim-sleuth'
   " Additional features for netrw
@@ -23,6 +29,7 @@
   Plug 'henrik/vim-indexed-search'
   " better search hightlights
   Plug 'haya14busa/incsearch.vim'
+  " similar: https://github.com/junegunn/vim-oblique/
   map /  <Plug>(incsearch-forward)\v
   map ?  <Plug>(incsearch-backward)\v
   " Setup for vim-indexed-search
@@ -71,7 +78,7 @@
   Plug 'tacahiroy/ctrlp-funky'
   " Also need `set path=.,**` (see below) to search recursively
   noremap <Leader>i :find<SPACE>
-  noremap <Leader>f :CtrlPMRUFiles<CR>
+  noremap <Leader>f :CtrlP<CR>
   noremap <Leader>u :CtrlPFunky<CR>
   " PyMatcher for CtrlP
   if !has('python')
@@ -237,8 +244,8 @@
   " :SidewaysLeft and :SidewaysRight - move the item under the cursor left or right, where an "item" is defined by a delimiter
   Plug 'AndrewRadev/sideways.vim'
   " note: for now define to h/l to get rid of by char movement habbit
-  nnoremap h :SidewaysLeft<cr>
-  nnoremap l :SidewaysRight<cr>
+  nnoremap <Leader>hh :SidewaysLeft<cr>
+  nnoremap <Leader>ll :SidewaysRight<cr>
   " aa – an argument, ia – inner argument
   omap aa <Plug>SidewaysArgumentTextobjA
   xmap aa <Plug>SidewaysArgumentTextobjA
@@ -292,13 +299,15 @@
   " [f / ]f - previous / next file in directory
   " [n / ]b - previous / next conflict marker
   Plug 'tpope/vim-unimpaired'
+  " gcc - comment out line
+  " gc<motion> - comment out lines defined by motion
+  Plug 'tpope/vim-commentary'
+
+  """ Quickfix improvements
   " Allows to populate vim's args from the quickfix, so we can:
   "  :Ggrep findme
   "  :Qargs | argdo %s/findme/replacement/gc | update
   Plug 'nelstrom/vim-qargs'
-  " gcc - comment out line
-  " gc<motion> - comment out lines defined by motion
-  Plug 'tpope/vim-commentary'
   " Having the quickfix list execute :EnMasse to edit the
   " list content and back-sync edits to source files
   Plug 'Wolfy87/vim-enmasse'
@@ -310,6 +319,37 @@
   " and then we can review/edit results
   Plug 'pelodelfuego/vim-swoop'
   let g:swoopUseDefaultKeyMap = 0
+  " TODO: check alternatives:
+  "https://github.com/dyng/ctrlsf.vim
+  "https://github.com/AndrewRadev/writable_search.vim
+  "https://github.com/stefandtw/quickfix-reflector.vim
+
+  " Highlight yanked text
+  " see  http://stackoverflow.com/questions/26069278/hightlight-copied-area-on-vim
+  " Lets user define their own operators.
+  Plug 'kana/vim-operator-user'
+  " Operator to do two or more operators.
+  Plug 'thinca/vim-operator-sequence'
+  " Highlight yanked text
+  Plug 'osyo-manga/vim-operator-highlight'
+  " let g:operator#highlight#clear_time=2.0
+  noremap <expr> <Plug>(yank-highlight) operator#sequence#map("y", "\<Plug>(operator-highlight)")
+  nmap yc <Plug>(yank-highlight)
+  vmap yc <Plug>(yank-highlight)
+
+  " :PP: Pretty print. With no argument, acts as a REPL.
+  " :Runtime: Reload runtime files. Like :runtime!, but it unlets any include guards first.
+  " :Disarm: Remove a runtime file's maps, commands, and autocommands, effectively disabling it.
+  " :Scriptnames: Load :scriptnames into the quickfix list.
+  " :Verbose: Capture the output of a :verbose invocation into the preview window.
+  " :Time: Measure how long a command takes.
+  " :Breakadd: Like its lowercase cousin, but makes it much easier to set breakpoints inside functions. Also :Breakdel.
+  " :Vedit: Edit a file relative the runtime path. For example, :Vedit plugin/scriptease.vim. Also, :Vsplit, :Vtabedit, etc. Extracted from pathogen.vim.
+  " K: Look up the :help for the VimL construct under the cursor.
+  " zS: Show the active syntax highlighting groups under the cursor.
+  " g!: Eval a motion or selection as VimL and replace it with the result.
+  "     This is handy for doing math, even outside of VimL. It's so handy, in fact, that it probably deserves its own plugin.
+  " Plug 'tpope/vim-scriptease'
 
   """""" Commands
   "Vim sugar for the UNIX shell commands that need it the most. Commands
@@ -343,6 +383,8 @@
   "  assignment, two_spaces, multiple_spaces, argument_list,
   "  split_declarations, trenary_operator, cpp_io, pascal_assign,
   "  trailing_c_comments
+  " Similar: https://github.com/tommcdo/vim-lion
+  "          https://github.com/junegunn/vim-easy-align
   Plug 'godlygeek/tabular'
   " Gundo.vim is Vim plugin to visualize your Vim undo tree.
   Plug 'sjl/gundo.vim'
@@ -373,6 +415,20 @@
   "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
   Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
   Plug 'UltiSnips'
+  " http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
+  " let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
+  " let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
+  " let g:SuperTabDefaultCompletionType = '<C-Tab>'
+  let g:ycm_key_list_select_completion = []
+  let g:ycm_key_list_previous_completion = []
+  let g:UltiSnipsExpandTrigger="<tab>"
+  let g:UltiSnipsJumpForwardTrigger="<tab>"
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+  "let g:UltiSnipsExpandTrigger="<c-tab>"
+  "let g:UltiSnipsListSnippets="<c-s-tab>"
+  "let g:UltiSnipsJumpForwardTrigger="<c-tab>"
+  "let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
+
   Plug 'honza/vim-snippets'
   Plug 'airblade/vim-rooter'
   " https://github.com/majutsushi/tagbar/wiki
@@ -722,6 +778,7 @@ EOF
 
   set nostartofline          " leave my cursor where it was
 
+  set relativenumber         " both relative and number (for current line)
   set number                 " turn on line numbers
   set numberwidth=5          " We are good up to 99999 lines
   set report=0               " tell us when anything is changed via :...
@@ -959,6 +1016,15 @@ EOF
   " now '.' will repeat the change on the next word, n - skip the next word
   nnoremap <leader>c *Ncgn
 
+  " Don't copy on change operations
+  noremap c "_c
+  noremap cc "_cc
+  noremap C "_C
+
+  " Note: to replace something with yanked text it's easy to use
+  " a change operation and then <C-R>0 to insert register '0' content
+  " in insert mode, like cw<C-R>0 - replace a word with yanked text
+
   " save
   noremap <leader>w :w<CR>
   noremap <leader>q :q<CR>
@@ -980,7 +1046,7 @@ EOF
   "                  ^- cursor here, c% will change inside the my_fun brackets
   " See: http://www.viemu.com/a-why-vi-vim.html
   "      http://thepugautomatic.com/2014/03/vims-life-changing-c-percent/
-  map <tab> %
+  nnoremap <Leader><Leader> %
 
   " Go to start / end of line - easier way
   noremap H ^
@@ -1436,27 +1502,6 @@ EOF
 
 " }}}
 
-" YouCompleteMe, Supertab and Ultisnips {{{
-
-  " http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
-  " let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
-  " let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
-  " let g:SuperTabDefaultCompletionType = '<C-Tab>'
-  let g:ycm_key_list_select_completion = []
-  let g:ycm_key_list_previous_completion = []
-
-  let g:UltiSnipsExpandTrigger="<tab>"
-  let g:UltiSnipsJumpForwardTrigger="<tab>"
-  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-  " Ultisnips
-  "let g:UltiSnipsExpandTrigger="<c-tab>"
-  "let g:UltiSnipsListSnippets="<c-s-tab>"
-  "let g:UltiSnipsJumpForwardTrigger="<c-tab>"
-  "let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
-
-" }}}
-
 " Xiki {{{
   function! XikiLaunch()
     ruby << EOF
@@ -1594,7 +1639,7 @@ command! -nargs=0 Pulse call s:Pulse()
 
   " Search the last search (@/ - '/' register content, last search text)
   " using vimgrep and show in quickfix
-  nnoremap <Leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+  nnoremap <Leader>z :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " Ag Motions
 " From https://bitbucket.org/sjl/dotfiles (AckMotions)
@@ -1607,12 +1652,13 @@ command! -nargs=0 Pulse call s:Pulse()
 "
 " Note: If the text covered by a motion contains a newline it won't work.  Ag
 " searches line-by-line.
-
 nnoremap <silent> g/ :set opfunc=<SID>AgMotion<CR>g@
 xnoremap <silent> g/ :<C-U>call <SID>AgMotion(visualmode())<CR>
 
-nnoremap <space><space> :Ag! '\b<c-r><c-w>\b'<cr>
-xnoremap <silent> <space><space>call <SID>AgMotion(visualmode())<CR>
+" search word under cursor
+nnoremap <Leader>w :Ag! '\b<c-r><c-w>\b'<cr>
+" search for visual selection
+xnoremap <silent> <Leader>w :call <SID>AgMotion(visualmode())<CR>
 
 function! s:CopyMotionForType(type)
     if a:type ==# 'v'
@@ -1631,5 +1677,76 @@ function! s:AgMotion(type) abort
 
     let @@ = reg_save
 endfunction
+
+" See https://gist.github.com/romainl/3c7ee68125f822ec550c
+"
+" This is an updated, more powerful, version of the function discussed here:
+" http://www.reddit.com/r/vim/comments/1rzvsm/do_any_of_you_redirect_results_of_i_to_the/
+" that shows ]I, [I, ]D, [D, :ilist and :dlist results in the quickfix window, even spanning multiple files.
+
+function! List(command, selection, start_at_cursor, ...)
+    " derive the commands used below from the first argument
+    let excmd   = a:command . "list"
+    let normcmd = toupper(a:command)
+
+    if a:selection
+        if len(a:1) > 0
+            let search_pattern = a:1
+        else
+            let old_reg = @v
+            normal! gv"vy
+            let search_pattern = substitute(escape(@v, '\/.*$^~[]'), '\\n', '\\n', 'g')
+            let @v = old_reg
+        endif
+        redir => output
+        silent! execute (a:start_at_cursor ? '+,$' : '') . excmd . ' /' . search_pattern
+        redir END
+    else
+        redir => output
+        silent! execute 'normal! ' . (a:start_at_cursor ? ']' : '[') . normcmd
+        redir END
+    endif
+
+    " clean up the output
+    let lines = split(output, '\n')
+
+    " bail out on errors
+    if lines[0] =~ '^Error detected'
+        echomsg 'Could not find "' . (a:selection ? search_pattern : expand("<cword>")) . '".'
+        return
+    endif
+
+    " our results may span multiple files so we need to build a relatively
+    " complex list based on file names
+    let filename   = ""
+    let qf_entries = []
+    for line in lines
+        if line =~ '^\S'
+            let filename = line
+        else
+            call add(qf_entries, {"filename" : filename, "lnum" : split(line)[1], "text" : join(split(line)[2:-1])})
+        endif
+    endfor
+
+    " build the quickfix list from our results
+    call setqflist(qf_entries)
+
+    " open the quickfix window if there is something to show
+    cwindow
+endfunction
+
+nnoremap <silent> [I :call List("i", 0, 0)<CR>
+nnoremap <silent> ]I :call List("i", 0, 1)<CR>
+xnoremap <silent> [I :<C-u>call List("i", 1, 0)<CR>
+xnoremap <silent> ]I :<C-u>call List("i", 1, 1)<CR>
+
+command! -nargs=1 Ilist call List("i", 1, 0, <f-args>)
+
+nnoremap <silent> [D :call List("d", 0, 0)<CR>
+nnoremap <silent> ]D :call List("d", 0, 1)<CR>
+xnoremap <silent> [D :<C-u>call List("d", 1, 0)<CR>
+xnoremap <silent> ]D :<C-u>call List("d", 1, 1)<CR>
+
+command! -nargs=1 Dlist call List("d", 1, 0, <f-args>)
 
 " }}}
