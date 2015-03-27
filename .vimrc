@@ -304,10 +304,35 @@
   Plug 'tpope/vim-commentary'
 
   """ Quickfix improvements
+  "
+  " :QFdo - quickfix do - run a command over quckfix files, see also :LLdo for location list
+  " :BufTypeDo, :BufMatchDo - run a command over buffers of specified type or
+  "    buffers with name matching the pattern
   " Allows to populate vim's args from the quickfix, so we can:
   "  :Ggrep findme
   "  :Qargs | argdo %s/findme/replacement/gc | update
-  Plug 'nelstrom/vim-qargs'
+  " Plug 'nelstrom/vim-qargs'
+  " :View command -> command result to split buffer, like :View ilist vim
+  "    or :View map x
+  " Alternative is to use 'redir' command:
+  "   :redir >name_of_registers_file
+  "   :registers
+  "   :redir END
+  "   :r name_of_registers_file
+  " OR:
+  "   :redir => m | silent registers | redir END | put=m
+  " See   
+  "   :help redir
+  " :Collect register-or-var command -> command result to register or var
+  "  Collect('reg-or-var command') - similar as function
+  " :GCollect - returns a list of lines for :g/pattern/, see also :GCCollect
+  " :MyMaps - active maps into the new buffer
+  " :Filter - like interactive :g/re/p - modifies the buffer! - leaves only matching lines in a buffer
+  " z=, [I, g] - overlay for spell suggestions, search results, tag search results
+  " Scall (script, function, arg) - call local function from script
+  nnoremap q[I <plug>vimple_ident_search<bs>
+  nnoremap q]I <plug>vimple_ident_search_forward
+  Plug 'dahu/Vimple'
   " Having the quickfix list execute :EnMasse to edit the
   " list content and back-sync edits to source files
   Plug 'Wolfy87/vim-enmasse'
@@ -547,6 +572,8 @@ EOF
   Plug '~/.vim/bundle/potion'
 
   Plug 'joonty/vdebug'
+  " Automatic ctags re-generator
+  " similar: https://github.com/xolox/vim-easytags
   Plug 'joonty/vim-taggatron'
   Plug 'TyeMcQueen/vim-merge-windows'
 
@@ -1633,7 +1660,7 @@ command! -nargs=0 Pulse call s:Pulse()
   " (this is :help include-search)
   " Note: result is similar to :g/C-RC-W (it uses 'p' - print command by
   " default)
-  nnoremap [I [I:
+  "nnoremap [I [I:
   " Search in the file, display a list of results
   nnoremap <Leader>I :ilist /
 
