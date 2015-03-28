@@ -321,7 +321,7 @@
   "   :r name_of_registers_file
   " OR:
   "   :redir => m | silent registers | redir END | put=m
-  " See   
+  " See
   "   :help redir
   " :Collect register-or-var command -> command result to register or var
   "  Collect('reg-or-var command') - similar as function
@@ -958,6 +958,25 @@ EOF
     "" use Leader-r to refresh (default is Ctrl-L which is used to jump
     "" to the left window)
     autocmd FileType netrw nnoremap <buffer> <Leader>r <Plug>NetrwRefresh
+  augroup END
+
+  " run nvim as below to get gui colors in terminal, works in gnome-termial
+  " and konsole
+  " NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim
+  " See: https://github.com/neovim/neovim/pull/2198
+  function! SetupColorscheme()
+    set background=dark
+    let g:solarized_contrast="high"    "default value is normal
+    let g:solarized_diffmode="high"    "default value is normal
+    try
+        colorscheme solarized
+    catch /^Vim\%((\a\+)\)\=:E185/
+        echo "Solarized theme not found. Run :PluginInstall"
+    endtry
+  endfunction
+  augroup NvimColors
+    autocmd!
+    autocmd VimEnter * call SetupColorscheme()
   augroup END
 
   augroup Rainbow
