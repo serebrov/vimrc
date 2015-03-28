@@ -78,6 +78,9 @@ function! s:session_vim_enter()
         call s:session_restore_all()
         "execute 'windo filtype detect'
         redraw | echom 'Loaded last session(s)'
+        " Without this after vim restart there is no syntax highlight in
+        " restored buffers
+        windo filetype detect
     endif
     let s:tab_leave_enabled = 1
 endfunction
