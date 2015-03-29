@@ -123,18 +123,16 @@
 
   Plug 'bling/vim-airline'
   let g:airline_theme='badwolf'
-  " unicode symbols
-  let g:airline_left_sep = '»'
+  if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+  endif
+  " " unicode symbols
   let g:airline_left_sep = '▶'
-  let g:airline_right_sep = '«'
   let g:airline_right_sep = '◀'
-  let g:airline_linecolumn_prefix = '␊ '
-  let g:airline_linecolumn_prefix = '␤ '
-  let g:airline_linecolumn_prefix = '¶ '
-  let g:airline_branch_prefix = '⎇ '
-  let g:airline_paste_symbol = 'ρ'
-  let g:airline_paste_symbol = 'Þ'
-  let g:airline_paste_symbol = '∥'
+  let g:airline_symbols.linenr = '␤'
+  let g:airline_symbols.branch = '⎇'
+  let g:airline_symbols.paste = 'Þ'
+  let g:airline_symbols.whitespace = 'Ξ'
 
   " adopt color schemes for terminal
   Plug 'godlygeek/csapprox'
@@ -477,6 +475,19 @@
   " Highlight patterns when do :s/... in cmd window (Ctrl-f in cmd mode)
   " also has own cmd line :OverCommandLine
   Plug 'osyo-manga/vim-over'
+
+  " HTTP client
+  " Example:
+  " # Second request.
+  " # :foo = bar
+  " POST http://httpbin.org/post
+  " {
+  "   "data": ":foo",
+  "   "otherkey": "hello"
+  " }
+  " <Leader>tt to run the request
+  " Similar: Plug 'nicwest/QQ.vim'
+  Plug 'aquach/vim-http-client'
 
   """""" Db
   " see https://mutelight.org/dbext-the-last-sql-client-youll-ever-need
@@ -973,6 +984,7 @@ EOF
     catch /^Vim\%((\a\+)\)\=:E185/
         echo "Solarized theme not found. Run :PluginInstall"
     endtry
+    :AirlineTheme badwolf
   endfunction
   augroup NvimColors
     autocmd!
