@@ -183,7 +183,7 @@
   ":Twrite sends a chunk of text to another pane. Give an argument like windowtitle.2, top-right, or last, or let it default to the previously given argument.
   ":Tattach lets you use a specific tmux session from outside of it.
   Plug 'tpope/vim-tbone'
-
+  "
   " Note: compare with tbone - :Twrite 1.2 also sends text to another
   "       tmux pane
   " Repl for vim
@@ -193,6 +193,8 @@
   "Plug 'jpalardy/vim-slime'
   "let g:slime_target = "tmux"
   "let g:slime_python_ipython = 1
+  "
+  " Similar: https://github.com/krisajenkins/vim-pipe
 
   " Manage files and directories in vim
   " :Vimdir [directory] - To list files and folders
@@ -232,13 +234,14 @@
   "   :DirDiff <A:Src Directory> <B:Src Directory>
   "   see http://www.vim.org/scripts/script.php?script_id=102
   Plug 'zhaocai/DirDiff.vim'
+  " :CustomDiff histogram | myers | patience | minimal | default
+  " and run :diffupdate
+  " :DisableEnhancedDiff - disable it
+  Plug 'chrisbra/vim-diff-enhanced'
 
   """""" Motions / normal mode commands
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
   Plug 'bkad/CamelCaseMotion'
-  "  VimTextObj provides a text object for function arguments.
-  " aa – an argument, ia – inner argument
-  " Plug 'vim-scripts/argtextobj.vim'
   " :SidewaysLeft and :SidewaysRight - move the item under the cursor left or right, where an "item" is defined by a delimiter
   Plug 'AndrewRadev/sideways.vim'
   " note: for now define to h/l to get rid of by char movement habbit
@@ -260,6 +263,12 @@
   " like vic - select a col / dic - delete a col / cic - change a col
   "      vicI - prepend text to col / vicA - append text
   Plug 'coderifous/textobj-word-column.vim'
+  " Improve text objects:
+  " vi" - works for multiple lines (like vi{ does)
+  " vi( - will look forward (like vi" does)
+  " also it creates text objects on the fly like vi, will try to
+  " select text between commas
+  Plug 'paradigm/TextObjectify'
   " Required by vim-surround
   Plug 'tpope/vim-repeat'
   " Change surrounding objects
@@ -471,6 +480,8 @@
   " leftmouse - select visual block; s-leftmouse - drag and draw with current brush (register)
   " \ra ... \rz - replace text with given brush (register); \pa ... - like \ra.., blanks are transparent
   Plug 'vim-scripts/DrawIt'
+  "
+  " Related: https://github.com/jondkinney/dragvisuals.vim - dragging visual blocks
 
   " Highlight patterns when do :s/... in cmd window (Ctrl-f in cmd mode)
   " also has own cmd line :OverCommandLine
@@ -586,7 +597,6 @@ EOF
   " Automatic ctags re-generator
   " similar: https://github.com/xolox/vim-easytags
   Plug 'joonty/vim-taggatron'
-  Plug 'TyeMcQueen/vim-merge-windows'
 
   call plug#end()
 
@@ -1226,10 +1236,12 @@ EOF
   "                                                       C
   "                                                      print "hello ", name
   "                                                             VVVVVV
-  onoremap an :<c-u>call NextTextObject('a', '/')<cr>
-  xnoremap an :<c-u>call NextTextObject('a', '/')<cr>
-  onoremap in :<c-u>call NextTextObject('i', '/')<cr>
-  xnoremap in :<c-u>call NextTextObject('i', '/')<cr>
+  " These are not needed, because TextObjectify plugin makes regular
+  " text objects always look forward
+  " onoremap an :<c-u>call NextTextObject('a', '/')<cr>
+  " xnoremap an :<c-u>call NextTextObject('a', '/')<cr>
+  " onoremap in :<c-u>call NextTextObject('i', '/')<cr>
+  " xnoremap in :<c-u>call NextTextObject('i', '/')<cr>
 
   onoremap al :<c-u>call NextTextObject('a', '?')<cr>
   xnoremap al :<c-u>call NextTextObject('a', '?')<cr>
@@ -1503,55 +1515,6 @@ EOF
     exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
   endfunction
 
-  " Actually I only need 'pdiff' script from there which converts
-  " between git diff format and vim diff
-  " Plugin 'TyeMcQueen/vim-merge-windows'
-  let s:diff_algo = "patience"
-  function! PDiff()
-      let opt = ""
-      if &diffopt =~ "icase"
-          let opt = opt . "-i "
-      endif
-      if &diffopt =~ "iwhite"
-          let opt = opt . "-b -B "
-      endif
-      " pdiff script has --patience option, but our options come at the end,
-      " so we will overwrite the algorithm
-      " supported are:
-      "  default, myers
-      "      The basic greedy diff algorithm. Currently, this is the default.
-      "  minimal
-      "      Spend extra time to make sure the smallest possible diff is produced.
-      "  patience
-      "      Use ""patience diff"" algorithm when generating patches.
-      "  histogram
-      "      This algorithm extends the patience algorithm to
-      "      support low-occurrence common elements
-      let opt = opt . "--diff-algorithm=" . s:diff_algo . " "
-      silent execute "!pdiff -a " . opt . v:fname_in . " " .
-          \ v:fname_new . " > " . v:fname_out
-  endfunction
-  function! PDiffOn(algorithm)
-    let s:diff_algo = a:algorithm
-    set diffexpr=PDiff()
-    "source ~/.vim/bundle/vim-merge-windows/patience-diff.vim
-    "source ~/.vim/bundle/vim-merge-windows/vim-merge-windows.vim
-    diffupdate
-  endfunction
-  function! PDiffOff()
-    set diffexpr=
-    diffupdate
-  endfunction
-  "These commands allow to set different diff algorithms
-  "So when vim is in diff / conflict resolution mode
-  "the diff can be switched with
-  "  :PDiffOnPatience
-  "to use patience diff algorithm
-  command! PDiffOnMyers call PDiffOn('myers')
-  command! PDiffOnPatience call PDiffOn('patience')
-  command! PDiffOnMinimal call PDiffOn('minimal')
-  command! PDiffOnHistogram call PDiffOn('histogram')
-  command! PDiffOff call PDiffOff()
 
   set diffopt=filler,iwhite
 
