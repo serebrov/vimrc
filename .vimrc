@@ -482,6 +482,8 @@
   Plug 'vim-scripts/DrawIt'
   "
   " Related: https://github.com/jondkinney/dragvisuals.vim - dragging visual blocks
+  " Related: vim-scripts/VisIncr - make a column of increasing or decreasing
+  "          numbers, dates, or daynames
 
   " Highlight patterns when do :s/... in cmd window (Ctrl-f in cmd mode)
   " also has own cmd line :OverCommandLine
@@ -1497,10 +1499,10 @@ EOF
       endif
     endfor
   endfunction
-
+  let g:netrw_altfile = 1
   autocmd MyAutoCmd VimLeavePre *  call QuitNetrw()
 
-  let g:netrw_altfile = 1
+  autocmd MyAutoCmd VimLeavePre *  call Wipeout(0)
 
 " }}}
 
@@ -1677,7 +1679,8 @@ nnoremap <silent> g/ :set opfunc=<SID>AgMotion<CR>g@
 xnoremap <silent> g/ :<C-U>call <SID>AgMotion(visualmode())<CR>
 
 " search word under cursor
-nnoremap <Leader>w :Ag! '\b<c-r><c-w>\b'<cr>
+" original gw is similar to gq, see :help gw
+nnoremap gw :Ag! '\b<c-r><c-w>\b'<cr>
 " search for visual selection
 xnoremap <silent> <Leader>w :call <SID>AgMotion(visualmode())<CR>
 
