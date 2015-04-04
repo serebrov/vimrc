@@ -244,14 +244,14 @@
   Plug 'bkad/CamelCaseMotion'
   " :SidewaysLeft and :SidewaysRight - move the item under the cursor left or right, where an "item" is defined by a delimiter
   Plug 'AndrewRadev/sideways.vim'
-  " note: for now define to h/l to get rid of by char movement habbit
   nnoremap <Leader>hh :SidewaysLeft<cr>
   nnoremap <Leader>ll :SidewaysRight<cr>
   " aa – an argument, ia – inner argument
-  omap aa <Plug>SidewaysArgumentTextobjA
-  xmap aa <Plug>SidewaysArgumentTextobjA
-  omap ia <Plug>SidewaysArgumentTextobjI
-  xmap ia <Plug>SidewaysArgumentTextobjI
+  " Note: these are defined by targets.vim
+  " omap aa <Plug>SidewaysArgumentTextobjA
+  " xmap aa <Plug>SidewaysArgumentTextobjA
+  " omap ia <Plug>SidewaysArgumentTextobjI
+  " xmap ia <Plug>SidewaysArgumentTextobjI
 
   " Python indent object
   " ai – the current indentation level and the line above
@@ -264,11 +264,32 @@
   "      vicI - prepend text to col / vicA - append text
   Plug 'coderifous/textobj-word-column.vim'
   " Improve text objects:
-  " vi" - works for multiple lines (like vi{ does)
-  " vi( - will look forward (like vi" does)
-  " also it creates text objects on the fly like vi, will try to
-  " select text between commas
-  Plug 'paradigm/TextObjectify'
+  " quote objects (",',`) - work for multiple lines (like standard vi{ )
+  " pair objects - (,[,{,<,t - will look forward (like vi" does)
+  "                            if there is no pair forward, will also look
+  "                            backward
+  "  note: ( == b and { == B
+  " in pair - i(, i), ib, etc - inside pair
+  " a pair - a(, a), ab, etc - include pair chars (brackets, tags, etc)
+  " inside pair - I(, I), etc - inside pair, but exclude whitespace
+  " around pair - A(, A), etc - include space after pair (or before if there
+  "                             is no space after)
+  " next pair - in(, in), etc - search for next pair
+  " last pair - il(, il), etc - search for previous pair
+  " next and last quote - in', In', An', il', Il', etc - select next/last
+  "                         quotes pair
+  " Next and Last quote - iN', IN', AN', etc - select next PROPER quote
+  "                          instead of pseudo quote between two quotes
+  " Separator text objects: , . ; : + - = ~ _ * # / | \ & $
+  "      work over multiple lines, i, - in separator, a, - a separator
+  "      I, - inside separator, A, - around separator
+  "      in, an, In, An, il, al, Al, iN, aN, IN, etc - next/last separator
+  " Argument text object: ia - inside, aa - an argument (with comma after it)
+  "                       Ia - inside, exclude space, Aa - around
+  "                       ina, ana, Ina, Ana, etc - next/last argument
+  Plug 'wellle/targets.vim'
+  " Similar: Plug 'paradigm/TextObjectify'
+  "
   " Required by vim-surround
   Plug 'tpope/vim-repeat'
   " Change surrounding objects
@@ -1218,57 +1239,16 @@ EOF
       set relativenumber
     endif
   endfunction
-
-  " plugins/next-object.vim
-  " Motion for "next/last object"
-  " Currently works for (, [, {, and their shortcuts b, r, B.
-  " Some examples (C marks cursor positions, V means visually selected):
-  "
-  " din'  -> delete in next single quotes                foo = bar('spam')
-  "                                                      C
-  "                                                      foo = bar('')
-  "                                                                C
-  "
-  " canb  -> change around next parens                   foo = bar('spam')
-  "                                                      C
-  "                                                      foo = bar
-  "                                                               C
-  "
-  " vin"  -> select inside next double quotes            print "hello ", name
-  "                                                       C
-  "                                                      print "hello ", name
-  "                                                             VVVVVV
-  " These are not needed, because TextObjectify plugin makes regular
-  " text objects always look forward
-  " onoremap an :<c-u>call NextTextObject('a', '/')<cr>
-  " xnoremap an :<c-u>call NextTextObject('a', '/')<cr>
-  " onoremap in :<c-u>call NextTextObject('i', '/')<cr>
-  " xnoremap in :<c-u>call NextTextObject('i', '/')<cr>
-
-  onoremap al :<c-u>call NextTextObject('a', '?')<cr>
-  xnoremap al :<c-u>call NextTextObject('a', '?')<cr>
-  onoremap il :<c-u>call NextTextObject('i', '?')<cr>
-  xnoremap il :<c-u>call NextTextObject('i', '?')<cr>
-
-  " inside next ( text object (just a simple example of omap)
-  " note: C-U removes the '<,'> when mapping is used in visual mode
-  " onoremap in( :<c-u>normal! f(vi(<cr>
-  " " inside last (
-  " onoremap il( :<c-u>normal! F)vi(<cr>
-  " " around next (
-  " onoremap an( :<c-u>normal! f(va(<cr>
-  " " around last (
-  " onoremap al( :<c-u>normal! F)va(<cr>
 " }}}
 
 " Buffers navigation {{{
-    " list buffers and start completion
-    nnoremap <Leader>b :buffer <C-z>
-    nnoremap <Leader>B :sbuffer <C-z>
+  " list buffers and start completion
+  nnoremap <Leader>b :buffer <C-z>
+  nnoremap <Leader>B :sbuffer <C-z>
 
-    " list buffers with ls and start completion
-    nnoremap gb :ls<CR>:buffer<Space>
-    nnoremap gB :ls<CR>:sbuffer<Space>
+  " list buffers with ls and start completion
+  nnoremap gb :ls<CR>:buffer<Space>
+  nnoremap gB :ls<CR>:sbuffer<Space>
 " }}}
 
 " Windows navigation {{{

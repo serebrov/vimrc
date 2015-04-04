@@ -31,6 +31,17 @@
 "                                                       C
 "                                                      print "hello ", name
 "                                                             VVVVVV
+"
+" Example mappings (put into .vimrc):
+  " onoremap an :<c-u>call NextTextObject('a', '/')<cr>
+  " xnoremap an :<c-u>call NextTextObject('a', '/')<cr>
+  " onoremap in :<c-u>call NextTextObject('i', '/')<cr>
+  " xnoremap in :<c-u>call NextTextObject('i', '/')<cr>
+
+  " onoremap al :<c-u>call NextTextObject('a', '?')<cr>
+  " xnoremap al :<c-u>call NextTextObject('a', '?')<cr>
+  " onoremap il :<c-u>call NextTextObject('i', '?')<cr>
+  " xnoremap il :<c-u>call NextTextObject('i', '?')<cr>
 
 function! NextTextObject(motion, dir)
     let c = nr2char(getchar())
