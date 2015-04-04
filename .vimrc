@@ -15,16 +15,33 @@
   autocmd BufEnter * HardTimeOn
   " auto adjust tab/space settings based on current file
   Plug 'tpope/vim-sleuth'
-  " Additional features for netrw
-  "  -  to open browser focused on current file, - again to go upper
-  "  .  to put selected file name to the end of command line;
-  "  !  to do the same and start command line with !
-  "  ~  go home; cd/cl - :cd / :lcd
-  Plug 'tpope/vim-vinegar'
-  " :Matchmaker - dynamically highlight word under the cursor,
-  "               move the cursor and it will highlight the different word
-  " :Matchmaker! to turn it off
-  Plug 'qstrahl/vim-matchmaker'
+
+  Plug 'bling/vim-airline'
+  let g:airline_theme='badwolf'
+  if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+  endif
+  " " unicode symbols
+  let g:airline_left_sep = '▶'
+  let g:airline_right_sep = '◀'
+  let g:airline_symbols.linenr = '␤'
+  let g:airline_symbols.branch = '⎇'
+  let g:airline_symbols.paste = 'Þ'
+  let g:airline_symbols.whitespace = 'Ξ'
+
+  " adopt color schemes for terminal
+  Plug 'godlygeek/csapprox'
+  " Solarized color scheme
+  Plug 'altercation/vim-colors-solarized'
+  Plug 'sjl/badwolf'
+  Plug 'nanotech/jellybeans.vim'
+  Plug 'noahfrederick/vim-hemisu'
+
+  " Gundo.vim is Vim plugin to visualize your Vim undo tree.
+  Plug 'sjl/gundo.vim'
+  " Similar: Plug 'mbbill/undotree'
+  
+  """"""" Search / highlight
   " On search automatically prints "At match #N out of M matches".
   Plug 'henrik/vim-indexed-search'
   " better search hightlights
@@ -49,6 +66,19 @@
   map #  <Plug>(incsearch-nohl-#)
   map g* <Plug>(incsearch-nohl-g*)
   map g# <Plug>(incsearch-nohl-g#)
+  
+  " :Multichange to enter multichange mode (cw will affect the whole file)
+  Plug 'AndrewRadev/multichange.vim'
+  " disable mapping entirely
+  let g:multichange_mapping = ''
+
+  " :Matchmaker - dynamically highlight word under the cursor,
+  "               move the cursor and it will highlight the different word
+  " :Matchmaker! to turn it off
+  Plug 'qstrahl/vim-matchmaker'
+
+  " always highlight matching html tags
+  Plug 'Valloric/MatchTagAlways'
 
   " rainbow parenthesis
   " Note: doesn't work for php due some specifics in the syntax file
@@ -69,9 +99,21 @@
   " :SemanticHighlightToggle - on/off
   Plug 'jaxbot/semantic-highlight.vim'
 
-  " :NR to move selected text into scratch buffer, :w to put modified text
-  " back
-  Plug 'chrisbra/NrrwRgn'
+  " Highlight patterns when do :s/... in cmd window (Ctrl-f in cmd mode)
+  " also has own cmd line :OverCommandLine
+  Plug 'osyo-manga/vim-over'
+
+  """"""" File browser
+  " Additional features for netrw
+  "  -  to open browser focused on current file, - again to go upper
+  "  .  to put selected file name to the end of command line;
+  "  !  to do the same and start command line with !
+  "  ~  go home; cd/cl - :cd / :lcd
+  Plug 'tpope/vim-vinegar'
+  
+  " Suggest to open existing file instead of creating new one when there
+  " are multiple matches
+  Plug 'EinfachToll/DidYouMean'
 
   Plug 'kien/ctrlp.vim'
   Plug 'FelikZ/ctrlp-py-matcher'
@@ -79,6 +121,7 @@
   " Also need `set path=.,**` (see below) to search recursively
   " See:http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/
   noremap <Leader>i :find<SPACE>
+  noremap <Leader>I :find <C-R>=expand('%:p:h').'/**/*'<CR>
   noremap <Leader>f :CtrlP<CR>
   noremap <Leader>u :CtrlPFunky<CR>
   " PyMatcher for CtrlP
@@ -109,31 +152,55 @@
   let g:ctrlp_clear_cache_on_exit = 0
   " Set no file limit, we are building a big project
   let g:ctrlp_max_files = 0
+  
+  " Manage files and directories in vim
+  " :Vimdir [directory] - To list files and folders
+  " :VimdirR [directory] - To list files and folders recursive
+  " Then change file names, dd to delete and save buffer to apply changes
+  Plug 'c0r73x/vimdir.vim'
+  " Similar: vidir from moreutils (https://joeyh.name/code/moreutils/)
+  " Similar: Plug 'idbrii/renamer.vim'
 
-  " Suggest to open existing file instead of creating new one when there
-  " are multiple matches
-  Plug 'EinfachToll/DidYouMean'
+  " Ensure dir exists before save the file
+  " :e some_new_dir/some_new_file and then :w will work
+  Plug 'dockyard/vim-easydir'
 
-  Plug 'bling/vim-airline'
-  let g:airline_theme='badwolf'
-  if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-  endif
-  " " unicode symbols
-  let g:airline_left_sep = '▶'
-  let g:airline_right_sep = '◀'
-  let g:airline_symbols.linenr = '␤'
-  let g:airline_symbols.branch = '⎇'
-  let g:airline_symbols.paste = 'Þ'
-  let g:airline_symbols.whitespace = 'Ξ'
+  " CD to project root
+  Plug 'airblade/vim-rooter'
 
-  " adopt color schemes for terminal
-  Plug 'godlygeek/csapprox'
-  " Solarized color scheme
-  Plug 'altercation/vim-colors-solarized'
-  Plug 'sjl/badwolf'
-  Plug 'nanotech/jellybeans.vim'
-  Plug 'noahfrederick/vim-hemisu'
+  " Vim / tmux splits integration
+  " <ctrl-h> => Left
+  " <ctrl-j> => Down
+  " <ctrl-k> => Up
+  " <ctrl-l> => Right
+  " <ctrl-\> => Previous split
+  Plug 'christoomey/vim-tmux-navigator'
+  ":Tmux lets you call any old tmux command (with really good tab complete).
+  ":Tyank and :Tput give you direct access to tmux buffers.
+  ":Twrite sends a chunk of text to another pane. Give an argument like windowtitle.2, top-right, or last, or let it default to the previously given argument.
+  ":Tattach lets you use a specific tmux session from outside of it.
+  Plug 'tpope/vim-tbone'
+  "
+  " Note: compare with tbone - :Twrite 1.2 also sends text to another
+  "       tmux pane
+  " Repl for vim
+  " Ctrl-c c - run code in other tmux pane (set :1.2 for win 1 pane 2)
+  " See: http://vimeo.com/34184155 and https://technotales.wordpress.com/2007/10/03/like-slime-for-vim/
+  " Can be used for anything: python, node, bash, mysql, etc
+  "Plug 'jpalardy/vim-slime'
+  "let g:slime_target = "tmux"
+  "let g:slime_python_ipython = 1
+  "
+  " Similar: https://github.com/krisajenkins/vim-pipe
+
+  " disables certain vim features to speedup large file editing
+  " g:LargeFile (by default, its 100) - 100Mb
+  Plug 'vim-scripts/LargeFile'
+
+  """""" Visual mode enhancements
+  " :NR to move selected text into scratch buffer, 
+  " :w to put modified text back
+  Plug 'chrisbra/NrrwRgn'
 
   "  http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
   "  v to select one character
@@ -164,42 +231,44 @@
   nmap <F10> <Plug>(textmanip-toggle-mode)
   xmap <F10> <Plug>(textmanip-toggle-mode)
 
-  " Vim / tmux splits integration
-  " <ctrl-h> => Left
-  " <ctrl-j> => Down
-  " <ctrl-k> => Up
-  " <ctrl-l> => Right
-  " <ctrl-\> => Previous split
-  Plug 'christoomey/vim-tmux-navigator'
-  ":Tmux lets you call any old tmux command (with really good tab complete).
-  ":Tyank and :Tput give you direct access to tmux buffers.
-  ":Twrite sends a chunk of text to another pane. Give an argument like windowtitle.2, top-right, or last, or let it default to the previously given argument.
-  ":Tattach lets you use a specific tmux session from outside of it.
-  Plug 'tpope/vim-tbone'
+  " drawing in vim
+  " \di - start \ds - stop
+  " left-right-up-down - draw and move; with shift - just move
+  " > < ^ v - draw an arrow; pgdb / end / pgup / home - move by diagonal
+  " \> \< \^ \v - draw a fat arrow;
+  " visual block: \a - arrow; \b - box; \e - ellipse; \f - fill; \h - canvas; \l - line;
+  "               \s - add spaces to canvas
+  " leftmouse - select visual block; s-leftmouse - drag and draw with current brush (register)
+  " \ra ... \rz - replace text with given brush (register); \pa ... - like \ra.., blanks are transparent
+  Plug 'vim-scripts/DrawIt'
   "
-  " Note: compare with tbone - :Twrite 1.2 also sends text to another
-  "       tmux pane
-  " Repl for vim
-  " Ctrl-c c - run code in other tmux pane (set :1.2 for win 1 pane 2)
-  " See: http://vimeo.com/34184155 and https://technotales.wordpress.com/2007/10/03/like-slime-for-vim/
-  " Can be used for anything: python, node, bash, mysql, etc
-  "Plug 'jpalardy/vim-slime'
-  "let g:slime_target = "tmux"
-  "let g:slime_python_ipython = 1
+  " Related: https://github.com/jondkinney/dragvisuals.vim - dragging visual blocks
+  " Related: vim-scripts/VisIncr - make a column of increasing or decreasing
+  "          numbers, dates, or daynames
+
+  """"" Tabularize and tables
+  " :Tabularize /, - tablarize by ','
+  " :Tabularize /,/[r|l|c]0
+  " r - align right, l - left, c - center
+  " 0 (or other number) - number of spaces between fields
+  " :Tabularize /,/r1c1l0
+  " formatters will be applied in the specified order
+  " :Tabularize /^[^,]*\zs,/r0c0l0 - use regex ^[^,]*\zs, (match only first comma)
+  " :AddTabularPattern first_comma /^[^,]*\zs,/r0c0l0 - save pattern
+  " (:Tab first_comma)
+  " Standard extensions (after/plugin/TabularMaps.vim)
+  "  assignment, two_spaces, multiple_spaces, argument_list,
+  "  split_declarations, trenary_operator, cpp_io, pascal_assign,
+  "  trailing_c_comments
+  " Similar: https://github.com/tommcdo/vim-lion
+  "          https://github.com/junegunn/vim-easy-align
+  Plug 'godlygeek/tabular'
+
+  " Create and format tables (including formulas)
+  " Plug 'dhruvasagar/vim-table-mode'
   "
-  " Similar: https://github.com/krisajenkins/vim-pipe
-
-  " Manage files and directories in vim
-  " :Vimdir [directory] - To list files and folders
-  " :VimdirR [directory] - To list files and folders recursive
-  " Then change file names, dd to delete and save buffer to apply changes
-  Plug 'c0r73x/vimdir.vim'
-  " Similar: vidir from moreutils (https://joeyh.name/code/moreutils/)
-  " Similar: Plug 'idbrii/renamer.vim'
-
-  " Ensure dir exists before save the file
-  " :e some_new_dir/some_new_file and then :w will work
-  Plug 'dockyard/vim-easydir'
+  " Search in column, arrange column, delete column, move, sum and much more
+  " Plug 'chrisbra/csv.vim'
 
   """""" Git
   " git support:
@@ -238,6 +307,10 @@
   """""" Motions / normal mode commands
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
   Plug 'bkad/CamelCaseMotion'
+
+  " gS / gJ to split / join multiline / single lines forms of code
+  Plug 'AndrewRadev/splitjoin.vim'
+
   " :SidewaysLeft and :SidewaysRight - move the item under the cursor left or right, where an "item" is defined by a delimiter
   Plug 'AndrewRadev/sideways.vim'
   nnoremap <Leader>hh :SidewaysLeft<cr>
@@ -419,32 +492,6 @@
   " Coercion: crs - coerce to snake case, crm - mixed case, crc - camel, cru - upper fooBar (crs)-> foo_bar
   " See also: http://www.reddit.com/r/vim/comments/1weenn/oh_thats_why_abolish_is_useful_subvert/
   Plug 'tpope/vim-abolish'
-  " :Tabularize /, - tablarize by ','
-  " :Tabularize /,/[r|l|c]0
-  " r - align right, l - left, c - center
-  " 0 (or other number) - number of spaces between fields
-  " :Tabularize /,/r1c1l0
-  " formatters will be applied in the specified order
-  " :Tabularize /^[^,]*\zs,/r0c0l0 - use regex ^[^,]*\zs, (match only first comma)
-  " :AddTabularPattern first_comma /^[^,]*\zs,/r0c0l0 - save pattern
-  " (:Tab first_comma)
-  " Standard extensions (after/plugin/TabularMaps.vim)
-  "  assignment, two_spaces, multiple_spaces, argument_list,
-  "  split_declarations, trenary_operator, cpp_io, pascal_assign,
-  "  trailing_c_comments
-  " Similar: https://github.com/tommcdo/vim-lion
-  "          https://github.com/junegunn/vim-easy-align
-  Plug 'godlygeek/tabular'
-  " Gundo.vim is Vim plugin to visualize your Vim undo tree.
-  Plug 'sjl/gundo.vim'
-  " :Multichange to enter multichange mode (cw will affect the whole file)
-  Plug 'AndrewRadev/multichange.vim'
-  " disable mapping entirely
-  let g:multichange_mapping = ''
-  " gS / gJ to split / join multiline / single lines forms of code
-  Plug 'AndrewRadev/splitjoin.vim'
-  " always highlight matching html tags
-  Plug 'Valloric/MatchTagAlways'
 
   """""" Programming / tags / autocomplete
   " Syntax checker
@@ -479,32 +526,9 @@
   "let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
 
   Plug 'honza/vim-snippets'
-  Plug 'airblade/vim-rooter'
   " https://github.com/majutsushi/tagbar/wiki
   " http://majutsushi.github.com/tagbar/ :TagbarToggle
   Plug 'majutsushi/tagbar'
-
-  " disables certain vim features to speedup large file editing
-  " g:LargeFile (by default, its 100) - 100Mb
-  Plug 'vim-scripts/LargeFile'
-  " drawing in vim
-  " \di - start \ds - stop
-  " left-right-up-down - draw and move; with shift - just move
-  " > < ^ v - draw an arrow; pgdb / end / pgup / home - move by diagonal
-  " \> \< \^ \v - draw a fat arrow;
-  " visual block: \a - arrow; \b - box; \e - ellipse; \f - fill; \h - canvas; \l - line;
-  "               \s - add spaces to canvas
-  " leftmouse - select visual block; s-leftmouse - drag and draw with current brush (register)
-  " \ra ... \rz - replace text with given brush (register); \pa ... - like \ra.., blanks are transparent
-  Plug 'vim-scripts/DrawIt'
-  "
-  " Related: https://github.com/jondkinney/dragvisuals.vim - dragging visual blocks
-  " Related: vim-scripts/VisIncr - make a column of increasing or decreasing
-  "          numbers, dates, or daynames
-
-  " Highlight patterns when do :s/... in cmd window (Ctrl-f in cmd mode)
-  " also has own cmd line :OverCommandLine
-  Plug 'osyo-manga/vim-over'
 
   " HTTP client
   " Example:
@@ -556,6 +580,8 @@
   let g:used_javascript_libs = 'jquery,underscore,angularjs'
   " ejs templates syntax highlight
   Plug 'briancollins/vim-jst'
+
+  """""" JSON
   " better json highlighting
   Plug 'elzr/vim-json'
 
@@ -1628,14 +1654,6 @@ command! -nargs=0 Pulse call s:Pulse()
   endfunction
   vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
   vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
-
-  " Search for keyword under cursor and start result selection mode
-  " (this is :help include-search)
-  " Note: result is similar to :g/C-RC-W (it uses 'p' - print command by
-  " default)
-  "nnoremap [I [I:
-  " Search in the file, display a list of results
-  nnoremap <Leader>I :ilist /
 
   " Search the last search (@/ - '/' register content, last search text)
   " using vimgrep and show in quickfix
