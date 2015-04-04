@@ -77,6 +77,7 @@
   Plug 'FelikZ/ctrlp-py-matcher'
   Plug 'tacahiroy/ctrlp-funky'
   " Also need `set path=.,**` (see below) to search recursively
+  " See:http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/
   noremap <Leader>i :find<SPACE>
   noremap <Leader>f :CtrlP<CR>
   noremap <Leader>u :CtrlPFunky<CR>
@@ -109,17 +110,9 @@
   " Set no file limit, we are building a big project
   let g:ctrlp_max_files = 0
 
-  " If ag is available use it as filename list generator instead of 'find'
-  if executable("ag")
-      set grepprg=ag\ --nogroup\ --nocolor
-  endif
-
   " Suggest to open existing file instead of creating new one when there
   " are multiple matches
   Plug 'EinfachToll/DidYouMean'
-
-  " :Ag  - ag integration
-  Plug 'rking/ag.vim'
 
   Plug 'bling/vim-airline'
   let g:airline_theme='badwolf'
@@ -199,7 +192,10 @@
   " Manage files and directories in vim
   " :Vimdir [directory] - To list files and folders
   " :VimdirR [directory] - To list files and folders recursive
+  " Then change file names, dd to delete and save buffer to apply changes
   Plug 'c0r73x/vimdir.vim'
+  " Similar: vidir from moreutils (https://joeyh.name/code/moreutils/)
+  " Similar: Plug 'idbrii/renamer.vim'
 
   " Ensure dir exists before save the file
   " :e some_new_dir/some_new_file and then :w will work
@@ -1247,6 +1243,7 @@ EOF
   nnoremap <Leader>B :sbuffer <C-z>
 
   " list buffers with ls and start completion
+  " see: http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/
   nnoremap gb :ls<CR>:buffer<Space>
   nnoremap gB :ls<CR>:sbuffer<Space>
 " }}}
@@ -1644,25 +1641,39 @@ command! -nargs=0 Pulse call s:Pulse()
   " using vimgrep and show in quickfix
   nnoremap <Leader>z :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
-" Ag Motions
+  " If ag is available use it as filename list generator instead of 'find'
+  if executable("ag")
+      " --vimgrep is available from version  0.25.0+
+      if split(system("ag --version"), "[ \n\r\t]")[2] =~ '\d\+.[2-9][5-9]\(.\d\+\)\?'
+        set grepprg=ag\ --vimgrep\ --ignore-case
+      else
+        " --noheading seems odd here, but see https://github.com/ggreer/the_silver_searcher/issues/361
+        set grepprg=ag\ --column\ --nogroup\ --noheading\ --ignore-case
+      endif
+      set grepformat=%f:%l:%c:%m,%f:%l:%m
+      command! -nargs=+ -complete=file_in_path -bar Grep silent! grep! <args> | copen | let@/=split('<args>')[-1]
+      " redraw!
+  endif
+" Grep Motions
 " From https://bitbucket.org/sjl/dotfiles (AckMotions)
 
-" Motions to Ag for things.  Works with pretty much everything, including:
-"
+" Motions to Grep for things.  Works with pretty much everything, including:
 "   w, W, e, E, b, B, t*, f*, i*, a*, and custom text objects
-"
-" Awesome.
 "
 " Note: If the text covered by a motion contains a newline it won't work.  Ag
 " searches line-by-line.
-nnoremap <silent> g/ :set opfunc=<SID>AgMotion<CR>g@
-xnoremap <silent> g/ :<C-U>call <SID>AgMotion(visualmode())<CR>
+" Note: g@{motion} - calls the 'operatorfunc' with 
+"                    one argument - line / char / block
+"                    '[ and '] marks are set to start/end of the text
+"                    selected by motion
+nnoremap <silent> g/ :set opfunc=<SID>GrepMotion<CR>g@
+xnoremap <silent> g/ :<C-U>call <SID>GrepMotion(visualmode())<CR>
 
 " search word under cursor
-" original gw is similar to gq, see :help gw
-nnoremap gw :Ag! '\b<c-r><c-w>\b'<cr>
+" Note: we remap 'gw' here, original gw is similar to gq, see :help gw
+nnoremap gw :Grep '\b<c-r><c-w>\b'<cr> :copen<cr>
 " search for visual selection
-xnoremap <silent> <Leader>w :call <SID>AgMotion(visualmode())<CR>
+xnoremap <silent> <Leader>w :call <SID>GrepMotion(visualmode())<CR>
 
 function! s:CopyMotionForType(type)
     if a:type ==# 'v'
@@ -1672,13 +1683,10 @@ function! s:CopyMotionForType(type)
     endif
 endfunction
 
-function! s:AgMotion(type) abort
+function! s:GrepMotion(type) abort
     let reg_save = @@
-
     call s:CopyMotionForType(a:type)
-
-    execute "normal! :Ag! --literal " . shellescape(@@) . "\<cr>"
-
+    execute "normal! :Grep --literal " . shellescape(@@) . "\<cr>"
     let @@ = reg_save
 endfunction
 
