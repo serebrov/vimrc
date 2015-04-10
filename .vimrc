@@ -2,6 +2,12 @@
   " set nocompatible " explicitly get out of vi-compatible mode
   " filetype off
 
+  " Check if we use nvim or vim
+  let g:nvim_here = 0
+  if $VIM =~ 'nvim'
+    let g:nvim_here = 1
+  endif
+
   call plug#begin('~/.vim/plugged')
 
   """""" UI
@@ -40,13 +46,14 @@
   " Gundo.vim is Vim plugin to visualize your Vim undo tree.
   Plug 'sjl/gundo.vim'
   " Similar: Plug 'mbbill/undotree'
-  
+
   """"""" Search / highlight
   " On search automatically prints "At match #N out of M matches".
   Plug 'henrik/vim-indexed-search'
   " better search hightlights
   Plug 'haya14busa/incsearch.vim'
-  " similar: https://github.com/junegunn/vim-oblique/
+  " Similar: https://github.com/junegunn/vim-oblique/
+  " Similar: https://github.com/dahu/SearchParty
   map /  <Plug>(incsearch-forward)\v
   map ?  <Plug>(incsearch-backward)\v
   " Setup for vim-indexed-search
@@ -66,7 +73,7 @@
   map #  <Plug>(incsearch-nohl-#)
   map g* <Plug>(incsearch-nohl-g*)
   map g# <Plug>(incsearch-nohl-g#)
-  
+
   " :Multichange to enter multichange mode (cw will affect the whole file)
   Plug 'AndrewRadev/multichange.vim'
   " disable mapping entirely
@@ -110,7 +117,7 @@
   "  !  to do the same and start command line with !
   "  ~  go home; cd/cl - :cd / :lcd
   Plug 'tpope/vim-vinegar'
-  
+
   " Suggest to open existing file instead of creating new one when there
   " are multiple matches
   Plug 'EinfachToll/DidYouMean'
@@ -152,7 +159,7 @@
   let g:ctrlp_clear_cache_on_exit = 0
   " Set no file limit, we are building a big project
   let g:ctrlp_max_files = 0
-  
+
   " Manage files and directories in vim
   " :Vimdir [directory] - To list files and folders
   " :VimdirR [directory] - To list files and folders recursive
@@ -198,7 +205,7 @@
   Plug 'vim-scripts/LargeFile'
 
   """""" Visual mode enhancements
-  " :NR to move selected text into scratch buffer, 
+  " :NR to move selected text into scratch buffer,
   " :w to put modified text back
   Plug 'chrisbra/NrrwRgn'
 
@@ -1309,6 +1316,27 @@ EOF
   vmap <c-k> :call WinMove('k')<CR>
   vmap <c-l> :call WinMove('l')<CR>
   vmap <c-h> :call WinMove('h')<CR>
+  if g:nvim_here 
+    " Testing, map jk/kj as Esc
+    " Map Ctrl + h,j,k,l to move between windows
+    " And map Alt + h,j,k,l for the same
+    " now it is possible to map Alt in terminal
+    " see also :help nvim-terminal-emulator
+    :tnoremap jk <C-\><C-n>
+    :tnoremap kj <C-\><C-n>
+    :tnoremap <C-h> <C-\><C-n>:call WinMove('h')<CR>
+    :tnoremap <C-j> <C-\><C-n>:call WinMove('j')<CR>
+    :tnoremap <C-k> <C-\><C-n>:call WinMove('j')<CR>
+    :tnoremap <C-l> <C-\><C-n>:call WinMove('j')<CR>
+    :tnoremap <A-h> <C-\><C-n>:call WinMove('h')<CR>
+    :tnoremap <A-j> <C-\><C-n>:call WinMove('j')<CR>
+    :tnoremap <A-k> <C-\><C-n>:call WinMove('j')<CR>
+    :tnoremap <A-l> <C-\><C-n>:call WinMove('j')<CR>
+    :nnoremap <A-h> :call WinMove('h')<CR>
+    :nnoremap <A-j> :call WinMove('j')<CR>
+    :nnoremap <A-k> :call WinMove('k')<CR>
+    :nnoremap <A-l> :call WinMove('l')<CR>
+  endif
 
   "close
   map <leader>wc :wincmd q<cr>
@@ -1680,7 +1708,7 @@ command! -nargs=0 Pulse call s:Pulse()
 "
 " Note: If the text covered by a motion contains a newline it won't work.  Ag
 " searches line-by-line.
-" Note: g@{motion} - calls the 'operatorfunc' with 
+" Note: g@{motion} - calls the 'operatorfunc' with
 "                    one argument - line / char / block
 "                    '[ and '] marks are set to start/end of the text
 "                    selected by motion
