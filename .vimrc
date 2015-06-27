@@ -14,11 +14,11 @@
   " sensible defaults
   Plug 'tpope/vim-sensible'
   " Hard mode - no jjjjj and kkkkk, :HardTimeToggle to toggle
-  let g:hardtime_allow_different_key = 1
-  let g:list_of_normal_keys = ["h", "j", "k", "l"]
-  let g:list_of_visual_keys = ["h", "j", "k", "l"]
-  Plug 'takac/vim-hardtime'
-  autocmd BufEnter * HardTimeOn
+  " let g:hardtime_allow_different_key = 1
+  " let g:list_of_normal_keys = ["h", "j", "k", "l"]
+  " let g:list_of_visual_keys = ["h", "j", "k", "l"]
+  " Plug 'takac/vim-hardtime'
+  " autocmd BufEnter * HardTimeOn
   " auto adjust tab/space settings based on current file
   Plug 'tpope/vim-sleuth'
 
@@ -39,50 +39,50 @@
   Plug 'godlygeek/csapprox'
   " Solarized color scheme
   Plug 'altercation/vim-colors-solarized'
-  Plug 'sjl/badwolf'
-  Plug 'nanotech/jellybeans.vim'
-  Plug 'noahfrederick/vim-hemisu'
+  " Plug 'sjl/badwolf'
+  " Plug 'nanotech/jellybeans.vim'
+  " Plug 'noahfrederick/vim-hemisu'
 
   " Gundo.vim is Vim plugin to visualize your Vim undo tree.
-  Plug 'sjl/gundo.vim'
+  " Plug 'sjl/gundo.vim'
   " Similar: Plug 'mbbill/undotree'
 
   """"""" Search / highlight
   " On search automatically prints "At match #N out of M matches".
-  Plug 'henrik/vim-indexed-search'
+  " Plug 'henrik/vim-indexed-search'
   " better search hightlights
-  Plug 'haya14busa/incsearch.vim'
-  " Similar: https://github.com/junegunn/vim-oblique/
-  " Similar: https://github.com/dahu/SearchParty
-  map /  <Plug>(incsearch-forward)\v
-  map ?  <Plug>(incsearch-backward)\v
-  " Setup for vim-indexed-search
-  " See: https://github.com/haya14busa/incsearch.vim/issues/21
-  let g:indexed_search_mappings = 0
-  augroup incsearch-indexed
-    autocmd!
-    autocmd User IncSearchLeave ShowSearchIndex
-  augroup END
-  nnoremap <silent>n nzv:ShowSearchIndex<CR>
-  nnoremap <silent>N Nzv:ShowSearchIndex<CR>
-  "set hlsearch
-  let g:incsearch#auto_nohlsearch = 1
-  map n  <Plug>(incsearch-nohl-n)zv:ShowSearchIndex<CR>
-  map N  <Plug>(incsearch-nohl-N)zv:ShowSearchIndex<CR>
-  map *  <Plug>(incsearch-nohl-*)
-  map #  <Plug>(incsearch-nohl-#)
-  map g* <Plug>(incsearch-nohl-g*)
-  map g# <Plug>(incsearch-nohl-g#)
+  " Plug 'haya14busa/incsearch.vim'
+  " " Similar: https://github.com/junegunn/vim-oblique/
+  " " Similar: https://github.com/dahu/SearchParty
+  " map /  <Plug>(incsearch-forward)\v
+  " map ?  <Plug>(incsearch-backward)\v
+  " " Setup for vim-indexed-search
+  " " See: https://github.com/haya14busa/incsearch.vim/issues/21
+  " let g:indexed_search_mappings = 0
+  " augroup incsearch-indexed
+  "   autocmd!
+  "   autocmd User IncSearchLeave ShowSearchIndex
+  " augroup END
+  " nnoremap <silent>n nzv:ShowSearchIndex<CR>
+  " nnoremap <silent>N Nzv:ShowSearchIndex<CR>
+  " "set hlsearch
+  " let g:incsearch#auto_nohlsearch = 1
+  " map n  <Plug>(incsearch-nohl-n)zv:ShowSearchIndex<CR>
+  " map N  <Plug>(incsearch-nohl-N)zv:ShowSearchIndex<CR>
+  " map *  <Plug>(incsearch-nohl-*)
+  " map #  <Plug>(incsearch-nohl-#)
+  " map g* <Plug>(incsearch-nohl-g*)
+  " map g# <Plug>(incsearch-nohl-g#)
 
   " :Multichange to enter multichange mode (cw will affect the whole file)
-  Plug 'AndrewRadev/multichange.vim'
+  " Plug 'AndrewRadev/multichange.vim'
   " disable mapping entirely
-  let g:multichange_mapping = ''
+  " let g:multichange_mapping = ''
 
   " :Matchmaker - dynamically highlight word under the cursor,
   "               move the cursor and it will highlight the different word
   " :Matchmaker! to turn it off
-  Plug 'qstrahl/vim-matchmaker'
+  " Plug 'qstrahl/vim-matchmaker'
 
   " always highlight matching html tags
   Plug 'Valloric/MatchTagAlways'
@@ -104,11 +104,11 @@
   "      https://plus.google.com/+DouglasCrockfordEsq/posts/FzKnHk96m2C
   "
   " :SemanticHighlightToggle - on/off
-  Plug 'jaxbot/semantic-highlight.vim'
+  " Plug 'jaxbot/semantic-highlight.vim'
 
   " Highlight patterns when do :s/... in cmd window (Ctrl-f in cmd mode)
   " also has own cmd line :OverCommandLine
-  Plug 'osyo-manga/vim-over'
+  " Plug 'osyo-manga/vim-over'
 
   """"""" File browser
   " Additional features for netrw
@@ -122,43 +122,65 @@
   " are multiple matches
   Plug 'EinfachToll/DidYouMean'
 
-  Plug 'kien/ctrlp.vim'
-  Plug 'FelikZ/ctrlp-py-matcher'
-  Plug 'tacahiroy/ctrlp-funky'
   " Also need `set path=.,**` (see below) to search recursively
   " See:http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/
   noremap <Leader>i :find<SPACE>
   noremap <Leader>I :find <C-R>=expand('%:p:h').'/**/*'<CR>
-  noremap <Leader>f :CtrlP<CR>
-  noremap <Leader>u :CtrlPFunky<CR>
-  " PyMatcher for CtrlP
-  if !has('python')
-    echo 'In order to use pymatcher plugin, you need +python compiled vim'
-  else
-    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-  endif
-  " http://stackoverflow.com/questions/18285751/use-ag-in-ctrlp-vim
-  if executable("ag")
-    set grepprg=ag\ --nogroup\ --nocolor
-    " --hidden to search dot files, but it also reveals .git, so ignore
-    "  it explicitly
-    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --ignore ''node_modules'' --hidden -g ""'
-  endif
-  " Note: per-project config can look like this (add to .vimrc.local):
+  " There is very annoying issue with fzf - when you select file and buffer stays in some
+  " strange state, where almost anything closes the buffer and some
+  " actions like attempt to search text deletes part of buffer without undo
+  " Issue is not stable, it is often reproduced when you start work with vim,
+  " but then it disappears and it start work normally, not sure why
+  " So for now keep ctrlp enabled for main mappings
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+  noremap <Leader>f :FZF<CR>
+  " " See also: https://github.com/junegunn/fzf/wiki/examples
+  " " See also: https://github.com/D630/fzf-contrib
+  " " Similar: https://github.com/garybernhardt/selecta
+  command! FZFMru call fzf#run({
+            \'source': NeomruHistory(),
+            \'sink' : 'e ',
+            \'options' : '-m',
+            \})
+  function! NeomruHistory()
+      return "sed '1d' " . $HOME . "/.vim/tmp/cache/neomru/file"
+      "return "ag -i " . a:l . " | sed 's@\\(.[^:]*\\):\\(.[^:]*\\):\\(.*\\)@\\3:\\2:\\1@' "
+  endfunction
+  noremap <Leader>fm :FZFMru<CR>
+
+  " Plug 'kien/ctrlp.vim'
+  " Plug 'FelikZ/ctrlp-py-matcher'
+  " Plug 'tacahiroy/ctrlp-funky'
+  " noremap <Leader>f :CtrlP<CR>
+  " noremap <Leader>u :CtrlPFunky<CR>
+  " " PyMatcher for CtrlP
+  " if !has('python')
+  "   echo 'In order to use pymatcher plugin, you need +python compiled vim'
+  " else
+  "   let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+  " endif
+  " " http://stackoverflow.com/questions/18285751/use-ag-in-ctrlp-vim
+  " if executable("ag")
+  "   set grepprg=ag\ --nogroup\ --nocolor
+  "   " --hidden to search dot files, but it also reveals .git, so ignore
+  "   "  it explicitly
+  "   let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --ignore ''node_modules'' --hidden -g ""'
+  " endif
+  " " Note: per-project config can look like this (add to .vimrc.local):
   " let g:ctrlp_custom_ignore = {
   " \ 'dir': '\v[\/](' . join([
   "       \ 'build',
   "       \ ], '|') . ')$',
   " \ 'file': '\v\.(exe|so|dll)$',
   " \ }
-  let g:ctrlp_switch_buffer = 'vt'
-  " Set delay to prevent extra search
-  let g:ctrlp_lazy_update = 350
-  " Do not clear filenames cache, to improve CtrlP startup
-  " You can manualy clear it by <F5> when ctrlp is opened, <F7> to clear MRU
-  let g:ctrlp_clear_cache_on_exit = 0
-  " Set no file limit, we are building a big project
-  let g:ctrlp_max_files = 0
+  " let g:ctrlp_switch_buffer = 'vt'
+  " " Set delay to prevent extra search
+  " let g:ctrlp_lazy_update = 350
+  " " Do not clear filenames cache, to improve CtrlP startup
+  " " You can manualy clear it by <F5> when ctrlp is opened, <F7> to clear MRU
+  " let g:ctrlp_clear_cache_on_exit = 0
+  " " Set no file limit, we are building a big project
+  " let g:ctrlp_max_files = 0
 
   " Manage files and directories in vim
   " :Vimdir [directory] - To list files and folders
@@ -186,7 +208,7 @@
   ":Tyank and :Tput give you direct access to tmux buffers.
   ":Twrite sends a chunk of text to another pane. Give an argument like windowtitle.2, top-right, or last, or let it default to the previously given argument.
   ":Tattach lets you use a specific tmux session from outside of it.
-  Plug 'tpope/vim-tbone'
+  " Plug 'tpope/vim-tbone'
   "
   " Note: compare with tbone - :Twrite 1.2 also sends text to another
   "       tmux pane
@@ -200,6 +222,18 @@
   "
   " Similar: https://github.com/krisajenkins/vim-pipe
 
+  " let g:ConqueTerm_ExecFileKey = '<Leader>te'
+  " let g:ConqueTerm_SendFileKey = '<Leader>ts'
+  " let g:ConqueTerm_SendVisKey = '<Leader>tv'
+  " Plug 'nicoraffo/conque'
+
+  Plug 'Shougo/vimproc'
+  Plug 'Shougo/vimshell.vim'
+
+  Plug 'Shougo/neomru.vim'
+  let g:neomru#file_mru_path = $HOME . '/.vim/tmp/cache/neomru/file'
+  let g:neomru#directory_mru_path = $HOME . '/.vim/tmp/cache/neomru/directory'
+
   " disables certain vim features to speedup large file editing
   " g:LargeFile (by default, its 100) - 100Mb
   Plug 'vim-scripts/LargeFile'
@@ -207,7 +241,7 @@
   """""" Visual mode enhancements
   " :NR to move selected text into scratch buffer,
   " :w to put modified text back
-  Plug 'chrisbra/NrrwRgn'
+  " Plug 'chrisbra/NrrwRgn'
 
   "  http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
   "  v to select one character
@@ -215,28 +249,28 @@
   "  v again to expand to paragraph
   "  ...
   "  <C-v> go back to previous selection if I went too far
-  Plug 'terryma/vim-expand-region'
-  vmap v <Plug>(expand_region_expand)
-  vmap <C-v> <Plug>(expand_region_shrink)
+  " Plug 'terryma/vim-expand-region'
+  " vmap v <Plug>(expand_region_expand)
+  " vmap <C-v> <Plug>(expand_region_shrink)
 
   " Move / duplicate text
   " space + d / D - duplicate down/up
   " visual mode - arrows - move selection
   " F10 - toggle replace/insert
-  Plug 't9md/vim-textmanip'
-  xmap <Space>d <Plug>(textmanip-duplicate-down)
-  nmap <Space>d <Plug>(textmanip-duplicate-down)
-  xmap <Space>D <Plug>(textmanip-duplicate-up)
-  nmap <Space>D <Plug>(textmanip-duplicate-up)
+  " Plug 't9md/vim-textmanip'
+  " xmap <Space>d <Plug>(textmanip-duplicate-down)
+  " nmap <Space>d <Plug>(textmanip-duplicate-down)
+  " xmap <Space>D <Plug>(textmanip-duplicate-up)
+  " nmap <Space>D <Plug>(textmanip-duplicate-up)
 
-  xmap <Down> <Plug>(textmanip-move-down)
-  xmap <Up> <Plug>(textmanip-move-up)
-  xmap <Left> <Plug>(textmanip-move-left)
-  xmap <Right> <Plug>(textmanip-move-right)
+  " xmap <Down> <Plug>(textmanip-move-down)
+  " xmap <Up> <Plug>(textmanip-move-up)
+  " xmap <Left> <Plug>(textmanip-move-left)
+  " xmap <Right> <Plug>(textmanip-move-right)
 
-  " toggle insert/replace with <F10>
-  nmap <F10> <Plug>(textmanip-toggle-mode)
-  xmap <F10> <Plug>(textmanip-toggle-mode)
+  " " toggle insert/replace with <F10>
+  " nmap <F10> <Plug>(textmanip-toggle-mode)
+  " xmap <F10> <Plug>(textmanip-toggle-mode)
 
   " drawing in vim
   " \di - start \ds - stop
@@ -247,7 +281,7 @@
   "               \s - add spaces to canvas
   " leftmouse - select visual block; s-leftmouse - drag and draw with current brush (register)
   " \ra ... \rz - replace text with given brush (register); \pa ... - like \ra.., blanks are transparent
-  Plug 'vim-scripts/DrawIt'
+  " Plug 'vim-scripts/DrawIt'
   "
   " Related: https://github.com/jondkinney/dragvisuals.vim - dragging visual blocks
   " Related: vim-scripts/VisIncr - make a column of increasing or decreasing
@@ -290,9 +324,9 @@
   "  mergetool.fugitive.trustexitcode=true
   Plug 'tpope/vim-fugitive'
   " :Gitv - git history viewer
-  Plug 'gregsexton/gitv'
+  " Plug 'gregsexton/gitv'
   " :Extradite - git browser
-  Plug 'int3/vim-extradite'
+  " Plug 'int3/vim-extradite'
   " Merge tool, see http://sjl.bitbucket.org/splice.vim/
   " git setup:
   "  mergetool.splice.cmd=gvim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'
@@ -409,13 +443,14 @@
 
   """ Quickfix improvements
   "
-  " :QFdo - quickfix do - run a command over quckfix files, see also :LLdo for location list
-  " :BufTypeDo, :BufMatchDo - run a command over buffers of specified type or
-  "    buffers with name matching the pattern
   " Allows to populate vim's args from the quickfix, so we can:
   "  :Ggrep findme
   "  :Qargs | argdo %s/findme/replacement/gc | update
   " Plug 'nelstrom/vim-qargs'
+  "
+  " :QFdo - quickfix do - run a command over quckfix files, see also :LLdo for location list
+  " :BufTypeDo, :BufMatchDo - run a command over buffers of specified type or
+  "    buffers with name matching the pattern
   " :View command -> command result to split buffer, like :View ilist vim
   "    or :View map x
   " Alternative is to use 'redir' command:
@@ -439,15 +474,15 @@
   Plug 'dahu/Vimple'
   " Having the quickfix list execute :EnMasse to edit the
   " list content and back-sync edits to source files
-  Plug 'Wolfy87/vim-enmasse'
+  " Plug 'Wolfy87/vim-enmasse'
   " find and replace occurences in many buffers being aware of the context
   " :Swoop pattern - run for singe buffer
   " :Swoop! pattern - for all buffers
   " For all buffers it is convenient to :CloseSession and :BufOnly and then
   " for example, :args **/*.py to load all python files
   " and then we can review/edit results
-  Plug 'pelodelfuego/vim-swoop'
-  let g:swoopUseDefaultKeyMap = 0
+  " Plug 'pelodelfuego/vim-swoop'
+  " let g:swoopUseDefaultKeyMap = 0
   " TODO: check alternatives:
   "https://github.com/dyng/ctrlsf.vim
   "https://github.com/AndrewRadev/writable_search.vim
@@ -456,15 +491,15 @@
   " Highlight yanked text
   " see  http://stackoverflow.com/questions/26069278/hightlight-copied-area-on-vim
   " Lets user define their own operators.
-  Plug 'kana/vim-operator-user'
+  " Plug 'kana/vim-operator-user'
   " Operator to do two or more operators.
-  Plug 'thinca/vim-operator-sequence'
+  " Plug 'thinca/vim-operator-sequence'
   " Highlight yanked text
-  Plug 'osyo-manga/vim-operator-highlight'
+  " Plug 'osyo-manga/vim-operator-highlight'
   " let g:operator#highlight#clear_time=2.0
-  noremap <expr> <Plug>(yank-highlight) operator#sequence#map("y", "\<Plug>(operator-highlight)")
-  nmap yc <Plug>(yank-highlight)
-  vmap yc <Plug>(yank-highlight)
+  " noremap <expr> <Plug>(yank-highlight) operator#sequence#map("y", "\<Plug>(operator-highlight)")
+  " nmap yc <Plug>(yank-highlight)
+  " vmap yc <Plug>(yank-highlight)
 
   " :PP: Pretty print. With no argument, acts as a REPL.
   " :Runtime: Reload runtime files. Like :runtime!, but it unlets any include guards first.
@@ -478,7 +513,7 @@
   " zS: Show the active syntax highlighting groups under the cursor.
   " g!: Eval a motion or selection as VimL and replace it with the result.
   "     This is handy for doing math, even outside of VimL. It's so handy, in fact, that it probably deserves its own plugin.
-  " Plug 'tpope/vim-scriptease'
+  Plug 'tpope/vim-scriptease'
 
   """""" Commands
   "Vim sugar for the UNIX shell commands that need it the most. Commands
@@ -535,7 +570,7 @@
   Plug 'honza/vim-snippets'
   " https://github.com/majutsushi/tagbar/wiki
   " http://majutsushi.github.com/tagbar/ :TagbarToggle
-  Plug 'majutsushi/tagbar'
+  " Plug 'majutsushi/tagbar'
 
   " HTTP client
   " Example:
@@ -568,17 +603,18 @@
   """""" Markdown
   Plug 'tpope/vim-markdown'
   " Markup files preview: <Leader>P
-  Plug 'greyblake/vim-preview'
-  let g:PreviewBrowsers='google-chrome'
+  " Plug 'greyblake/vim-preview'
+  " nnoremap <Leader>pm :Preview<CR>
+  " let g:PreviewBrowsers='google-chrome'
 
-  Plug 'suan/vim-instant-markdown'
+  " Plug 'suan/vim-instant-markdown'
 
   """""" PHP
   " php completion - it should be copied to autoload/phpcomplete.vim
-  Plug 'shawncplus/phpcomplete.vim'
+  " Plug 'shawncplus/phpcomplete.vim'
   " php 5.3 syntax
-  Plug 'StanAngeloff/php.vim'
-  Plug '2072/PHP-Indenting-for-VIm'
+  " Plug 'StanAngeloff/php.vim'
+  " Plug '2072/PHP-Indenting-for-VIm'
 
   """""" Javascript
   Plug 'pangloss/vim-javascript'
@@ -617,28 +653,28 @@ EOF
 
   """""" Documentation
   " php documenter
-  Plug 'mikehaertl/pdv-standalone'
+  " Plug 'mikehaertl/pdv-standalone'
   " phpDocumenter
-  let g:pdv_cfg_Package = "app"
-  let g:pdv_cfg_Version = ""
-  let g:pdv_cfg_Author = "Boris Serebrov"
-  let g:pdv_cfg_Copyright = ""
-  let g:pdv_cfg_License = ""
+  " let g:pdv_cfg_Package = "app"
+  " let g:pdv_cfg_Version = ""
+  " let g:pdv_cfg_Author = "Boris Serebrov"
+  " let g:pdv_cfg_Copyright = ""
+  " let g:pdv_cfg_License = ""
   Plug 'heavenshell/vim-jsdoc'
   "JSDoc
   let g:jsdoc_default_mapping = 0
   augroup DocMap
     autocmd!
 
-    autocmd FileType php inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
-    autocmd FileType php nnoremap <Leader>pd :call PhpDocSingle()<CR>
-    autocmd FileType php vnoremap <Leader>pd :call PhpDocRange()<CR>
+    " autocmd FileType php inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
+    " autocmd FileType php nnoremap <Leader>pd :call PhpDocSingle()<CR>
+    " autocmd FileType php vnoremap <Leader>pd :call PhpDocRange()<CR>
 
     autocmd FileType javascript nnoremap <Leader>pd :JsDoc<CR>
 
   augroup END
   """""" Go
-  Plug 'fatih/vim-go'
+  " Plug 'fatih/vim-go'
 
   """""" Wakatime: https://wakatime.com
   Plug 'wakatime/vim-wakatime'
@@ -697,7 +733,8 @@ EOF
 
   " Colors {{{
       set background=dark
-      if $COLORTERM == 'gnome-terminal'
+      "if $COLORTERM == 'gnome-terminal'
+      if !has("gui_running")
           " tell vim that gnome terminal supports 256 colors
           set t_Co=256
           let g:solarized_termcolors=256
@@ -770,7 +807,7 @@ EOF
     " autowrite on leave the insert mode, focus load and cursor hold
     augroup MyAutoCmdAutosave
       autocmd!
-      autocmd InsertLeave,CursorHold,CursorHoldI * call DoAutosave()
+      "autocmd InsertLeave,CursorHold,CursorHoldI * call DoAutosave()
       autocmd FocusLost,WinLeave   * call DoAutosave()
     augroup END
   endif
@@ -1201,6 +1238,8 @@ EOF
   vnoremap <Leader>y "+y
   nnoremap <Leader>p "+p
   vnoremap <Leader>p "+p
+  nnoremap <Leader>P "+P
+  vnoremap <Leader>P "+P
 
   " Move cursor by display lines when wrapping
   " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
@@ -1316,7 +1355,7 @@ EOF
   vmap <c-k> :call WinMove('k')<CR>
   vmap <c-l> :call WinMove('l')<CR>
   vmap <c-h> :call WinMove('h')<CR>
-  if g:nvim_here 
+  if g:nvim_here
     " Testing, map jk/kj as Esc
     " Map Ctrl + h,j,k,l to move between windows
     " And map Alt + h,j,k,l for the same
@@ -1465,7 +1504,7 @@ EOF
   \    },
   \    "javascript" : {
   \        "tagfile":".js.tags",
-  \        "args":"-R",
+  \        "args":"-R --exclude=node_modules --exclude=*.min.js --exclude=*-min.js",
   \        "filesappend": "/**"
   \    }
   \}
