@@ -53,7 +53,7 @@ command! -nargs=0 SessionRestore call s:session_restore_all()
 augroup tabsession
     "autocmd!
     " autosave session
-    autocmd TabLeave,BufEnter * call s:session_tab_leave()
+    autocmd TabLeave * call s:session_tab_leave()
     autocmd VimLeavePre * call s:session_vim_leave()
     " load last session on start
     autocmd VimEnter * call s:session_vim_enter()
