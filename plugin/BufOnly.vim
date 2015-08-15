@@ -14,8 +14,7 @@
 " Without any arguments the current buffer is kept.  With an argument the
 " buffer name/number supplied is kept.
 
-command! -nargs=? -complete=buffer -bang BufOnlyTab
-    \ :call BufOnlyTab('<args>', '<bang>')
+command! BufOnlyTab :call BufOnlyTab()
 
 command! -nargs=? -complete=buffer -bang BufOnly
     \ :call BufOnly('<args>', '<bang>')
@@ -70,7 +69,6 @@ endfunction
 
 " see http://stackoverflow.com/questions/1534835/how-do-i-close-all-buffers-that-arent-shown-in-a-window-in-vim
 " wipe all hidden buffers in all tabs
-"function! CloseHiddenBuffers()
 function! BufOnlyTab()
   " list of *all* buffer numbers
   let l:buffers = range(1, bufnr('$'))
