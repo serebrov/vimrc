@@ -39,6 +39,7 @@
   Plug 'godlygeek/csapprox'
   " Solarized color scheme
   Plug 'altercation/vim-colors-solarized'
+  Plug 'kshenoy/vim-sol'
   " Plug 'sjl/badwolf'
   " Plug 'nanotech/jellybeans.vim'
   " Plug 'noahfrederick/vim-hemisu'
@@ -51,7 +52,7 @@
   " On search automatically prints "At match #N out of M matches".
   " Plug 'henrik/vim-indexed-search'
   " better search hightlights
-  " Plug 'haya14busa/incsearch.vim'
+  Plug 'haya14busa/incsearch.vim'
   " " Similar: https://github.com/junegunn/vim-oblique/
   " " Similar: https://github.com/dahu/SearchParty
   " map /  <Plug>(incsearch-forward)\v
@@ -399,7 +400,12 @@
   "                       ina, ana, Ina, Ana, etc - next/last argument
   Plug 'wellle/targets.vim'
   " Similar: Plug 'paradigm/TextObjectify'
-  "
+
+  " turns [count]j and [count]k motions into jumps
+  " so you can use <C-o> to get back
+  " very handy in conjunction with Vim's relativenumber option.
+  Plug 'buztard/vim-rel-jump'
+
   " Required by vim-surround
   Plug 'tpope/vim-repeat'
   " Change surrounding objects
@@ -471,6 +477,8 @@
   " Scall (script, function, arg) - call local function from script
   nnoremap q[I <plug>vimple_ident_search<bs>
   nnoremap q]I <plug>vimple_ident_search_forward
+  " rempap to avoid conflict
+  inoremap vjj <plug>vimple_completers_trigger
   Plug 'dahu/Vimple'
   " Having the quickfix list execute :EnMasse to edit the
   " list content and back-sync edits to source files
@@ -731,45 +739,89 @@ EOF
   endif
   " }}}
 
-  " Colors {{{
+  " run nvim as below to get gui colors in terminal, works in gnome-termial
+  " and konsole
+  " NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim
+  " See: https://github.com/neovim/neovim/pull/2198
+  function! SetupColorscheme()
+    if &diff
+      echom 'Diff mode setup'
+      set background=light
+      set guifont=Liberation\ Mono\ 9
+      colorscheme github
+      " A bit modified diff colors from github scheme
+      hi DiffAdd         guifg=#003300 guibg=#DDFFDD gui=none
+      hi DiffChange                    guibg=#ececec gui=none
+      hi DiffText        guifg=#000033 guibg=#A6F3A6 gui=none
+      hi DiffDelete      guifg=#DDCCCC guibg=#FFDDDD gui=none
+      " highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+      " highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+      " highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+      " highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+    else
       set background=dark
-      "if $COLORTERM == 'gnome-terminal'
-      if !has("gui_running")
-          " tell vim that gnome terminal supports 256 colors
-          set t_Co=256
-          let g:solarized_termcolors=256
-      endif
-      " Solarized {{{
-          let g:solarized_contrast="high"    "default value is normal
-          let g:solarized_diffmode="high"    "default value is normal
-          try
-              colorscheme solarized
-          catch /^Vim\%((\a\+)\)\=:E185/
-              echo "Solarized theme not found. Run :PluginInstall"
-          endtry
-      " }}}
-      if &diff
-        set background=light
-        set guifont=Liberation\ Mono\ 9
-        colorscheme github
-        " A bit modified diff colors from github scheme
-        hi DiffAdd         guifg=#003300 guibg=#DDFFDD gui=none
-        hi DiffChange                    guibg=#ececec gui=none
-        hi DiffText        guifg=#000033 guibg=#A6F3A6 gui=none
-        hi DiffDelete      guifg=#DDCCCC guibg=#FFDDDD gui=none
-        " highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-        " highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-        " highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-        " highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
-      endif
+      let g:solarized_contrast="high"    "default value is normal
+      let g:solarized_diffmode="high"    "default value is normal
+      try
+          colorscheme solarized
+      catch /^Vim\%((\a\+)\)\=:E185/
+          echo "Solarized theme not found. Run :PluginInstall"
+      endtry
+      :AirlineTheme badwolf
+    endif
+    " From: http://sunaku.github.io/vim-256color-bce.html
+    if &term =~ '256color'
+        " Fix for tmux
+        " disable Background Color Erase (BCE) so that color schemes
+        " render properly when inside 256-color tmux and GNU screen.
+        " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+        set t_ut=
+    endif
+  endfunction
+  call SetupColorscheme()
+
+  " Colors {{{
+      " if &diff
+      "   echom 'Diff mode setup'
+      "   set background=light
+      "   set guifont=Liberation\ Mono\ 9
+      "   colorscheme sol
+      "   " A bit modified diff colors from github scheme
+      "   " hi DiffAdd         guifg=#003300 guibg=#DDFFDD gui=none
+      "   " hi DiffChange                    guibg=#ececec gui=none
+      "   " hi DiffText        guifg=#000033 guibg=#A6F3A6 gui=none
+      "   " hi DiffDelete      guifg=#DDCCCC guibg=#FFDDDD gui=none
+      "   " highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+      "   " highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+      "   " highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+      "   " highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+      " else
+      "   echom 'Regular mode setup'
+      "   set background=dark
+      "   "if $COLORTERM == 'gnome-terminal'
+      "   if !has("gui_running")
+      "       " tell vim that gnome terminal supports 256 colors
+      "       set t_Co=256
+      "       let g:solarized_termcolors=256
+      "   endif
+      "   " Solarized {{{
+      "       let g:solarized_contrast="high"    "default value is normal
+      "       let g:solarized_diffmode="high"    "default value is normal
+      "       try
+      "           colorscheme solarized
+      "       catch /^Vim\%((\a\+)\)\=:E185/
+      "           echo "Solarized theme not found. Run :PluginInstall"
+      "       endtry
+      "   " }}}
+      " endif
       " From: http://sunaku.github.io/vim-256color-bce.html
-      if &term =~ '256color'
-          " Fix for tmux
-          " disable Background Color Erase (BCE) so that color schemes
-          " render properly when inside 256-color tmux and GNU screen.
-          " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-          set t_ut=
-      endif
+      " if &term =~ '256color'
+      "     " Fix for tmux
+      "     " disable Background Color Erase (BCE) so that color schemes
+      "     " render properly when inside 256-color tmux and GNU screen.
+      "     " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+      "     set t_ut=
+      " endif
   " }}}
 
 " }}}
@@ -1070,21 +1122,6 @@ EOF
     autocmd FileType netrw nnoremap <buffer> <Leader>r <Plug>NetrwRefresh
   augroup END
 
-  " run nvim as below to get gui colors in terminal, works in gnome-termial
-  " and konsole
-  " NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim
-  " See: https://github.com/neovim/neovim/pull/2198
-  function! SetupColorscheme()
-    set background=dark
-    let g:solarized_contrast="high"    "default value is normal
-    let g:solarized_diffmode="high"    "default value is normal
-    try
-        colorscheme solarized
-    catch /^Vim\%((\a\+)\)\=:E185/
-        echo "Solarized theme not found. Run :PluginInstall"
-    endtry
-    :AirlineTheme badwolf
-  endfunction
   augroup NvimColors
     autocmd!
     autocmd VimEnter * call SetupColorscheme()
@@ -1243,10 +1280,10 @@ EOF
 
   " Move cursor by display lines when wrapping
   " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
-  noremap k gk
-  noremap j gj
-  noremap gk k
-  noremap gj j
+  " noremap k gk
+  " noremap j gj
+  " noremap gk k
+  " noremap gj j
   "noremap 0 g0
   "noremap $ g$
 
