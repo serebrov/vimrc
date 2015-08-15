@@ -741,24 +741,30 @@ EOF
 
   " run nvim as below to get gui colors in terminal, works in gnome-termial
   " and konsole
-  " NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim
+  "    NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim
+  "
+  " Or add to your .bashrc / .zshrc
+  "    export NVIM_TUI_ENABLE_TRUE_COLOR=1
+  "
   " See: https://github.com/neovim/neovim/pull/2198
   function! SetupColorscheme()
     if &diff
       echom 'Diff mode setup'
       set background=light
       set guifont=Liberation\ Mono\ 9
-      colorscheme github
-      " A bit modified diff colors from github scheme
-      hi DiffAdd         guifg=#003300 guibg=#DDFFDD gui=none
-      hi DiffChange                    guibg=#ececec gui=none
-      hi DiffText        guifg=#000033 guibg=#A6F3A6 gui=none
-      hi DiffDelete      guifg=#DDCCCC guibg=#FFDDDD gui=none
-      " highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-      " highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-      " highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-      " highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+      colorscheme sol
+      " colorscheme github
+      " " A bit modified diff colors from github scheme
+      " hi DiffAdd         guifg=#003300 guibg=#DDFFDD gui=none
+      " hi DiffChange                    guibg=#ececec gui=none
+      " hi DiffText        guifg=#000033 guibg=#A6F3A6 gui=none
+      " hi DiffDelete      guifg=#DDCCCC guibg=#FFDDDD gui=none
     else
+      if !has("gui_running")
+          " tell vim that gnome terminal supports 256 colors
+          set t_Co=256
+          let g:solarized_termcolors=256
+      endif
       set background=dark
       let g:solarized_contrast="high"    "default value is normal
       let g:solarized_diffmode="high"    "default value is normal
@@ -767,7 +773,6 @@ EOF
       catch /^Vim\%((\a\+)\)\=:E185/
           echo "Solarized theme not found. Run :PluginInstall"
       endtry
-      :AirlineTheme badwolf
     endif
     " From: http://sunaku.github.io/vim-256color-bce.html
     if &term =~ '256color'
@@ -778,7 +783,15 @@ EOF
         set t_ut=
     endif
   endfunction
+
+  " For vim
   call SetupColorscheme()
+
+  " For nvim
+  augroup NvimColors
+    autocmd!
+    autocmd VimEnter * call SetupColorscheme()
+  augroup END
 
   " Colors {{{
       " if &diff
@@ -1120,11 +1133,6 @@ EOF
     "" use Leader-r to refresh (default is Ctrl-L which is used to jump
     "" to the left window)
     autocmd FileType netrw nnoremap <buffer> <Leader>r <Plug>NetrwRefresh
-  augroup END
-
-  augroup NvimColors
-    autocmd!
-    autocmd VimEnter * call SetupColorscheme()
   augroup END
 
   augroup Rainbow
