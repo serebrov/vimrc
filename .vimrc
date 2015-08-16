@@ -22,18 +22,18 @@
   " auto adjust tab/space settings based on current file
   Plug 'tpope/vim-sleuth'
 
-  Plug 'bling/vim-airline'
-  let g:airline_theme='badwolf'
-  if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-  endif
-  " " unicode symbols
-  let g:airline_left_sep = '▶'
-  let g:airline_right_sep = '◀'
-  let g:airline_symbols.linenr = '␤'
-  let g:airline_symbols.branch = '⎇'
-  let g:airline_symbols.paste = 'Þ'
-  let g:airline_symbols.whitespace = 'Ξ'
+  "Plug 'bling/vim-airline'
+  " let g:airline_theme='badwolf'
+  " if !exists('g:airline_symbols')
+  "   let g:airline_symbols = {}
+  " endif
+  " " " unicode symbols
+  " let g:airline_left_sep = '▶'
+  " let g:airline_right_sep = '◀'
+  " let g:airline_symbols.linenr = '␤'
+  " let g:airline_symbols.branch = '⎇'
+  " let g:airline_symbols.paste = 'Þ'
+  " let g:airline_symbols.whitespace = 'Ξ'
 
   " adopt color schemes for terminal
   Plug 'godlygeek/csapprox'
@@ -1009,7 +1009,7 @@ EOF
   "                |                         |   +-- modified flag in square brackets
   "                |                         +-- full path to file in the buffer
   "                +-- buffer number
-"
+
 " }}}
 
 " Text Formatting/Layout {{{
