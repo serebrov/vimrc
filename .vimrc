@@ -547,24 +547,47 @@
   " Syntax checker
   Plug 'scrooloose/syntastic'
   " Syntastic
+  " It places errors into local error list which can be viewed with :Errors
+  " With unimpaired plugin you can move to the next / prev error with ]l / [l
+  "
   " PHP - PHPCS
   " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
   " it is also possible to configure options for each checker, see
   " syntastic helt - "syntastic-config-makeprg"
   let g:syntastic_check_on_open=0
   let g:syntastic_css_checkers = ['csslint']
+  " Available checkers: flake8 pep257 pep8 pyflakes pylint python
+  let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
   " Python - pip install flake8 (pyflakes + pep8)
   "          pip install pep257 - docstring conventions
+  " Note: pylint also checks docstrings + gives a lot of other notices, not
+  " always useful
+  " The pylint behavior can be modified via pylintrc (place into the project
+  " root) or with special comments, like:
+  "
+  "    except Exception as error:  # pylint: disable=W0703
+  "
+  " here we disable the [broad-except] warning, the warning name is shown in
+  " the error message
+  "
+  " The warning id (W0703) can be shown using pylint itself:
+  "
+  " $ pylint --help-msg broad-except                                                                                                                       19:17
+  "  :broad-except (W0703): *Catching too general exception %s*
+  "  Used when an except catches a too general exception, possibly burying
+  "  unrelated errors. This message belongs to the exceptions checker.
 
   " fetching can take a long time causing the timeout
   " to manually install it
   "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+  "Plug 'davidhalter/jedi-vim'
   Plug 'UltiSnips'
   " http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
   " let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
   " let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
   " let g:SuperTabDefaultCompletionType = '<C-Tab>'
+  let g:ycm_autoclose_preview_window_after_completion = 1
   let g:ycm_key_list_select_completion = []
   let g:ycm_key_list_previous_completion = []
   let g:UltiSnipsExpandTrigger="<tab>"
@@ -654,7 +677,10 @@ EOF
   " Install: cd ~/.vim/bundle/ropevim
   "          python setup.py install
   " See: https://github.com/python-rope/ropevim
-  Plug 'python-rope/ropevim'
+  " Plug 'python-rope/ropevim'
+  " let ropevim_vim_completion=1
+  " let ropevim_extended_complete=1
+
   "Plug 'klen/python-mode'
   " Correct python code indenting
   Plug 'hynek/vim-python-pep8-indent'
@@ -1094,7 +1120,7 @@ EOF
   set complete=""             " what use for completions
   set complete+=.             " current buffer
   set complete+=t             " tags
-  set complete+=k             " dictionary
+  set complete+=kspell        " dictionary
   set complete+=b             " other open buffers
 
   " tag files
@@ -1641,30 +1667,30 @@ EOF
 " }}}
 
 " Xiki {{{
-  function! XikiLaunch()
-    ruby << EOF
+  " function! XikiLaunch()
+  "   ruby << EOF
 
-      #xiki_dir = ENV['XIKI_DIR']
-      xiki_dir = '/home/seb/xiki'
-      ['core/ol', 'vim/line', 'vim/tree'].each {|o| load "#{xiki_dir}/lib/xiki/#{o}.rb"}
-      include Xiki
+  "     #xiki_dir = ENV['XIKI_DIR']
+  "     xiki_dir = '/home/seb/xiki'
+  "     ['core/ol', 'vim/line', 'vim/tree'].each {|o| load "#{xiki_dir}/lib/xiki/#{o}.rb"}
+  "     include Xiki
 
-      line = Line.value
-      next_line = Line.value 2
+  "     line = Line.value
+  "     next_line = Line.value 2
 
-      indent = line[/^ +/]
-      command = "xiki '#{line}'"
-      result = `#{command}`
-      Tree << result
-EOF
-  endfunction
+  "     indent = line[/^ +/]
+  "     command = "xiki '#{line}'"
+  "     result = `#{command}`
+  "     Tree << result
+" EOF
+  " endfunction
 
-  " imap <silent> <2-LeftMouse> <C-c>:call XikiLaunch()<CR>i
-  " nmap <silent> <2-LeftMouse> :call XikiLaunch()<CR>
-  imap <silent> <C-CR> <C-c>:call XikiLaunch()<CR>i
-  nmap <silent> <C-CR> :call XikiLaunch()<CR>
-  imap <silent> <C-@> <C-c>:call XikiLaunch()<CR>i
-  nmap <silent> <C-@> :call XikiLaunch()<CR>
+  " " imap <silent> <2-LeftMouse> <C-c>:call XikiLaunch()<CR>i
+  " " nmap <silent> <2-LeftMouse> :call XikiLaunch()<CR>
+  " imap <silent> <C-CR> <C-c>:call XikiLaunch()<CR>i
+  " nmap <silent> <C-CR> :call XikiLaunch()<CR>
+  " imap <silent> <C-@> <C-c>:call XikiLaunch()<CR>i
+  " nmap <silent> <C-@> :call XikiLaunch()<CR>
 
 " }}}
 " Highlight Word {{{
