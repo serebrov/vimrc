@@ -6,3 +6,7 @@ if [[ ! -f ~/vim/autoload/plug.vim ]]; then
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   popd
 fi
+
+# for neovim
+ln -s ~/.vim ~/.config/nvim
+ln -s ~/.vim/.vimrc ~/.vim/init.vim

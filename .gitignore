@@ -8,3 +8,4 @@ tmp/*
 eclim
 plugin/eclim.vim
 vim_phpdebug.sess
+init.vim
