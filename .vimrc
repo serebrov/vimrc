@@ -50,30 +50,42 @@
 
   """"""" Search / highlight
   " On search automatically prints "At match #N out of M matches".
-  " Plug 'henrik/vim-indexed-search'
+  Plug 'henrik/vim-indexed-search'
   " better search hightlights
   Plug 'haya14busa/incsearch.vim'
   " " Similar: https://github.com/junegunn/vim-oblique/
   " " Similar: https://github.com/dahu/SearchParty
-  " map /  <Plug>(incsearch-forward)\v
-  " map ?  <Plug>(incsearch-backward)\v
-  " " Setup for vim-indexed-search
-  " " See: https://github.com/haya14busa/incsearch.vim/issues/21
-  " let g:indexed_search_mappings = 0
-  " augroup incsearch-indexed
-  "   autocmd!
-  "   autocmd User IncSearchLeave ShowSearchIndex
-  " augroup END
-  " nnoremap <silent>n nzv:ShowSearchIndex<CR>
-  " nnoremap <silent>N Nzv:ShowSearchIndex<CR>
-  " "set hlsearch
-  " let g:incsearch#auto_nohlsearch = 1
-  " map n  <Plug>(incsearch-nohl-n)zv:ShowSearchIndex<CR>
-  " map N  <Plug>(incsearch-nohl-N)zv:ShowSearchIndex<CR>
-  " map *  <Plug>(incsearch-nohl-*)
-  " map #  <Plug>(incsearch-nohl-#)
-  " map g* <Plug>(incsearch-nohl-g*)
-  " map g# <Plug>(incsearch-nohl-g#)
+  " " Similar: 'osyo-manga/vim-over' - highlighs in cmd win (Ctrl-f in cmd
+  " mode) and has own :OverCommandLine where it also shows replace preview
+  " ---
+  " Usage:
+  " - just search to see the incremental matches highlight
+  " - Tab / S-Tab to go forward/backward between results
+  " - automatically disables highlight when you move the cursor with
+  "   non-search related movements (just do j or k when search is active to 
+  "   disable highlight)
+  map /  <Plug>(incsearch-forward)\v
+  map ?  <Plug>(incsearch-backward)\v
+  " Search, but don't move the cursor (usually moves to the first match)
+  map g/ <Plug>(incsearch-stay)
+  " Setup for vim-indexed-search
+  " See: https://github.com/haya14busa/incsearch.vim/issues/21
+  let g:indexed_search_mappings = 0
+  augroup incsearch-indexed
+    autocmd!
+    autocmd User IncSearchLeave ShowSearchIndex
+  augroup END
+  nnoremap <silent>n nzv:ShowSearchIndex<CR>
+  nnoremap <silent>N Nzv:ShowSearchIndex<CR>
+  "set hlsearch
+  let g:incsearch#auto_nohlsearch = 1
+  map n  <Plug>(incsearch-nohl-n)zv:ShowSearchIndex<CR>
+  map N  <Plug>(incsearch-nohl-N)zv:ShowSearchIndex<CR>
+  map *  <Plug>(incsearch-nohl-*)
+  map #  <Plug>(incsearch-nohl-#)
+  map g* <Plug>(incsearch-nohl-g*)
+  map g# <Plug>(incsearch-nohl-g#)
+
 
   " :Multichange to enter multichange mode (cw will affect the whole file)
   " Plug 'AndrewRadev/multichange.vim'
@@ -106,10 +118,6 @@
   "
   " :SemanticHighlightToggle - on/off
   " Plug 'jaxbot/semantic-highlight.vim'
-
-  " Highlight patterns when do :s/... in cmd window (Ctrl-f in cmd mode)
-  " also has own cmd line :OverCommandLine
-  " Plug 'osyo-manga/vim-over'
 
   """"""" File browser
   " Additional features for netrw
@@ -345,6 +353,12 @@
   " and run :diffupdate
   " :DisableEnhancedDiff - disable it
   Plug 'chrisbra/vim-diff-enhanced'
+  " From a very single vim buffer, you can perform all basic git operations. To name a few:
+  "  Visualize all diffs in your git repository.
+  "  Stage files/hunks/parts of hunks with single key S.
+  "  Write or amend your commit message and commit.
+  " :Magit - open it
+  Plug 'jreybert/vimagit'
 
   """""" Motions / normal mode commands
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
@@ -448,11 +462,16 @@
   Plug 'tpope/vim-commentary'
 
   """ Quickfix improvements
+  " Note: quickfix vs location list
+  "  quickfix is a general list for all windows
+  "  location list is local to the window (so there can be many location lists)
   "
-  " Allows to populate vim's args from the quickfix, so we can:
-  "  :Ggrep findme
-  "  :Qargs | argdo %s/findme/replacement/gc | update
-  " Plug 'nelstrom/vim-qargs'
+  " :Ack -> uses ag / ack or grep to search across files, :Lack - location list
+  " :Acks -> run replace for previous search
+  " :Qargs -> put files from the quickfix to the :args, so can then use :argdo
+  " :Qargs | argdo %s/findme/replacement/gc | update
+  " See also 'nelstrom/vim-qargs' and QFdo from Vimple (below)
+  Plug 'wincent/ferret'
   "
   " :QFdo - quickfix do - run a command over quckfix files, see also :LLdo for location list
   " :BufTypeDo, :BufMatchDo - run a command over buffers of specified type or
@@ -482,15 +501,15 @@
   Plug 'dahu/Vimple'
   " Having the quickfix list execute :EnMasse to edit the
   " list content and back-sync edits to source files
-  " Plug 'Wolfy87/vim-enmasse'
+  Plug 'Wolfy87/vim-enmasse'
   " find and replace occurences in many buffers being aware of the context
   " :Swoop pattern - run for singe buffer
   " :Swoop! pattern - for all buffers
   " For all buffers it is convenient to :CloseSession and :BufOnly and then
   " for example, :args **/*.py to load all python files
   " and then we can review/edit results
-  " Plug 'pelodelfuego/vim-swoop'
-  " let g:swoopUseDefaultKeyMap = 0
+  Plug 'pelodelfuego/vim-swoop'
+  let g:swoopUseDefaultKeyMap = 0
   " TODO: check alternatives:
   "https://github.com/dyng/ctrlsf.vim
   "https://github.com/AndrewRadev/writable_search.vim
@@ -684,6 +703,8 @@ EOF
   "Plug 'klen/python-mode'
   " Correct python code indenting
   Plug 'hynek/vim-python-pep8-indent'
+  " :Ped sqlalchemy.orm -> open the module from current virtual env
+  Plug 'sloria/vim-ped'
 
   """""" Documentation
   " php documenter
