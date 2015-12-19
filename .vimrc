@@ -62,7 +62,7 @@
   " - just search to see the incremental matches highlight
   " - Tab / S-Tab to go forward/backward between results
   " - automatically disables highlight when you move the cursor with
-  "   non-search related movements (just do j or k when search is active to 
+  "   non-search related movements (just do j or k when search is active to
   "   disable highlight)
   map /  <Plug>(incsearch-forward)\v
   map ?  <Plug>(incsearch-backward)\v
@@ -564,58 +564,67 @@
 
   """""" Programming / tags / autocomplete
   " Syntax checker
-  Plug 'scrooloose/syntastic'
-  " Syntastic
-  " It places errors into local error list which can be viewed with :Errors
-  " With unimpaired plugin you can move to the next / prev error with ]l / [l
-  "
-  " PHP - PHPCS
-  " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
-  " it is also possible to configure options for each checker, see
-  " syntastic helt - "syntastic-config-makeprg"
-  let g:syntastic_check_on_open=0
-  let g:syntastic_css_checkers = ['csslint']
-  " Available checkers: flake8 pep257 pep8 pyflakes pylint python
-  let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
-  " Python - pip install flake8 (pyflakes + pep8)
-  "          pip install pep257 - docstring conventions
-  " Note: pylint also checks docstrings + gives a lot of other notices, not
-  " always useful
-  " The pylint behavior can be modified via pylintrc (place into the project
-  " root) or with special comments, like:
-  "
-  "    except Exception as error:  # pylint: disable=W0703
-  "
-  " here we disable the [broad-except] warning, the warning name is shown in
-  " the error message
-  "
-  " The warning id (W0703) can be shown using pylint itself:
-  "
-  " $ pylint --help-msg broad-except                                                                                                                       19:17
-  "  :broad-except (W0703): *Catching too general exception %s*
-  "  Used when an except catches a too general exception, possibly burying
-  "  unrelated errors. This message belongs to the exceptions checker.
+  if g:nvim_here
+    Plug 'benekastah/neomake'
+    let g:neomake_css_enabled_makers = ['csslint']
+    " Available checkers: flake8 pep257 pep8 pyflakes pylint python
+    let g:neomake_python_enabled_makers = ['python', 'flake8', 'frosted', 'pylint']
+    autocmd! BufWritePost * Neomake
+  else
+    " Syntastic
+    Plug 'scrooloose/syntastic'
+    " It places errors into local error list which can be viewed with :Errors
+    " With unimpaired plugin you can move to the next / prev error with ]l / [l
+    "
+    " PHP - PHPCS
+    " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
+    " it is also possible to configure options for each checker, see
+    " syntastic helt - "syntastic-config-makeprg"
+    let g:syntastic_check_on_open=0
+    let g:syntastic_css_checkers = ['csslint']
+    " Available checkers: flake8 pep257 pep8 pyflakes pylint python
+    let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
+    " Python - pip install flake8 (pyflakes + pep8)
+    "          pip install pep257 - docstring conventions
+    "          piip install frosted - pyflakes re-work
+    " Note: pylint also checks docstrings + gives a lot of other notices, not
+    " always useful
+    " The pylint behavior can be modified via pylintrc (place into the project
+    " root) or with special comments, like:
+    "
+    "    except Exception as error:  # pylint: disable=W0703
+    "
+    " here we disable the [broad-except] warning, the warning name is shown in
+    " the error message
+    "
+    " The warning id (W0703) can be shown using pylint itself:
+    "
+    " $ pylint --help-msg broad-except                                                                                                                       19:17
+    "  :broad-except (W0703): *Catching too general exception %s*
+    "  Used when an except catches a too general exception, possibly burying
+    "  unrelated errors. This message belongs to the exceptions checker.
+  endif
 
   " fetching can take a long time causing the timeout
   " to manually install it
   "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
   Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
   "Plug 'davidhalter/jedi-vim'
-  Plug 'UltiSnips'
-  " http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
-  " let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
-  " let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
-  " let g:SuperTabDefaultCompletionType = '<C-Tab>'
-  let g:ycm_autoclose_preview_window_after_completion = 1
-  let g:ycm_key_list_select_completion = []
-  let g:ycm_key_list_previous_completion = []
-  let g:UltiSnipsExpandTrigger="<tab>"
-  let g:UltiSnipsJumpForwardTrigger="<tab>"
-  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-  "let g:UltiSnipsExpandTrigger="<c-tab>"
-  "let g:UltiSnipsListSnippets="<c-s-tab>"
-  "let g:UltiSnipsJumpForwardTrigger="<c-tab>"
-  "let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
+  "Plug 'UltiSnips'
+  "" http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
+  "" let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
+  "" let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
+  "" let g:SuperTabDefaultCompletionType = '<C-Tab>'
+  "let g:ycm_autoclose_preview_window_after_completion = 1
+  "let g:ycm_key_list_select_completion = []
+  "let g:ycm_key_list_previous_completion = []
+  "let g:UltiSnipsExpandTrigger="<tab>"
+  "let g:UltiSnipsJumpForwardTrigger="<tab>"
+  "let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+  ""let g:UltiSnipsExpandTrigger="<c-tab>"
+  ""let g:UltiSnipsListSnippets="<c-s-tab>"
+  ""let g:UltiSnipsJumpForwardTrigger="<c-tab>"
+  ""let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
 
   Plug 'honza/vim-snippets'
   " https://github.com/majutsushi/tagbar/wiki
