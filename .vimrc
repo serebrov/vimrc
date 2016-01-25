@@ -36,10 +36,10 @@
   " let g:airline_symbols.whitespace = 'Ξ'
 
   " adopt color schemes for terminal
-  Plug 'godlygeek/csapprox'
+  " Plug 'godlygeek/csapprox'
   " Solarized color scheme
   Plug 'altercation/vim-colors-solarized'
-  Plug 'kshenoy/vim-sol'
+  Plug 'romainl/Apprentice'
   " Plug 'sjl/badwolf'
   " Plug 'nanotech/jellybeans.vim'
   " Plug 'noahfrederick/vim-hemisu'
@@ -822,13 +822,14 @@ EOF
           let g:solarized_termcolors=256
       endif
       set background=dark
-      let g:solarized_contrast="high"    "default value is normal
-      let g:solarized_diffmode="high"    "default value is normal
-      try
-          colorscheme solarized
-      catch /^Vim\%((\a\+)\)\=:E185/
-          echo "Solarized theme not found. Run :PluginInstall"
-      endtry
+      colorscheme apprentice
+      " let g:solarized_contrast="high"    "default value is normal
+      " let g:solarized_diffmode="high"    "default value is normal
+      " try
+      "     colorscheme solarized
+      " catch /^Vim\%((\a\+)\)\=:E185/
+      "     echo "Solarized theme not found. Run :PluginInstall"
+      " endtry
     endif
     " From: http://sunaku.github.io/vim-256color-bce.html
     if &term =~ '256color'
