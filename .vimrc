@@ -734,6 +734,15 @@ EOF
   Plug 'hynek/vim-python-pep8-indent'
   " :Ped sqlalchemy.orm -> open the module from current virtual env
   Plug 'sloria/vim-ped'
+  " Generate docstrings with :Pydocstring
+  "   note: UltiSnips is also able to generate docstring templates, but
+  "         I didn't find the way to trigger it for already existing code
+  Plug 'heavenshell/vim-pydocstring'
+  nmap <silent> <nop> <Plug>(pydocstring)
+  augroup DocMap
+    autocmd!
+    autocmd FileType python nnoremap <Leader>pd :Pydocstring<CR>
+  augroup END
 
   """""" Documentation
   " php documenter
