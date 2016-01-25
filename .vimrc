@@ -569,6 +569,7 @@
     let g:neomake_css_enabled_makers = ['csslint']
     " Available checkers: flake8 pep257 pep8 pyflakes pylint python
     let g:neomake_python_enabled_makers = ['python', 'flake8', 'frosted', 'pylint']
+    "let g:neomake_python_enabled_makers = ['python', 'flake8', 'frosted', 'pylint', 'pep257']
     autocmd! BufWritePost * Neomake
   else
     " Syntastic
@@ -582,6 +583,7 @@
     " syntastic helt - "syntastic-config-makeprg"
     let g:syntastic_check_on_open=0
     let g:syntastic_css_checkers = ['csslint']
+    let g:syntastic_javascript_checkers = ['eslint', 'flow', 'jshint']
     " Available checkers: flake8 pep257 pep8 pyflakes pylint python
     let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
     " Python - pip install flake8 (pyflakes + pep8)
