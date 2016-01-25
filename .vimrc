@@ -1176,7 +1176,8 @@ EOF
 " }}}
 
 " Completions {{{
-  set completeopt=longest,menuone,preview " use a pop up menu for completions
+  "set completeopt=longest,menuone,preview " use a pop up menu for completions
+  set completeopt=menuone,longest,preview " use a pop up menu for completions
   set complete=""             " what use for completions
   set complete+=.             " current buffer
   set complete+=t             " tags
@@ -1482,10 +1483,10 @@ EOF
   endfunction
 
   " move to and open if not exists
-  vmap <c-j> :call WinMove('j')<CR>
-  vmap <c-k> :call WinMove('k')<CR>
-  vmap <c-l> :call WinMove('l')<CR>
-  vmap <c-h> :call WinMove('h')<CR>
+  map <c-j> :call WinMove('j')<CR>
+  map <c-k> :call WinMove('k')<CR>
+  map <c-l> :call WinMove('l')<CR>
+  map <c-h> :call WinMove('h')<CR>
   if g:nvim_here
     " Testing, map jk/kj as Esc
     " Map Ctrl + h,j,k,l to move between windows
