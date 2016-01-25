@@ -499,6 +499,14 @@
   " rempap to avoid conflict
   inoremap vjj <plug>vimple_completers_trigger
   Plug 'dahu/Vimple'
+  "
+  " Improvements for [I / ]I / [D / ]D - copy their output and
+  " put into the quickfix list instead of non-usable window
+  " [I / ]I - search for word under cursor in the current file
+  " Ilist (use instead of :ilist) - search custom term :Ilist word
+  " [D / ]D - search for macro definitions
+  " See: https://www.reddit.com/r/vim/comments/1rzvsm/do_any_of_you_redirect_results_of_i_to_the/
+  Plug 'romainl/vim-qlist'
   " Having the quickfix list execute :EnMasse to edit the
   " list content and back-sync edits to source files
   Plug 'Wolfy87/vim-enmasse'
@@ -1879,75 +1887,18 @@ function! s:GrepMotion(type) abort
     let @@ = reg_save
 endfunction
 
-" See https://gist.github.com/romainl/3c7ee68125f822ec550c
-"
-" This is an updated, more powerful, version of the function discussed here:
-" http://www.reddit.com/r/vim/comments/1rzvsm/do_any_of_you_redirect_results_of_i_to_the/
-" that shows ]I, [I, ]D, [D, :ilist and :dlist results in the quickfix window, even spanning multiple files.
-
-function! List(command, selection, start_at_cursor, ...)
-    " derive the commands used below from the first argument
-    let excmd   = a:command . "list"
-    let normcmd = toupper(a:command)
-
-    if a:selection
-        if len(a:1) > 0
-            let search_pattern = a:1
-        else
-            let old_reg = @v
-            normal! gv"vy
-            let search_pattern = substitute(escape(@v, '\/.*$^~[]'), '\\n', '\\n', 'g')
-            let @v = old_reg
-        endif
-        redir => output
-        silent! execute (a:start_at_cursor ? '+,$' : '') . excmd . ' /' . search_pattern
-        redir END
+let s:mybg = "dark"
+function! BgToggleSol()
+    if (s:mybg ==? "light")
+       set background=dark
+       let s:mybg = "dark"
     else
-        redir => output
-        silent! execute 'normal! ' . (a:start_at_cursor ? ']' : '[') . normcmd
-        redir END
+       set background=light
+       let s:mybg = "light"
     endif
-
-    " clean up the output
-    let lines = split(output, '\n')
-
-    " bail out on errors
-    if lines[0] =~ '^Error detected'
-        echomsg 'Could not find "' . (a:selection ? search_pattern : expand("<cword>")) . '".'
-        return
-    endif
-
-    " our results may span multiple files so we need to build a relatively
-    " complex list based on file names
-    let filename   = ""
-    let qf_entries = []
-    for line in lines
-        if line =~ '^\S'
-            let filename = line
-        else
-            call add(qf_entries, {"filename" : filename, "lnum" : split(line)[1], "text" : join(split(line)[2:-1])})
-        endif
-    endfor
-
-    " build the quickfix list from our results
-    call setqflist(qf_entries)
-
-    " open the quickfix window if there is something to show
-    cwindow
+    " set background=light
+    colorscheme solarized
 endfunction
 
-nnoremap <silent> [I :call List("i", 0, 0)<CR>
-nnoremap <silent> ]I :call List("i", 0, 1)<CR>
-xnoremap <silent> [I :<C-u>call List("i", 1, 0)<CR>
-xnoremap <silent> ]I :<C-u>call List("i", 1, 1)<CR>
-
-command! -nargs=1 Ilist call List("i", 1, 0, <f-args>)
-
-nnoremap <silent> [D :call List("d", 0, 0)<CR>
-nnoremap <silent> ]D :call List("d", 0, 1)<CR>
-xnoremap <silent> [D :<C-u>call List("d", 1, 0)<CR>
-xnoremap <silent> ]D :<C-u>call List("d", 1, 1)<CR>
-
-command! -nargs=1 Dlist call List("d", 1, 0, <f-args>)
-
+nnoremap <silent> <leader>sz :call BgToggleSol()<cr>
 " }}}
