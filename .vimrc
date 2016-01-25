@@ -52,7 +52,7 @@
   " On search automatically prints "At match #N out of M matches".
   Plug 'henrik/vim-indexed-search'
   " better search hightlights
-  Plug 'haya14busa/incsearch.vim'
+  " Plug 'haya14busa/incsearch.vim'
   " " Similar: https://github.com/junegunn/vim-oblique/
   " " Similar: https://github.com/dahu/SearchParty
   " " Similar: 'osyo-manga/vim-over' - highlighs in cmd win (Ctrl-f in cmd
@@ -64,27 +64,27 @@
   " - automatically disables highlight when you move the cursor with
   "   non-search related movements (just do j or k when search is active to
   "   disable highlight)
-  map /  <Plug>(incsearch-forward)\v
-  map ?  <Plug>(incsearch-backward)\v
-  " Search, but don't move the cursor (usually moves to the first match)
-  map g/ <Plug>(incsearch-stay)
-  " Setup for vim-indexed-search
-  " See: https://github.com/haya14busa/incsearch.vim/issues/21
-  let g:indexed_search_mappings = 0
-  augroup incsearch-indexed
-    autocmd!
-    autocmd User IncSearchLeave ShowSearchIndex
-  augroup END
-  nnoremap <silent>n nzv:ShowSearchIndex<CR>
-  nnoremap <silent>N Nzv:ShowSearchIndex<CR>
-  "set hlsearch
-  let g:incsearch#auto_nohlsearch = 1
-  map n  <Plug>(incsearch-nohl-n)zv:ShowSearchIndex<CR>
-  map N  <Plug>(incsearch-nohl-N)zv:ShowSearchIndex<CR>
-  map *  <Plug>(incsearch-nohl-*)
-  map #  <Plug>(incsearch-nohl-#)
-  map g* <Plug>(incsearch-nohl-g*)
-  map g# <Plug>(incsearch-nohl-g#)
+  " map /  <Plug>(incsearch-forward)\v
+  " map ?  <Plug>(incsearch-backward)\v
+  " " Search, but don't move the cursor (usually moves to the first match)
+  " map g/ <Plug>(incsearch-stay)
+  " " Setup for vim-indexed-search
+  " " See: https://github.com/haya14busa/incsearch.vim/issues/21
+  " let g:indexed_search_mappings = 0
+  " augroup incsearch-indexed
+  "   autocmd!
+  "   autocmd User IncSearchLeave ShowSearchIndex
+  " augroup END
+  " nnoremap <silent>n nzv:ShowSearchIndex<CR>
+  " nnoremap <silent>N Nzv:ShowSearchIndex<CR>
+  " "set hlsearch
+  " let g:incsearch#auto_nohlsearch = 1
+  " map n  <Plug>(incsearch-nohl-n)zv:ShowSearchIndex<CR>
+  " map N  <Plug>(incsearch-nohl-N)zv:ShowSearchIndex<CR>
+  " map *  <Plug>(incsearch-nohl-*)
+  " map #  <Plug>(incsearch-nohl-#)
+  " map g* <Plug>(incsearch-nohl-g*)
+  " map g# <Plug>(incsearch-nohl-g#)
 
 
   " :Multichange to enter multichange mode (cw will affect the whole file)
@@ -212,7 +212,7 @@
   " <ctrl-k> => Up
   " <ctrl-l> => Right
   " <ctrl-\> => Previous split
-  Plug 'christoomey/vim-tmux-navigator'
+  " Plug 'christoomey/vim-tmux-navigator'
   ":Tmux lets you call any old tmux command (with really good tab complete).
   ":Tyank and :Tput give you direct access to tmux buffers.
   ":Twrite sends a chunk of text to another pane. Give an argument like windowtitle.2, top-right, or last, or let it default to the previously given argument.
