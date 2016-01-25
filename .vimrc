@@ -618,23 +618,33 @@
   " fetching can take a long time causing the timeout
   " to manually install it
   "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-  "Plug 'davidhalter/jedi-vim'
-  "Plug 'UltiSnips'
-  "" http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
-  "" let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
-  "" let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
-  "" let g:SuperTabDefaultCompletionType = '<C-Tab>'
-  "let g:ycm_autoclose_preview_window_after_completion = 1
-  "let g:ycm_key_list_select_completion = []
-  "let g:ycm_key_list_previous_completion = []
-  "let g:UltiSnipsExpandTrigger="<tab>"
-  "let g:UltiSnipsJumpForwardTrigger="<tab>"
-  "let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-  ""let g:UltiSnipsExpandTrigger="<c-tab>"
-  ""let g:UltiSnipsListSnippets="<c-s-tab>"
-  ""let g:UltiSnipsJumpForwardTrigger="<c-tab>"
-  ""let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
+  if g:nvim_here
+    " requires
+    " sudo pip3 install neovim
+    " after install run
+    " :UpdateRemotePlugins
+    let g:deoplete#enable_at_startup = 1
+    Plug 'Shougo/deoplete.nvim'
+  else
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+  endif
+  " Plug 'davidhalter/jedi-vim'
+  Plug 'UltiSnips'
+  " http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
+  " let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
+  " let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
+  " let g:SuperTabDefaultCompletionType = '<C-Tab>'
+  let g:ycm_autoclose_preview_window_after_completion = 1
+  let g:ycm_autoclose_preview_window_after_insertion = 1
+  let g:ycm_key_list_select_completion = []
+  let g:ycm_key_list_previous_completion = []
+  let g:UltiSnipsExpandTrigger="<tab>"
+  let g:UltiSnipsJumpForwardTrigger="<tab>"
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+  "let g:UltiSnipsExpandTrigger="<c-tab>"
+  "let g:UltiSnipsListSnippets="<c-s-tab>"
+  "let g:UltiSnipsJumpForwardTrigger="<c-tab>"
+  "let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
 
   Plug 'honza/vim-snippets'
   " https://github.com/majutsushi/tagbar/wiki
