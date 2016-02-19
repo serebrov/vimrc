@@ -22,19 +22,6 @@
   " auto adjust tab/space settings based on current file
   Plug 'tpope/vim-sleuth'
 
-  "Plug 'bling/vim-airline'
-  " let g:airline_theme='badwolf'
-  " if !exists('g:airline_symbols')
-  "   let g:airline_symbols = {}
-  " endif
-  " " " unicode symbols
-  " let g:airline_left_sep = '▶'
-  " let g:airline_right_sep = '◀'
-  " let g:airline_symbols.linenr = '␤'
-  " let g:airline_symbols.branch = '⎇'
-  " let g:airline_symbols.paste = 'Þ'
-  " let g:airline_symbols.whitespace = 'Ξ'
-
   " adopt color schemes for terminal
   " Plug 'godlygeek/csapprox'
   " Solarized color scheme
@@ -87,7 +74,6 @@
   " map g* <Plug>(incsearch-nohl-g*)
   " map g# <Plug>(incsearch-nohl-g#)
 
-
   " :Multichange to enter multichange mode (cw will affect the whole file)
   " Plug 'AndrewRadev/multichange.vim'
   " disable mapping entirely
@@ -134,11 +120,34 @@
   " Suggest to open existing file instead of creating new one when there
   " are multiple matches
   Plug 'EinfachToll/DidYouMean'
+  " Ensure dir exists before save the file
+  " :e some_new_dir/some_new_file and then :w will work
+  Plug 'dockyard/vim-easydir'
+  " Auto CD to project root
+  Plug 'airblade/vim-rooter'
+  " disables certain vim features to speedup large file editing
+  " g:LargeFile (by default, its 100) - 100Mb
+  Plug 'vim-scripts/LargeFile'
 
+  " Native files / buffers navigation
   " Also need `set path=.,**` (see below) to search recursively
   " See:http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/
   noremap <Leader>i :find<SPACE>
   noremap <Leader>I :find <C-R>=expand('%:p:h').'/**/*'<CR>
+  " Insert current file's folder
+  cnoremap <Leader><Leader>fn <C-r>=expand('%')<CR>
+  cnoremap <Leader><Leader>f <C-r>=expand('%:p:h')<CR>
+  " will expand %% to current file path
+  "cabbr <expr> %% expand('%:p:h')
+  cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<CR>
+  " list buffers and start completion
+  nnoremap <Leader>b :buffer <C-z>
+  nnoremap <Leader>B :sbuffer <C-z>
+  " list buffers with ls and start completion
+  " see: http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/
+  nnoremap gb :ls<CR>:buffer<Space>
+  nnoremap gB :ls<CR>:sbuffer<Space>
+
   " There is very annoying issue with fzf - when you select file and buffer stays in some
   " strange state, where almost anything closes the buffer and some
   " actions like attempt to search text deletes part of buffer without undo
@@ -203,13 +212,6 @@
   " Similar: vidir from moreutils (https://joeyh.name/code/moreutils/)
   " Similar: Plug 'idbrii/renamer.vim'
 
-  " Ensure dir exists before save the file
-  " :e some_new_dir/some_new_file and then :w will work
-  Plug 'dockyard/vim-easydir'
-
-  " CD to project root
-  Plug 'airblade/vim-rooter'
-
   " Vim / tmux splits integration
   " <ctrl-h> => Left
   " <ctrl-j> => Down
@@ -246,10 +248,6 @@
   Plug 'Shougo/neomru.vim'
   let g:neomru#file_mru_path = $HOME . '/.vim/tmp/cache/neomru/file'
   let g:neomru#directory_mru_path = $HOME . '/.vim/tmp/cache/neomru/directory'
-
-  " disables certain vim features to speedup large file editing
-  " g:LargeFile (by default, its 100) - 100Mb
-  Plug 'vim-scripts/LargeFile'
 
   """""" Visual mode enhancements
   " :NR to move selected text into scratch buffer,
@@ -290,11 +288,19 @@
   " left-right-up-down - draw and move; with shift - just move
   " > < ^ v - draw an arrow; pgdb / end / pgup / home - move by diagonal
   " \> \< \^ \v - draw a fat arrow;
-  " visual block: \a - arrow; \b - box; \e - ellipse; \f - fill; \h - canvas; \l - line;
-  "               \s - add spaces to canvas
-  " leftmouse - select visual block; s-leftmouse - drag and draw with current brush (register)
+  "
+  " select visual block and draw:
+  "   \a - arrow between corners;
+  "   \l - line between corners;
+  "   \b - box around; \e - ellipse around;
+  "   \f - fill with char;
+  "   \s - append spaces up to the textwidth (def: 78)
+  "   \h - canvas; ??
+  " leftmouse - select visual block;
+  " s-leftmouse - drag and draw with current brush
+  " c-leftmouse - drag and move the current brush
   " \ra ... \rz - replace text with given brush (register); \pa ... - like \ra.., blanks are transparent
-  " Plug 'vim-scripts/DrawIt'
+  Plug 'vim-scripts/DrawIt'
   "
   " Related: https://github.com/jondkinney/dragvisuals.vim - dragging visual blocks
   " Related: vim-scripts/VisIncr - make a column of increasing or decreasing
@@ -1219,45 +1225,6 @@ EOF
     autocmd FocusGained * if !has('win32') | silent! call fugitive#reload_status() | endif
   augroup END
 
-  " execute a command while preserve the position
-  if !exists("*Preserve")
-    function! Preserve(command)
-      " Preparation: save last search, and cursor position.
-      let _s=@/
-      let l = line(".")
-      let c = col(".")
-      " Do the business:
-      execute a:command
-      " Clean up: restore previous search history, and cursor position
-      let @/=_s
-      call cursor(l, c)
-    endfunction
-  endif
-
-  " remove trailing whitespace on save
-  " new version from http://vimcasts.org/episodes/tidying-whitespace/
-  let g:clean_trails_enabled = 1
-  function! CleanTrails()
-    if g:clean_trails_enabled
-      call Preserve("%s/\\s\\+$//e")
-    endif
-  endfunction
-
-  autocmd MyAutoCmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd MyAutoCmd BufWritePre <buffer>
-    \ call CleanTrails()
-    "\ call Preserve("%s/\\s\\+$//e")
-
-  " When editing a file, always jump to the last known cursor porition.
-  " Don't do it when the position is invalid or when inside an event
-  " handler.
-  autocmd MyAutoCmd BufReadPost *
-    \ if line("'\"") > 0 |
-    \   if line("'\"") <= line("$") |
-    \     exe("norm '\"") |
-    \   else |
-    \     exe "norm $" |
-    \   endif|
-    \ endif
 " }}}
 
 " Mappings {{{
@@ -1272,19 +1239,20 @@ EOF
   nnoremap * *N
   nnoremap # #N
 
+  " Use CTRL-N to remove search highlight
+  noremap <C-N> :noh \| call clearmatches()<CR>
+  vnoremap <C-N> <C-C>:noh \| call clearmatches()<CR>gv
+  " CTRL-N in insert mode is a completion!!!
+  " inoremap <C-N> <C-O>:noh<CR>
+
   " Repeat change on word
   " Set cursor over a word, <leader>c - change it,
   " now '.' will repeat the change on the next word, n - skip the next word
   nnoremap <leader>c *Ncgn
 
-  " Don't copy on change operations
-  noremap c "_c
-  noremap cc "_cc
-  noremap C "_C
-
   " Note: to replace something with yanked text it's easy to use
   " a change operation and then <C-R>0 to insert register '0' content
-  " in insert mode, like cw<C-R>0 - replace a word with yanked text
+  " in insert mode, like cw<C-R>0 - replace  a word with yanked text
 
   " save
   noremap <leader>w :w<CR>
@@ -1307,24 +1275,7 @@ EOF
   "                  ^- cursor here, c% will change inside the my_fun brackets
   " See: http://www.viemu.com/a-why-vi-vim.html
   "      http://thepugautomatic.com/2014/03/vims-life-changing-c-percent/
-  nnoremap <Leader><Leader> %
-
-  " Go to start / end of line - easier way
-  noremap H ^
-  noremap L $
-  vnoremap L g_
-
-  " ,vv to re-read .vimrc
-  nnoremap <Leader>vv :call Preserve("source ".$MYVIMRC)<CR>
-  " ,vc to edit .vimrc
-  "nnoremap <leader>vc :tabedit $MYVIMRC<CR>
-  nnoremap <leader>vc :tabedit $HOME/.vim/.vimrc<CR>
-
-  " Use CTRL-N to remove search highlight
-  noremap <C-N> :noh \| call clearmatches()<CR>
-  vnoremap <C-N> <C-C>:noh \| call clearmatches()<CR>gv
-  " CTRL-N in insert mode is a completion!!!
-  " inoremap <C-N> <C-O>:noh<CR>
+  " nnoremap <Leader><Leader> %
 
   " Make last word uppercase
   inoremap <C-F> <Esc>gUiw`]a
@@ -1355,30 +1306,14 @@ EOF
   "noremap $ g$
 
   " Move cursor with Ctrl + hjkl in Insert mode
-  inoremap <C-h> <C-o>h
-  inoremap <C-j> <C-o>j
-  inoremap <C-k> <C-o>k
-  inoremap <C-l> <C-o>l
+  " inoremap <C-h> <C-o>h
+  " inoremap <C-j> <C-o>j
+  " inoremap <C-k> <C-o>k
+  " inoremap <C-l> <C-o>l
 
   " Shortcut to rapidly toggle `set list` (def leader = \)
-  nnoremap <leader>l :set list!<CR>
-
-  " <Leader>a to toggle current fold (more convenient then za)
-  nnoremap <Leader>a za
-
-  " http://technotales.wordpress.com/2010/03/31/preserve-a-vim-function-that-keeps-your-state/
-  " remove trailing spaces
-  nnoremap _$ :call preserve("%s/\\s\\+$//e")<cr>
-  " autoformat file
-  nnoremap _= :call preserve("normal gg=g")<cr>
-
-  " Insert current file's folder
-  cnoremap <Leader><Leader>fn <C-r>=expand('%')<CR>
-  cnoremap <Leader><Leader>f <C-r>=expand('%:p:h')<CR>
-
-  " will expand %% to current file path
-  "cabbr <expr> %% expand('%:p:h')
-  cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<CR>
+  " :list displays tabs, trailing spaces and other "invisible" chars
+  " nnoremap <leader>l :set list!<CR>
 
   " Put ending { to the next line
   function! ClosingBracketToNextLine()
@@ -1411,17 +1346,6 @@ EOF
       set relativenumber
     endif
   endfunction
-" }}}
-
-" Buffers navigation {{{
-  " list buffers and start completion
-  nnoremap <Leader>b :buffer <C-z>
-  nnoremap <Leader>B :sbuffer <C-z>
-
-  " list buffers with ls and start completion
-  " see: http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/
-  nnoremap gb :ls<CR>:buffer<Space>
-  nnoremap gB :ls<CR>:sbuffer<Space>
 " }}}
 
 " Windows navigation {{{
@@ -1481,8 +1405,6 @@ EOF
     :nnoremap <A-l> :call WinMove('l')<CR>
   endif
 
-  "close
-  map <leader>wc :wincmd q<cr>
   "rotate
   map <leader>wr <C-W>r
 
@@ -1678,26 +1600,62 @@ EOF
 
   autocmd MyAutoCmd VimLeavePre *  call Wipeout(0)
 
-" }}}
+  " execute a command while preserve the position
+  if !exists("*Preserve")
+    function! Preserve(command)
+      " Preparation: save last search, and cursor position.
+      let _s=@/
+      let l = line(".")
+      let c = col(".")
+      " Do the business:
+      execute a:command
+      " Clean up: restore previous search history, and cursor position
+      let @/=_s
+      call cursor(l, c)
+    endfunction
+  endif
 
-" Utils {{{
-
-  " Diff current unsaved file
-  function! s:DiffWithSaved()
-    let filetype=&ft
-    diffthis
-    vnew | r # | normal! 1Gdd
-    diffthis
-    exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+  " remove trailing whitespace on save
+  " new version from http://vimcasts.org/episodes/tidying-whitespace/
+  let g:clean_trails_enabled = 1
+  function! CleanTrails()
+    if g:clean_trails_enabled
+      call Preserve("%s/\\s\\+$//e")
+    endif
   endfunction
 
+  autocmd MyAutoCmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd MyAutoCmd BufWritePre <buffer>
+    \ call CleanTrails()
+    "\ call Preserve("%s/\\s\\+$//e")
 
-  set diffopt=filler,iwhite
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event
+  " handler.
+  autocmd MyAutoCmd BufReadPost *
+    \ if line("'\"") > 0 |
+    \   if line("'\"") <= line("$") |
+    \     exe("norm '\"") |
+    \   else |
+    \     exe "norm $" |
+    \   endif|
+    \ endif
 
-  " Highlight VCS conflict markers
-  match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+  " ,vv to re-read .vimrc
+  nnoremap <Leader>vv :call Preserve("source ".$MYVIMRC)<CR>
+  " ,vc to edit .vimrc
+  "nnoremap <leader>vc :tabedit $MYVIMRC<CR>
+  nnoremap <leader>vc :tabedit $HOME/.vim/.vimrc<CR>
+
+  " http://technotales.wordpress.com/2010/03/31/preserve-a-vim-function-that-keeps-your-state/
+  " remove trailing spaces
+  nnoremap _$ :call preserve("%s/\\s\\+$//e")<cr>
+  " autoformat file
+  nnoremap _= :call preserve("normal gg=g")<cr>
 
 " }}}
+
+  " Highlight VCS conflict markers
+  "match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Xiki {{{
   " function! XikiLaunch()
@@ -1738,22 +1696,16 @@ EOF
 function! HiInterestingWord(n) " {{{
     " Save our location.
     normal! mz
-
     " Yank the current word into the z register.
     normal! "zyiw
-
     " Calculate an arbitrary match ID.  Hopefully nothing else is using it.
     let mid = 86750 + a:n
-
     " Clear existing matches, but don't worry if they don't exist.
     silent! call matchdelete(mid)
-
     " Construct a literal pattern that has to match at boundaries.
     let pat = '\V\<' . escape(@z, '\') . '\>'
-
     " Actually match the words.
     call matchadd("InterestingWord" . a:n, pat, 1, mid)
-
     " Move back to our original location.
     normal! `z
 endfunction " }}}
@@ -1778,37 +1730,6 @@ hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
 hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
 
 " }}}
-
-" }}}
-" Pulse Line {{{
-
-function! s:Pulse() " {{{
-    redir => old_hi
-        silent execute 'hi CursorLine'
-    redir END
-    let old_hi = split(old_hi, '\n')[0]
-    let old_hi = substitute(old_hi, 'xxx', '', '')
-
-    let steps = 8
-    let width = 1
-    let start = width
-    let end = steps * width
-    let color = 233
-
-    for i in range(start, end, width)
-        execute "hi CursorLine ctermbg=" . (color + i)
-        redraw
-        sleep 6m
-    endfor
-    for i in range(end, start, -1 * width)
-        execute "hi CursorLine ctermbg=" . (color + i)
-        redraw
-        sleep 6m
-    endfor
-
-    execute 'hi ' . old_hi
-endfunction " }}}
-command! -nargs=0 Pulse call s:Pulse()
 
 " }}}
 
@@ -1878,19 +1799,4 @@ function! s:GrepMotion(type) abort
     execute "normal! :Grep --literal " . shellescape(@@) . "\<cr>"
     let @@ = reg_save
 endfunction
-
-let s:mybg = "dark"
-function! BgToggleSol()
-    if (s:mybg ==? "light")
-       set background=dark
-       let s:mybg = "dark"
-    else
-       set background=light
-       let s:mybg = "light"
-    endif
-    " set background=light
-    colorscheme solarized
-endfunction
-
-nnoremap <silent> <leader>sz :call BgToggleSol()<cr>
 " }}}
