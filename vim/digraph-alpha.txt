@@ -1,47 +1,47 @@
 Digraphs:             |  Unicode digraphs
- À	A!       í	i'       Ā  A-    ĭ  i(    Ś  S'    ƶ  z/    ΐ  i3    ξ  c*    В  V=    п  p=    ג  G+    ز  z+    ḇ  b_    Ṽ  V?    ἃ  ,!    ぇ E5     ぴ pi     ォ o6     ブ Bu     ㄉ d4
- Á	A'       î	i>       ā  a-    Į  I;    ś  s'    Ʒ  ED    Α  A*    ο  o*    Г  G=    р  r=    ד  D+    س  s+    Ḋ  D.    ṽ  v?    ἄ  ?;    え e5     ふ hu     オ O6     プ Pu     ㄊ t4
- Â	A>       ï	i:       Ă  A(    į  i;    Ŝ  S>    Ǎ  A<    Β  B*    π  p*    Д  D=    с  s=    ה  H+    ش  sn    ḋ  d.    Ẁ  W!    ἅ  ?,    ぉ O5     ぶ bu     カ Ka     ヘ He     ㄋ n4
- Ã	A?       ð	d-       ă  a(    İ  I.    ŝ  s>    ǎ  a<    Γ  G*    ρ  r*    Е  E=    т  t=    ו  W+    ص  c+    Ḏ  D_    ẁ  w!    ἆ  !:    お o5     ぷ pu     ガ Ga     ベ Be     ㄌ l4
- Ä	A:       ñ	n?       Ą  A;    ı  i.    Ş  S,    Ǐ  I<    Δ  D*    ς  *s    Ж  Z%    у  u=    ז  Z+    ض  dd    ḏ  d_    Ẃ  W'    ἇ  ?:    か ka     へ he     キ Ki     ペ Pe     ㄍ g4
- Å	AA       ò	o!       ą  a;    Ĳ  IJ    ş  s,    ǐ  i<    Ε  E*    σ  s*    З  Z=    ф  f=    ח  X+    ط  tj    Ḑ  D,    ẃ  w'       1N    が ga     べ be     ギ Gi     ホ Ho     ㄎ k4
- Æ	AE       ó	o'       Ć  C'    ĳ  ij    Š  S<    Ǒ  O<    Ζ  Z*    τ  t*    И  I=    х  h=    ט  Tj    ظ  zH    ḑ  d,    Ẅ  W:       1M    き ki     ぺ pe     ク Ku     ボ Bo     ㄏ h4
- Ç	C,       ô	o>       ć  c'    Ĵ  J>    š  s<    ǒ  o<    Η  Y*    υ  u*    Й  J=    ц  c=    י  J+    ع  e+    Ḟ  F.    ẅ  w:       3M    ぎ gi     ほ ho     グ Gu     ポ Po     ㄐ j4
- È	E!       õ	o?       Ĉ  C>    ĵ  j>    Ţ  T,    Ǔ  U<    Θ  H*    φ  f*    К  K=    ч  c%    ך  K%    غ  i+    ḟ  f.    Ẇ  W.       4M    く ku     ぼ bo     ケ Ke     マ Ma     ㄑ q4
- É	E'       ö	o:       ĉ  c>    Ķ  K,    ţ  t,    ǔ  u<    Ι  I*    χ  x*    Л  L=    ш  s%    כ  K+    ـ  ++    Ḡ  G-    ẇ  w.       6M    ぐ gu     ぽ po     ゲ Ge     ミ Mi     ㄒ x4
- Ê	E>       ù	u!       Ċ  C.    ķ  k,    Ť  T<    Ǟ  A1    Κ  K*    ψ  q*    М  M=    щ  sc    ל  L+    ف  f+    ḡ  g-    Ẋ  X.       1T    け ke     ま ma     コ Ko     ム Mu     ㄓ zh
- Ë	E:       ú	u'       ċ  c.    ĸ  kk    ť  t<    ǟ  a1    Λ  L*    ω  w*    Н  N=    ъ  ='    ם  M%    ق  q+    Ḣ  H.    ẋ  x.       1H    げ ge     み mi     ゴ Go     メ Me     ㄔ ch
- Ì	I!       û	u>       Č  C<    Ĺ  L'    Ŧ  T/    Ǡ  A7    Μ  M*    ϊ  j*    О  O=    ы  y=    מ  M+    ك  k+    ḣ  h.    Ẍ  X:             こ ko     む mu     サ Sa     モ Mo     ㄕ sh
- Í	I'       ü	u:       č  c<    ĺ  l'    ŧ  t/    ǡ  a7    Ν  N*    ϋ  v*    П  P=    ь  %'    ן  N%    ل  l+    Ḧ  H:    ẍ  x:    ぁ A5    ご go     め me     ザ Za     ャ YA     ㄖ r4
- Î	I>       ý	y'       Ď  D<    Ļ  L,    Ũ  U?    Ǣ  A3    Ξ  C*    ό  o%    Р  R=    э  je    נ  N+    م  m+    ḧ  h:    Ẏ  Y.    あ a5    さ sa     も mo     シ Si     ヤ Ya     ㄗ z4
- Ï	I:       þ	th       ď  d<    ļ  l,    ũ  u?    ǣ  a3    Ο  O*    ύ  u%    С  S=    ю  ju    ס  S+    ن  n+    Ḩ  H,    ẏ  y.    ぃ I5    ざ za     ゃ yA     ジ Zi     ュ YU     ㄘ c4
- Ð	D-       ÿ	y:       Đ  D/    Ľ  L<    Ū  U-    Ǥ  G/    Π  P*    ώ  w%    Т  T=    я  ja    ע  E+    ه  h+    ḩ  h,    Ẑ  Z>    い i5    し si     や ya     ス Su     ユ Yu     ㄙ s4
- Ñ	N?                   đ  d/    ľ  l<    ū  u-    ǥ  g/    Ρ  R*    Ϙ  'G    У  U=    ё  io    ף  P%    و  w+    Ḱ  K'    ẑ  z>    ぅ U5    じ zi     ゅ yU     ズ Zu     ョ YO     ㄚ a4
- Ò	O!                   Ē  E-    Ŀ  L.    Ŭ  U(    Ǧ  G<    Σ  S*    ϙ  ,G    Ф  F=    ђ  d%    פ  P+    ى  j+    ḱ  k'    Ẕ  Z_    う u5    す su     ゆ yu     セ Se     ヨ Yo     ㄛ o4
- Ó	O'                   ē  e-    ŀ  l.    ŭ  u(    ǧ  g<    Τ  T*    Ϛ  T3    Х  H=    ѓ  g%    ץ  Zj    ي  y+    Ḵ  K_    ẕ  z_             ず zu     ょ yO     ゼ Ze     ラ Ra     ㄜ e4
- Ô	O>                   Ĕ  E(    Ł  L/    Ů  U0    Ǩ  K<    Υ  U*    ϛ  t3    Ц  C=    є  ie    צ  ZJ      :+     ḵ  k_    ẖ  h_    ﬁ  fi    せ se     よ yo     ソ So     リ Ri     ㄞ ai
- Õ	O?                   ĕ  e(    ł  l/    ů  u0    ǩ  k<    Φ  F*    Ϝ  M3    Ч  C%    ѕ  ds    ק  Q+      "+     Ḻ  L_    ẗ  t:    ﬂ  fl    ぜ ze     ら ra     ゾ Zo     ル Ru     ㄟ ei
- Ö	O:                   Ė  E.    Ń  N'    Ű  U"    Ǫ  O;    Χ  X*    ϝ  m3    Ш  S%    і  ii    ר  R+      =+     ḻ  l_    ẘ  w0    ﬅ  ft    そ so     り ri     タ Ta     レ Re     ㄠ au
- Ù	U!                   ė  e.    ń  n'    ű  u"    ǫ  o;    Ψ  Q*    Ϟ  K3    Щ  Sc    ї  yi    ש  Sh      /+     Ḿ  M'    ẙ  y0    ﬆ  st    ぞ zo     る ru     ダ Da     ロ Ro     ㄡ ou
- Ú	U'                   Ę  E;    Ņ  N,    Ų  U;    Ǭ  O1    Ω  W*    ϟ  k3    Ъ  ="    ј  j%    ת  T+      '+     ḿ  m'    Ả  A2             た ta     れ re     チ Ti     ヮ WA     ㄢ an
- Û	U>                   ę  e;    ņ  n,    ų  u;    ǭ  o1    Ϊ  J*    Ϡ  P3    Ы  Y=    љ  lj    ،  ,+      1+     Ṁ  M.    ả  a2             だ da     ろ ro     ヂ Di     ワ Wa     ㄣ en
- Ü	U:                   Ě  E<    Ň  N<    Ŵ  W>    Ǯ  EZ    Ϋ  V*    ϡ  p3    Ь  %"    њ  nj    ؛  ;+      3+     ṁ  m.    Ẻ  E2             ち ti     ゎ wA     ッ TU     ヰ Wi     ㄤ aN
- Ý	Y'                   ě  e<    ň  n<    ŵ  w>    ǯ  ez    ά  a%    ϴ  '%    Э  JE    ћ  ts    ؟  ?+      0+     Ṅ  N.    ẻ  e2             ぢ di     わ wa     ツ Tu     ヱ We     ㄥ eN
- Þ	TH                   Ĝ  G>    ŉ  'n    Ŷ  Y>    ǰ  j<    έ  e%    ϵ  j3    Ю  JU    ќ  kj    ء  H'      aS     ṅ  n.    Ẽ  E?             っ tU     ゐ wi     ヅ Du     ヲ Wo     ㄦ er
- ß	ss                   ĝ  g>    Ŋ  NG    ŷ  y>    Ǵ  G'    ή  y%    Ё  IO    Я  JA    ў  v%    آ  aM    پ  p+    Ṉ  N_    ẽ  e?             つ tu     ゑ we     テ Te     ン N6     ㄧ i4
- à	a!                   Ğ  G(    ŋ  ng    Ÿ  Y:    ǵ  g'    ί  i%    Ђ  D%    а  a=    џ  dz    أ  aH    ڤ  v+    ṉ  n_    Ỉ  I2             づ du     を wo     デ De     ヴ Vu     ㄨ u4
- á	a'                   ğ  g(    Ō  O-    Ź  Z'    ʿ  ;S    ΰ  u3    Ѓ  G%    б  b=    Ѣ  Y3    ؤ  wH    گ  gf    Ṕ  P'    ỉ  i2             て te     ん n5     ト To     ヵ KA     ㄩ iu
- â	a>                   Ġ  G.    ō  o-    ź  z'    ˇ  '<    α  a*    Є  IE    в  v=    ѣ  y3    إ  ah    ۰  0a    ṕ  p'    Ỏ  O2             で de     ゔ vu     ド Do     ヶ KE     ㄪ v4
- ã	a?                   ġ  g.    Ŏ  O(    Ż  Z.    ˘  '(    β  b*    Ѕ  DS    г  g=    Ѫ  O3    ئ  yH    ۱  1a    Ṗ  P.    ỏ  o2             と to     ゛ "5     ナ Na     ヷ Va     ㄫ nG
- ä	a:                   Ģ  G,    ŏ  o(    ż  z.    ˙  '.    γ  g*    І  II    д  d=    ѫ  o3    ا  a+    ۲  2a    ṗ  p.    Ủ  U2             ど do     ゜ 05     ニ Ni     ヸ Vi     ㄬ gn
- å	aa                   ģ  g,    Ő  O"    Ž  Z<    ˚  '0    δ  d*    Ї  YI    е  e=    Ѳ  F3    ب  b+    ۳  3a    Ṙ  R.    ủ  u2             な na     ゝ *5     ヌ Nu     ヹ Ve     ㈠ 1c
- æ	ae                   Ĥ  H>    ő  o"    ž  z<    ˛  ';    ε  e*    Ј  J%    ж  z%    ѳ  f3    ة  tm    ۴  4a    ṙ  r.    Ỳ  Y!             に ni     ゞ +5     ネ Ne     ヺ Vo     ㈡ 2c
- ç	c,                   ĥ  h>    Œ  OE    Ơ  O9    ˝  '"    ζ  z*    Љ  LJ    з  z=    Ѵ  V3    ت  t+    ۵  5a    Ṟ  R_    ỳ  y!             ぬ nu     ァ a6     ノ No     ・ .6     ㈢ 3c
- è	e!                   Ħ  H/    œ  oe    ơ  o9    Ά  A%    η  y*    Њ  NJ    и  i=    ѵ  v3    ث  tk    ۶  6a    ṟ  r_    Ỷ  Y2             ね ne     ア A6     ハ Ha     ー -6     ㈣ 4c
- é	e'                   ħ  h/    Ŕ  R'    Ƣ  OI    Έ  E%    θ  h*    Ћ  Ts    й  j=    Ҁ  C3    ج  g+    ۷  7a    Ṡ  S.    ỷ  y2             の no     ィ i6     バ Ba     ヽ *6     ㈤ 5c
- ê	e>                   Ĩ  I?    ŕ  r'    ƣ  oi    Ή  Y%    ι  i*    Ќ  KJ    к  k=    ҁ  c3    ح  hk    ۸  8a    ṡ  s.    Ỹ  Y?             は ha     イ I6     パ Pa     ヾ +6     ㈥ 6c
- ë	e:                   ĩ  i?    Ŗ  R,    Ʀ  yr    Ί  I%    κ  k*    Ў  V%    л  l=    Ґ  G3    خ  x+    ۹  9a    Ṫ  T.    ỹ  y?             ば ba     ゥ u6     ヒ Hi     ㄅ b4     ㈦ 7c
- ì	i!                   Ī  I-    ŗ  r,    Ư  U9    Ό  O%    λ  l*    Џ  DZ    м  m=    ґ  g3    د  d+    Ḃ  B.    ṫ  t.    ἀ  ;'             ぱ pa     ウ U6     ビ Bi     ㄆ p4     ㈧ 8c
+ À  A!       í  i'       Ā  A-    ĭ  i(    Ś  S'    ƶ  z/    ΐ  i3    ξ  c*    В  V=    п  p=    ג  G+    ز  z+    ḇ  b_    Ṽ  V?    ἃ  ,!    ぇ E5     ぴ pi     ォ o6     ブ Bu     ㄉ d4
+ Á  A'       î  i>       ā  a-    Į  I;    ś  s'    Ʒ  ED    Α  A*    ο  o*    Г  G=    р  r=    ד  D+    س  s+    Ḋ  D.    ṽ  v?    ἄ  ?;    え e5     ふ hu     オ O6     プ Pu     ㄊ t4
+ Â  A>       ï  i:       Ă  A(    į  i;    Ŝ  S>    Ǎ  A<    Β  B*    π  p*    Д  D=    с  s=    ה  H+    ش  sn    ḋ  d.    Ẁ  W!    ἅ  ?,    ぉ O5     ぶ bu     カ Ka     ヘ He     ㄋ n4
+ Ã  A?       ð  d-       ă  a(    İ  I.    ŝ  s>    ǎ  a<    Γ  G*    ρ  r*    Е  E=    т  t=    ו  W+    ص  c+    Ḏ  D_    ẁ  w!    ἆ  !:    お o5     ぷ pu     ガ Ga     ベ Be     ㄌ l4
+ Ä  A:       ñ  n?       Ą  A;    ı  i.    Ş  S,    Ǐ  I<    Δ  D*    ς  *s    Ж  Z%    у  u=    ז  Z+    ض  dd    ḏ  d_    Ẃ  W'    ἇ  ?:    か ka     へ he     キ Ki     ペ Pe     ㄍ g4
+ Å  AA       ò  o!       ą  a;    Ĳ  IJ    ş  s,    ǐ  i<    Ε  E*    σ  s*    З  Z=    ф  f=    ח  X+    ط  tj    Ḑ  D,    ẃ  w'       1N    が ga     べ be     ギ Gi     ホ Ho     ㄎ k4
+ Æ  AE       ó  o'       Ć  C'    ĳ  ij    Š  S<    Ǒ  O<    Ζ  Z*    τ  t*    И  I=    х  h=    ט  Tj    ظ  zH    ḑ  d,    Ẅ  W:       1M    き ki     ぺ pe     ク Ku     ボ Bo     ㄏ h4
+ Ç  C,       ô  o>       ć  c'    Ĵ  J>    š  s<    ǒ  o<    Η  Y*    υ  u*    Й  J=    ц  c=    י  J+    ع  e+    Ḟ  F.    ẅ  w:       3M    ぎ gi     ほ ho     グ Gu     ポ Po     ㄐ j4
+ È  E!       õ  o?       Ĉ  C>    ĵ  j>    Ţ  T,    Ǔ  U<    Θ  H*    φ  f*    К  K=    ч  c%    ך  K%    غ  i+    ḟ  f.    Ẇ  W.       4M    く ku     ぼ bo     ケ Ke     マ Ma     ㄑ q4
+ É  E'       ö  o:       ĉ  c>    Ķ  K,    ţ  t,    ǔ  u<    Ι  I*    χ  x*    Л  L=    ш  s%    כ  K+    ـ  ++    Ḡ  G-    ẇ  w.       6M    ぐ gu     ぽ po     ゲ Ge     ミ Mi     ㄒ x4
+ Ê  E>       ù  u!       Ċ  C.    ķ  k,    Ť  T<    Ǟ  A1    Κ  K*    ψ  q*    М  M=    щ  sc    ל  L+    ف  f+    ḡ  g-    Ẋ  X.       1T    け ke     ま ma     コ Ko     ム Mu     ㄓ zh
+ Ë  E:       ú  u'       ċ  c.    ĸ  kk    ť  t<    ǟ  a1    Λ  L*    ω  w*    Н  N=    ъ  ='    ם  M%    ق  q+    Ḣ  H.    ẋ  x.       1H    げ ge     み mi     ゴ Go     メ Me     ㄔ ch
+ Ì  I!       û  u>       Č  C<    Ĺ  L'    Ŧ  T/    Ǡ  A7    Μ  M*    ϊ  j*    О  O=    ы  y=    מ  M+    ك  k+    ḣ  h.    Ẍ  X:             こ ko     む mu     サ Sa     モ Mo     ㄕ sh
+ Í  I'       ü  u:       č  c<    ĺ  l'    ŧ  t/    ǡ  a7    Ν  N*    ϋ  v*    П  P=    ь  %'    ן  N%    ل  l+    Ḧ  H:    ẍ  x:    ぁ A5    ご go     め me     ザ Za     ャ YA     ㄖ r4
+ Î  I>       ý  y'       Ď  D<    Ļ  L,    Ũ  U?    Ǣ  A3    Ξ  C*    ό  o%    Р  R=    э  je    נ  N+    م  m+    ḧ  h:    Ẏ  Y.    あ a5    さ sa     も mo     シ Si     ヤ Ya     ㄗ z4
+ Ï  I:       þ  th       ď  d<    ļ  l,    ũ  u?    ǣ  a3    Ο  O*    ύ  u%    С  S=    ю  ju    ס  S+    ن  n+    Ḩ  H,    ẏ  y.    ぃ I5    ざ za     ゃ yA     ジ Zi     ュ YU     ㄘ c4
+ Ð  D-       ÿ  y:       Đ  D/    Ľ  L<    Ū  U-    Ǥ  G/    Π  P*    ώ  w%    Т  T=    я  ja    ע  E+    ه  h+    ḩ  h,    Ẑ  Z>    い i5    し si     や ya     ス Su     ユ Yu     ㄙ s4
+ Ñ  N?                   đ  d/    ľ  l<    ū  u-    ǥ  g/    Ρ  R*    Ϙ  'G    У  U=    ё  io    ף  P%    و  w+    Ḱ  K'    ẑ  z>    ぅ U5    じ zi     ゅ yU     ズ Zu     ョ YO     ㄚ a4
+ Ò  O!                   Ē  E-    Ŀ  L.    Ŭ  U(    Ǧ  G<    Σ  S*    ϙ  ,G    Ф  F=    ђ  d%    פ  P+    ى  j+    ḱ  k'    Ẕ  Z_    う u5    す su     ゆ yu     セ Se     ヨ Yo     ㄛ o4
+ Ó  O'                   ē  e-    ŀ  l.    ŭ  u(    ǧ  g<    Τ  T*    Ϛ  T3    Х  H=    ѓ  g%    ץ  Zj    ي  y+    Ḵ  K_    ẕ  z_             ず zu     ょ yO     ゼ Ze     ラ Ra     ㄜ e4
+ Ô  O>                   Ĕ  E(    Ł  L/    Ů  U0    Ǩ  K<    Υ  U*    ϛ  t3    Ц  C=    є  ie    צ  ZJ      :+     ḵ  k_    ẖ  h_    ﬁ  fi    せ se     よ yo     ソ So     リ Ri     ㄞ ai
+ Õ  O?                   ĕ  e(    ł  l/    ů  u0    ǩ  k<    Φ  F*    Ϝ  M3    Ч  C%    ѕ  ds    ק  Q+      "+     Ḻ  L_    ẗ  t:    ﬂ  fl    ぜ ze     ら ra     ゾ Zo     ル Ru     ㄟ ei
+ Ö  O:                   Ė  E.    Ń  N'    Ű  U"    Ǫ  O;    Χ  X*    ϝ  m3    Ш  S%    і  ii    ר  R+      =+     ḻ  l_    ẘ  w0    ﬅ  ft    そ so     り ri     タ Ta     レ Re     ㄠ au
+ Ù  U!                   ė  e.    ń  n'    ű  u"    ǫ  o;    Ψ  Q*    Ϟ  K3    Щ  Sc    ї  yi    ש  Sh      /+     Ḿ  M'    ẙ  y0    ﬆ  st    ぞ zo     る ru     ダ Da     ロ Ro     ㄡ ou
+ Ú  U'                   Ę  E;    Ņ  N,    Ų  U;    Ǭ  O1    Ω  W*    ϟ  k3    Ъ  ="    ј  j%    ת  T+      '+     ḿ  m'    Ả  A2             た ta     れ re     チ Ti     ヮ WA     ㄢ an
+ Û  U>                   ę  e;    ņ  n,    ų  u;    ǭ  o1    Ϊ  J*    Ϡ  P3    Ы  Y=    љ  lj    ،  ,+      1+     Ṁ  M.    ả  a2             だ da     ろ ro     ヂ Di     ワ Wa     ㄣ en
+ Ü  U:                   Ě  E<    Ň  N<    Ŵ  W>    Ǯ  EZ    Ϋ  V*    ϡ  p3    Ь  %"    њ  nj    ؛  ;+      3+     ṁ  m.    Ẻ  E2             ち ti     ゎ wA     ッ TU     ヰ Wi     ㄤ aN
+ Ý  Y'                   ě  e<    ň  n<    ŵ  w>    ǯ  ez    ά  a%    ϴ  '%    Э  JE    ћ  ts    ؟  ?+      0+     Ṅ  N.    ẻ  e2             ぢ di     わ wa     ツ Tu     ヱ We     ㄥ eN
+ Þ  TH                   Ĝ  G>    ŉ  'n    Ŷ  Y>    ǰ  j<    έ  e%    ϵ  j3    Ю  JU    ќ  kj    ء  H'      aS     ṅ  n.    Ẽ  E?             っ tU     ゐ wi     ヅ Du     ヲ Wo     ㄦ er
+ ß  ss                   ĝ  g>    Ŋ  NG    ŷ  y>    Ǵ  G'    ή  y%    Ё  IO    Я  JA    ў  v%    آ  aM    پ  p+    Ṉ  N_    ẽ  e?             つ tu     ゑ we     テ Te     ン N6     ㄧ i4
+ à  a!                   Ğ  G(    ŋ  ng    Ÿ  Y:    ǵ  g'    ί  i%    Ђ  D%    а  a=    џ  dz    أ  aH    ڤ  v+    ṉ  n_    Ỉ  I2             づ du     を wo     デ De     ヴ Vu     ㄨ u4
+ á  a'                   ğ  g(    Ō  O-    Ź  Z'    ʿ  ;S    ΰ  u3    Ѓ  G%    б  b=    Ѣ  Y3    ؤ  wH    گ  gf    Ṕ  P'    ỉ  i2             て te     ん n5     ト To     ヵ KA     ㄩ iu
+ â  a>                   Ġ  G.    ō  o-    ź  z'    ˇ  '<    α  a*    Є  IE    в  v=    ѣ  y3    إ  ah    ۰  0a    ṕ  p'    Ỏ  O2             で de     ゔ vu     ド Do     ヶ KE     ㄪ v4
+ ã  a?                   ġ  g.    Ŏ  O(    Ż  Z.    ˘  '(    β  b*    Ѕ  DS    г  g=    Ѫ  O3    ئ  yH    ۱  1a    Ṗ  P.    ỏ  o2             と to     ゛ "5     ナ Na     ヷ Va     ㄫ nG
+ ä  a:                   Ģ  G,    ŏ  o(    ż  z.    ˙  '.    γ  g*    І  II    д  d=    ѫ  o3    ا  a+    ۲  2a    ṗ  p.    Ủ  U2             ど do     ゜ 05     ニ Ni     ヸ Vi     ㄬ gn
+ å  aa                   ģ  g,    Ő  O"    Ž  Z<    ˚  '0    δ  d*    Ї  YI    е  e=    Ѳ  F3    ب  b+    ۳  3a    Ṙ  R.    ủ  u2             な na     ゝ *5     ヌ Nu     ヹ Ve     ㈠ 1c
+ æ  ae                   Ĥ  H>    ő  o"    ž  z<    ˛  ';    ε  e*    Ј  J%    ж  z%    ѳ  f3    ة  tm    ۴  4a    ṙ  r.    Ỳ  Y!             に ni     ゞ +5     ネ Ne     ヺ Vo     ㈡ 2c
+ ç  c,                   ĥ  h>    Œ  OE    Ơ  O9    ˝  '"    ζ  z*    Љ  LJ    з  z=    Ѵ  V3    ت  t+    ۵  5a    Ṟ  R_    ỳ  y!             ぬ nu     ァ a6     ノ No     ・ .6     ㈢ 3c
+ è  e!                   Ħ  H/    œ  oe    ơ  o9    Ά  A%    η  y*    Њ  NJ    и  i=    ѵ  v3    ث  tk    ۶  6a    ṟ  r_    Ỷ  Y2             ね ne     ア A6     ハ Ha     ー -6     ㈣ 4c
+ é  e'                   ħ  h/    Ŕ  R'    Ƣ  OI    Έ  E%    θ  h*    Ћ  Ts    й  j=    Ҁ  C3    ج  g+    ۷  7a    Ṡ  S.    ỷ  y2             の no     ィ i6     バ Ba     ヽ *6     ㈤ 5c
+ ê  e>                   Ĩ  I?    ŕ  r'    ƣ  oi    Ή  Y%    ι  i*    Ќ  KJ    к  k=    ҁ  c3    ح  hk    ۸  8a    ṡ  s.    Ỹ  Y?             は ha     イ I6     パ Pa     ヾ +6     ㈥ 6c
+ ë  e:                   ĩ  i?    Ŗ  R,    Ʀ  yr    Ί  I%    κ  k*    Ў  V%    л  l=    Ґ  G3    خ  x+    ۹  9a    Ṫ  T.    ỹ  y?             ば ba     ゥ u6     ヒ Hi     ㄅ b4     ㈦ 7c
+ ì  i!                   Ī  I-    ŗ  r,    Ư  U9    Ό  O%    λ  l*    Џ  DZ    м  m=    ґ  g3    د  d+    Ḃ  B.    ṫ  t.    ἀ  ;'             ぱ pa     ウ U6     ビ Bi     ㄆ p4     ㈧ 8c
                          ī  i-    Ř  R<    ư  u9    Ύ  U%    μ  m*    А  A=    н  n=    א  A+    ذ  dk    ḃ  b.    Ṯ  T_    ἁ  ,'             ひ hi     ェ e6     ピ Pi     ㄇ m4     ㈨ 9c
                          Ĭ  I(    ř  r<    Ƶ  Z/    Ώ  W%    ν  n*    Б  B=    о  o=    ב  B+    ر  r+    Ḇ  B_    ṯ  t_    ἂ  ;!             び bi     エ E6     フ Hu     ㄈ f4     ﬀ  ff
  vim:ft=help:norl:nowrap:
