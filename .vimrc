@@ -144,6 +144,25 @@
   " c-leftmouse - drag and move the current brush
   " \ra ... \rz - replace text with given brush (register); \pa ... - like \ra.., blanks are transparent
   Plug 'vim-scripts/DrawIt'
+
+  " Move / duplicate text
+  " space + d / D - duplicate down/up
+  " visual mode - arrows - move selection
+  " F10 - toggle replace/insert
+  Plug 't9md/vim-textmanip'
+  xmap <Space>d <Plug>(textmanip-duplicate-down)
+  nmap <Space>d <Plug>(textmanip-duplicate-down)
+  xmap <Space>D <Plug>(textmanip-duplicate-up)
+  nmap <Space>D <Plug>(textmanip-duplicate-up)
+
+  xmap <Down> <Plug>(textmanip-move-down)
+  xmap <Up> <Plug>(textmanip-move-up)
+  xmap <Left> <Plug>(textmanip-move-left)
+  xmap <Right> <Plug>(textmanip-move-right)
+
+  " toggle insert/replace with <F10>
+  nmap <F10> <Plug>(textmanip-toggle-mode)
+  xmap <F10> <Plug>(textmanip-toggle-mode)
   "
   " Related: https://github.com/jondkinney/dragvisuals.vim - dragging visual blocks
   " Related: vim-scripts/VisIncr - make a column of increasing or decreasing
@@ -1136,12 +1155,15 @@ EOF
   " C-W s|v       - split current win horiz | vert
   " :on[ly]       - leave only current win
   " C-W +|-       - height +|- 1 px
+  " C-W >         - increase current window width N columns
   " C-W _||       - maximize height|width
   " moving windows:
   " C-W H|J|K|L   - move win to the left|down|up|right
   " C-W r         - rotate
   " C-W x         - exchange with neighbour
   " C-W T         - move window to separate tab
+  " C-W P         - go to preview window
+  " C-W z         - close preview window
 
   " move to and open if not exists
   " http://www.agillo.net/simple-vim-window-management/
@@ -1518,14 +1540,24 @@ hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
   " Visual search
   " select text and hit * / # to find it
   " http://got-ravings.blogspot.com/2008/07/vim-pr0n-visual-search-mappings.html
+  " https://github.com/godlygeek/vim-files/blob/master/plugin/vsearch.vim
+  " Visual mode search
   function! s:VSetSearch()
-      let temp = @@
-      norm! gvy
-      let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
-      let @@ = temp
+    let temp = @@
+    norm! gvy
+    let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+    " Use this line instead of the above to match matches spanning across lines
+    "let @/ = '\V' . substitute(escape(@@, '\'), '\_s\+', '\\_s\\+', 'g')
+    call histadd('/', substitute(@/, '[?/]', '\="\\%d".char2nr(submatch(0))', 'g'))
+    let @@ = temp
   endfunction
-  vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
-  vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
+  " xnoremap - only for visual mode, but not for select mode
+  xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>
+  xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<CR>
+
+  " recursively vimgrep for word under cursor or selection if you hit leader-star
+  nmap <leader>* :execute 'noautocmd vimgrep /\V' . substitute(escape(expand("<cword>"), '\'), '\n', '\\n', 'g') . '/ **'<CR>
+  vmap <leader>* :<C-u>call <SID>VSetSearch()<CR>:execute 'noautocmd vimgrep /' . @/ . '/ **'<CR>
 
   " Search the last search (@/ - '/' register content, last search text)
   " using vimgrep and show in quickfix
@@ -1725,24 +1757,6 @@ endfunction
   " vmap v <Plug>(expand_region_expand)
   " vmap <C-v> <Plug>(expand_region_shrink)
 
-  " Move / duplicate text
-  " space + d / D - duplicate down/up
-  " visual mode - arrows - move selection
-  " F10 - toggle replace/insert
-  " Plug 't9md/vim-textmanip'
-  " xmap <Space>d <Plug>(textmanip-duplicate-down)
-  " nmap <Space>d <Plug>(textmanip-duplicate-down)
-  " xmap <Space>D <Plug>(textmanip-duplicate-up)
-  " nmap <Space>D <Plug>(textmanip-duplicate-up)
-
-  " xmap <Down> <Plug>(textmanip-move-down)
-  " xmap <Up> <Plug>(textmanip-move-up)
-  " xmap <Left> <Plug>(textmanip-move-left)
-  " xmap <Right> <Plug>(textmanip-move-right)
-
-  " " toggle insert/replace with <F10>
-  " nmap <F10> <Plug>(textmanip-toggle-mode)
-  " xmap <F10> <Plug>(textmanip-toggle-mode)
   "
   "
   " Create and format tables (including formulas)

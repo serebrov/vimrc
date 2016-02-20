@@ -1,0 +1,49 @@
+Digraphs: |  Unicode digraphs
+
+ |	NS     ἃ  ,!    ⁶  6S    ⅗  35    ∆  DE    ⊆  (_    ┇  3/    █  FB    ☼  SU    ぇ E5     ぴ pi     ォ o6     ブ Bu     ㄉ d4     ﬁ  fi
+ ¡	!I     ἄ  ?;    ⁷  7S    ⅘  45    ∇  NB    ⊇  )_    ┈  4-    ▌  lB    ♀  Fm    え e5     ふ hu     オ O6     プ Pu     ㄊ t4     ﬂ  fl
+ ¢	Ct     ἅ  ?,    ⁸  8S    ⅙  16    ∈  (-    ⊙  0.    ┉  4_    ▐  RB    ♂  Ml    ぉ O5     ぶ bu     カ Ka     ヘ He     ㄋ n4     ﬅ  ft
+ £	Pd     ἆ  !:    ⁹  9S    ⅚  56    ∋  -)    ⊚  02    ┊  4!    ░  .S    ♠  cS    お o5     ぷ pu     ガ Ga     ベ Be     ㄌ l4     ﬆ  st
+ ¤	Cu     ἇ  ?:    ⁺  +S    ⅛  18    ∏  *P    ⊥  -T    ┋  4/    ▒  :S    ♡  cH    か ka     へ he     キ Ki     ペ Pe     ㄍ g4
+ ¥	Ye        1N    ⁻  -S    ⅜  38    ∑  +Z    ⋅  .P    ┌  dr    ▓  ?S    ♢  cD    が ga     べ be     ギ Gi     ホ Ho     ㄎ k4
+ ¦	BB        1M    ⁼  =S    ⅝  58    −  -2    ⋮  :3    ┍  dR    ■  fS    ♣  cC    き ki     ぺ pe     ク Ku     ボ Bo     ㄏ h4
+ §	SE        3M    ⁽  (S    ⅞  78    ∓  -+    ⋯  .3    ┎  Dr    □  OS    ♩  Md    ぎ gi     ほ ho     グ Gu     ポ Po     ㄐ j4
+ ¨	':        4M    ⁾  )S    Ⅰ  1R    ∗  *-    ⌂  Eh    ┏  DR    ▢  RO    ♪  M8    く ku     ぼ bo     ケ Ke     マ Ma     ㄑ q4
+ ©	Co        6M    ⁿ  nS    Ⅱ  2R    ∘  Ob    ⌈  <7    ┐  dl    ▣  Rr    ♫  M2    ぐ gu     ぽ po     ゲ Ge     ミ Mi     ㄒ x4
+ ª	-a        1T    ₀  0s    Ⅲ  3R    ∙  Sb    ⌉  >7    ┑  dL    ▤  RF    ♭  Mb    け ke     ま ma     コ Ko     ム Mu     ㄓ zh
+ «	<<        1H    ₁  1s    Ⅳ  4R    √  RT    ⌊  7<    ┒  Dl    ▥  RY    ♮  Mx    げ ge     み mi     ゴ Go     メ Me     ㄔ ch
+ ¬	NO     ‐  -1    ₂  2s    Ⅴ  5R    ∝  0(    ⌋  7>    ┓  LD    ▦  RH    ♯  MX    こ ko     む mu     サ Sa     モ Mo     ㄕ sh
+ ­	--     –  -N    ₃  3s    Ⅵ  6R    ∞  00    ⌐  NI    └  ur    ▧  RZ    ✓  OK    ご go     め me     ザ Za     ャ YA     ㄖ r4
+ ®	Rg     —  -M    ₄  4s    Ⅶ  7R    ∟  -L    ⌒  (A    ┕  uR    ▨  RK    ✗  XX    さ sa     も mo     シ Si     ヤ Ya     ㄗ z4
+ ¯	'm     ―  -3    ₅  5s    Ⅷ  8R    ∠  -V    ⌕  TR    ┖  Ur    ▩  RX    ✠  -X    ざ za     ゃ yA     ジ Zi     ュ YU     ㄘ c4
+ °	DG     ‖  !2    ₆  6s    Ⅸ  9R    ∥  PP    ⌠  Iu    ┗  UR    ▪  sB    　 IS    し si     や ya     ス Su     ユ Yu     ㄙ s4
+ ±	+-     ‗  =2    ₇  7s    Ⅹ  aR    ∧  AN    ⌡  Il    ┘  ul    ▬  SR    、 ,_    じ zi     ゅ yU     ズ Zu     ョ YO     ㄚ a4
+ ²	2S     ‘  '6    ₈  8s    Ⅺ  bR    ∨  OR    〈 </    ┙  uL    ▭  Or    。 ._    す su     ゆ yu     セ Se     ヨ Yo     ㄛ o4
+ ³	3S     ’  '9    ₉  9s    Ⅻ  cR    ∩  (U    〉 />    ┚  Ul    ▲  UT    〃 +"    ず zu     ょ yO     ゼ Ze     ラ Ra     ㄜ e4
+ ´	''     ‚  .9    ₊  +s    ⅰ  1r    ∪  )U    ␣  Vs    ┛  UL    △  uT    〄 +_    せ se     よ yo     ソ So     リ Ri     ㄞ ai
+ µ	My     ‛  9'    ₋  -s    ⅱ  2r    ∫  In    ⑀  1h    ├  vr    ▶  PR    々 *_    ぜ ze     ら ra     ゾ Zo     ル Ru     ㄟ ei
+ ¶	PI     “  "6    ₌  =s    ⅲ  3r    ∬  DI    ⑁  3h    ┝  vR    ▷  Tr    〆 ;_    そ so     り ri     タ Ta     レ Re     ㄠ au
+ ·	.M     ”  "9    ₍  (s    ⅳ  4r    ∮  Io    ⑂  2h    ┠  Vr    ▼  Dt    〇 0_    ぞ zo     る ru     ダ Da     ロ Ro     ㄡ ou
+ ¸	',     „  :9    ₎  )s    ⅴ  5r    ∴  .:    ⑃  4h    ┣  VR    ▽  dT    《 <+    た ta     れ re     チ Ti     ヮ WA     ㄢ an
+ ¹	1S     ‟  9"    ₤  Li    ⅵ  6r    ∵  :.    ⑆  1j    ┤  vl    ◀  PL    》 >+    だ da     ろ ro     ヂ Di     ワ Wa     ㄣ en
+ º	-o     †  /-    ₧  Pt    ⅶ  7r    ∶  :R    ⑇  2j    ┥  vL    ◁  Tl    「 <'    ち ti     ゎ wA     ッ TU     ヰ Wi     ㄤ aN
+ »	>>     ‡  /=    ₩  W=    ⅷ  8r    ∷  ::    ⑈  3j    ┨  Vl    ◆  Db    」 >'    ぢ di     わ wa     ツ Tu     ヱ We     ㄥ eN
+ ¼	14     ‥  ..    €  Eu    ⅸ  9r    ∼  ?1    ⑉  4j    ┫  VL    ◇  Dw    『 <"    っ tU     ゐ wi     ヅ Du     ヲ Wo     ㄦ er
+ ½	12     ‰  %0    ₽  =R    ⅹ  ar    ∾  CG    ⒈  1.    ┬  dh    ◊  LZ    』 >"    つ tu     ゑ we     テ Te     ン N6     ㄧ i4
+ ¾	34     ′  1'    ₽  =P    ⅺ  br    ≃  ?-    ⒉  2.    ┯  dH    ○  0m    【 ("    づ du     を wo     デ De     ヴ Vu     ㄨ u4
+ ¿	?I     ″  2'    ℃  oC    ⅻ  cr    ≅  ?=    ⒊  3.    ┰  Dh    ◎  0o    】 )"    て te     ん n5     ト To     ヵ KA     ㄩ iu
+ ×	*X     ‴  3'    ℅  co    ←  <-    ≈  ?2    ⒋  4.    ┳  DH    ●  0M    〒 =T    で de     ゔ vu     ド Do     ヶ KE     ㄪ v4
+ Ø	O/     ‵  1"    ℉  oF    ↑  -!    ≌  =?    ⒌  5.    ┴  uh    ◐  0L    〓 =_    と to     ゛ "5     ナ Na     ヷ Va     ㄫ nG
+ ÷	-:     ‶  2"    №  N0    →  ->    ≓  HI    ⒍  6.    ┷  uH    ◑  0R    〔 ('    ど do     ゜ 05     ニ Ni     ヸ Vi     ㄬ gn
+ ø	o/     ‷  3"    ℗  PO    ↓  -v    ≠  !=    ⒎  7.    ┸  Uh    ◘  Sn    〕 )'    な na     ゝ *5     ヌ Nu     ヹ Ve     ㈠ 1c
+           ‸  Ca    ℞  Rx    ↔  <>    ≡  =3    ⒏  8.    ┻  UH    ◙  Ic    〖 (I    に ni     ゞ +5     ネ Ne     ヺ Vo     ㈡ 2c
+           ‹  <1    ℠  SM    ↕  UD    ≤  =<    ⒐  9.    ┼  vh    ◢  Fd    〗 )I    ぬ nu     ァ a6     ノ No     ・ .6     ㈢ 3c
+           ›  >1    ™  TM    ⇐  <=    ≥  >=    ─  hh    ┿  vH    ◣  Bd    〜 -?    ね ne     ア A6     ハ Ha     ー -6     ㈣ 4c
+           ※  :X    Ω  Om    ⇒  =>    ≪  <*    ━  HH    ╂  Vh    ★  *2    ぁ A5    の no     ィ i6     バ Ba     ヽ *6     ㈤ 5c
+           ‾  '-    Å  AO    ⇔  ==    ≫  *>    │  vv    ╋  VH    ☆  *1    あ a5    は ha     イ I6     パ Pa     ヾ +6     ㈥ 6c
+           ⁄  /f    ⅓  13    ∀  FA    ≮  !<    ┃  VV    ╱  FD    ☜  <H    ぃ I5    ば ba     ゥ u6     ヒ Hi     ㄅ b4     ㈦ 7c
+           ⁰  0S    ⅔  23    ∂  dP    ≯  !>    ┄  3-    ╲  BD    ☞  >H    い i5    ぱ pa     ウ U6     ビ Bi     ㄆ p4     ㈧ 8c
+           ⁴  4S    ⅕  15    ∃  TE    ⊂  (C    ┅  3_    ▀  TB    ☺  0u    ぅ U5    ひ hi     ェ e6     ピ Pi     ㄇ m4     ㈨ 9c
+           ⁵  5S    ⅖  25    ∅  /0    ⊃  )C    ┆  3!    ▄  LB    ☻  0U    う u5    び bi     エ E6     フ Hu     ㄈ f4     ﬀ  ff
+
+ vim:ft=help:norl:nowrap:
