@@ -1,3 +1,11 @@
+# About
+
+This is my personal vim configuration and some useful information about vim usage.
+
+The config is common for both vim and neovim.
+
+# Vim usage
+
 ## Insert-mode keys (also work in command-line mode)
 
 - `<C-h>` - delete prev char
