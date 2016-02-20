@@ -21,8 +21,8 @@ Alternative: do `A` on one line, then select a block and repeat with `:'<,'>norm
 ## Digraphs and special chars
 
 - `<C-K>{char1}{char2}` - insert a digraph (normal mode)
--- [alpha digraphs](./vim/digraph-alpha.txt)
--- [symbol digraphs](./vim/digraph-symbol.txt)
+ - [alpha digraphs](./vim/digraph-alpha.txt)
+ - [symbol digraphs](./vim/digraph-symbol.txt)
 - `<C-V><key>` - insert the key literally (like <C-V><Tab> always inserts tab, regardless of 'expandtab' option).
 - `<C-V>{code}` - insert the unicode char literally by decimal code
 - `<C-Vu>{code}` - insert by hex code
