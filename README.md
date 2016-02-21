@@ -74,9 +74,9 @@ Words (letters, digits and underscores, can be configured with `'iskeyword'`) an
     [        ] [       ] [      ] [        ] - WORDS
     [     ][ ] [   ][  ] [   ][ ] [     ][ ] - words
     Pudding--- Alice:::: Alice--- Pudding...
-    |      |   *    |    |
-    |      |        w    W - next word / WORD
-    |      |
+    ⋮      |   *    |    |
+    ⋮      |        w    W - next word / WORD
+    ⋮      |
     B      b - prev word / WORD
 
     Pudding--- Alice:::: Alice--- Pudding...
