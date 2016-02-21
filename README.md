@@ -17,7 +17,11 @@ Essential resources:
 
 `.` (dot) - repeat the last normal-mode command, automatic mini-macro.
 
-## Normal mode operators
+## Normal mode operators, motions and text objects
+
+[:h navigation](http://vimhelp.appspot.com/motion.txt.html)
+
+### Operators
 
 `[operator]{motion}` - apply [operator](http://vimhelp.appspot.com/motion.txt.html#operator) to the text defined by motion.
 
@@ -40,6 +44,50 @@ For example: `<G` - shift everything right until the end of file (`<` - right sh
 - `g@`-  call function set with the 'operatorfunc' option
 
 More info: [how to define own operator, :h :map-operator](http://vimhelp.appspot.com/map.txt.html#%3Amap-operator), [how to define own motion, :h omap-info](http://vimhelp.appspot.com/map.txt.html#omap-info).
+
+### Left-right motions
+
+```
+    Pudding—Alice: Alice—Pudding.
+          *
+0   ^    h l      gm            g_   $
+                        25|
+```
+
+Here `*` is a cursor position, `h` / `l` move one char right / left (can also take count), `0` - move to line start and so on. The `[count]|` moves to the specified column.
+
+When the line is wrapped, `g^` moves to the start of screen line.
+The `gm` depends on the window width and moves to the center of the screen line.
+
+Jump to the char with `f` / `t`, `F` / `T`, `f` jumps forward to the char and `t` jumps forward till the chars (stops just before it); the `F` and `T` do the same backwards.
+
+```
+    Pudding-Alice: Alice-Pudding.
+     |    *    |        |
+     Fu        fc       tP
+     TP
+```
+
+Words (letters, digits and underscores, can be configured with `'iskeyword'`) and WORDS (any non-blank chars):
+
+```
+    [        ] [       ] [      ] [        ] - WORDS
+    [     ][ ] [   ][  ] [   ][ ] [     ][ ] - words
+    Pudding--- Alice:::: Alice--- Pudding...
+    |      |   *    |    |
+    |      |        w    W - next word / WORD
+    |      |
+    B      b - prev word / WORD
+
+    Pudding--- Alice:::: Alice--- Pudding...
+             |     |   | *   |  |
+             |     |   |     e  E - end of the word / WORD
+             |     |   |
+             |     |   ge/gE - end of the prev word / WORD
+             |     |
+             2gE   2ge       - two words / WORDs back
+```
+
 
 ## Normal mode - jump list and change list
 
@@ -100,7 +148,7 @@ Example:
 cf(new_text"      - change "some_text" to "new_text" till the (
 
 "some_text, ...   - now we need to do the same change, but till the comma
-ct,Ctrl-A"        - we enter the new command `ct,` and then use Ctrl-A to insert new_text
+ct,<C-A>"        - we enter the new command `ct,` and then use Ctrl-A to insert new_text
 ```
 
 There is also `<C-@>` - Insert the last inserted text and stop the insert mode.
@@ -194,7 +242,7 @@ A mapping to work from any level inside the function: `:map t ? function <CR>f{v
 - `<C-V><key>` - insert the key literally (like <C-V><Tab> always inserts tab, regardless of 'expandtab' option).
 - `<C-V>{code}` - insert the unicode char literally by decimal code
 - `<C-Vu>{code}` - insert by hex code
-- ga - show ascii value of char under cursor
-- g8 - show utf-8 byte sequence for char under cursor
+- `ga` - show ascii value of char under cursor
+- `g8` - show utf-8 byte sequence for char under cursor
 
 `:dig` - show digraphs
