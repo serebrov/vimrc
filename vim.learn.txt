@@ -1,15 +1,18 @@
-# Insert-mode keys (also work in command-line mode)
-
+Normal:
   `<C-h>` - delete prev char
   `<C-W>` - delete previous word
   `<C-U>` - delete current line
+
   `<C-O>` - execute normal command and get back to insert mode
 
-`<C-R><r>` - insert the text from register, `<C-R>0` (zero) - paste yanked text, `<C-R>"` - paste the text from the unnamed register
+  `<C-R><r>` - insert the text from register, `<C-R>0` (zero) - paste yanked text, `<C-R>"` - paste the text from the unnamed register
 
-`<C-R>=` - prompt for the expression and insert it 3*0.65=1.95
+  `<C-R>=` - prompt for the expression and insert it 3*0.65=1.95
 
-`<C-A>` - Insert the last inserted text.
+  `<C-A>` - Insert the last inserted text.
+
+  q: open command-line window
+  q/ - for search
 
 In visual mode:
 
@@ -75,6 +78,8 @@ Ex commands:
 	  :[range]substitute/{pattern}/{string}/[flags] Replace occurrences of {pattern} with {string} on each specified line
 	  :[range]global/{pattern}/[cmd] Execute the Ex command [cmd] on all specified lines where the {pattern} matches
 
+	  Q (normal mode) - switch to Ex-mode
+
 	  :h ex-cmd-index
 
 	  :print can be used to preview put/yank/delete/etc
@@ -92,12 +97,10 @@ Ex commands:
 	       Before executing the specified Normal mode command on each line, Vim
 	       moves the cursor to the beginning of the line.
 	  :%normal i// - comment out the whole file
-	  @: - repeat last ex-command, @@ - repeat again
+	  @: - play the macro from ':' register = repeat last ex-command, @@ - repeat again
 
 	  :<Ctrl-R><Ctrl-W> - insert `word` under cursor, <Ctrl-R><Ctrl-a> - `WORD`
 
-	  q: the same as :<Ctrl-F> - command-line window
-	  q/ - for search
 
 	  :read !cmd
 	  :write !cmd
@@ -164,9 +167,11 @@ visual selection + p
 
 for line visual selection:
     p/P - cursor will be at the beginning of the pasted text
-    gp/gP - at the end
+    gp/gP - paste with cursor at the end of new text
 
 Macros:
+
+  . - repeat the last cmd
 
   qA - append to the macro in register A
 
@@ -238,6 +243,8 @@ Windows
   " C-W P         - go to preview window
   " C-W z         - close preview window
 
+  Move-or-split!
+
 
 
 Quickfix
@@ -283,6 +290,12 @@ Quickfix
 (<C-R>") \v'([^'])+'  ←── add (, put the text back with <C-R>", add )
 
 Search / patterns
+
+   * / #	Search for word under the cursor (forward / back)
+
+   [ SHIFT-i	Find and display in the quickfix all occurrences of the word under the cursor in the file
+   :help ilist
+
 
   \v - very magic - all chars assume special meaning, so we can enter regexps
        without lots of backslashing, we need to backslash only if we want
@@ -546,6 +559,8 @@ Plugins
 
   Surround S" - wrap visual selection into quotes
 
+ :TOHtml	convert text to html
+
   The netrw plugin doesn’t just let us explore the file system. We can create
   new files ( :h netrw-% ) or directories ( :h netrw-d ), rename existing ones
   ( :h netrw-rename ), or delete them ( :h netrw-del ). For a demonstration, watch
@@ -653,6 +668,7 @@ gh - start Select mode
 
 |netrw-gx|	gx		   execute application for file name under the
 				   cursor (only with |netrw| plugin)
+- `gx` - open the URL in the browser, of file in the gui app (picture / movie, etc), see [:h netrw-gx]
 
 |g@|		g@{motion}	   call 'operatorfunc'
 
