@@ -480,13 +480,13 @@ A mapping to work from any level inside the function: `:map t ? function <CR>f{v
 
 ## Easter Eggs
 
-:help 42
-:help!
-:help holy-grail
-:help UserGettingBored
-:help quotes
-:Ni!
-:set rightleft
-:help map-modes (see comment below the table about :nunmap)
-:help showmatch (read the note)
-:help bar
+- :help 42
+- :help!
+- :help holy-grail
+- :help UserGettingBored
+- :help quotes
+- :Ni!
+- :set rightleft
+- :help map-modes (see comment below the table about :nunmap)
+- :help showmatch (read the note)
+- :help bar
