@@ -506,17 +506,6 @@ Search / patterns
     <cword> - word under cursor, <cfile> - file path under cursor, ... there
     are more like this
 
-  Work with autocomplete menu:
-   <C-p> / <C-n> Use the prev/ next match from the word list (next match)
-  <C-y> Accept the currently selected match (yes)
-  <C-e> Revert to the originally typed text (exit from autocompletion)
-  <C-h> (and <BS>) Delete one character from current match
-  <C-l> Add one character from current match
-  {char} Stop completion and insert {char}
-
-  Manually open the popup without selecting the first item: <C-N><C-P> (it
-  already works automatically via the plugin, so just FYI).
-
 
 Plugins
 
