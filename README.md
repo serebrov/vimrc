@@ -164,9 +164,9 @@ For example `c%` - change until the matching pair:
     link_to(""text"", my_p(sing(""one""), plu(fn(""two""))))
                       *   A                               B
                       |
-                      c%  --- from here will change until B
-                      %c% --- will change the A-B, including brackets
-                      %c( --- will change inside the A-B
+                      c%   --- from here will change until B
+                      %c%  --- will change the A-B, including brackets
+                      %ci( --- here will change inside the A-B
 ```
 
 See also [Vim's life-changing c%](http://thepugautomatic.com/2014/03/vims-life-changing-c-percent/).
