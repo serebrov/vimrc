@@ -45,9 +45,11 @@ For example: `<G` - shift everything right until the end of file (`<` - right sh
 
 More info: [how to define own operator, :h :map-operator](http://vimhelp.appspot.com/map.txt.html#%3Amap-operator), [how to define own motion, :h omap-info](http://vimhelp.appspot.com/map.txt.html#omap-info).
 
-### Left-right motions
+### Motions
 
 ```
+Left-right motions
+
     Pudding—Alice: Alice—Pudding.
           *
 0   ^    h l      gm            g_   $
@@ -62,6 +64,8 @@ The `gm` depends on the window width and moves to the center of the screen line.
 Jump to the char with `f` / `t`, `F` / `T`, `f` jumps forward to the char and `t` jumps forward till the chars (stops just before it); the `F` and `T` do the same backwards.
 
 ```
+f/t, F/T jump to char
+
     Pudding-Alice: Alice-Pudding.
      |    *    |        |
      Fu        fc       tP
@@ -71,6 +75,8 @@ Jump to the char with `f` / `t`, `F` / `T`, `f` jumps forward to the char and `t
 Words (letters, digits and underscores, can be configured with `'iskeyword'`) and WORDS (any non-blank chars):
 
 ```
+Words and WORDs
+
     ┌┈┈┈┈┈┈┈┈┐ ┌┈┈┈┈┈┈┈┐ ┌┈┈┈┈┈┈┐ ┌┈┈┈┈┈┈┈┈┐ - WORDS
     ┌┈┈┈┈┈┐┌┈┐ ┌┈┈┈┐┌┈┈┐ ┌┈┈┈┐┌┈┐ ┌┈┈┈┈┈┐┌┈┐ - words
     Pudding--- Alice:::: Alice--- Pudding...
@@ -88,6 +94,25 @@ Words (letters, digits and underscores, can be configured with `'iskeyword'`) an
              2gE   2ge ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈  two words / WORDs back
 ```
 
+Up-down motions:
+
+```
+  Up-down motions ...                        gg
+  ...
+  But the Red Queen looked sulky,
+  and growled                                k - line up, `+` - up and move to the start
+  'Pudding—Alice: Alice—Pudding.     *
+  Remove the pudding!'                       j - line down, `-` - down and move to the start
+
+  and the waiters took it away so quickly    :+3   - range is a motion, c:+2, d:107
+  that Alice couldn't return its bow.        /bow  - search is a motion, c/bow
+  ...
+  ...                                        G
+```
+
+There is also `[count]_` motion which moves `count-1` lines down and jumps to the start. It is like a `^` motion, but with count. If there is no count or count=1 it moves to the current line start, with count > 1 moves down and jumps to the start.
+
+The `[N]%` jumps to the N% of the file, `:[range]go[to] [count]` and `[count]go` jump to the `count` byte in the file.
 
 ## Normal mode - jump list and change list
 
