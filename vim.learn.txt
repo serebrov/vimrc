@@ -14,6 +14,11 @@ Normal:
   q: open command-line window
   q/ - for search
 
+  :+3   - range is a motion, c:+2, d:107
+  /bow  - search is a motion, c/bow
+
+Note: motions like `yw` and `yaw` do the same and yank the word with the trailing space (same for `daw`, `caw`, etc), but it will be a bit different in visual mode. The `vaw` will also select the first letter of the next word (because `w` actually moves to there).
+
 In visual mode:
 
 - `o` - move to other end of the selection

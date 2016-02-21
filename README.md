@@ -47,6 +47,7 @@ More info: [how to define own operator, :h :map-operator](http://vimhelp.appspot
 
 ### Motions
 
+#### Left-right motions
 ```
 Left-right motions
 
@@ -72,7 +73,7 @@ f/t, F/T jump to char
      TP
 ```
 
-Words (letters, digits and underscores, can be configured with `'iskeyword'`) and WORDS (any non-blank chars):
+#### Words (letters, digits and underscores, can be configured with `'iskeyword'`) and WORDS (any non-blank chars):
 
 ```
 Words and WORDs
@@ -94,7 +95,7 @@ Words and WORDs
              2gE   2ge ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈  two words / WORDs back
 ```
 
-Up-down motions:
+#### Up-down motions:
 
 ```
   Up-down motions ...                        gg
@@ -113,6 +114,81 @@ Up-down motions:
 There is also `[count]_` motion which moves `count-1` lines down and jumps to the start. It is like a `^` motion, but with count. If there is no count or count=1 it moves to the current line start, with count > 1 moves down and jumps to the start.
 
 The `[N]%` jumps to the N% of the file, `:[range]go[to] [count]` and `[count]go` jump to the `count` byte in the file.
+
+#### Text object motions / various motions
+
+```
+matching pair () {} []    - % - move to the matching pair, make sure to enable the
+              /**/          matchit.vim (standard plugin), ":h matchit.txt"
+              <tag></tag>
+              if/else/endif
+              etc
+
+A sentence.               - ) / ( - [count] sentences, like y3) - yank 3 sentences
+
+A paragraph of
+text.                     - } / { - [count] paragraphs
+
+A section                 - ]] / [[ - [count] sections, see [:h section](http://vimhelp.appspot.com/motion.txt.html#section),
+                          can be redefined by filetype plugins, like move between
+                          classes / methods in python.
+End of the section        - ][ / [] - [count] end of section
+
+unmatched (               - [( / ]( - prev/next unmatched (
+unmatched {               - [{ / ]{ - prev/next unmatched {
+unmatched #if / #else     - [# / ]# - prev/next unmatched {
+
+a method of the class     - [m / ]m, and [M / ]M move to the end of the method
+
+a block comment /*  */    - [*, [/ / ]*, ]* - prev / next comment mark
+
+[n] lines from the top    - [n]H
+[n] lines from the bootom - [n]L
+middle line               - M
+```
+
+Each of them can be used as an operator target.
+For example `c%` - change until the matching pair.
+
+#### Text object selection
+
+```
+word, word_two          - aw / iw (regular / inner text object)
+WORD, word--%4-         - aW / iW
+
+'string'                - a' / i'
+"string"                - a" / i"
+`string`                - a` / i`
+
+A sentence.             - as / is
+
+A paragraph of
+text. It also has a
+text object.            - ap / ip
+
+[ block ]               - a[, a] / i[, i]
+( block )               - a(, a), ab / i(, i), ib
+< block >               - a<, a> / i<, i>
+{ block }               - a{, a}, aB / i{, i}, iB
+<tag>value</tag>        - at / it
+```
+
+More text objects: [wellle/targets.vim](https://github.com/wellle/targets.vim), [indent object](https://github.com/michaeljsmith/vim-indent-object), [column object](https://github.com/coderifous/textobj-word-column.vim).
+
+Inner text objects (`iw`, `iB`, etc) do not include the surrounding marks.
+For words this is trailing space, for blocks - brackets.
+
+```
+"aw" vs "iw" vs "w"
+
+    ┌┈┈┈┈┈┈┈┐  - yaw - yank word with trailing space - "Pudding "
+    ┌┈┈┈┈┈┐    - yiw - yank only word - "Pudding"
+    Pudding Alice
+```
+
+Note: motions like `yw` and `yaw` do the same and yank the word with the trailing space (same for `daw`, `caw`, etc), but it will be a bit different in visual mode. The `vaw` will also select the first letter of the next word (because `w` actually moves to there).
+It works in a similar way for other objects, like sentences.
+See also [:h exclusive](http://vimhelp.appspot.com/motion.txt.html#exclusive).
 
 ## Normal mode - jump list and change list
 
