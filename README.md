@@ -122,7 +122,7 @@ Visual block + $ - selects a non-rectangular block. Then use `A` to append to th
 Alternative: do `A` on one line, then select a block and repeat with `:'<,'>normal .`.
 
 Select function body (between { and }): `vaBV` - select "a block" and then change the selection mode to line-wise.
-To select 2 levels up - `v2aBV` (when inside other {} block inside function).
+To select 2 levels up - `v2aBV` (when inside other {} block inside function) or `vaBaB` (repeat `aB` to move to the next block).
 A mapping to work from any level inside the function: `:map t ? function <CR>f{vaBV` (search backwards for `function`, move to the `{` and then do `vaBV`).
 
 ## Digraphs and special chars
