@@ -74,18 +74,18 @@ Words (letters, digits and underscores, can be configured with `'iskeyword'`) an
     [        ] [       ] [      ] [        ] - WORDS
     [     ][ ] [   ][  ] [   ][ ] [     ][ ] - words
     Pudding--- Alice:::: Alice--- Pudding...
-    ⋮      |   *    |    |
-    ⋮      |        w    W - next word / WORD
-    ⋮      |
+    ┆      ┆   *    ┆    ┆
+    ┆      ┆        w    W ⋯ ⋯ ⋯  next word / WORD
+    ┆      ┆
     B      b - prev word / WORD
 
     Pudding--- Alice:::: Alice--- Pudding...
-             |     |   | *   |  |
-             |     |   |     e  E - end of the word / WORD
-             |     |   |
-             |     |   ge/gE - end of the prev word / WORD
-             |     |
-             2gE   2ge       - two words / WORDs back
+             ┆     ┆   ┆ *   ┆  ┆
+             ┆     ┆   ┆     e  E ⋯ ⋯ ⋯  end of the word / WORD
+             ┆     ┆   ┆
+             ┆     ┆   ge/gE ⋯ ⋯ ⋯ ⋯ ⋯ ⋯  end of the prev word / WORD
+             ┆     ┆
+             2gE   2ge       ⋯ ⋯ ⋯ ⋯ ⋯ ⋯  two words / WORDs back
 ```
 
 
