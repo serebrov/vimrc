@@ -29,6 +29,7 @@
   - [Visual mode](#visual-mode)
   - [Show full file name and stats](#show-full-file-name-and-stats)
   - [Digraphs and special chars](#digraphs-and-special-chars)
+  - [Easter Eggs](#easter-eggs)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
