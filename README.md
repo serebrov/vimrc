@@ -251,8 +251,8 @@ Set the mark with `m{a-zA-Z}`.
 
 Jump to the mark:
 
-- `'{a-z} \`{a-z}` - jump to mark in the current buffer, with ' - to the mark location, with ` - to the first non-blank char
-- `'{A-Z0-9} \`{A-Z0-9}` - jump to mark in the file (may be another file, not a motion in this case)
+- `'{a-z} ``{a-z}` - jump to mark in the current buffer, with ' - to the mark location, with ` - to the first non-blank char
+- `'{A-Z0-9} ``{A-Z0-9}` - jump to mark in the file (may be another file, not a motion in this case)
 
 Jump to the mark is a motion (can be used with operators).
 
