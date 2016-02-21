@@ -333,7 +333,7 @@ Delete marks with `:delm`:
 [' [` / ]' ]`   - [count] previous / next lowercase mark
 ```
 
-## Insert/command mode keys
+## Insert / command mode keys
 
 - `<C-H>` - delete prev char
 - `<C-W>` - delete previous word
@@ -345,7 +345,7 @@ Delete marks with `:delm`:
 
 [:h insert.txt](http://vimhelp.appspot.com/insert.txt.html)
 
-## Insert/command mode - insert from the register
+## Insert / command mode - insert from the register
 
 `<C-R><r>` - insert the text from the register.
 
@@ -359,7 +359,7 @@ If we have "Hello" in the `a` register and "World" in the `b`, we can insert the
 
 But it is easy to do from the insert mode `<C-R>a<C-R>b` and change will be repeatable with dot.
 
-## Insert/command mode - calculate the expression and insert the result
+## Insert / command mode - calculate the expression and insert the result
 
 `<C-R>=` - prompt for the expression and insert it
 
@@ -367,7 +367,7 @@ But it is easy to do from the insert mode `<C-R>a<C-R>b` and change will be repe
 <C-R>=3*0.65  -- will insert 1.95
 ```
 
-## Insert-mode - insert the last text
+## Insert mode - insert the last text
 
 `<C-A>` - Insert the last inserted text.
 
@@ -383,7 +383,7 @@ ct,<C-A>"        - we enter the new command `ct,` and then use Ctrl-A to insert 
 
 There is also `<C-@>` - Insert the last inserted text and stop the insert mode.
 
-## Insert-mode autocompletion
+## Insert mode autocompletion
 
 - `<C-N>` / `<C-P>` - generic completion, [:h i\_CTRL\_N](http://vimhelp.appspot.com/insert.txt.html#compl-generic)
 - `<C-X><C-O>` - omni-completion, :h ins-completion
@@ -404,7 +404,7 @@ Work with autocomplete menu:
 
 Open the popup without selecting the first item: <C-N><C-P> (will actually select the first item and then un-select it).
 
-## Insert-mode complete whole lines
+## Insert mode complete whole lines
 
 Complete whole lines with `<C-X><C-L>`:
 
