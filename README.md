@@ -337,12 +337,12 @@ Similarly it is possible to complete sentences word-by-work with `<C-X><C-P>`.
 
 It is super-useful to edit long commands, or search patterns.
 
-`q:` - opens a command-line window.
-`q/` - opens a search history window.
+- `q:` - opens a command-line window.
+- `q/` - opens a search history window.
 
 From the command line / search prompt - press `<C-F>` to switch to the command-line window.
 
-It is super-useful to edit long commands, don't re-map the `q:`.
+Don't re-map the `q:`:
 
 If you often invoke it accidentally, you probably have a problem with entering `:q` correctly. In this case whether remap the `:q` to something else (for example, to `<Leader>q`) or type it like this: left pinky - Shift, right pinky - ':', left pinky - 'q' (there is no chance to type it backwards this way).
 
