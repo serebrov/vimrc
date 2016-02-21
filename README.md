@@ -118,7 +118,7 @@ The `[N]%` jumps to the N% of the file, `:[range]go[to] [count]` and `[count]go`
 #### Text object motions / various motions
 
 ```
-matching pair () {} []    - % - move to the matching pair, make sure to enable the
+Matching pair () {} []    - % - move to the matching pair, make sure to enable the
               /**/          matchit.vim (standard plugin), ":h matchit.txt"
               <tag></tag>
               if/else/endif
@@ -134,21 +134,30 @@ A section                 - ]] / [[ - [count] sections, see [:h section](http://
                           classes / methods in python.
 End of the section        - ][ / [] - [count] end of section
 
-unmatched (               - [( / ]( - prev/next unmatched (
-unmatched {               - [{ / ]{ - prev/next unmatched {
-unmatched #if / #else     - [# / ]# - prev/next unmatched {
+Unmatched (               - [( / ]( - prev/next unmatched (
+Unmatched {               - [{ / ]{ - prev/next unmatched {
+Unmatched #if / #else     - [# / ]# - prev/next unmatched {
 
-a method of the class     - [m / ]m, and [M / ]M move to the end of the method
+A method of the class     - [m / ]m, and [M / ]M move to the end of the method
 
-a block comment /*  */    - [*, [/ / ]*, ]* - prev / next comment mark
+A block comment /*  */    - [*, [/ / ]*, ]* - prev / next comment mark
 
 [n] lines from the top    - [n]H
 [n] lines from the bootom - [n]L
-middle line               - M
+Middle line               - M
 ```
 
 Each of them can be used as an operator target.
-For example `c%` - change until the matching pair.
+
+For example `c%` - change until the matching pair:
+
+```
+    if (x and y or something(b, c))
+                   *
+                   c% - from here it will find the bracket pair around
+                        the "b, c" and will jump to the matching (end parent)
+    if (x and y or ▓)
+```
 
 #### Text object selection
 
