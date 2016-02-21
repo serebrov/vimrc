@@ -1,3 +1,37 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Contents**
+
+- [About](#about)
+- [Vim usage](#vim-usage)
+  - [Normal mode - dot to repeat the last command](#normal-mode---dot-to-repeat-the-last-command)
+  - [Normal mode operators, motions and text objects](#normal-mode-operators-motions-and-text-objects)
+    - [Operators](#operators)
+    - [Motions](#motions)
+      - [Left-right motions](#left-right-motions)
+      - [Words (letters, digits and underscores, can be configured with `'iskeyword'`) and WORDS (any non-blank chars):](#words-letters-digits-and-underscores-can-be-configured-with-iskeyword-and-words-any-non-blank-chars)
+      - [Up-down motions:](#up-down-motions)
+      - [Text object motions / various motions](#text-object-motions--various-motions)
+      - [Text object selection](#text-object-selection)
+      - [Motions and operators](#motions-and-operators)
+  - [Marks](#marks)
+  - [Normal mode - jump list and change list](#normal-mode---jump-list-and-change-list)
+    - [Change list](#change-list)
+    - [Jump list](#jump-list)
+    - [Special marks](#special-marks)
+  - [Insert/command mode keys](#insertcommand-mode-keys)
+  - [Insert/command mode - insert from the register](#insertcommand-mode---insert-from-the-register)
+  - [Insert/command mode - calculate the expression and insert the result](#insertcommand-mode---calculate-the-expression-and-insert-the-result)
+  - [Insert-mode - insert the last text](#insert-mode---insert-the-last-text)
+  - [Insert-mode autocompletion](#insert-mode-autocompletion)
+  - [Insert-mode complete whole lines](#insert-mode-complete-whole-lines)
+  - [Command line window](#command-line-window)
+  - [Visual mode](#visual-mode)
+  - [Show full file name and stats](#show-full-file-name-and-stats)
+  - [Digraphs and special chars](#digraphs-and-special-chars)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # About
 
 This is my personal vim configuration along with some information about vim usage.
@@ -74,7 +108,9 @@ f/t, F/T jump to char
      TP
 ```
 
-#### Words (letters, digits and underscores, can be configured with `'iskeyword'`) and WORDS (any non-blank chars):
+#### Words and WORDs
+
+Words (letters, digits and underscores, can be configured with `'iskeyword'`) and WORDS (any non-blank chars):
 
 ```
 Words and WORDs
@@ -96,7 +132,7 @@ Words and WORDs
              2gE   2ge ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈  two words / WORDs back
 ```
 
-#### Up-down motions:
+#### Up-down motions
 
 ```
   Up-down motions ...                        gg
