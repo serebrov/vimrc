@@ -4,20 +4,31 @@ This is my personal vim configuration along with some information about vim usag
 
 The config is common for both vim and neovim.
 
+Essential resources:
+
+- [Vim documentation](http://vimhelp.appspot.com/)
+- [Drew Neil's Vimcasts](http://vimcasts.org/)
+- [Derek Wyatt's Video Tutorials](http://derekwyatt.org/vim/tutorials/)
+- [Tim Pope's plugins](https://github.com/search?q=user%3Atpope+vim)
+
 # Vim usage
 
 ## Insert/command mode keys
 
-- `<C-h>` - delete prev char
+- `<C-H>` - delete prev char
 - `<C-W>` - delete previous word
-- `<C-U>` - delete current line
+- `<C-U>` - delete current line, this often used in mappings to clear the command line
+- `<C-T>` / `<C-D>` - indent / un-indent, useful for markdown lists
+- `<C-E>` / `<C-Y>` - insert char above / below the cursor
 - `<C-O>` - execute normal command and get back to insert mode
+
+[:h insert.txt](http://vimhelp.appspot.com/insert.txt.html)
 
 ## Insert/command mode - insert from the register
 
-`<C-R><r>` - insert the text from register
+`<C-R><r>` - insert the text from the register.
 
-Like:
+Examples:
 
 - `<C-R>0` (zero) - paste yanked text
 - `<C-R>"` - paste the text from the unnamed register
@@ -48,6 +59,8 @@ cf(new_text"      - change "some_text" to "new_text" till the (
 "some_text, ...   - now we need to do the same change, but till the comma
 ct,Ctrl-A"        - we enter the new command `ct,` and then use Ctrl-A to insert new_text
 ```
+
+There is also `<C-@>` - Insert the last inserted text and stop the insert mode.
 
 ## Insert-mode autocompletion
 
@@ -85,14 +98,32 @@ Similarly it is possible to complete sentences word-by-work with `<C-X><C-P>`.
 
 ## Visual mode
 
-- `v` / `V` / `<C-V>` - char / line / block visual mode
+In normal mode - `v` / `V` / `<C-V>` - char / line / block visual mode.
+Same keys in visual mode switch between selection modes.
+
+In normal mode `gv` - re-select the last visual selection (very useful).
+
+In visual mode:
+
 - `o` - move to other end of the selection
-- `O` - in block mode - move to other corner on the same line
-- `c` - in block mode - change block
+- `gv` - switch current and previous visual selection
+- `c` - change the selection (can re-paste after the change with `<C-R>"`, convenient for wrapping)
+- `d` - delete the selection
+- `r` - replace the selection with entered char
+
+In visual block mode:
+
+- `O` - move to other corner on the same line
+- `$` - select until the end of line, will work for all lines even if length is different
+- `A` / `I` - append / prepend the block with entered text
 
 Visual block + $ - selects a non-rectangular block. Then use `A` to append to the end of lines.
 
 Alternative: do `A` on one line, then select a block and repeat with `:'<,'>normal .`.
+
+Select function body (between { and }): `vaBV` - select "a block" and then change the selection mode to line-wise.
+To select 2 levels up - `v2aBV` (when inside other {} block inside function).
+A mapping to work from any level inside the function: `:map t ? function <CR>f{vaBV` (search backwards for `function`, move to the `{` and then do `vaBV`).
 
 ## Digraphs and special chars
 
@@ -102,3 +133,5 @@ Alternative: do `A` on one line, then select a block and repeat with `:'<,'>norm
 - `<C-V><key>` - insert the key literally (like <C-V><Tab> always inserts tab, regardless of 'expandtab' option).
 - `<C-V>{code}` - insert the unicode char literally by decimal code
 - `<C-Vu>{code}` - insert by hex code
+
+`:dig` - show digraphs

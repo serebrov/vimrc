@@ -1,10 +1,12 @@
 # Insert-mode keys (also work in command-line mode)
 
-`<C-h>` - delete prev char
-`<C-W>` - delete previous word
-`<C-U>` - delete current line
-`<C-O>` - execute normal command and get back to insert mode
+  `<C-h>` - delete prev char
+  `<C-W>` - delete previous word
+  `<C-U>` - delete current line
+  `<C-O>` - execute normal command and get back to insert mode
+
 `<C-R><r>` - insert the text from register, `<C-R>0` (zero) - paste yanked text, `<C-R>"` - paste the text from the unnamed register
+
 `<C-R>=` - prompt for the expression and insert it 3*0.65=1.95
 
 # Visual mode
@@ -21,6 +23,8 @@ Normal mode
 	  <a href="/episodes/show-invisibles/"> Show invisibles: http://vimcasts.org
         it is OK to be on the start of the line to do yi" (yank inner quotes)
 	so we can run :norm yi"$p to copy the path and append at the end
+	note: by default not all text objects do this "forward" selection,
+	this is fixed by targets.vim
 
 	gR - virtual replace mode - will not 'destroy' tabs
 		    if you replace the tab in R mode, the whole tab char will be
