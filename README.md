@@ -35,9 +35,9 @@ But it is easy to do from the insert mode `<C-R>a<C-R>b` and change will be repe
 <C-R>=3*0.65  -- will insert 1.95
 ```
 
-## Insert-mode insert last text
+## Insert-mode - insert the last text
 
-`<C-A>` - Insert last inserted text.
+`<C-A>` - Insert the last inserted text.
 
 Example:
 
@@ -50,6 +50,15 @@ ct,Ctrl-A"        - we enter the new command `ct,` and then use Ctrl-A to insert
 ```
 
 ## Insert-mode autocompletion
+
+- `<C-N>` / `<C-P>` - generic completion, [:h i\_CTRL\_N](http://vimhelp.appspot.com/insert.txt.html#compl-generic)
+- `<C-X><C-O>` - omni-completion, :h ins-completion
+- `<C-X><C-L>` - lines
+- `<C-X><C-F>` - file names, based on `:pwd`
+- `<C-X><C-]>` - tags
+- `<C-X><C-K>` - dictionary
+- `<C-X><C-N>` - keywords in current file
+- there are more, see [:h ins-completion](http://vimhelp.appspot.com/insert.txt.html#ins-completion)
 
 Work with autocomplete menu:
 
@@ -70,6 +79,9 @@ Complete whole lines with `<C-X><C-L>`:
 - now you at the end of line, and complete mode is still active
 - press `<C-X><C-L>` few more times to get more lines which follow the line you've got
 
+From [Let Vim Do the Typing](https://www.youtube.com/watch?v=3TX3kV3TICU).
+
+Similarly it is possible to complete sentences word-by-work with `<C-X><C-P>`.
 
 ## Visual mode
 
