@@ -71,21 +71,21 @@ Jump to the char with `f` / `t`, `F` / `T`, `f` jumps forward to the char and `t
 Words (letters, digits and underscores, can be configured with `'iskeyword'`) and WORDS (any non-blank chars):
 
 ```
-    [        ] [       ] [      ] [        ] - WORDS
-    [     ][ ] [   ][  ] [   ][ ] [     ][ ] - words
+    ┌┈┈┈┈┈┈┈┈┐ ┌┈┈┈┈┈┈┈┐ ┌┈┈┈┈┈┈┐ ┌┈┈┈┈┈┈┈┈┐ - WORDS
+    ┌┈┈┈┈┈┐┌┈┐ ┌┈┈┈┐┌┈┈┐ ┌┈┈┈┐┌┈┐ ┌┈┈┈┈┈┐┌┈┐ - words
     Pudding--- Alice:::: Alice--- Pudding...
     ┆      ┆   *    ┆    ┆
-    ┆      ┆        w    W ⋯ ⋯ ⋯  next word / WORD
+    ┆      ┆        w    W ┈┈┈┈┈┈ next word / WORD
     ┆      ┆
     B      b - prev word / WORD
 
     Pudding--- Alice:::: Alice--- Pudding...
              ┆     ┆   ┆ *   ┆  ┆
-             ┆     ┆   ┆     e  E ⋯ ⋯ ⋯  end of the word / WORD
+             ┆     ┆   ┆     e  E ┈┈┈┈┈┈ end of the word / WORD
              ┆     ┆   ┆
-             ┆     ┆   ge/gE ⋯ ⋯ ⋯ ⋯ ⋯ ⋯  end of the prev word / WORD
+             ┆     ┆   ge/gE ┈┈┈┈┈┈┈┈┈┈┈  end of the prev word / WORD
              ┆     ┆
-             2gE   2ge       ⋯ ⋯ ⋯ ⋯ ⋯ ⋯  two words / WORDs back
+             2gE   2ge ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈  two words / WORDs back
 ```
 
 
