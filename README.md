@@ -278,7 +278,7 @@ Delete marks with `:delm`:
 ### Jump list
 
 - `<C-O>` / `<C-I>` - move back / forward in the [jump list](http://vimhelp.appspot.com/motion.txt.html#jumplist), `:jumps`
-- `''` / `` `` `` - jump to the previous place you jumped here from
+- `''` / `` - jump to the previous place you jumped here from
 - `gf` - open file under cursor
 - `gd` / `gD` - local / global variable definition
 - `C-]` - jump to the tag
