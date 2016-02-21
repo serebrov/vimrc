@@ -23,7 +23,7 @@ Essential resources:
 
 ### Operators
 
-`[operator]{motion}` - apply [operator](http://vimhelp.appspot.com/motion.txt.html#operator) to the text defined by motion.
+`[operator]{motion}` - apply [:h operator](http://vimhelp.appspot.com/motion.txt.html#operator) to the text defined by motion.
 
 For example: `<G` - shift everything right until the end of file (`<` - right shift operator, `G` - end of file motion), `gg=G` - format the whole file (gg - jump to the top, `=` - format operator, `G` - end of file motion).
 
@@ -111,6 +111,8 @@ Words and WORDs
   ...                                        G
 ```
 
+Note that `:` can be in general used as motion, not only to specify the range: `d:call search('f')` will delete until the next 'f' found by search() function.
+
 There is also `[count]_` motion which moves `count-1` lines down and jumps to the start. It is like a `^` motion, but with count. If there is no count or count=1 it moves to the current line start, with count > 1 moves down and jumps to the start.
 
 The `[N]%` jumps to the N% of the file, `:[range]go[to] [count]` and `[count]go` jump to the `count` byte in the file.
@@ -154,10 +156,20 @@ For example `c%` - change until the matching pair:
 ```
     if (x and y or something(b, c))
                    *
+                   |
                    c% - from here it will find the bracket pair around
                         the "b, c" and will jump to the matching (end parent)
     if (x and y or ▓)
+
+    link_to(""text"", my_p(sing(""one""), plu(fn(""two""))))
+                      *   A                               B
+                      |
+                      c%  --- from here will change until B
+                      %c% --- will change the A-B, including brackets
+                      %c( --- will change inside the A-B
 ```
+
+See also [Vim's life-changing c%](http://thepugautomatic.com/2014/03/vims-life-changing-c-percent/).
 
 #### Text object selection
 
@@ -198,6 +210,30 @@ For words this is trailing space, for blocks - brackets.
 Note: motions like `yw` and `yaw` do the same and yank the word with the trailing space (same for `daw`, `caw`, etc), but it will be a bit different in visual mode. The `vaw` will also select the first letter of the next word (because `w` actually moves to there).
 It works in a similar way for other objects, like sentences.
 See also [:h exclusive](http://vimhelp.appspot.com/motion.txt.html#exclusive).
+
+#### Motions and operators
+
+There are 3 types of the effects of operators: `characterwise`, `linewise`, `blockwise`.
+
+And `*wise` can be varied by operator and motion:
+
+- `dw` - characterwise - delete a word
+- `>j` - linewise - indent 2 lines
+- `dj` - linewise - delete 2 lines
+
+It is possible to force *wise with the following keys:
+
+- `v` - characterwise
+- `V` - linewise
+- `<C-v>` - blockwise
+
+Usage: {operator}{*wise-specifier}{motion}, see [:h o_v](http://vimhelp.appspot.com/motion.txt.html#o_v):
+
+- `dvj` - characterwise
+- `dVj` - linewise
+- `d<C-v>j` - blockwise
+
+See also: [operator, the true power of Vim](http://whileimautomaton.net/2008/11/vimm3/operator).
 
 ## Normal mode - jump list and change list
 

@@ -19,6 +19,25 @@ Normal:
 
 Note: motions like `yw` and `yaw` do the same and yank the word with the trailing space (same for `daw`, `caw`, etc), but it will be a bit different in visual mode. The `vaw` will also select the first letter of the next word (because `w` actually moves to there).
 
+ There are 3 types of the effects of operators:
+- characterwise
+- linewise
+- blockwise
+*wise can be varied by operator and motion
+- dw - characterwise - delete a word
+- >j - linewise - indent 2 lines
+- dj - linewise - delete 2 lines
+
+Forcing *wise (advanced)
+You can force *wise with the following keys:
+- v - characterwise
+- V - linewise
+- <C-v> - blockwise
+Usage: {operator}{*wise-specifier}{motion}
+- dvj - characterwise
+- dVj - linewise
+- d<C-v>j - blockwise
+
 In visual mode:
 
 - `o` - move to other end of the selection
@@ -258,6 +277,7 @@ Quickfix
 
   " Quickfix notes:
   "  - (superuseful) :cold / :cnew - display older / newer quckfix state
+ http://thepugautomatic.com/2014/03/stacked-vim-searches-down-cold/
   "  - location list is the same as quickfix, but local to window (we can
   "    have different location lists for different windows),
   "    lol / lnew for older / newer states
