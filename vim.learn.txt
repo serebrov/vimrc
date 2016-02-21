@@ -2,22 +2,40 @@ Normal:
   `<C-h>` - delete prev char
   `<C-W>` - delete previous word
   `<C-U>` - delete current line
+- `<C-T>` / `<C-D>` - indent / un-indent, useful for markdown lists
+- `<C-E>` / `<C-Y>` - insert char above / below the cursor
+- `<C-A>` / `<C-X>` - increment/decrement number under the cursor
+
+  ------
 
   `<C-O>` - execute normal command and get back to insert mode
+  ------
 
   `<C-R><r>` - insert the text from register, `<C-R>0` (zero) - paste yanked text, `<C-R>"` - paste the text from the unnamed register
 
+  ------
   `<C-R>=` - prompt for the expression and insert it 3*0.65=1.95
 
+  ------
   `<C-A>` - Insert the last inserted text.
+
+  ------
 
   q: open command-line window
   q/ - for search
 
+  ------
+
   :+3   - range is a motion, c:+2, d:107
   /bow  - search is a motion, c/bow
 
+  and ':' in general is a motion
+  d:call search('f') will delete until the next 'f' found by search() function.
+
+  ------
+
 Note: motions like `yw` and `yaw` do the same and yank the word with the trailing space (same for `daw`, `caw`, etc), but it will be a bit different in visual mode. The `vaw` will also select the first letter of the next word (because `w` actually moves to there).
+  ------
 
  There are 3 types of the effects of operators:
 - characterwise
@@ -37,6 +55,7 @@ Usage: {operator}{*wise-specifier}{motion}
 - dvj - characterwise
 - dVj - linewise
 - d<C-v>j - blockwise
+  ------
 
 In visual mode:
 
@@ -45,20 +64,18 @@ In visual mode:
 - `c` - change the selection (can re-paste after the change with `<C-R>"`, convenient for wrapping)
 - `d` - delete the selection
 - `r` - replace the selection with entered char
-
 In visual block mode:
-
 - `O` - move to other corner on the same line
-- `$` - select until the end of line, will work for all lines even if length is different
-- `A` / `I` - append / prepend the block with entered text
 
-Visual block + $ - selects a non-rectangular block. Then use `A` to append to the end of lines.
-
+Visual block + $ + Asomething
 Alternative: do `A` on one line, then select a block and repeat with `:'<,'>normal .`.
+  ------
 
 Select function body (between { and }): `vaBV` - select "a block" and then change the selection mode to line-wise.
 To select 2 levels up - `v2aBV` (when inside other {} block inside function).
 A mapping to work from any level inside the function: `:map t ? function <CR>f{vaBV` (search backwards for `function`, move to the `{` and then do `vaBV`).
+
+  ------
 
 Work with autocomplete menu:
 
@@ -68,27 +85,38 @@ Work with autocomplete menu:
 - <C-h> (and <BS>) Delete one character from current match
 - <C-l> Add one character from current match
 
+  ------
+
 Complete whole lines with `<C-X><C-L>`:
 Similarly it is possible to complete sentences word-by-work with `<C-X><C-P>`.
 ------
 
-Normal mode
-        usage of b, e, ge (and usage of W, B, E, gE)
-	w, b, e, ge - letters+digist+underscores surrounded with space or other chars surrunded with space
-	W, B, E, gE - anything surrounded with space
+```
+Words and WORDs
 
-        text objects select next object, for example here:
-	  <a href="/episodes/show-invisibles/"> Show invisibles: http://vimcasts.org
-        it is OK to be on the start of the line to do yi" (yank inner quotes)
-	so we can run :norm yi"$p to copy the path and append at the end
-	note: by default not all text objects do this "forward" selection,
-	this is fixed by targets.vim
+    ┌┈┈┈┈┈┈┈┈┐ ┌┈┈┈┈┈┈┈┐ ┌┈┈┈┈┈┈┐ ┌┈┈┈┈┈┈┈┈┐ - WORDS
+    ┌┈┈┈┈┈┐┌┈┐ ┌┈┈┈┐┌┈┈┐ ┌┈┈┈┐┌┈┐ ┌┈┈┈┈┈┐┌┈┐ - words
+    Pudding--- Alice:::: Alice--- Pudding...
+    ┆      ┆   *    ┆    ┆
+    ┆      ┆        w    W ┈┈┈┈┈┈ next word / WORD
+    ┆      ┆
+    B      b - prev word / WORD
 
-	gR - virtual replace mode - will not 'destroy' tabs
-		    if you replace the tab in R mode, the whole tab char will be
-		    replaced, but in virtual replace mode it will be converted
-		    to spaces
-	     similarly `gr` will work as `r`, but with virtual replace for tabs
+    Pudding--- Alice:::: Alice--- Pudding...
+             ┆     ┆   ┆ *   ┆  ┆
+             ┆     ┆   ┆     e  E ┈┈┈┈┈┈ end of the word / WORD
+             ┆     ┆   ┆
+             ┆     ┆   ge/gE ┈┈┈┈┈┈┈┈┈┈┈  end of the prev word / WORD
+             ┆     ┆
+             2gE   2ge ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈  two words / WORDs back
+```
+
+------
+
+Quote text objects look forward (targets.vim make all objects do this + also look backward).
+
+------
+
 
 Ex commands:
 	  :[range] delete [x] - delete to reg x

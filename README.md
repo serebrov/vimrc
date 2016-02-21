@@ -30,6 +30,7 @@ For example: `<G` - shift everything right until the end of file (`<` - right sh
 - `c` - change
 - `d` - delete
 - `y` - yank into register (does not change the text)
+- `J` - join lines, `gJ` - join lines without adding a space between them
 - `~` - swap case (only if 'tildeop' is set)
 - `g~`- swap case, visual mode `~`
 - `gu`- make lowercase, visual mode `u`
@@ -174,27 +175,30 @@ See also [Vim's life-changing c%](http://thepugautomatic.com/2014/03/vims-life-c
 #### Text object selection
 
 ```
-word, word_two          - aw / iw (regular / inner text object)
-WORD, word--%4-         - aW / iW
+ word, word_two          - aw / iw (regular / inner text object)
+ WORD, word--%4-         - aW / iW
 
-'string'                - a' / i'
-"string"                - a" / i"
-`string`                - a` / i`
+ 'string'                - a' / i'
+ "string"                - a" / i"
+ `string`                - a` / i`
 
-A sentence.             - as / is
+ A sentence.             - as / is
 
-A paragraph of
-text. It also has a
-text object.            - ap / ip
+ A paragraph of
+ text. It also has a
+ text object.            - ap / ip
 
-[ block ]               - a[, a] / i[, i]
-( block )               - a(, a), ab / i(, i), ib
-< block >               - a<, a> / i<, i>
-{ block }               - a{, a}, aB / i{, i}, iB
-<tag>value</tag>        - at / it
+ [ block ]               - a[, a] / i[, i]
+ ( block )               - a(, a), ab / i(, i), ib
+ < block >               - a<, a> / i<, i>
+ { block }               - a{, a}, aB / i{, i}, iB
+ <tag>value</tag>        - at / it
 ```
 
 More text objects: [wellle/targets.vim](https://github.com/wellle/targets.vim), [indent object](https://github.com/michaeljsmith/vim-indent-object), [column object](https://github.com/coderifous/textobj-word-column.vim).
+
+The quotes text objects (a', a", etc) look forward if the cursor is not inside the quoted string. Like if cursor is on the `*` position in `text [*] text 'quote'`, the `ya'` will yank the quoted word.
+The [wellle/targets.vim](https://github.com/wellle/targets.vim) makes other text objects also look forward (and then also backward if there is no object forward).
 
 Inner text objects (`iw`, `iB`, etc) do not include the surrounding marks.
 For words this is trailing space, for blocks - brackets.
@@ -202,7 +206,7 @@ For words this is trailing space, for blocks - brackets.
 ```
 "aw" vs "iw" vs "w"
 
-    ┌┈┈┈┈┈┈┈┐  - yaw - yank word with trailing space - "Pudding "
+    ┌┈┈┈┈┈┈┐   - yaw - yank word with trailing space - "Pudding "
     ┌┈┈┈┈┈┐    - yiw - yank only word - "Pudding"
     Pudding Alice
 ```
@@ -235,19 +239,63 @@ Usage: {operator}{*wise-specifier}{motion}, see [:h o_v](http://vimhelp.appspot.
 
 See also: [operator, the true power of Vim](http://whileimautomaton.net/2008/11/vimm3/operator).
 
+## Marks
+
+[:h ](http://vimhelp.appspot.com/motion.txt.html#mark-motions).
+
+- `a-z` - local marks (inside the buffer), reset when buffer is deleted
+- `A-Z` - global (across files)
+- `0-9` - automatically set from .viminfo, '0 - cursor position on last exit from Vim, '1 - previous exit, and so on, see [:h viminfo-file-marks](http://vimhelp.appspot.com/starting.txt.html#viminfo-file-marks)
+
+Set the mark with `m{a-zA-Z}`.
+
+Jump to the mark:
+
+- '{a-z} `{a-z} - jump to mark in the current buffer, with ' - to the mark location, with ` - to the first non-blank char
+- '{A-Z0-9} `{A-Z0-9} - jump to mark in the file (may be another file, not a motion in this case)
+
+Jump to the mark is a motion (can be used with operators).
+
+List of marks - `:marks`.
+
+Delete marks with `:delm`:
+
+```
+:delm a - delete mark `a`
+:delm a b or :delm ab - delete marks `a` and `b`
+:delm p-z - delete all marks from `p` to `z`
+:delm! - delete all marks for the current buffer (only a-z, not A-Z and 0-9)
+```
+
 ## Normal mode - jump list and change list
+
+### Change list
 
 - `g;` / `g,` - move back / forward the [change list](http://vimhelp.appspot.com/motion.txt.html#changelist), view the list `:changes`
 - `gi` - jump to last edit and start the insert mode (uses `'^` mark)
 - `'.` - jump to last edit position
 
+### Jump list
+
 - `<C-O>` / `<C-I>` - move back / forward in the [jump list](http://vimhelp.appspot.com/motion.txt.html#jumplist), `:jumps`
-- `''` / ```` - jump to the previous place you jumped here from
+- `''` / `\`\`` - jump to the previous place you jumped here from
 - `gf` - open file under cursor
 - `gd` / `gD` - local / global variable definition
 - `C-]` - jump to the tag
 - `C-^` - switch between two recent files
 - `[num]<C-^>` - switch to 'num' file (see file numbers in :buffers)
+
+### Special marks
+
+```
+'[ `[ / '] `]   - first / last char of last changed / yanked text
+'< `<` / '> `>  - first / last char of last visual selected text
+''  ``          - previous jump position
+'" `"           - position before exiting the buffer (useful when re-open it)
+'^ `^           - last insert mode position
+'. `.           - last edit position
+[' [` / ]' ]`   - [count] previous / next lowercase mark
+```
 
 ## Insert/command mode keys
 

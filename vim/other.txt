@@ -1,0 +1,84 @@
+gR - virtual replace mode - will not 'destroy' tabs
+	    if you replace the tab in R mode, the whole tab char will be
+	    replaced, but in virtual replace mode it will be converted
+	    to spaces
+
+Similarly `gr` will work as `r`, but with virtual replace for tabs.
+
+Scrolling
+---------
+
+ctrl-E / ctrl-Y (normal)	    scroll down / up
+ctrl-B / ctrl-F	                page up / page down
+ctrl-U / ctrl-D	                half page up / half page down
+z<CR> or zt	                    redraw, current line at top of window
+z. or zz	                    redraw, current line at center of window
+z- or zb	                    redraw, current line at bottom of window
+zh / zl	                        (when 'wrap' is off) scroll {count} chars right / left
+zH / zL	                        (when 'wrap' is off) scroll half screen right / left
+zs / ze	                        scroll to the left / right side of the screen
+
+undo / redo
+-------------
+:help :undolist
+:help undo-redo
+:help usr_32.txt
+Gundo (plugin)
+
+undo	            u
+redo	            ctrl-r
+g- / g+	            previous / next text state
+:earlier 4m	        4 minutes earlier
+:later 45s	        45 seconds later
+:undo 5	            undo 5 changes
+:undolist	        undo list
+
+foldings
+---------
+http://vimcasts.org/episodes/how-to-fold/
+http://learnvimscriptthehardway.stevelosh.com/chapters/48.html
+
+:help folding
+:help fold-methods
+:help fold-commands
+:help usr_28
+
+zi (zn / zN)	    toggle folding on/off (zn - disable folds; zN - enable folds)
+zj / zk	            down / up to the next fold (fold+down = z+j)
+za	                toggle current fold
+zc, zC	            close current fold; if it is closed then close parent fold; ...; zC - recursively close all folds at cursor
+zo, zO	            open current fold; zO - recursively open all folds at cursor
+zMzv	            close other folds (zM - close all; zv - expand folds to reveal the cursor)
+
+Steve Losh’s fold mappings	https://github.com/sjl/dotfiles/blob/eea18b00b8c74943f5094fddf91d3c2a7e0a7242/vim/vimrc#L534
+
+:nnoremap <space> za	    switch current fold by space
+zC	                        recursively close current fold
+zA	                        recursively open/close current fold
+zm, zM	                    z"more" - add one level of folds (close one level of folds); zM - more and more - close all folds;
+zr, zR	                    z"reduce" - reduce (open) one level of folds; zR - reduce all folds
+
+:help foldlevel
+
+set foldlevel?	            will show current fold level; changing the parameter will close / open folds (foldlevel=0 - close all);
+
+commands like zm, zM, zR set this parameter"
+
+set foldlevelstart	        initial fold level when open a document	:help foldlevelstart
+
+zf{motion}	                define a fold, like zfap - fold a paragraph
+zd, zD	                    delete current fold; delete current fold recursively
+
+setlocal foldcolumn=4	    show fold column of length n (4 in this case) with fold markers
+
+Marks
+------------
+
+- g'{mark} g`{mark} - jump to mark, but do not change the jumplist
+
+It is possible to set [special marks](#special-marks):
+
+- m' m` - set the context mark (jump to it with '' or `` then)
+- m[ m] - set the '[ / '] mark
+- m< m> - set the '< / '> mark
+
