@@ -488,7 +488,7 @@
   " sT - select from table, prompt for limit, stw - prompts for where,
   " sta - prompts for table name, slc - copy column names
   " Results buffer: R - rerun command; q - close.
-  " Connection - :DBPromptForBufferParameters or sbp
+  " Connection - :DBPromptForBufferParameters or <Leader>sbp
   " Define profiles (can be done per-project in .vimrc.local):
   "  let g:dbext_default_profile_mySqlProject = 'type=MYSQL:user=root:passwd=:dbname=mydb'
   "  let g:dbext_default_profile_mySqlProjectTest = 'type=MYSQL:user=root:passwd=:dbname=mydb_test'
@@ -1447,6 +1447,8 @@ EOF
   " ,vc to edit .vimrc
   "nnoremap <leader>vc :tabedit $MYVIMRC<CR>
   nnoremap <leader>vc :tabedit $HOME/.vim/.vimrc<CR>
+  " ,vcc to open .vimrc
+  nnoremap <leader>vcc :edit $HOME/.vim/.vimrc<CR>
 
   " http://technotales.wordpress.com/2010/03/31/preserve-a-vim-function-that-keeps-your-state/
   " remove trailing spaces
