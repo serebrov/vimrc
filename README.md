@@ -3,33 +3,32 @@
 **Contents**
 
 - [About](#about)
-- [Vim usage](#vim-usage)
-  - [Normal mode - dot to repeat the last command](#normal-mode---dot-to-repeat-the-last-command)
-  - [Normal mode operators, motions and text objects](#normal-mode-operators-motions-and-text-objects)
-    - [Operators](#operators)
-    - [Motions](#motions)
-      - [Left-right motions](#left-right-motions)
-      - [Words and WORDs](#words-and-words)
-      - [Up-down motions](#up-down-motions)
-      - [Text object motions / various motions](#text-object-motions--various-motions)
-      - [Text object selection](#text-object-selection)
-      - [Motions and operators](#motions-and-operators)
-  - [Marks](#marks)
-  - [Normal mode - jump list and change list](#normal-mode---jump-list-and-change-list)
-    - [Change list](#change-list)
-    - [Jump list](#jump-list)
-    - [Special marks](#special-marks)
-  - [Insert / command mode keys](#insert--command-mode-keys)
-  - [Insert / command mode - insert from the register](#insert--command-mode---insert-from-the-register)
-  - [Insert / command mode - calculate the expression and insert the result](#insert--command-mode---calculate-the-expression-and-insert-the-result)
-  - [Insert mode - insert the last text](#insert-mode---insert-the-last-text)
-  - [Insert mode autocompletion](#insert-mode-autocompletion)
-  - [Insert mode complete whole lines](#insert-mode-complete-whole-lines)
-  - [Command line window](#command-line-window)
-  - [Visual mode](#visual-mode)
-  - [Show full file name and stats](#show-full-file-name-and-stats)
-  - [Digraphs and special chars](#digraphs-and-special-chars)
-  - [Easter Eggs](#easter-eggs)
+- [Normal mode - dot to repeat the last command](#normal-mode---dot-to-repeat-the-last-command)
+- [Normal mode operators, motions and text objects](#normal-mode-operators-motions-and-text-objects)
+  - [Operators](#operators)
+  - [Motions](#motions)
+    - [Left-right motions](#left-right-motions)
+    - [Words and WORDs](#words-and-words)
+    - [Up-down motions](#up-down-motions)
+    - [Text object motions / various motions](#text-object-motions--various-motions)
+    - [Text object selection](#text-object-selection)
+    - [Motions and operators](#motions-and-operators)
+- [Marks](#marks)
+- [Normal mode - jump list and change list](#normal-mode---jump-list-and-change-list)
+  - [Change list](#change-list)
+  - [Jump list](#jump-list)
+  - [Special marks](#special-marks)
+- [Insert / command mode keys](#insert--command-mode-keys)
+- [Insert / command mode - insert from the register](#insert--command-mode---insert-from-the-register)
+- [Insert / command mode - calculate the expression and insert the result](#insert--command-mode---calculate-the-expression-and-insert-the-result)
+- [Insert mode - insert the last text](#insert-mode---insert-the-last-text)
+- [Insert mode autocompletion](#insert-mode-autocompletion)
+- [Insert mode complete whole lines](#insert-mode-complete-whole-lines)
+- [Command line window](#command-line-window)
+- [Visual mode](#visual-mode)
+- [Show full file name and stats](#show-full-file-name-and-stats)
+- [Digraphs and special chars](#digraphs-and-special-chars)
+- [Easter Eggs](#easter-eggs)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -46,17 +45,15 @@ Essential resources:
 - [Derek Wyatt's Video Tutorials](http://derekwyatt.org/vim/tutorials/)
 - [Tim Pope's plugins](https://github.com/search?q=user%3Atpope+vim)
 
-# Vim usage
-
-## Normal mode - dot to repeat the last command
+# Normal mode - dot to repeat the last command
 
 `.` (dot) - repeat the last normal-mode command, automatic mini-macro.
 
-## Normal mode operators, motions and text objects
+# Normal mode operators, motions and text objects
 
 [:h navigation](http://vimhelp.appspot.com/motion.txt.html)
 
-### Operators
+## Operators
 
 `[operator]{motion}` - apply [:h operator](http://vimhelp.appspot.com/motion.txt.html#operator) to the text defined by motion.
 
@@ -81,9 +78,9 @@ For example: `<G` - shift everything right until the end of file (`<` - right sh
 
 More info: [how to define own operator, :h :map-operator](http://vimhelp.appspot.com/map.txt.html#%3Amap-operator), [how to define own motion, :h omap-info](http://vimhelp.appspot.com/map.txt.html#omap-info).
 
-### Motions
+## Motions
 
-#### Left-right motions
+### Left-right motions
 ```
 Left-right motions
 
@@ -109,7 +106,7 @@ f/t, F/T jump to char
      TP
 ```
 
-#### Words and WORDs
+### Words and WORDs
 
 Words (letters, digits and underscores, can be configured with `'iskeyword'`) and WORDS (any non-blank chars):
 
@@ -133,7 +130,7 @@ Words and WORDs
              2gE   2ge ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈  two words / WORDs back
 ```
 
-#### Up-down motions
+### Up-down motions
 
 ```
   Up-down motions ...                        gg
@@ -155,7 +152,7 @@ There is also `[count]_` motion which moves `count-1` lines down and jumps to th
 
 The `[N]%` jumps to the N% of the file, `:[range]go[to] [count]` and `[count]go` jump to the `count` byte in the file.
 
-#### Text object motions / various motions
+### Text object motions / various motions
 
 ```
 Matching pair () {} []    - % - move to the matching pair, make sure to enable the
@@ -209,7 +206,7 @@ For example `c%` - change until the matching pair:
 
 See also [Vim's life-changing c%](http://thepugautomatic.com/2014/03/vims-life-changing-c-percent/).
 
-#### Text object selection
+### Text object selection
 
 ```
  word, word_two          - aw / iw (regular / inner text object)
@@ -252,7 +249,7 @@ Note: motions like `yw` and `yaw` do the same and yank the word with the trailin
 It works in a similar way for other objects, like sentences.
 See also [:h exclusive](http://vimhelp.appspot.com/motion.txt.html#exclusive).
 
-#### Motions and operators
+### Motions and operators
 
 There are 3 types of the effects of operators: `characterwise`, `linewise`, `blockwise`.
 
@@ -276,7 +273,7 @@ Usage: {operator}{*wise-specifier}{motion}, see [:h o_v](http://vimhelp.appspot.
 
 See also: [operator, the true power of Vim](http://whileimautomaton.net/2008/11/vimm3/operator).
 
-## Marks
+# Marks
 
 [:h mark-motions](http://vimhelp.appspot.com/motion.txt.html#mark-motions).
 
@@ -304,15 +301,15 @@ Delete marks with `:delm`:
 :delm! - delete all marks for the current buffer (only a-z, not A-Z and 0-9)
 ```
 
-## Normal mode - jump list and change list
+# Normal mode - jump list and change list
 
-### Change list
+## Change list
 
 - `g;` / `g,` - move back / forward the [change list](http://vimhelp.appspot.com/motion.txt.html#changelist), view the list `:changes`
 - `gi` - jump to last edit and start the insert mode (uses `'^` mark)
 - `'.` - jump to last edit position
 
-### Jump list
+## Jump list
 
 - `<C-O>` / `<C-I>` - move back / forward in the [jump list](http://vimhelp.appspot.com/motion.txt.html#jumplist), `:jumps`
 - `''` / `` - jump to the previous place you jumped here from
@@ -322,7 +319,7 @@ Delete marks with `:delm`:
 - `C-^` - switch between two recent files
 - `[num]<C-^>` - switch to 'num' file (see file numbers in :buffers)
 
-### Special marks
+## Special marks
 
 ```
 '[ `[ / '] `]   - first / last char of last changed / yanked text
@@ -334,7 +331,7 @@ Delete marks with `:delm`:
 [' [` / ]' ]`   - [count] previous / next lowercase mark
 ```
 
-## Insert / command mode keys
+# Insert / command mode keys
 
 - `<C-H>` - delete prev char
 - `<C-W>` - delete previous word
@@ -346,7 +343,7 @@ Delete marks with `:delm`:
 
 [:h insert.txt](http://vimhelp.appspot.com/insert.txt.html)
 
-## Insert / command mode - insert from the register
+# Insert / command mode - insert from the register
 
 `<C-R><r>` - insert the text from the register.
 
@@ -360,7 +357,7 @@ If we have "Hello" in the `a` register and "World" in the `b`, we can insert the
 
 But it is easy to do from the insert mode `<C-R>a<C-R>b` and change will be repeatable with dot.
 
-## Insert / command mode - calculate the expression and insert the result
+# Insert / command mode - calculate the expression and insert the result
 
 `<C-R>=` - prompt for the expression and insert it
 
@@ -368,7 +365,7 @@ But it is easy to do from the insert mode `<C-R>a<C-R>b` and change will be repe
 <C-R>=3*0.65  -- will insert 1.95
 ```
 
-## Insert mode - insert the last text
+# Insert mode - insert the last text
 
 `<C-A>` - Insert the last inserted text.
 
@@ -384,7 +381,7 @@ ct,<C-A>"        - we enter the new command `ct,` and then use Ctrl-A to insert 
 
 There is also `<C-@>` - Insert the last inserted text and stop the insert mode.
 
-## Insert mode autocompletion
+# Insert mode autocompletion
 
 - `<C-N>` / `<C-P>` - generic completion, [:h i\_CTRL\_N](http://vimhelp.appspot.com/insert.txt.html#compl-generic)
 - `<C-X><C-O>` - omni-completion, :h ins-completion
@@ -405,7 +402,7 @@ Work with autocomplete menu:
 
 Open the popup without selecting the first item: <C-N><C-P> (will actually select the first item and then un-select it).
 
-## Insert mode complete whole lines
+# Insert mode complete whole lines
 
 Complete whole lines with `<C-X><C-L>`:
 
@@ -418,7 +415,7 @@ From [Let Vim Do the Typing](https://www.youtube.com/watch?v=3TX3kV3TICU).
 
 Similarly it is possible to complete sentences word-by-work with `<C-X><C-P>`.
 
-## Command line window
+# Command line window
 
 It is super-useful to edit long commands, or search patterns.
 
@@ -431,7 +428,7 @@ Don't re-map the `q:`:
 
 If you often invoke it accidentally, you probably have a problem with entering `:q` correctly. In this case whether remap the `:q` to something else (for example, to `<Leader>q`) or type it like this: left pinky - Shift, right pinky - ':', left pinky - 'q' (there is no chance to type it backwards this way).
 
-## Visual mode
+# Visual mode
 
 In normal mode - `v` / `V` / `<C-V>` - char / line / block visual mode.
 Same keys in visual mode switch between selection modes.
@@ -460,12 +457,12 @@ Select function body (between { and }): `vaBV` - select "a block" and then chang
 To select 2 levels up - `v2aBV` (when inside other {} block inside function) or `vaBaB` (repeat `aB` to move to the next block).
 A mapping to work from any level inside the function: `:map t ? function <CR>f{vaBV` (search backwards for `function`, move to the `{` and then do `vaBV`).
 
-## Show full file name and stats
+# Show full file name and stats
 
 - `<C-G>` - normal mode, show current file name and path and cursor position
 - `<g C-G> - show file stats (numer of columns, lines, words, bytes)
 
-## Digraphs and special chars
+# Digraphs and special chars
 
 - `<C-K>{char1}{char2}` - insert a digraph (normal mode)
  - [alpha digraphs](./vim/digraph-alpha.txt)
@@ -478,7 +475,7 @@ A mapping to work from any level inside the function: `:map t ? function <CR>f{v
 
 `:dig` - show digraphs
 
-## Easter Eggs
+# Easter Eggs
 
 - :help 42
 - :help!
