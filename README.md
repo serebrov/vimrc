@@ -331,11 +331,14 @@ Delete marks with `:delm`:
 [' [` / ]' ]`   - [count] previous / next lowercase mark
 ```
 
-# Insert / command mode keys
+# Insert / command mode editing
 
 - `<C-H>` - delete prev char
 - `<C-W>` - delete previous word
 - `<C-U>` - delete current line, this often used in mappings to clear the command line, for example to remove the automatic `'<,'>` when there is a visual selection
+
+# Insert mode editing
+
 - `<C-T>` / `<C-D>` - indent / un-indent, useful for markdown lists
 - `<C-E>` / `<C-Y>` - insert char above / below the cursor
 - `<C-A>` / `<C-X>` - increment/decrement number under the cursor
