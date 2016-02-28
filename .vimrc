@@ -165,6 +165,7 @@
   xmap <F10> <Plug>(textmanip-toggle-mode)
   "
   " Related: https://github.com/jondkinney/dragvisuals.vim - dragging visual blocks
+  " Related: https://github.com/zirrostig/vim-schlepp - moving visual blocks
   " Related: vim-scripts/VisIncr - make a column of increasing or decreasing
   "          numbers, dates, or daynames
 

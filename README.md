@@ -29,6 +29,8 @@
 - [Visual mode](#visual-mode)
 - [Show full file name and stats](#show-full-file-name-and-stats)
 - [Digraphs and special chars](#digraphs-and-special-chars)
+- [Manage Files](#manage-files)
+- [Netrw](#netrw)
 - [Easter Eggs](#easter-eggs)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -478,6 +480,44 @@ A mapping to work from any level inside the function: `:map t ? function <CR>f{v
 - `g8` - show utf-8 byte sequence for char under cursor
 
 `:dig` - show digraphs
+
+# Manage Files
+
+- `set path=.,**` - set path to recursively look through the sub-directories.
+- `:find **/filename or :e **/filename` - search for the file and open it.
+- `:find **/filename<TAB>` - display the list of matching files and move through them
+
+- `:saveas new_name` - make a copy with `new_name` and switch to that copy
+- `:saveas Ctrl-R %` - will insert the current file name, useful if new file name is similar to the current file name (also the following <C-F> can be useful to edit the new name in the command-line window)
+- `:w new_name` - make a copy, but don't switch to it
+- `:drop file_name` - open file or jump to already opened version
+- `:set switchbuf += useopen` + `:sbuffer path/to/file"` -  with ['useopen'](http://vimhelp.appspot.com/options.txt.html#%27switchbuf%27) option will also search for already open buffer and jump to it (also affects quickfix)
+- `:hardcopy` - print the file
+
+The ['tpope/vim-eunuch'](https://github.com/tpope/vim-eunuch) adds more commands to manage files (like Remove, Move, Chmod, Find, SudoWrite, and others).
+
+# Netrw
+
+- `<F1>` - open netrw help (use <C-^> or <C-O> to get back)
+- `-` - go to the parent dir, <CR> - open a file
+- `R` - rename file
+- `d` - create dir
+- `mf` - mark file, `mF` - unmark file, `mu` - unmark all files, `qF` - mark quickfix files
+- `:MF pattern` - mark files by pattern, `mr` - query for pattern and mark files
+- `mt` - mark target dir (or `:MP dir`), mark files, `mc` - copy files (`mm` - move)
+- `mg` - vimgrep marked, `mz` - compress / decompress, `mx` - apply shell command, `md` - diff, `mp` - print
+- `qf` - file info
+- `<del>`, `D` - delete file or dir (marked files if there are any, visual selection if any)
+- `gh` - hide / unhide dot files
+- `i` - switch view mode (thin / long / wide / tree)
+- `s` - sorting style
+- `p` - preview the file
+- `x` - view the file with an associated program (`gx` in any buffer)
+- `X` - execute the file
+- `mb` - bookmark the directord, `gb` - go to bookmarked dif, `qb` - list bookmarks and history
+- `:Ex */pattern` - search in current dir
+- `:Ex **/pattern` - search in current dir and sub-directories
+- `:Ex **//pattern` - search in dir and sub-dirs inside files with vimgrep
 
 # Easter Eggs
 
