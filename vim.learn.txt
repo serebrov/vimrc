@@ -1,3 +1,7 @@
+Operations with files:
+   https://github.com/justinmk/vim-dirvish
+   see the readme, check tips related to file operations
+
 Ex commands:
 	  :[range] delete [x] - delete to reg x
 	  :[range] yank [x] - yank
@@ -173,7 +177,7 @@ Windows
 
   " C-W w         - go to the next window
   " C-W P         - go to preview window
-  " C-W z         - close preview window
+  " C-W z         - close preview window, also :pclose
 
   Move-or-split!
 
@@ -551,6 +555,11 @@ There are some vim's filters:
      tail	Shows end of a file (default 10 lines).
      wc	Counts characters, words and lines.
      sort	Sorts input lines.
+     shuf       Shuffle lines
+                check also parameters, for example:
+                shuf -n 5 -i 1-1000 - select 5 numbers from the 1-1000
+		integers
+     rev        Reverse input lines
      grep	Shows lines that match a regular expression.
      tr	Translates or deletes specified character sets.
 		     tr '[A-Z]' '[a-z]' - lowercase
@@ -572,6 +581,10 @@ There are some vim's filters:
      paste
      join
      tac	inversed cat, will print the file backwards
+     look       display words, starting with something, `look fun`
+
+     expr       calculate an expression `expr 5 \* 3`
+     factor     factor the number `factor 100` -> 2 2 5 5, 2*2*5*5=100
 
      nl		nl stands for number lines and it does just that.
      pr

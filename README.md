@@ -499,7 +499,7 @@ The ['tpope/vim-eunuch'](https://github.com/tpope/vim-eunuch) adds more commands
 # Netrw
 
 - `<F1>` - open netrw help (use <C-^> or <C-O> to get back)
-- `-` - go to the parent dir, <CR> - open a file
+- `-` - go to the parent dir, `<CR>` - open a file
 - `R` - rename file
 - `d` - create dir
 - `mf` - mark file, `mF` - unmark file, `mu` - unmark all files, `qF` - mark quickfix files
