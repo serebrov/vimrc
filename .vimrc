@@ -1008,6 +1008,13 @@ EOF
     autocmd Syntax * RainbowParenthesesLoadBraces
   augroup END
 
+  " see https://github.com/romainl/vim-qf for more
+  augroup autoquickfix
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost    l* lwindow
+  augroup END
+
   command! -bar -nargs=? -bang Scratch :silent enew<bang>|set buftype=nofile bufhidden=hide noswapfile buflisted filetype=<args> modifiable
   function! s:scratch_maps() abort
     nnoremap <silent> <buffer> == :Scratch<CR>
@@ -1614,7 +1621,12 @@ function! s:GrepMotion(type) abort
     execute "normal! :Grep --literal " . shellescape(@@) . "\<cr>"
     let @@ = reg_save
 endfunction
+
 " }}}
+"
+function! FormatPyJson()
+  exe "'<,'>s/'/\"/g | '<,'>s/u\"/\"/g | '<,'>!python -m json.tool"
+endfunction
 
 " Disabled {{{
   " adopt color schemes for terminal
@@ -1825,7 +1837,5 @@ endfunction
 
   """""" Go
   " Plug 'fatih/vim-go'
-
-
 
 " }}}
