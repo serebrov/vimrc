@@ -2,10 +2,19 @@
   set nocompatible " explicitly get out of vi-compatible mode
   " filetype off
 
-  " Check if we use nvim or vim
-  let g:nvim_here = 0
-  if $VIM =~ 'nvim'
-    let g:nvim_here = 1
+  " run nvim as below to get gui colors in terminal, works in gnome-termial
+  " and konsole
+  "    NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim
+  "
+  " Or add to your .bashrc / .zshrc
+  "    export NVIM_TUI_ENABLE_TRUE_COLOR=1
+  " See: https://github.com/neovim/neovim/pull/2198
+  if has('nvim')
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+    # see https://github.com/neovim/neovim/wiki/Following-HEAD
+    # $NVIM_TUI_ENABLE_TRUE_COLOR=1 is now ignored
+    set termguicolors
   endif
 
   call plug#begin('~/.vim/plugged')
@@ -22,10 +31,16 @@
   " auto adjust tab/space settings based on current file
   Plug 'tpope/vim-sleuth'
 
-  " Solarized color scheme
-  Plug 'altercation/vim-colors-solarized'
+  if has('nvim')
+    Plug 'frankier/neovim-colors-solarized-truecolor-only'
+  else
+    Plug 'altercation/vim-colors-solarized'
+  endif
   Plug 'notpratheek/vim-sol'
   Plug 'romainl/Apprentice'
+  Plug 'romainl/flattened'
+  Plug 'morhetz/gruvbox'
+  Plug 'chriskempson/base16-vim'
 
   " Gundo.vim is Vim plugin to visualize your Vim undo tree.
   " Plug 'sjl/gundo.vim'
@@ -51,7 +66,22 @@
   "  .  to put selected file name to the end of command line;
   "  !  to do the same and start command line with !
   "  ~  go home; cd/cl - :cd / :lcd
-  Plug 'tpope/vim-vinegar'
+  " Plug 'tpope/vim-vinegar'
+
+  " Filebrowser
+  " '-' to open it and to go up dir
+  " R - refresh;
+  " f - define the filter for filenames; F - toggle filter;
+  " gh - toggle hide/show wildeignored files
+  " <BS> - go back in dirs history
+  " q - close
+  " ~ - go home
+  " + / % - create file
+  " :ClipPathname / :ClipDirname - copy the full path of the selected file / current dir
+  Plug 'jeetsukumaran/vim-filebeagle'
+  let g:filebeagle_suppress_keymaps = 1
+  " map <silent> <Leader>f  <Plug>FileBeagleOpenCurrentWorkingDir
+  map <silent> -          <Plug>FileBeagleOpenCurrentBufferDir
 
   " Suggest to open existing file instead of creating new one when there
   " are multiple matches
@@ -394,7 +424,7 @@
 
   """""" Programming / tags / autocomplete
   " Syntax checker
-  if g:nvim_here
+  if has('nvim')
     Plug 'benekastah/neomake'
     let g:neomake_css_enabled_makers = ['csslint']
     " Available checkers: flake8 pep257 pep8 pyflakes pylint python
@@ -440,7 +470,7 @@
   " fetching can take a long time causing the timeout
   " to manually install it
   "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
-  if g:nvim_here
+  if has('nvim')
     " requires
     " sudo pip3 install neovim
     " after install run
@@ -640,14 +670,7 @@ EOF
   endif
   " }}}
 
-  " run nvim as below to get gui colors in terminal, works in gnome-termial
-  " and konsole
-  "    NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim
   "
-  " Or add to your .bashrc / .zshrc
-  "    export NVIM_TUI_ENABLE_TRUE_COLOR=1
-  "
-  " See: https://github.com/neovim/neovim/pull/2198
   function! SetupColorscheme()
     if &diff
       echom 'Diff mode setup'
@@ -661,8 +684,10 @@ EOF
       " hi DiffText        guifg=#000033 guibg=#A6F3A6 gui=none
       " hi DiffDelete      guifg=#DDCCCC guibg=#FFDDDD gui=none
     else
-      if g:nvim_here
-        colorscheme apprentice
+      if has('nvim')
+        set background=dark
+        colorscheme solarized
+        "colorscheme apprentice
       else
         if !has("gui_running")
             " tell vim that gnome terminal supports 256 colors
@@ -670,7 +695,6 @@ EOF
             let g:solarized_termcolors=256
         endif
         set background=dark
-        "colorscheme apprentice
         let g:solarized_contrast="high"    "default value is normal
         let g:solarized_diffmode="high"    "default value is normal
         try
@@ -678,28 +702,29 @@ EOF
         catch /^Vim\%((\a\+)\)\=:E185/
             echo "Solarized theme not found. Run :PluginInstall"
         endtry
+        " From: http://sunaku.github.io/vim-256color-bce.html
+        if &term =~ '256color'
+            " Fix for tmux
+            " disable Background Color Erase (BCE) so that color schemes
+            " render properly when inside 256-color tmux and GNU screen.
+            " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+            set t_ut=
+        endif
       endif
-    endif
-    " From: http://sunaku.github.io/vim-256color-bce.html
-    if &term =~ '256color'
-        " Fix for tmux
-        " disable Background Color Erase (BCE) so that color schemes
-        " render properly when inside 256-color tmux and GNU screen.
-        " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-        set t_ut=
     endif
   endfunction
 
-  if g:nvim_here
-    " For nvim
-    augroup NvimColors
-      autocmd!
-      autocmd VimEnter * call SetupColorscheme()
-    augroup END
-  else
-    " For vim
-    call SetupColorscheme()
-  endif
+  " if has('nvim')
+  "   " For nvim
+  "   augroup NvimColors
+  "     autocmd!
+  "     autocmd VimEnter * call SetupColorscheme()
+  "   augroup END
+  " else
+  "   " For vim
+  "   call SetupColorscheme()
+  " endif
+  call SetupColorscheme()
 
 " }}}
 
@@ -1193,7 +1218,7 @@ EOF
   map <c-k> :call WinMove('k')<CR>
   map <c-l> :call WinMove('l')<CR>
   map <c-h> :call WinMove('h')<CR>
-  if g:nvim_here
+  if has('nvim')
     " Testing, map jk/kj as Esc
     " Map Ctrl + h,j,k,l to move between windows
     " And map Alt + h,j,k,l for the same
@@ -1626,6 +1651,10 @@ endfunction
 "
 function! FormatPyJson()
   exe "'<,'>s/'/\"/g | '<,'>s/u\"/\"/g | '<,'>!python -m json.tool"
+endfunction
+
+function! PreFormatPyJson()
+  exe "'<,'>s/'/\"/g | '<,'>s/u\"/\"/g"
 endfunction
 
 " Disabled {{{
