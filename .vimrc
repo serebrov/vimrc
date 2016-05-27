@@ -12,8 +12,8 @@
   if has('nvim')
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-    # see https://github.com/neovim/neovim/wiki/Following-HEAD
-    # $NVIM_TUI_ENABLE_TRUE_COLOR=1 is now ignored
+    " see https://github.com/neovim/neovim/wiki/Following-HEAD
+    " $NVIM_TUI_ENABLE_TRUE_COLOR=1 is now ignored
     set termguicolors
   endif
 
