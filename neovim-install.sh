@@ -6,3 +6,4 @@ sudo apt-get install neovim
 
 sudo apt-get install libffi-dev
 pip install neovim
+pip3 install neovim
