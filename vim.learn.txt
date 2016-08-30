@@ -19,6 +19,12 @@ Ex commands:
 	  :h ex-cmd-index
 
 	  :print can be used to preview put/yank/delete/etc
+	  :number - like print, but show line numbers, short form is :#
+	            can be used to search inside the visual selection with
+		    `g/pattern/#` - it will display the matching lines with numbers
+		    Note: visual selection can be searched with `/\%Vpattern`
+		    The `\%V` will limit the search to visual area.
+
 	  :$ - move to the end of file (also used as end line address in ranges)
 	       :% also moves to the end (means the whole file)
 	  :/<html>/,/<\/html>/p - specify range with patterns
