@@ -60,6 +60,12 @@
   " see https://defuse.ca/blog/vim-rainbow-parentheses-work-in-php
   Plug 'kien/rainbow_parentheses.vim'
 
+  " Different highlight for current search result
+  " Add `\v` when start search to enable very magic mode
+  " Overrides search params (history=1000, hlsearch enabled, incsearch,
+  " ignorecase, shortmess, smartcase)
+  Plug 'wincent/loupe'
+
   """"""" File browser
   " Additional features for netrw
   "  -  to open browser focused on current file, - again to go upper
@@ -80,6 +86,8 @@
   " :ClipPathname / :ClipDirname - copy the full path of the selected file / current dir
   Plug 'jeetsukumaran/vim-filebeagle'
   let g:filebeagle_suppress_keymaps = 1
+  let g:filebeagle_show_hidden = 1
+  let g:filebeagle_check_gitignore = 1
   " map <silent> <Leader>f  <Plug>FileBeagleOpenCurrentWorkingDir
   map <silent> -          <Plug>FileBeagleOpenCurrentBufferDir
 
@@ -245,6 +253,8 @@
   Plug 'airblade/vim-gitgutter'
   "   :DirDiff <A:Src Directory> <B:Src Directory>
   "   see http://www.vim.org/scripts/script.php?script_id=102
+  "   see the source and diff pane for features, for example,
+  "   'a' command lets to set diff arguments (like -w - ignore whitespace)
   Plug 'zhaocai/DirDiff.vim'
   " :CustomDiff histogram | myers | patience | minimal | default
   " and run :diffupdate
@@ -476,7 +486,7 @@
     " after install run
     " :UpdateRemotePlugins
     let g:deoplete#enable_at_startup = 1
-    Plug 'Shougo/deoplete.nvim'
+    "Plug 'Shougo/deoplete.nvim'
   else
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
   endif
@@ -1459,9 +1469,9 @@ EOF
     endif
   endfunction
 
-  autocmd MyAutoCmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd MyAutoCmd BufWritePre <buffer>
-    \ call CleanTrails()
-    "\ call Preserve("%s/\\s\\+$//e")
+  "autocmd MyAutoCmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd MyAutoCmd BufWritePre <buffer>
+  "  \ call CleanTrails()
+  "  "\ call Preserve("%s/\\s\\+$//e")
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event
@@ -1649,12 +1659,14 @@ endfunction
 
 " }}}
 "
-function! FormatPyJson()
-  exe "'<,'>s/'/\"/g | '<,'>s/u\"/\"/g | '<,'>!python -m json.tool"
+"
+function! PreFormatPyJson()
+  exe "s/\\vDecimal\\('(-?\\d+)'\\)/\\1/g | s/'/\"/g | s/u\"/\"/g | s/None/null/g | s/False/false/g | s/True/true/g"
 endfunction
 
-function! PreFormatPyJson()
-  exe "'<,'>s/'/\"/g | '<,'>s/u\"/\"/g"
+function! FormatPyJson()
+  call PreFormatPyJson()
+  exe "'<,'>!python -m json.tool"
 endfunction
 
 " Disabled {{{
