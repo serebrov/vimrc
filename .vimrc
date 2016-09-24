@@ -1682,7 +1682,7 @@ endfunction
 "
 "
 function! PreFormatPyJson()
-  exe "s/\\vDecimal\\('(-?\\d+)'\\)/\\1/g | s/'/\"/g | s/u\"/\"/g | s/None/null/g | s/False/false/g | s/True/true/g"
+  exe "s/\\vDecimal\\('(-?\\d+)'\\)/\\1/g | s/'/\"/g | s/u\"/\"/g | s/None/null/g | s/False/false/g | s/True/true/g | s/\\(\\d\\)L\\([},]\\)/\\1\\2/g"
 endfunction
 
 function! FormatPyJson()
