@@ -550,6 +550,9 @@
   " Define profiles (can be done per-project in .vimrc.local):
   "  let g:dbext_default_profile_mySqlProject = 'type=MYSQL:user=root:passwd=:dbname=mydb'
   "  let g:dbext_default_profile_mySqlProjectTest = 'type=MYSQL:user=root:passwd=:dbname=mydb_test'
+  " PostgreSQL example:
+  "  let g:dbext_default_profile_postgres_local = 'type=PGSQL:user=seb:passwd=:dbname=andyslist_local'
+  "  let g:dbext_default_profile_postgres_develop = 'type=PGSQL:user=myuser:passwd=xxxyyyzzzpppwwww:dbname=mydb:host=mydb.cdiofumurupu.us-east-1.rds.amazonaws.com'
   " Set db param (name, user, pw, etc) - :DBSetOption dbname=mydb
   " visual se - execute
   Plug 'vim-scripts/dbext.vim'
