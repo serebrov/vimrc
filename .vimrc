@@ -1262,6 +1262,12 @@ EOF
     endif
   endfunction
 
+  " See also an alternative approach to windows navigation
+  " using submode plugin: http://ddrscott.github.io/blog/2016/making-a-window-submode/
+  " The plugin: https://github.com/kana/vim-submode
+  " Basically, the idea is that Ctrl-W starts the sumbode and then you just
+  " use h/j/k/l and other keys without prefixing each one with Ctrl-W
+
   " move to and open if not exists
   map <c-j> :call WinMove('j')<CR>
   map <c-k> :call WinMove('k')<CR>
