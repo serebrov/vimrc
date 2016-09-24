@@ -503,12 +503,20 @@
     " after install run
     " :UpdateRemotePlugins
     let g:deoplete#enable_at_startup = 1
-    "Plug 'Shougo/deoplete.nvim'
+    Plug 'Shougo/deoplete.nvim'
   else
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
   endif
   " Plug 'davidhalter/jedi-vim'
   Plug 'UltiSnips'
+  " Activate with TAB, better with autocompletion plugin,
+  " the UlitSnips adds entries marked [US]
+  " select the one you need and press <Tab>,
+  " don't go out of insert mode, enter parts of the template
+  " and press <Tab> again to move to the next placeholder
+  " If you exit the insert mode - just get into insert again and
+  " use <Tab> / <Shift-Tab> to move between placeholders.
+  "
   " http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
   " let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
   " let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
@@ -520,6 +528,7 @@
   let g:UltiSnipsExpandTrigger="<tab>"
   let g:UltiSnipsJumpForwardTrigger="<tab>"
   let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+  let g:ultisnips_python_style="google"
   "let g:UltiSnipsExpandTrigger="<c-tab>"
   "let g:UltiSnipsListSnippets="<c-s-tab>"
   "let g:UltiSnipsJumpForwardTrigger="<c-tab>"
@@ -615,6 +624,7 @@ EOF
   " Generate docstrings with :Pydocstring
   "   note: UltiSnips is also able to generate docstring templates, but
   "         I didn't find the way to trigger it for already existing code
+  let g:template_vim_template_dir = $HOME . "/.vim/templates/pydocstring"
   Plug 'heavenshell/vim-pydocstring'
   nmap <silent> <nop> <Plug>(pydocstring)
   augroup DocMap
