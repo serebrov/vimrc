@@ -445,10 +445,16 @@
   """""" Programming / tags / autocomplete
   " Syntax checker
   if has('nvim')
+    " There was a problem with Neovim not seeing python
+    let g:python2_host_prog = '/usr/bin/python'
+    let g:python3_host_prog = '/usr/bin/python3'
+    " To get the errors, save the file or run :Neomake
+    " then open the local error list with :lopen to see the
+    " errors (and it is possible to navigate via ]l [l - this is from unimpaired
     Plug 'benekastah/neomake'
     let g:neomake_css_enabled_makers = ['csslint']
     " Available checkers: flake8 pep257 pep8 pyflakes pylint python
-    let g:neomake_python_enabled_makers = ['python', 'flake8', 'frosted', 'pylint']
+    let g:neomake_python_enabled_makers = ['python', 'flake8', 'frosted']
     "let g:neomake_python_enabled_makers = ['python', 'flake8', 'frosted', 'pylint', 'pep257']
     autocmd! BufWritePost * Neomake
   else
@@ -465,10 +471,11 @@
     let g:syntastic_css_checkers = ['csslint']
     let g:syntastic_javascript_checkers = ['eslint', 'flow', 'jshint']
     " Available checkers: flake8 pep257 pep8 pyflakes pylint python
-    let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
+    let g:syntastic_python_checkers = ['python', 'flake8']
     " Python - pip install flake8 (pyflakes + pep8)
     "          pip install pep257 - docstring conventions
     "          piip install frosted - pyflakes re-work
+    "          piip install pylint
     " Note: pylint also checks docstrings + gives a lot of other notices, not
     " always useful
     " The pylint behavior can be modified via pylintrc (place into the project
