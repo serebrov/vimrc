@@ -703,16 +703,18 @@ EOF
   "
   function! SetupColorscheme()
     if &diff
+      " Note: to run nvim diff manually use command like this:
+      " nvim -d base.js local.js remote.js merge-result.js
       echom 'Diff mode setup'
       set background=light
       set guifont=Liberation\ Mono\ 9
-      colorscheme sol
-      " colorscheme github
+      " colorscheme sol
+      colorscheme github
       " " A bit modified diff colors from github scheme
-      " hi DiffAdd         guifg=#003300 guibg=#DDFFDD gui=none
-      " hi DiffChange                    guibg=#ececec gui=none
-      " hi DiffText        guifg=#000033 guibg=#A6F3A6 gui=none
-      " hi DiffDelete      guifg=#DDCCCC guibg=#FFDDDD gui=none
+      hi DiffAdd         guifg=#003300 guibg=#DDFFDD gui=none
+      hi DiffChange                    guibg=#ececec gui=none
+      hi DiffText        guifg=#000033 guibg=#A6F3A6 gui=none
+      hi DiffDelete      guifg=#DDCCCC guibg=#FFDDDD gui=none
     else
       if has('nvim')
         set background=dark
