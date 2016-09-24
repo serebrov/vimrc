@@ -1491,9 +1491,8 @@ EOF
     endif
   endfunction
 
-  "autocmd MyAutoCmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd MyAutoCmd BufWritePre <buffer>
-  "  \ call CleanTrails()
-  "  "\ call Preserve("%s/\\s\\+$//e")
+  autocmd MyAutoCmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd MyAutoCmd BufWritePre <buffer>
+    \ call CleanTrails()
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event
