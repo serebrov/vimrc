@@ -41,6 +41,7 @@
   Plug 'romainl/flattened'
   Plug 'morhetz/gruvbox'
   Plug 'chriskempson/base16-vim'
+  Plug 'jacoborus/tender'
 
   " Gundo.vim is Vim plugin to visualize your Vim undo tree.
   " Plug 'sjl/gundo.vim'
