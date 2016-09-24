@@ -104,6 +104,15 @@
   " g:LargeFile (by default, its 100) - 100Mb
   Plug 'vim-scripts/LargeFile'
 
+  " Interactive scratchpad for python / node / coffee / haskell / ruby / ocaml
+  " / r / closure / php
+  " PHP requires psysh
+  " Codi [filetype] activates Codi for the current buffer, using the provided filetype or the buffer's filetype.
+  " Codi! deactivates Codi for the current buffer.
+  " Codi!! [filetype] toggles Codi for the current buffer.
+  " Plus there is a shell-wrapper (in ~/.zshrc, call with code [filetype] [filename]
+  Plug 'metakirby5/codi.vim'
+
   " Native files / buffers navigation
   " Also need `set path=.,**` (see below) to search recursively
   " See:http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/
