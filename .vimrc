@@ -1212,6 +1212,13 @@ EOF
   " Visually select the text that was last edited/pasted
   nnoremap gV `[v`]
 
+  " Don't move the cursor after yanking the visual selection
+  " (usually it jumps back to the start of the selection)
+  " http://ddrscott.github.io/blog/2016/yank-without-jank/
+  vnoremap <expr>y "my\"" . v:register . "y`y"
+  " Y will yank line-wise even if you have character-wise selection
+  vnoremap <expr>Y "my\"" . v:register . "Y`y"
+
   nnoremap gl :call ToggleRelativeAbsoluteNumber()<CR>
   function! ToggleRelativeAbsoluteNumber()
     if &relativenumber
