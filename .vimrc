@@ -404,6 +404,8 @@
   " :Swoop! pattern - for all buffers
   " For all buffers it is convenient to :CloseSession and :BufOnly and then
   " for example, :args **/*.py to load all python files
+  " or get the files into quickfix list, for example with :Ggrep (provided by
+  " fugitive plugin) and then do :Qargs (provided by ferret plugin)
   " and then we can review/edit results
   Plug 'pelodelfuego/vim-swoop'
   let g:swoopUseDefaultKeyMap = 0
@@ -444,6 +446,32 @@
 
   """""" Programming / tags / autocomplete
   " Syntax checker
+  " Python - pip install flake8 (pyflakes + pep8)
+  "          pip install pep257 - docstring conventions
+  "          pip install mypy-lang - python3 static type checks
+  "          pip install vulture - dead code checks
+  "          pip install frosted - pyflakes re-work
+  "          piip install pylint
+  " Note: pylint also checks docstrings + gives a lot of other notices, not
+  " always useful
+  " The pylint behavior can be modified via pylintrc (place into the project
+  " root) or with special comments, like:
+  "
+  "    except Exception as error:  # pylint: disable=W0703
+  "
+  " here we disable the [broad-except] warning, the warning name is shown in
+  " the error message
+  "
+  " The warning id (W0703) can be shown using pylint itself:
+  "
+  " $ pylint --help-msg broad-except
+  "  :broad-except (W0703): *Catching too general exception %s*
+  "  Used when an except catches a too general exception, possibly burying
+  "  unrelated errors. This message belongs to the exceptions checker.
+  "
+  " For flake8, to disable the error check use comment # noqa
+  " to disable the specific error # noqa: F401
+  "
   if has('nvim')
     " There was a problem with Neovim not seeing python
     let g:python2_host_prog = '/usr/bin/python'
@@ -453,8 +481,11 @@
     " errors (and it is possible to navigate via ]l [l - this is from unimpaired
     Plug 'benekastah/neomake'
     let g:neomake_css_enabled_makers = ['csslint']
-    " Available checkers: flake8 pep257 pep8 pyflakes pylint python
-    let g:neomake_python_enabled_makers = ['python', 'flake8', 'frosted']
+    " Available checkers: flake8 pep257 pep8 pyflakes pylama pylint python vulture py3kwarn
+    " To run checker manually use :Neomake vulture
+    " let g:neomake_python_enabled_makers = ['pep257', 'flake8', 'mypy']
+    let g:neomake_python_enabled_makers = ['flake8', 'mypy']
+    let g:neomake_open_list = 2
     "let g:neomake_python_enabled_makers = ['python', 'flake8', 'frosted', 'pylint', 'pep257']
     autocmd! BufWritePost * Neomake
   else
@@ -472,28 +503,9 @@
     let g:syntastic_javascript_checkers = ['eslint', 'flow', 'jshint']
     " Available checkers: flake8 pep257 pep8 pyflakes pylint python
     let g:syntastic_python_checkers = ['python', 'flake8']
-    " Python - pip install flake8 (pyflakes + pep8)
-    "          pip install pep257 - docstring conventions
-    "          piip install frosted - pyflakes re-work
-    "          piip install pylint
-    " Note: pylint also checks docstrings + gives a lot of other notices, not
-    " always useful
-    " The pylint behavior can be modified via pylintrc (place into the project
-    " root) or with special comments, like:
-    "
-    "    except Exception as error:  # pylint: disable=W0703
-    "
-    " here we disable the [broad-except] warning, the warning name is shown in
-    " the error message
-    "
-    " The warning id (W0703) can be shown using pylint itself:
-    "
-    " $ pylint --help-msg broad-except                                                                                                                       19:17
-    "  :broad-except (W0703): *Catching too general exception %s*
-    "  Used when an except catches a too general exception, possibly burying
-    "  unrelated errors. This message belongs to the exceptions checker.
   endif
 
+  Plug 'davidhalter/jedi-vim'
   " fetching can take a long time causing the timeout
   " to manually install it
   "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
@@ -504,10 +516,10 @@
     " :UpdateRemotePlugins
     let g:deoplete#enable_at_startup = 1
     Plug 'Shougo/deoplete.nvim'
+    Plug 'zchee/deoplete-jedi'
   else
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
   endif
-  " Plug 'davidhalter/jedi-vim'
   Plug 'UltiSnips'
   " Activate with TAB, better with autocompletion plugin,
   " the UlitSnips adds entries marked [US]
