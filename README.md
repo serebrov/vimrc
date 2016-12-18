@@ -345,6 +345,12 @@ Delete marks with `:delm`:
 - `<C-T>` / `<C-D>` - indent / un-indent, useful for markdown lists
 - `<C-E>` / `<C-Y>` - insert char above / below the cursor
 - `<C-A>` / `<C-X>` - increment/decrement number under the cursor
+                      in visual mode - g<C-A> to sequentially increment values in a column
+```
+                      1            1            1
+                      1 -select-> |1| -g<C-A>-> 2
+                      1           |1|           3
+```
 - `<C-O>` - execute normal command and get back to insert mode
 
 [:h insert.txt](http://vimhelp.appspot.com/insert.txt.html)
