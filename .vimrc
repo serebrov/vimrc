@@ -277,6 +277,9 @@
   " :Magit - open it
   Plug 'jreybert/vimagit'
 
+  " Improves the commit buffer - splits into diff, edit, status.
+  Plug 'rhysd/committia.vim'
+
   """""" Motions / normal mode commands
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
   Plug 'bkad/CamelCaseMotion'
@@ -331,7 +334,7 @@
   "                       ina, ana, Ina, Ana, etc - next/last argument
   Plug 'wellle/targets.vim'
   " Similar: Plug 'paradigm/TextObjectify'
-
+  .
   " turns [count]j and [count]k motions into jumps
   " so you can use <C-o> to get back
   " very handy in conjunction with Vim's relativenumber option.
@@ -409,6 +412,11 @@
   " and then we can review/edit results
   Plug 'pelodelfuego/vim-swoop'
   let g:swoopUseDefaultKeyMap = 0
+  " Similar to Swoop, but searches via ack / ag / pt / rg.
+  " :CtrlSF term
+  " It is possible to edit the results (no inserts), save with :w,
+  " undo with `u` and `p` to open file preview.
+  Plug 'dyng/ctrlsf.vim'
 
   " :PP: Pretty print. With no argument, acts as a REPL.
   " :Runtime: Reload runtime files. Like :runtime!, but it unlets any include guards first.
@@ -574,6 +582,9 @@
   " PostgreSQL example:
   "  let g:dbext_default_profile_postgres_local = 'type=PGSQL:user=seb:passwd=:dbname=andyslist_local'
   "  let g:dbext_default_profile_postgres_develop = 'type=PGSQL:user=myuser:passwd=xxxyyyzzzpppwwww:dbname=mydb:host=mydb.cdiofumurupu.us-east-1.rds.amazonaws.com'
+  "  NOTE: depending on the PostgreSQL server configuration, the password setting may not work
+  "        in this case it is possible to put the password into ~/.pgpass file
+  "        server_name:post:*:db_name:passwor
   " Set db param (name, user, pw, etc) - :DBSetOption dbname=mydb
   " visual se - execute
   Plug 'vim-scripts/dbext.vim'
