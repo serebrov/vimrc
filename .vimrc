@@ -154,6 +154,44 @@
   endfunction
   noremap <Leader>fm :FZFMru<CR>
 
+  " Open list of buffers
+  command! -bang Buffers call fzf#run(fzf#wrap('buffers',
+      \ {'source': map(range(1, bufnr('$')), 'bufname(v:val)')}, <bang>0))
+  " Locate any file on the filesystem - :LocateFZF .vimrc
+  command! -nargs=1 -bang LocateFZF call fzf#run(fzf#wrap(
+      \ {'source': 'locate <q-args>', 'options': '-m'}, <bang>0))
+  " Jump to tags with :Tags
+  function! s:tags_sink(line)
+    let parts = split(a:line, '\t\zs')
+    let excmd = matchstr(parts[2:], '^.*\ze;"\t')
+    execute 'silent e' parts[1][:-2]
+    let [magic, &magic] = [&magic, 0]
+    execute excmd
+    let &magic = magic
+  endfunction
+
+  function! s:tags()
+    if empty(tagfiles())
+      echohl WarningMsg
+      echom 'No tags here'
+      echohl None
+      return
+      " echohl WarningMsg
+      " echom 'Preparing tags'
+      " echohl None
+      " call system('ctags -R')
+    endif
+    call fzf#run({
+    \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+    \            '| grep -v -a ^!',
+    \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+    \ 'down':    '40%',
+    \ 'sink':    function('s:tags_sink')})
+  endfunction
+
+  command! Tags call s:tags()
+
+
   " Manage files and directories in vim
   " :Vimdir [directory] - To list files and folders
   " :VimdirR [directory] - To list files and folders recursive
