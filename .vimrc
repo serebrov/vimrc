@@ -525,6 +525,8 @@
     let g:deoplete#enable_at_startup = 1
     Plug 'Shougo/deoplete.nvim'
     Plug 'zchee/deoplete-jedi'
+    " Preview for substitute
+    set inccommand=nosplit
   else
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
   endif
