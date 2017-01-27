@@ -751,7 +751,7 @@ EOF
       set guioptions-=r
 
       "set guifont=* to display font chooser
-      set guifont=Droid\ Sans\ Mono\ 11
+      set guifont=Droid\ Sans\ Mono\ 13
       " set guifont=Ubuntu\ Mono\ 13
       " set guifont=Monospace\ 11
   endif
