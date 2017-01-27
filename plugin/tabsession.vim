@@ -264,7 +264,7 @@ function! s:session_save(...)
     let sessionoptions = &sessionoptions
     try
         set sessionoptions-=options
-        set sessionoptions-=tabpages
+        set sessionoptions+=tabpages
         call s:session_debug_message('Saving a session')
 
         execute 'mksession! ' . s:sessions_path . '/' . name
