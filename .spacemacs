@@ -41,7 +41,23 @@ values."
      auto-completion
      ;; better-defaults
      emacs-lisp
-     ;; git
+     ;; http://spacemacs.org/layers/+source-control/git/README.html 
+     ;; - git repository management the indispensable magit package
+     ;; - git-flow add-on for magit.
+     ;; - quick in buffer history browsing with git-timemachine.
+     ;; - quick in buffer last commit message per line with git-messenger
+     ;; - colorize buffer line by age of commit with smeargle
+     ;; - gitignore generator with helm-gitignore
+     ;; - org integration with magit via orgit
+     ;; Magit:
+     ;;   SPC g s - show status
+     ;;     TAB - open/close diff for file
+     ;;     s / u - stage / unstage
+     ;;     c - commit message, C-c C-c - commit
+     ;;     q - close
+     ;;
+     ;;     ? - help
+     git
      ;; markdown
      ;; org
      ;; (shell :variables
