@@ -54,8 +54,8 @@ values."
      ;;     TAB - open/close diff for file
      ;;     s / u - stage / unstage
      ;;     c - commit message, C-c C-c - commit
+     ;;     g - refresh
      ;;     q - close
-     ;;
      ;;     ? - help
      git
      ;; markdown
