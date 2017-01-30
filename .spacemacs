@@ -347,6 +347,7 @@ you should place your code here."
 ;;   SPC w c - close window (same as :q)
 ;;   SPC b d - delete buffer without closing the split
 ;;   SPC w u - undo window operation (for example, restore splits after :only)
+;;   SPC w . - window transient state (commands, related to windows)
 ;;
 ;; - Wrap / no wrap - SPC t l (toogle line truncation)
 ;;
@@ -354,16 +355,79 @@ you should place your code here."
 ;;
 ;; - Search for the file by name
 ;;   SPC f f - search from the current dir
+;;   SPC f r - search in recent files
 ;;   SPC p f - search in a project
 ;;
 ;; - shell / ansi-term / eshell
 ;;   See https://www.masteringemacs.org/article/running-shells-in-emacs-overview
 ;;
+;; - Help
+;;   SPC h d - help describe ... (function, variable, key, etc)
+;;   SPC <F1> - search for help
+;;   SPC ? - searchable list of keybindings
+;;   SPC h SPC - list of layers (plugins)
+;;
 ;; - Other
-;;   SPC ? - searchable list of functions
-;;   SPC h d f - help describe function, function help with fuzzy-search
-;;   SPC h d v - help describe variable
-;;   SPC h d k - help describe key
+;;   SPC SPC - run Emacs command, also can run in command mode (:command-name)
+;;
+;;   vim-surround - is included
+;;   comment / uncomment with gc - works
+;;
+;; - Terminology
+;;   mode = state (insert mode = evil-insert-state)
+;;   transient state - temporary state with own keybindings (similar to i3 resize mode)
+;;   minor-mode - additional feature activated in the major mode
+;;   major-mode - editing behavior in the current buffer, usually depends on the file type
+;;                like python-mode for python files
+;;   layers - similar to vim plugins (layer can be composed of several packages)
+;;
+;; - Set the variable
+;;   (setq variable value) ; Syntax
+;;   ;; Setting variables example
+;;   (setq variable1 t ; True
+;;         variable2 nil ; False
+;;         variable3 '("A" "list" "of" "things"))
+;;
+;; - Define the keybinding
+;;   (define-key map new-keybinding function) ; Syntax
+;;   ;; Map H to go to the previous buffer in normal mode
+;;   (define-key evil-normal-state-map (kbd "H") 'previous-buffer)
+;;   ;; Mapping keybinding to another keybinding
+;;   (define-key evil-normal-state-map (kbd "H") (kbd "^")) ; H goes to beginning of the line
+;;   To map <Leader> keybindings, use the spacemacs/set-leader-keys function.
+;;
+;;   (spacemacs/set-leader-keys key function) ; Syntax
+;;   ;; Map killing a buffer to <Leader> b c
+;;   (spacemacs/set-leader-keys "bc" 'spacemacs/kill-this-buffer)
+;;   ;; Map opening a link to <Leader> o l only in org-mode (works for any major-mode)
+;;   (spacemacs/set-leader-keys-for-major-mode 'org-mode
+;;     "ol" 'org-open-at-point)
+;;
+;;   Function:
+;;
+;;   (defun func-name (arg1 arg2)
+;;     "docstring"
+;;     ;; Body
+;;     )
+;;
+;;   Calling a function
+;;   (func-name arg1 arg1)
+;;
+;;   Here is an example of a function that is useful in real life:
+;;   ;; This snippet allows you to run clang-format before saving
+;;   ;; given the current file as the correct filetype.
+;;   ;; This relies on the c-c++ layer being enabled.
+;;   (defun clang-format-for-filetype ()
+;;     "Run clang-format if the current file has a file extensions
+;;   in the filetypes list."
+;;     (let ((filetypes '("c" "cpp")))
+;;       (when (member (file-name-extension (buffer-file-name)) filetypes)
+;;         (clang-format-buffer))))
+
+;; See http://www.gnu.org/software/emacs/manual/html_node/emacs/Hooks.html for
+;; what this line means
+(add-hook 'before-save-hook 'clang-format-for-filetype)
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
