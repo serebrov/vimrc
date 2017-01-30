@@ -323,7 +323,7 @@ you should place your code here."
   (define-key evil-normal-state-map (kbd "C-l") 'windmove-right)
   (define-key evil-normal-state-map (kbd "C-j") 'windmove-down)
   (define-key evil-normal-state-map (kbd "C-k") 'windmove-up)
-  (define-key evil-visual-state-map (kbd "C-h") 'split-window-below-and-focus)
+  (define-key evil-visual-state-map (kbd "C-j") 'split-window-below-and-focus)
   (define-key evil-visual-state-map (kbd "C-k") 'split-window-vertically)
   (define-key evil-visual-state-map (kbd "C-l") 'split-window-right-and-focus)
   (define-key evil-visual-state-map (kbd "C-h") 'split-window-horizontally)
