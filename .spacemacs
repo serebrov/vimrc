@@ -76,7 +76,13 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages
+   '(
+     ;; this package emulates vim behavior to persist search highlight
+     ;; results, we remove it here to automatically clear search highlight
+     ;; when it is not needed (you stop navigating search results)
+     evil-search-highlight-persist
+      )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
