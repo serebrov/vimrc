@@ -318,6 +318,7 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq-default evil-escape-key-sequence "jk")
+  (setq-default evil-escape-key-sequence "kj")
   (define-key evil-normal-state-map (kbd "C-h") 'windmove-left)
   (define-key evil-normal-state-map (kbd "C-l") 'windmove-right)
   (define-key evil-normal-state-map (kbd "C-j") 'windmove-down)
