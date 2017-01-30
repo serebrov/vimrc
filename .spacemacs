@@ -328,6 +328,36 @@ you should place your code here."
   (define-key evil-visual-state-map (kbd "C-l") 'split-window-right-and-focus)
   (define-key evil-visual-state-map (kbd "C-h") 'split-window-horizontally)
   )
+;;
+;; Usage
+;; - Layouts (tabs)
+;;   See develop branch docs -
+;;      https://github.com/syl20bnr/spacemacs/blob/develop/doc/DOCUMENTATION.org#layouts-and-workspaces
+;;   SPC l <num> - switch to layout <num> or create new layout (enter the name in this case)
+;;   layout name is displayed in the status string, bottom left
+;;
+;; - Windows
+;;   SPC w / - vert split, SPC w - - horizontal split-window-horizontally
+;;   SPC w c - close window (same as :q)
+;;   SPC b d - delete buffer without closing the split
+;;   SPC w u - undo window operation (for example, restore splits after :only)
+;;
+;; - Wrap / no wrap - SPC t l (toogle line truncation)
+;;
+;; - Show/hide whitespace - SPC t w
+;;
+;; - Search for the file by name
+;;   SPC f f - search from the current dir
+;;   SPC p f - search in a project
+;;
+;; - shell / ansi-term / eshell
+;;   See https://www.masteringemacs.org/article/running-shells-in-emacs-overview
+;;
+;; - Other
+;;   SPC ? - searchable list of functions
+;;   SPC h d f - help describe function, function help with fuzzy-search
+;;   SPC h d v - help describe variable
+;;   SPC h d k - help describe key
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
