@@ -369,9 +369,10 @@ you should place your code here."
 ;;   SPC p f - search in a project
 ;;
 ;; - Search in files
-;;   SPC s a [scope] - with ag, scope can be b (buffers), f (files in dir), p (project), etc
-;;   SPC s s - swoop - search for a word under cursor,
-;;             SPC s S (multi-swoop?), SPC s C-s - multi-swoop all
+;;   SPC s a [b,f,p] - search with ag in buffers, files, project
+;;   SPC s s - swwop, search for word under cursor
+;;             SPC s S - multi-swoop (?), SPC s C-s multi-swoop all
+;;   SPC s j - display symbols in a buffer
 ;;
 ;; - shell / ansi-term / eshell
 ;;   See https://www.masteringemacs.org/article/running-shells-in-emacs-overview
@@ -392,15 +393,21 @@ you should place your code here."
 ;;   g b or [	go back (same as clicking on [back] button)
 ;;   g f or ]	go forward (same as clicking on [forward] button)
 ;;   g h	go to help for symbol under point
-;;   o - activate ace-link to jump to any link
+;;   o - initiate ace link mode in help-mode and info-mode
 ;;
 ;; - Other
 ;;   SPC SPC - run Emacs command, also can run in command mode (:command-name)
-;;   SPC s w g - search in google
+;;   SPC s w g - search google, open browser
 ;;
 ;;   vim-surround - included
-;;   unimpared bindings - included
+;;   unimpared bindinds included
 ;;   comment / uncomment with gc - works
+;;
+;; - Text manipulation (align, sort, count, move up/down, google translate, etc) - SPC x
+;;
+;; - Text insert (lorem-ipsum, UUID) - SPC i
+;;
+;; - Zoom - SPC z x - buffer, SPC z f - whole frame
 ;;
 ;; - Terminology
 ;;   mode = state (insert mode = evil-insert-state)
@@ -420,25 +427,73 @@ you should place your code here."
 ;;   8	text between /* and */
 ;;   %	text between %
 ;;   \vert	text between \vert
+;;   ii, iI, iJ - indent object - inner indentation / above and indentation / above, below and indentation
 ;;
-;; - Text manipulation (align, remove trailing space, count words, sort,
-;;       upper/lower case, google translate, move up / down, ...)
-;;   SPC x
-;;
-;; - Insert text (lorem-ipsum, UUID) SPC i
-;;
-;; - Zoom
-;;   SPC z x - current buffer
-;;   SPC z f - whole frame (Emacs window)
-;;   += / - / 0 - increase / decrease / reset font size
-;;
-;; - Vimperator-like target selection (use as motion, after the operator)
+;; - Vimperator-like avy motions (use after operator)
 ;;   SPC j b	go back to the previous location (before the jump)
 ;;   SPC j j	initiate avy jump char
 ;;   SPC j w	initiate avy jump word
 ;;   SPC j l	initiate avy jump line
 ;;
-;; - SPC j - jumping / joining and splitting
+;; - Jumping, splitting / joining
+;;   SPC j ...
+;;
+;; - Expand region mode
+;;   SPC v - semi-automatically select the object
+;;
+;; - Narrow region
+;;   SPC n [f,p,r] - to function, visible page, selected text
+;;   SPC n w - show the whole buffer again
+;;
+;; - iedit - edit multiple occurrences
+;;     SPC s e	normal or visual -> iedit
+;;     e	expand-region -> 	iedit
+;;     ESC	iedit -> 	normal
+;;     C-g	iedit -> 	normal
+;;     fd	iedit -> 	normal
+;;     ESC	iedit-insert -> 	iedit
+;;     C-g	iedit-insert -> 	normal
+;;     fd	iedit-insert -> 	normal
+;;   --
+;;   In iedit state
+;;   iedit state inherits from normal state, the following key bindings are specific to iedit state.
+;;     ESC	go back to normal state
+;;     TAB	toggle current occurrence
+;;     0	go to the beginning of the current occurrence
+;;     $	go to the end of the current occurrence
+;;     #	prefix all occurrences with an increasing number (SPC u to choose the starting number).
+;;     A	go to the end of the current occurrence and switch to iedit-insert state
+;;     D	delete the occurrences
+;;     F	restrict the scope to the function
+;;     gg	go to first occurrence
+;;     G	go to last occurrence
+;;     I	go to the beginning of the current occurrence and switch to iedit-insert state
+;;     J	increase the editing scope by one line below
+;;     K	increase the editing scope by one line above
+;;     L	restrict the scope to the current line
+;;     n	go to next occurrence
+;;     N	go to previous occurrence
+;;     p	replace occurrences with last yanked (copied) text
+;;     S	(substitute) delete the occurrences and switch to iedit-insert state
+;;     V	toggle visibility of lines with no occurrence
+;;     U	Up-case the occurrences
+;;     C-U	down-case the occurrences
+;;     Note: 0, $, A and I have the default Vim behavior when used outside of an occurrence.
+;;     In iedit-insert state
+;;     Key Binding	Description
+;;     ESC	go back to iedit state
+;;     C-g	go back to normal state
+;;   ... - also can replace in multiple files
+;;
+;;   Renaming files in a directory
+;;     It is possible to batch rename files in a directory using wdired from an helm session:
+;;     - browse for a directory using SPC f f
+;;     - enter wdired with C-c C-e
+;;     - edit the file names and use C-c C-c to confirm the changes
+;;     - use C-c C-k to abort any changes
+;;
+;; - Helm
+;;   F3 - save results to regular buffer
 ;;
 ;; - Set the variable
 ;;   (setq variable value) ; Syntax
@@ -446,14 +501,6 @@ you should place your code here."
 ;;   (setq variable1 t ; True
 ;;         variable2 nil ; False
 ;;         variable3 '("A" "list" "of" "things"))
-;;
-;; - Browse packages
-;;   SPC a k	launch paradox
-;;   Important Note 1: Installing a new package from Paradox won't make it persistent.
-;;                     To install a package persistently you have to add it explicitly
-;;                     to a configuration layer.
-;;   Important Note 2: Don't update your packages from Paradox or package-list-packages
-;;                     because they don't support the rollback feature of Spacemacs.
 ;;
 ;; - Define the keybinding
 ;;   NOTE: SPC o and SPC m o are reserved for user keybindings
@@ -508,6 +555,14 @@ you should place your code here."
 ;;   evil-surround	port of vim-surround
 ;;   evil-visualstar	search for current selection with *
 ;;   NeoTree	mimic NERD Tree
+;;
+;; Search for packages - paradox
+;;   SPC a k	launch paradox
+;;   Important Note 1: Installing a new package from Paradox won't make it persistent.
+;;                     To install a package persistently you have to add it explicitly
+;;                     to a configuration layer.
+;;   Important Note 2: Don't update your packages from Paradox or package-list-packages
+;;                     because they don't support the rollback feature of Spacemacs.
 ;;
 ;; GUI Toggles
 ;;   SPC t 8	highlight any character past the 80th column
