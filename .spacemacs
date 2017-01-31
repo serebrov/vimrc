@@ -339,8 +339,17 @@ you should place your code here."
 ;; - Layouts (tabs)
 ;;   See develop branch docs -
 ;;      https://github.com/syl20bnr/spacemacs/blob/develop/doc/DOCUMENTATION.org#layouts-and-workspaces
-;;   SPC l <num> - switch to layout <num> or create new layout (enter the name in this case)
 ;;   layout name is displayed in the status string, bottom left
+;;   SPC l <num> - switch to layout <num> or create new layout (enter the name in this case)
+;;   SPC l s - save the layout to the file
+;;   SPC l L - load the layout
+;;   SPC l - layouts transient state, ? to show the commands
+;;
+;;   There are also workspaces - tabs inside the tab:
+;;   SPC l w 2 - create second workspace inside the current layout
+;;   (workspace number is displayed near the layout number, bottom left:
+;;    name | workspace | layout)
+;;   SPC l w - workspace transient state
 ;;
 ;; - Windows
 ;;   SPC w / - vert split, SPC w - - horizontal split-window-horizontally
@@ -348,6 +357,7 @@ you should place your code here."
 ;;   SPC b d - delete buffer without closing the split
 ;;   SPC w u - undo window operation (for example, restore splits after :only)
 ;;   SPC w . - window transient state (commands, related to windows)
+;;   SPC w b - focus mini-buffer (useful to get back to Helm if you accidentally left it)
 ;;
 ;; - Wrap / no wrap - SPC t l (toogle line truncation)
 ;;
@@ -358,19 +368,38 @@ you should place your code here."
 ;;   SPC f r - search in recent files
 ;;   SPC p f - search in a project
 ;;
+;; - Search in files
+;;   SPC s a [scope] - with ag, scope can be b (buffers), f (files in dir), p (project), etc
+;;   SPC s s - swoop - search for a word under cursor,
+;;             SPC s S (multi-swoop?), SPC s C-s - multi-swoop all
+;;
 ;; - shell / ansi-term / eshell
 ;;   See https://www.masteringemacs.org/article/running-shells-in-emacs-overview
+;;
+;; - Helm
+;;   M-SPC while in helm (for example, after SPC f f) - helm transient state
 ;;
 ;; - Help
 ;;   SPC h d - help describe ... (function, variable, key, etc)
 ;;   SPC <F1> - search for help
 ;;   SPC ? - searchable list of keybindings
-;;   SPC h SPC - list of layers (plugins)
+;;   SPC h SPC - list of layers (plugins), packages, toggles
+;;   SPC h k - top-level bindings
+;;   SPC h i - search in info pages
+;;   SPC h m - search in man pages
+;;
+;;   Navigation key bindings in help-mode:
+;;   g b or [	go back (same as clicking on [back] button)
+;;   g f or ]	go forward (same as clicking on [forward] button)
+;;   g h	go to help for symbol under point
+;;   o - activate ace-link to jump to any link
 ;;
 ;; - Other
 ;;   SPC SPC - run Emacs command, also can run in command mode (:command-name)
+;;   SPC s w g - search in google
 ;;
-;;   vim-surround - is included
+;;   vim-surround - included
+;;   unimpared bindings - included
 ;;   comment / uncomment with gc - works
 ;;
 ;; - Terminology
@@ -381,6 +410,36 @@ you should place your code here."
 ;;                like python-mode for python files
 ;;   layers - similar to vim plugins (layer can be composed of several packages)
 ;;
+;; - Sometimes evil mode disappears, to exit emacs: C-x C-c (but try 'jk' first)
+;;
+;; - Additional text objects are defined in Spacemacs:
+;;   a	an argument
+;;   g	the entire buffer
+;;   $	text between $
+;;   *	text between *
+;;   8	text between /* and */
+;;   %	text between %
+;;   \vert	text between \vert
+;;
+;; - Text manipulation (align, remove trailing space, count words, sort,
+;;       upper/lower case, google translate, move up / down, ...)
+;;   SPC x
+;;
+;; - Insert text (lorem-ipsum, UUID) SPC i
+;;
+;; - Zoom
+;;   SPC z x - current buffer
+;;   SPC z f - whole frame (Emacs window)
+;;   += / - / 0 - increase / decrease / reset font size
+;;
+;; - Vimperator-like target selection (use as motion, after the operator)
+;;   SPC j b	go back to the previous location (before the jump)
+;;   SPC j j	initiate avy jump char
+;;   SPC j w	initiate avy jump word
+;;   SPC j l	initiate avy jump line
+;;
+;; - SPC j - jumping / joining and splitting
+;;
 ;; - Set the variable
 ;;   (setq variable value) ; Syntax
 ;;   ;; Setting variables example
@@ -388,7 +447,16 @@ you should place your code here."
 ;;         variable2 nil ; False
 ;;         variable3 '("A" "list" "of" "things"))
 ;;
+;; - Browse packages
+;;   SPC a k	launch paradox
+;;   Important Note 1: Installing a new package from Paradox won't make it persistent.
+;;                     To install a package persistently you have to add it explicitly
+;;                     to a configuration layer.
+;;   Important Note 2: Don't update your packages from Paradox or package-list-packages
+;;                     because they don't support the rollback feature of Spacemacs.
+;;
 ;; - Define the keybinding
+;;   NOTE: SPC o and SPC m o are reserved for user keybindings
 ;;   (define-key map new-keybinding function) ; Syntax
 ;;   ;; Map H to go to the previous buffer in normal mode
 ;;   (define-key evil-normal-state-map (kbd "H") 'previous-buffer)
@@ -426,8 +494,56 @@ you should place your code here."
 
 ;; See http://www.gnu.org/software/emacs/manual/html_node/emacs/Hooks.html for
 ;; what this line means
-(add-hook 'before-save-hook 'clang-format-for-filetype)
+;; (add-hook 'before-save-hook 'clang-format-for-filetype)
+;;
+;; Included plugins:
+;;
+;;   evil-args	motions and text objects for arguments
+;;   evil-exchange	port of vim-exchange
+;;   evil-indent-textobject	add text object based on indentation level
+;;   evil-matchit	port of matchit.vim
+;;   evil-nerd-commenter	port of nerdcommenter
+;;   evil-numbers	like C-a and C-x in vim
+;;   evil-search-highlight-persist	emulation of hlsearch behavior
+;;   evil-surround	port of vim-surround
+;;   evil-visualstar	search for current selection with *
+;;   NeoTree	mimic NERD Tree
+;;
+;; GUI Toggles
+;;   SPC t 8	highlight any character past the 80th column
+;;   SPC t f	display the fill column (by default the fill column is set to 80)
+;;   SPC t h h	toggle highlight of the current line
+;;   SPC t h i	toggle highlight indentation levels
+;;   SPC t h c	toggle highlight indentation current column
+;;   SPC t i	toggle indentation guide at point
+;;   SPC t l	toggle truncate lines
+;;   SPC t L	toggle visual lines
+;;   SPC t n	toggle line numbers
+;;   SPC t v	toggle smooth scrolling
+;;
+;;   SPC T ~	display ~ in the fringe on empty lines
+;;   SPC T F	toggle frame fullscreen
+;;   SPC T f	toggle display of the fringe
+;;   SPC T m	toggle menu bar
+;;   SPC T M	toggle frame maximize
+;;   SPC T t	toggle tool bar
+;;   SPC T T	toggle frame transparency and enter transparency transient state
+;;   Note: These toggles are all available via the helm-spacemacs-help interface
+;;         (press SPC h SPC to display the helm-spacemacs-help buffer,
+;;          then enter 'SPC' to filter the information).
 
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(paradox-github-token t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
