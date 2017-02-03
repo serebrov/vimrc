@@ -31,6 +31,8 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     sql
+     php
      python
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -58,6 +60,39 @@ values."
      ;;     q - close
      ;;     ? - help
      git
+     ;; Requires GNU global, see ~/.i3/install-gnu-global-cscope.sh
+     ;; to create tags, CD into project dir and run-at-time
+     ;;   gtags --gtagslabel=pygments
+     ;; Keys:
+     ;; SPC m g c	create a tag database
+     ;; SPC m g f	jump to a file in tag database
+     ;; SPC m g g	jump to a location based on context
+     ;; SPC m g G	jump to a location based on context (open another window)
+     ;; SPC m g d	find definitions
+     ;; SPC m g i	present tags in current function only
+     ;; SPC m g l	jump to definitions in file
+     ;; SPC m g n	jump to next location in context stack
+     ;; SPC m g p	jump to previous location in context stack
+     ;; SPC m g r	find references
+     ;; SPC m g R	resume previous helm-gtags session
+     ;; SPC m g s	select any tag in a project retrieved by gtags
+     ;; SPC m g S	show stack of visited locations
+     ;; SPC m g u	manually update tag database
+     gtags
+     ;;
+     ;; pycscope for python code: see ~/.i3/install-gnu-global-cscope.sh
+     ;;  run SPC m g i to create the index
+     ;; Keys
+     ;; SPC m g c	find which functions are called by a function
+     ;; SPC m g C	find where a function is called
+     ;; SPC m g d	find global definition of a symbol
+     ;; SPC m g e	search regular expression
+     ;; SPC m g f	find a file
+     ;; SPC m g F	find which files include a file
+     ;; SPC m g i	create Cscope index
+     ;; SPC m g r	find references of a symbol
+     ;; SPC m g x	search text
+     ;; cscope
      ;; markdown
      ;; org
      ;; (shell :variables
@@ -74,7 +109,14 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '()
    ;; A list of packages that cannot be updated.
-   dotspacemacs-frozen-packages '()
+   dotspacemacs-frozen-packages
+   '(
+     ;; See https://github.com/tarao/evil-plugins
+     ;; provides C-R support for command-line mode-line
+     ;; also additional text objects and operators
+     ;; TODO: add more details
+     (evil-plugins :location (recipe :fetcher github :repo "tarao/evil-plugins"))
+     )
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages
    '(
@@ -324,7 +366,7 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq-default evil-escape-key-sequence "jk")
-  (setq-default evil-escape-key-sequence "kj")
+  ;(setq-default evil-escape-key-sequence "kj")
   (define-key evil-normal-state-map (kbd "C-h") 'windmove-left)
   (define-key evil-normal-state-map (kbd "C-l") 'windmove-right)
   (define-key evil-normal-state-map (kbd "C-j") 'windmove-down)
@@ -333,7 +375,27 @@ you should place your code here."
   (define-key evil-visual-state-map (kbd "C-k") 'split-window-vertically)
   (define-key evil-visual-state-map (kbd "C-l") 'split-window-right-and-focus)
   (define-key evil-visual-state-map (kbd "C-h") 'split-window-horizontally)
+  ;; don't create .#filename lock files
+  (setq create-lockfiles nil)
+  ;; Show directories first in vinegar (dired)
+  ;; BEWARE ! This option breaks ange-ftp!!! This option is not compatible with ‘ls’ on ftp.
+  (setq dired-listing-switches "-lXGh --group-directories-first")
+
+  ;; Persistent undo, see https://github.com/syl20bnr/spacemacs/issues/774
+  ;; may cause some problems though
+  (setq undo-tree-auto-save-history t
+        undo-tree-history-directory-alist
+        `(("." . ,(concat spacemacs-cache-directory "undo"))))
+  (unless (file-exists-p (concat spacemacs-cache-directory "undo"))
+    (make-directory (concat spacemacs-cache-directory "undo")))
   )
+  ;; Don't count underscore as word character.
+  ;; For python
+  (add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+  ;; For ruby
+  (add-hook 'ruby-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+  ;; For Javascript
+  (add-hook 'js2-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 ;;
 ;; Usage
 ;; - Layouts (tabs)
@@ -350,6 +412,8 @@ you should place your code here."
 ;;   (workspace number is displayed near the layout number, bottom left:
 ;;    name | workspace | layout)
 ;;   SPC l w - workspace transient state
+;;
+;; - Flycheck - SPC e l - open error list (check also other keys under SPC e)
 ;;
 ;; - Windows
 ;;   SPC w / - vert split, SPC w - - horizontal split-window-horizontally
