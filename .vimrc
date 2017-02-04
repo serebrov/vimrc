@@ -439,6 +439,7 @@
   Plug 'romainl/vim-qlist'
   " Having the quickfix list execute :EnMasse to edit the
   " list content and back-sync edits to source files
+  " Simlar: https://github.com/thinca/vim-qfreplace
   Plug 'Wolfy87/vim-enmasse'
   " find and replace occurences in many buffers being aware of the context
   " :Swoop pattern - run for singe buffer
