@@ -31,6 +31,8 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     csv
+     javascript
      sql
      php
      python
@@ -123,7 +125,7 @@ values."
      ;; this package emulates vim behavior to persist search highlight
      ;; results, we remove it here to automatically clear search highlight
      ;; when it is not needed (you stop navigating search results)
-     evil-search-highlight-persist
+     ;; evil-search-highlight-persist
       )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -383,11 +385,12 @@ you should place your code here."
 
   ;; Persistent undo, see https://github.com/syl20bnr/spacemacs/issues/774
   ;; may cause some problems though
-  (setq undo-tree-auto-save-history t
-        undo-tree-history-directory-alist
-        `(("." . ,(concat spacemacs-cache-directory "undo"))))
-  (unless (file-exists-p (concat spacemacs-cache-directory "undo"))
-    (make-directory (concat spacemacs-cache-directory "undo")))
+  ;; (setq undo-tree-auto-save-history t
+  ;;       undo-tree-history-directory-alist
+  ;;       `(("." . ,(concat spacemacs-cache-directory "undo"))))
+  ;; (unless (file-exists-p (concat spacemacs-cache-directory "undo"))
+  ;;   (make-directory (concat spacemacs-cache-directory "undo")))
+
   )
   ;; Don't count underscore as word character.
   ;; For python
@@ -396,6 +399,51 @@ you should place your code here."
   (add-hook 'ruby-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   ;; For Javascript
   (add-hook 'js2-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+;;
+;; TODO / what doesn't work:
+;; - something similar to dbext
+;;   check SPC m ' in sql file - how to pre-configure connections?
+;; - how to diff two buffers?
+;; - how to search / replace in files (similar to CtrlSF / vim-swoop or at least quick fix
+;;   editing as in vim-enmasse), is there something similar to ctrlsf?
+;;   - check moccur
+;;   - check https://github.com/ShingoFukuyama/helm-swoop, it can swoop across multiple buffers
+;;     although it usues separate list of results,
+;;     SPC s C-s opens search and you can navigate the list with preview, but how to switch to the
+;;     buffer at the top without closing the list? or how to do mass-replace with it?
+;;   - check iedit mode
+;;   - in general - wouldn't it be better to have ctrlsf-like UI for all the tasks that are
+;;     covered by helm / vim unite / fzf / etc - instead of having a kind of a list which is
+;;     hard to havigate and easy to close accidentally, we could just have a regular buffer
+;;     with text + special keybindings
+;;     another example of such UI is magit (and vim-magit)
+;; - how to use help?
+;;   there are some key-bindings to access help (see below), but I still fail to find
+;;   the topics I am interested in, so just google for things
+;; - check emacs as merge tool for git
+;; - persistent undo history (to be able to undo or g; after you restart emacs)
+;; - C-F in command line mode / search mode to show command buffer (same as shown with q: and q/)
+;; - repeat indent in visual mode (< or >) with dot
+;; - go to tag with C-] - gtags work, but the key is not binded, do I need to have ctags tags for
+;;   that? or just re-bind the C-]?
+;; - do I need gtags or cscope?
+;; - what's the (practical) difference between helm and ivy?
+;; - check org mode
+;; - what are real benefits over vim?
+;;   shell (VimShell in (n)vim works quite good, nvim's term still sucks - no editing, hard to use)
+;;   additional modes are auto installed
+;; - status line - how to display file path (now there is only a file name)
+;;
+;;
+;; DONE:
+;; - C-R C-W in command mode to insert word under cursor (and other C-R stuff)
+;;   solved with https://github.com/tarao/evil-plugins
+;; - Navigation with w in undersored_word - jumped to underscore
+;;   solved with add-hook for python mode (see above), but probably
+;;   there should be the way to do that globally
+;; - Show dirs first in vinegar (dired)
+;;   solved by configuring dired-listing-switches
+;; - how to :copen (show quickfix list) - for flycheck, SPC e l
 ;;
 ;; Usage
 ;; - Layouts (tabs)
@@ -482,6 +530,14 @@ you should place your code here."
 ;;   layers - similar to vim plugins (layer can be composed of several packages)
 ;;
 ;; - Sometimes evil mode disappears, to exit emacs: C-x C-c (but try 'jk' first)
+;;   Other Emacs keys:
+;;     C-g (that is Control and g at the same time) to cancel prompts.
+;;     C-x k to kill (close) a buffer. Automatically opened windows are usually closeable with “q”.
+;;     C-x o (that’s an “o” not a zero) to rotate between window
+;;     C-x 2 to create an horizontal split (window)
+;;     C-x 3 to create a vertical split
+;;     M-x shows the “minibuffer” where you can call Emacs functions.
+;;     C-y: yank/paste. The only way to paste on the modeline even when you’re using Evil.
 ;;
 ;; - Additional text objects are defined in Spacemacs:
 ;;   a	an argument
