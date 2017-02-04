@@ -433,6 +433,17 @@ you should place your code here."
 ;;   shell (VimShell in (n)vim works quite good, nvim's term still sucks - no editing, hard to use)
 ;;   additional modes are auto installed
 ;; - status line - how to display file path (now there is only a file name)
+;; - interactive debugger (python, node, php)?
+;; - check ibuffer: 
+;;   - https://www.emacswiki.org/emacs/IbufferMode
+;;   - http://martinowen.net/blog/2010/02/03/tips-for-emacs-ibuffer.html
+;;   seems like this is a nice way to explore open buffers
+;; - autosave files - should work according to the settings above
+;;   (see auto-save), but I've noticed that sometimes files don't get saved automatically.
+;; - http client, check http://spacemacs.org/layers/restclient/README.html
+;; - snippets? check https://github.com/joaotavora/yasnippet
+;; - check https://github.com/tarao/evil-plugins
+;;   it is installed because it makes :C-R work, but there are more things than that.
 ;;
 ;;
 ;; DONE:
@@ -444,6 +455,8 @@ you should place your code here."
 ;; - Show dirs first in vinegar (dired)
 ;;   solved by configuring dired-listing-switches
 ;; - how to :copen (show quickfix list) - for flycheck, SPC e l
+;; - how to use tabs? - use layouts, like SPC l 2 to create or switch to 2nd tab
+;;   there is also `evil-tabs` package which provides :tabnew, gt
 ;;
 ;; Usage
 ;; - Layouts (tabs)
@@ -460,6 +473,8 @@ you should place your code here."
 ;;   (workspace number is displayed near the layout number, bottom left:
 ;;    name | workspace | layout)
 ;;   SPC l w - workspace transient state
+;;
+;; - Select last pasted text: C-x C-x
 ;;
 ;; - Flycheck - SPC e l - open error list (check also other keys under SPC e)
 ;;
@@ -531,6 +546,7 @@ you should place your code here."
 ;;
 ;; - Sometimes evil mode disappears, to exit emacs: C-x C-c (but try 'jk' first)
 ;;   Other Emacs keys:
+;;     M-x - enter and execute command (like : mode in vim)
 ;;     C-g (that is Control and g at the same time) to cancel prompts.
 ;;     C-x k to kill (close) a buffer. Automatically opened windows are usually closeable with “q”.
 ;;     C-x o (that’s an “o” not a zero) to rotate between window
