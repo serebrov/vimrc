@@ -557,7 +557,7 @@
   "          pip install mypy-lang - python3 static type checks
   "          pip install vulture - dead code checks
   "          pip install frosted - pyflakes re-work
-  "          piip install pylint
+  "          pip install pylint
   " Note: pylint also checks docstrings + gives a lot of other notices, not
   " always useful
   " The pylint behavior can be modified via pylintrc (place into the project
