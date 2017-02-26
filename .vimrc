@@ -170,8 +170,34 @@
   " Issue is not stable, it is often reproduced when you start work with vim,
   " but then it disappears and it start work normally, not sure why
   " So for now keep ctrlp enabled for main mappings
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
+  " Files [PATH]    Files (similar to :FZF)
+  " GFiles [OPTS]   Git files (git ls-files)
+  " GFiles? Git files (git status)
+  " Buffers Open buffers
+  " Colors  Color schemes
+  " Ag [PATTERN]    ag search result (ALT-A to select all, ALT-D to deselect all)
+  " Lines [QUERY]   Lines in loaded buffers
+  " BLines [QUERY]  Lines in the current buffer
+  " Tags [QUERY]    Tags in the project (ctags -R)
+  " BTags [QUERY]   Tags in the current buffer
+  " Marks   Marks
+  " Windows Windows
+  " Locate PATTERN  locate command output
+  " History v:oldfiles and open buffers
+  " History:    Command history
+  " History/    Search history
+  " Snippets    Snippets (UltiSnips)
+  " Commits Git commits (requires fugitive.vim)
+  " BCommits    Git commits for the current buffer
+  " Commands    Commands
+  " Maps    Normal mode mappings
+  " Helptags    Help tags 1
+  " Filetypes   File types
   noremap <Leader>f :FZF<CR>
+  noremap <Leader>t :Tags<CR>
+  noremap <Leader>a :Ag<CR>
   " " See also: https://github.com/junegunn/fzf/wiki/examples
   " " See also: https://github.com/D630/fzf-contrib
   " " Similar: https://github.com/garybernhardt/selecta
