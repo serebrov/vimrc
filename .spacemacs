@@ -362,13 +362,13 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
+  This function is called at the very end of Spacemacs initialization after
+  layers configuration.
+  This is the place where most of your configurations should be done. Unless it is
+  explicitly specified that a variable should be set before a package is loaded,
+  you should place your code here."
   (setq-default evil-escape-key-sequence "jk")
-  ;(setq-default evil-escape-key-sequence "kj")
+                                        ;(setq-default evil-escape-key-sequence "kj")
   (define-key evil-normal-state-map (kbd "C-h") 'windmove-left)
   (define-key evil-normal-state-map (kbd "C-l") 'windmove-right)
   (define-key evil-normal-state-map (kbd "C-j") 'windmove-down)
@@ -391,7 +391,6 @@ you should place your code here."
   ;; (unless (file-exists-p (concat spacemacs-cache-directory "undo"))
   ;;   (make-directory (concat spacemacs-cache-directory "undo")))
 
-  )
   ;; Don't count underscore as word character.
   ;; For python
   (add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
@@ -399,7 +398,13 @@ you should place your code here."
   (add-hook 'ruby-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   ;; For Javascript
   (add-hook 'js2-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
-;;
+
+  ;; Enable aggresive indent
+  ;; See http://emacsredux.com/blog/2016/02/07/auto-indent-your-code-with-aggressive-indent-mode/
+  ;; and https://github.com/Malabarba/aggressive-indent-mode
+  (global-aggressive-indent-mode 1)
+  )
+
 ;; TODO / what doesn't work:
 ;; - something similar to dbext
 ;;   check SPC m ' in sql file - how to pre-configure connections?
@@ -407,6 +412,7 @@ you should place your code here."
 ;; - how to search / replace in files (similar to CtrlSF / vim-swoop or at least quick fix
 ;;   editing as in vim-enmasse), is there something similar to ctrlsf?
 ;;   - check moccur
+;;   - check https://www.emacswiki.org/emacs/SearchBuffers
 ;;   - check https://github.com/ShingoFukuyama/helm-swoop, it can swoop across multiple buffers
 ;;     although it usues separate list of results,
 ;;     SPC s C-s opens search and you can navigate the list with preview, but how to switch to the
@@ -427,6 +433,8 @@ you should place your code here."
 ;; - go to tag with C-] - gtags work, but the key is not binded, do I need to have ctags tags for
 ;;   that? or just re-bind the C-]?
 ;; - do I need gtags or cscope?
+;; - check helm http://tuhdo.github.io/helm-intro.html
+;;              http://tuhdo.github.io/helm-projectile.html
 ;; - what's the (practical) difference between helm and ivy?
 ;; - check org mode
 ;; - what are real benefits over vim?
@@ -738,3 +746,90 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; Emacs lisp
+;; ;; https://learnxinyminutes.com/docs/elisp/
+;; 
+;; ;; C-j after the sexp to run it in the buffer
+;; ;; C-xC-e to execute and display the result in mini-buffer at the bottom
+;; (+ 2 2)
+;; 4
+;; (+ 3 (+ 2 1))
+;; 6
+;; (setq my-var "test")
+;; "test"
+;; 
+;; (insert "hello" " world! " my-var)
+;; hello world! testnil
+;; 
+;; ;; Need to evaluate function body before using it
+;; (defun hello () (insert "Hello " my-var))
+;; (hello)
+;; 
+;; (defun hello(name) (insert "hello " name "!\n"))
+;; (hello "yo")
+;; 
+;; (switch-to-buffer-other-window "*test*")
+;; 
+;; ;; combine sexps with progn
+;; (progn
+;;   (switch-to-buffer-other-window "*test*")
+;;   (erase-buffer)
+;;   (hello "you"))
+;; 
+;; ;; `let` defines the local variable and it also works as `progn` 
+;; (let ((my-name "bugs"))
+;;   (switch-to-buffer-other-window "*test*")
+;;   (erase-buffer)
+;;   (hello my-name)
+;;   (other-window 1))
+;; 
+;; (format "Hello %s!\n" "John")
+;; 
+;; (defun greeting (name)
+;;   (let ((your-name "Jack"))
+;;     (insert (format "Hello %s! I am %s."
+;;                     name
+;;                     your-name)
+;;             )))
+;; (greeting "John")
+;; 
+;; (read-from-minibuffer "Enter your name: ")
+;; 
+;; (defun greeting (name)
+;;   (let ((your-name (read-from-minibuffer "Enter your name: ")))
+;;     (switch-to-buffer-other-window "*test*")
+;;     (erase-buffer)
+;;     (insert (format "Hello %s! I am %s."
+;;                     name
+;;                     your-name)
+;;             )))
+;; (greeting "John")
+;; 
+;; (setq list-of-names '("Sarah" "Chloe" "Mathilde"))
+;; ;; first elem
+;; (car list-of-names)
+;; ;; tail of the list after first elem
+;; (cdr list-of-names)
+;; ;; add elem at the beginning - it modifies the list
+;; (push "Moo" list-of-names)
+;; ;; call 'hello' for each element
+;; (mapcar 'hello list-of-names)
+;; 
+;; (defun greeting ()
+;;   (switch-to-buffer-other-window "*test*")
+;;   (erase-buffer)
+;;   (mapcar 'hello list-of-names)
+;;   (other-window 1))
+;; 
+;; (greeting)
+;; 
+;; (defun boldify-names ()
+;;   (switch-to-buffer-other-window "*test*")
+;;   (goto-char (point-min))
+;;   (while (re-search-forward "hello \\(.+\\)!" nil 't)
+;;     (add-text-properties (match-beginning 1)
+;;                          (match-end 1)
+;;                          (list 'face 'bold)))
+;;   (other-window 1))
+;; (boldify-names)
