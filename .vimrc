@@ -49,6 +49,36 @@
     Plug 'jacoborus/tender'
 
 
+  " Folding
+    set foldenable
+    " set foldopen=block,hor,mark,percent,quickfix,tag " what movements open folds
+    " Don't autofold anything (but I can still fold manually)
+    " set foldlevel=100
+    " Autofold everything:
+    set foldlevel=0
+
+    " Generic folding mechanism and motion based on indentation.
+    " Fold anything that is structured into indented blocks.
+    " Quickly navigate between blocks.
+    Plug 'pseewald/vim-anyfold'
+    let anyfold_activate=1
+    let anyfold_fold_comments=1
+    " Vim's fold commands:
+    " zf{motion} or {Visual}zf - create a manual fold
+    " za - open/close current fold
+    " zR - open all folds
+    " zM - close all folds
+    "
+    " Navigate between blocks:
+    " [[ / ]] - beginning / end of the current fold
+    " ]k / [j - end of prev block / beginning of the next block
+    "
+    " Unfolds the line in which the cursor is located when opening a file
+    autocmd User anyfoldLoaded normal zv
+
+    " Cycle open and closed folds and nested folds - <CR> / <BS>
+    Plug 'arecarn/vim-fold-cycle'
+
   """"""" Search / highlight
   " On search automatically prints "At match #N out of M matches".
   Plug 'henrik/vim-indexed-search'
