@@ -611,21 +611,21 @@
     let g:syntastic_python_checkers = ['python', 'flake8']
   endif
 
-  Plug 'davidhalter/jedi-vim'
-  " fetching can take a long time causing the timeout
-  " to manually install it
-  "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
   if has('nvim')
-    " requires
-    " sudo pip3 install neovim
-    " after install run
-    " :UpdateRemotePlugins
+    " " requires
+    " " sudo pip3 install neovim
+    " " after install run
+    " " :UpdateRemotePlugins
     let g:deoplete#enable_at_startup = 1
     Plug 'Shougo/deoplete.nvim'
     Plug 'zchee/deoplete-jedi'
     " Preview for substitute
     set inccommand=nosplit
   else
+    Plug 'davidhalter/jedi-vim'
+    " fetching can take a long time causing the timeout
+    " to manually install it
+    "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
   endif
   Plug 'UltiSnips'
