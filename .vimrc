@@ -379,6 +379,17 @@
   """""" Motions / normal mode commands
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
   Plug 'bkad/CamelCaseMotion'
+  " Default w motion:
+  " <a href="http://www.vim.org/">www.vim.org</a>
+  "  # #   # #   #  #  ##  ##  #  #  ##  ##  # #
+  " Smart word (skip non-letters between words):
+  " <a href="http://www.vim.org/">www.vim.org</a>
+  "  # #     #      #   #   #     #   #   #    #
+  Plug 'kana/vim-smartword'
+  map w  <Plug>(smartword-w)
+  map b  <Plug>(smartword-b)
+  map e  <Plug>(smartword-e)
+  map ge  <Plug>(smartword-ge)
 
   " gS / gJ to split / join multiline / single lines forms of code
   Plug 'AndrewRadev/splitjoin.vim'
