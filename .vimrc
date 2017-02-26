@@ -1111,11 +1111,6 @@ EOF
 " }}}
 
 " Folding {{{
-  " zf{motion} or {Visual}zf - create a manual fold
-  " za - open/close current fold
-  " zR - open all folds
-  " zM - close all folds
-  "
   " " Make zO recursively open whatever fold we're in, even if it's partially open.
   " nnoremap zO zczO
   "
@@ -1130,38 +1125,6 @@ EOF
   " "
   " " I use :sus for the rare times I want to actually background Vim.
   " nnoremap <c-z> mzzMzvzz15<c-e>`z:Pulse<cr>
-
-  " enable folding by marker for vimrc
-  " augroup fold_vim
-  "   autocmd!
-  "   autocmd FileType vim setlocal foldmethod=marker
-  " augroup END
-
-  " set foldenable              " Turn on folding
-  " set foldmarker={,}          " Fold C style code (only use this as default
-  "                             " if you use a high foldlevel)
-  " set foldmethod=marker       " Fold on the marker
-  " set foldlevel=100           " Don't autofold anything (but I can still
-  "                             " fold manually)
-  " set foldopen=block,hor,mark,percent,quickfix,tag " what movements open folds
-
-  " " from https://github.com/sjl/dotfiles/blob/master/vim/.vimrc
-  " function! MyFoldText()
-  "     let line = getline(v:foldstart)
-
-  "     let nucolwidth = &fdc + &number * &numberwidth
-  "     let windowwidth = winwidth(0) - nucolwidth - 3
-  "     let foldedlinecount = v:foldend - v:foldstart
-
-  "     " expand tabs into spaces
-  "     let onetab = strpart(' ', 0, &tabstop)
-  "     let line = substitute(line, '\t', onetab, 'g')
-
-  "     let line = strpart(line, 0, windowwidth - 2 - len(foldedlinecount))
-  "     let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-  "     return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
-  " endfunction
-  " set foldtext=MyFoldText()
 
 " }}}
 
