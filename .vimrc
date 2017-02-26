@@ -20,32 +20,34 @@
   call plug#begin('~/.vim/plugged')
 
   """""" UI
-  " sensible defaults
-  Plug 'tpope/vim-sensible'
-  " Hard mode - no jjjjj and kkkkk, :HardTimeToggle to toggle
-  " let g:hardtime_allow_different_key = 1
-  " let g:list_of_normal_keys = ["h", "j", "k", "l"]
-  " let g:list_of_visual_keys = ["h", "j", "k", "l"]
-  " Plug 'takac/vim-hardtime'
-  " autocmd BufEnter * HardTimeOn
-  " auto adjust tab/space settings based on current file
-  Plug 'tpope/vim-sleuth'
+    " sensible defaults
+    Plug 'tpope/vim-sensible'
+    " Hard mode - no jjjjj and kkkkk, :HardTimeToggle to toggle
+    " let g:hardtime_allow_different_key = 1
+    " let g:list_of_normal_keys = ["h", "j", "k", "l"]
+    " let g:list_of_visual_keys = ["h", "j", "k", "l"]
+    " Plug 'takac/vim-hardtime'
+    " autocmd BufEnter * HardTimeOn
+    " auto adjust tab/space settings based on current file
+    Plug 'tpope/vim-sleuth'
 
-  if has('nvim')
-    Plug 'frankier/neovim-colors-solarized-truecolor-only'
-  else
-    Plug 'altercation/vim-colors-solarized'
-  endif
-  Plug 'notpratheek/vim-sol'
-  Plug 'romainl/Apprentice'
-  Plug 'romainl/flattened'
-  Plug 'morhetz/gruvbox'
-  Plug 'chriskempson/base16-vim'
-  Plug 'jacoborus/tender'
+    " Gundo.vim is Vim plugin to visualize your Vim undo tree.
+    " Plug 'sjl/gundo.vim'
+    " Similar: Plug 'mbbill/undotree'
 
-  " Gundo.vim is Vim plugin to visualize your Vim undo tree.
-  " Plug 'sjl/gundo.vim'
-  " Similar: Plug 'mbbill/undotree'
+  " Color schemes
+    if has('nvim')
+      Plug 'frankier/neovim-colors-solarized-truecolor-only'
+    else
+      Plug 'altercation/vim-colors-solarized'
+    endif
+    Plug 'notpratheek/vim-sol'
+    Plug 'romainl/Apprentice'
+    Plug 'romainl/flattened'
+    Plug 'morhetz/gruvbox'
+    Plug 'chriskempson/base16-vim'
+    Plug 'jacoborus/tender'
+
 
   """"""" Search / highlight
   " On search automatically prints "At match #N out of M matches".
