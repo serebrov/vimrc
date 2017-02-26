@@ -429,7 +429,8 @@
   " :Qargs -> put files from the quickfix to the :args, so can then use :argdo
   " :Qargs | argdo %s/findme/replacement/gc | update
   " See also 'nelstrom/vim-qargs' and QFdo from Vimple (below)
-  Plug 'wincent/ferret'
+  " Plug 'wincent/ferret'
+
   " Improvements for [I / ]I / [D / ]D - copy their output and
   " put into the quickfix list instead of non-usable window
   " [I / ]I - search for word under cursor in the current file
