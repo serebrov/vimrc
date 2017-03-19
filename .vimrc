@@ -22,12 +22,41 @@
   """""" UI
     " sensible defaults
     Plug 'tpope/vim-sensible'
+    " This plugin just disables h/j/k/l, arrows, +/-, gj/gk/gl/gh, PgUp/PgDown
+    " Plug 'wikitopian/hardmode'
+    " autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+    "
+    " This plugin disables repeated use of h/j/k/l and others
+    " (Stopped working in nvim)
     " Hard mode - no jjjjj and kkkkk, :HardTimeToggle to toggle
     " let g:hardtime_allow_different_key = 1
     " let g:list_of_normal_keys = ["h", "j", "k", "l"]
     " let g:list_of_visual_keys = ["h", "j", "k", "l"]
     " Plug 'takac/vim-hardtime'
     " autocmd BufEnter * HardTimeOn
+    "
+    " This one, like vim-hardtime, only disables repeated use.
+    " Disable repeated character-wise movements
+    " Use: word motions: w, b, e, ge / W, B, E, gE
+    "      char search: f, t, F, T and ; / ,
+    "      line start/end: 0, $, ^ (non-blank start)
+    "      ex commands: :8,15d - delete lines
+    "                   :8,15co . - copy lines
+    "                   :-5,-3co . with relative numbers
+    "                   :8,15m . - move lines
+    "      text objects: Vi{ to select a block in {}
+    "      search: /forward or ?backward
+    "      insert at start/end: I / A
+    "      use by-block movements: { / }, [[ / ]], etc
+    "      change list: g; / g, or gi to insert at last change position
+    "      jump history: C-O / C-I
+    "      matching pair jump: %
+    "      line jumps: 50G to line 50 or 20j to 20 lines down
+    " See: http://vimcasts.org/blog/2013/02/habit-breaking-habit-making/
+    "      http://stackoverflow.com/questions/37059399/vim-motion-without-jk-and-hardmode-installed
+    "      https://pbrisbin.com/posts/hard_mode/
+    "      :help motion.txt
+    Plug 'kbarrette/mediummode'
     " auto adjust tab/space settings based on current file
     Plug 'tpope/vim-sleuth'
 
