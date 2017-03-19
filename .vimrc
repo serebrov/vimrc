@@ -290,6 +290,12 @@
   Plug 'Shougo/vimproc'
   Plug 'Shougo/vimshell.vim'
 
+
+  " :ConqueTerm bash
+  " :ConqueTerm mysql -h localhost -u joe -p sock_collection
+  " :ConqueTerm ipython
+  " Note: to open file use 'gf'
+  Plug 'lrvick/Conque-Shell'
   Plug 'Shougo/neomru.vim'
   let g:neomru#file_mru_path = $HOME . '/.vim/tmp/cache/neomru/file'
   let g:neomru#directory_mru_path = $HOME . '/.vim/tmp/cache/neomru/directory'
