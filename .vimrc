@@ -582,6 +582,7 @@
   " It is possible to edit the results (no inserts), save with :w,
   " undo with `u` and `p` to open file preview.
   Plug 'dyng/ctrlsf.vim'
+  let g:ctrlsf_auto_close = 0
 
   " :PP: Pretty print. With no argument, acts as a REPL.
   " :Runtime: Reload runtime files. Like :runtime!, but it unlets any include guards first.
