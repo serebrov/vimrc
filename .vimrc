@@ -470,11 +470,6 @@
   "                       ina, ana, Ina, Ana, etc - next/last argument
   Plug 'wellle/targets.vim'
   " Similar: Plug 'paradigm/TextObjectify'
-  .
-  " turns [count]j and [count]k motions into jumps
-  " so you can use <C-o> to get back
-  " very handy in conjunction with Vim's relativenumber option.
-  Plug 'buztard/vim-rel-jump'
 
   " Required by vim-surround
   Plug 'tpope/vim-repeat'
