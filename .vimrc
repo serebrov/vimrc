@@ -701,7 +701,7 @@
   " }
   " <Leader>tt to run the request
   " Similar: Plug 'nicwest/QQ.vim'
-  Plug 'aquach/vim-http-client'
+  " Plug 'aquach/vim-http-client'
 
   """""" Db
   " see https://mutelight.org/dbext-the-last-sql-client-youll-ever-need
