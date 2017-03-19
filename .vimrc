@@ -296,6 +296,32 @@
   " :ConqueTerm ipython
   " Note: to open file use 'gf'
   Plug 'lrvick/Conque-Shell'
+
+  if has('nvim')
+    " terminal scrollback buffer size
+    " set scrollback=100000
+
+    " :T <command> - open terminal with command
+    " :TREPLSend: sends the current line or the selection to a REPL in a terminal.
+    " :TREPLSendFile: sends the current file to a REPL in a terminal.
+    Plug 'kassio/neoterm'
+    let g:neoterm_position = 'horizontal'
+    let g:neoterm_automap_keys = ',tt'
+
+    nnoremap <silent> ,tsf :TREPLSendFile<cr>
+    nnoremap <silent> ,tsl<f9> :TREPLSendLine<cr>
+    vnoremap <silent> ,tss :TREPLSendSelection<cr>
+    " Useful maps
+    " hide/close terminal
+    nnoremap <silent> ,th :call neoterm#close()<cr>
+    " clear terminal
+    nnoremap <silent> ,tl :call neoterm#clear()<cr>
+    " kills the current job (send a <c-c>)
+    nnoremap <silent> ,tc :call neoterm#kill()<cr>
+    " Git commands
+    command! -nargs=+ Tg :T git <args>
+  endif
+
   Plug 'Shougo/neomru.vim'
   let g:neomru#file_mru_path = $HOME . '/.vim/tmp/cache/neomru/file'
   let g:neomru#directory_mru_path = $HOME . '/.vim/tmp/cache/neomru/directory'
