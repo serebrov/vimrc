@@ -751,6 +751,11 @@
   "   structure in PostgreSQL
   Plug 'vim-scripts/dbext.vim'
 
+  " [range]SQLUFormatter - format SQL
+  Plug 'vim-scripts/SQLUtilities'
+  " This is SQLUtitiles dependency
+  Plug 'vim-scripts/Align'
+
   """""" Markdown
   Plug 'tpope/vim-markdown'
   " Markup files preview: <Leader>P
