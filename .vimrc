@@ -1137,6 +1137,7 @@ EOF
   "set scrolloff=10          " Keep 10 lines (top/bottom) for scope
   set scrolloff=999          " Work line is always in the middle
                             " alternative: zz - centers current line
+  set sidescroll=1           " smooth horizontal scrolling
   set sidescrolloff=10       " Keep 5 lines at the size
 
   set shortmess=aOstT        " shortens messages to avoid
