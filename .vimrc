@@ -785,6 +785,10 @@
 
   " [range]SQLUFormatter - format SQL
   Plug 'vim-scripts/SQLUtilities'
+  " Upper-case SQL keywords
+  let g:sqlutil_keyword_case = '\U'
+  " Align comma at the before the column name
+  let g:sqlutil_align_comma = 1
   " This is SQLUtitiles dependency
   Plug 'vim-scripts/Align'
 
