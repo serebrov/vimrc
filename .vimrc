@@ -1625,21 +1625,16 @@ EOF
 " }}}
 
 " Save and launch vim {{{
-  " default: blank,buffers,curdir,folds,help,options,tabpages,winsize"
-  set sessionoptions=buffers,curdir,help,winsize " localoptions,
   " default: '100,<50,s10,h
   " NOTE: ! is necessary in order to be able to restore last session
   set viminfo=!,'100,/50,:50,<50,@50,h,s10
 
   noremap <Leader>s :SessionList<CR>
-
+  " default: blank,buffers,curdir,folds,help,options,tabpages,winsize"
+  set sessionoptions=buffers,curdir,help,winsize " localoptions,
   let g:debug_tabsession = 0
   let g:debug_tabsession_file = '~/vim.tabsession.log'
   let g:tabsession_load_after = 'LoadLocalVimrc()'
-
-  function! TestEcho(test)
-    echom 'Test: ' . a:test
-  endfunction
 
   function! LoadLocalVimrc()
     :Rooter
