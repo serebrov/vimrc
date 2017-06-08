@@ -56,7 +56,7 @@
     "      http://stackoverflow.com/questions/37059399/vim-motion-without-jk-and-hardmode-installed
     "      https://pbrisbin.com/posts/hard_mode/
     "      :help motion.txt
-    Plug 'kbarrette/mediummode'
+    " Plug 'kbarrette/mediummode'
     " auto adjust tab/space settings based on current file
     Plug 'tpope/vim-sleuth'
 
