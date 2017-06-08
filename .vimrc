@@ -227,6 +227,9 @@
   " Filetypes   File types
   noremap <Leader>f :FZF<CR>
   noremap <Leader>t :Tags<CR>
+  inoremap <Leader>l :Lines<CR>
+  " Complete lines with FZF
+  imap <c-x><c-l> <plug>(fzf-complete-line)
   noremap <Leader>a :Ag<CR>
   " " See also: https://github.com/junegunn/fzf/wiki/examples
   " " See also: https://github.com/D630/fzf-contrib
