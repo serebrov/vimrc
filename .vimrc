@@ -460,6 +460,8 @@
 
   " gS / gJ to split / join multiline / single lines forms of code
   Plug 'AndrewRadev/splitjoin.vim'
+  " :Deleft or `dh` (by default) to remove surrounding parent block.
+  Plug 'AndrewRadev/deleft.vim'
 
   " :SidewaysLeft and :SidewaysRight - move the item under the cursor left or right, where an "item" is defined by a delimiter
   Plug 'AndrewRadev/sideways.vim'
