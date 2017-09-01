@@ -446,6 +446,7 @@
   """""" Motions / normal mode commands
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
   Plug 'bkad/CamelCaseMotion'
+  " call camelcasemotion#CreateMotionMappings(',')
   " Default w motion:
   " <a href="http://www.vim.org/">www.vim.org</a>
   "  # #   # #   #  #  ##  ##  #  #  ##  ##  # #
