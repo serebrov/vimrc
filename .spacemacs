@@ -109,7 +109,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages'()
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages
    '(
@@ -126,7 +126,7 @@ values."
      ;; results, we remove it here to automatically clear search highlight
      ;; when it is not needed (you stop navigating search results)
      ;; evil-search-highlight-persist
-      )
+     )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -465,6 +465,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 ;; - how to :copen (show quickfix list) - for flycheck, SPC e l
 ;; - how to use tabs? - use layouts, like SPC l 2 to create or switch to 2nd tab
 ;;   there is also `evil-tabs` package which provides :tabnew, gt
+;; - how to reload config? SPC f e R
 ;;
 ;; Usage
 ;; - Layouts (tabs)
