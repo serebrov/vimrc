@@ -1710,7 +1710,7 @@ EOF
     endif
   endfunction
 
-  autocmd MyAutoCmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml autocmd MyAutoCmd BufWritePre <buffer>
+  autocmd MyAutoCmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml,sql autocmd MyAutoCmd BufWritePre <buffer>
     \ call CleanTrails()
 
   " When editing a file, always jump to the last known cursor position.
