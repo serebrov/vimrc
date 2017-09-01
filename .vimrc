@@ -64,6 +64,9 @@
     " Plug 'sjl/gundo.vim'
     " Similar: Plug 'mbbill/undotree'
 
+    " <leader>ww in first window and then <leader>ww in second to swap them.
+    Plug 'wesq3/vim-windowswap'
+
   " Color schemes
     if has('nvim')
       Plug 'frankier/neovim-colors-solarized-truecolor-only'
@@ -1436,6 +1439,10 @@ EOF
   " C-W T         - move window to separate tab
   " C-W P         - go to preview window
   " C-W z         - close preview window
+  "
+  " Window swap plugin: <leader>ww in first window and
+  "                     then <leader>ww in second to
+  "                     swap them.
 
   " move to and open if not exists
   " http://www.agillo.net/simple-vim-window-management/
