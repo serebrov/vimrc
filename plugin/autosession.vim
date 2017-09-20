@@ -266,7 +266,7 @@ function! s:session_save(...)
         call s:session_debug_message('Saving a session')
 
         execute 'mksession! ' . s:sessions_path . '/' . name
-        s:set_session(name)
+        call s:set_session(name)
         "call writefile(insert(readfile(g:this_obsession), 'let g:this_obsession = v:this_session', -2), g:this_obsession)
         call s:session_debug_message('Writing sessions')
         redraw | echom 'Saved session "' . name . '"'
