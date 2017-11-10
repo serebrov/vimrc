@@ -174,18 +174,18 @@ Average calculation:
 
 # System variables
 
-* FS - input field separator (space by default)
+* `FS` - input field separator (space by default)
 ** Note: usually FS is assigned in the BEGIN block, but can be changed anywhere
    new FS value will take effect on the next line (not on the current line)
-* OFS - output field separator (space by default)
-* NF - number of fields (so `{ print $NF }` outputs last field)
+* `OFS` - output field separator (space by default)
+* `NF` - number of fields (so `{ print $NF }` outputs last field)
 ** Note: NF is mutable, can be changed (as well as $0 or fields)
-* RS - record separator, default is newline
-* ORS - output record separator
-* NR - current record number
-* FILENAME - current file name
-* FNR - current record number in current file (useful when there are many files)
-* CONVFMT - `printf`-style number-to-string conversion format, "%.6g" by default
+* `RS` - record separator, default is newline
+* `ORS` - output record separator
+* `NR` - current record number
+* `FILENAME` - current file name
+* `FNR` - current record number in current file (useful when there are many files)
+* `CONVFMT` - `printf`-style number-to-string conversion format, "%.6g" by default
 ** Used when we do `str = (5.5 + 3.2) " is a nice value"`
-* OFMT - `printf` style number-to-string conversion when number is printed
+* `OFMT` - `printf` style number-to-string conversion when number is printed
 ** Used when we do `print 5.5`
