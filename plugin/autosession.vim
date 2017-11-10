@@ -96,6 +96,10 @@ function! s:session_vim_enter()
         " Without this after vim restart there is no syntax highlight in
         " restored buffers
         " windo filetype detect
+    else
+        " remove last session, so actual session will not be changed when
+        " we open vim like `vim .` or `vim file_name` for quick edit.
+        call s:remove_session()
     endif
 endfunction
 
@@ -302,11 +306,11 @@ function! s:set_session(name)
 endfunction
 
 function! s:has_session()
-      return exists('g:LAST_SESSION')
+    return exists('g:LAST_SESSION')
 endfunction
 
 function! s:remove_session()
-      unlet! g:LAST_SESSION
+    unlet! g:LAST_SESSION
 endfunction
 
 function! s:get_session()
