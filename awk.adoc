@@ -214,4 +214,39 @@ print NR, "records processed." }'
 3       records processed.
 ----
 
+Multiline records:
 
+[source,bash]
+----
+echo 'John Robinson
+Boston MA 01760
+
+Phyllis Chapman
+Amesbury MA 01881' | awk '
+# set field separator to a newline and record separator to the empty string
+BEGIN { FS = "\n"; RS = "" }
+{ print $1, $NF}'
+
+John Robinson Boston MA 01760
+Phyllis Chapman Amesbury MA 01881
+----
+
+Also split the output to multiple lines:
+
+[source,bash]
+----
+echo 'John Robinson
+Boston MA 01760
+
+Phyllis Chapman
+Amesbury MA 01881' | awk '
+# set field separator to a newline and record separator to the empty string
+BEGIN { FS = "\n"; RS = ""; OFS = "\n"; ORS = "\n\n" }
+{ print $1, $NF}'
+
+John Robinson
+Boston MA 01760
+
+Phyllis Chapman
+Amesbury MA 01881
+----
