@@ -1,8 +1,8 @@
+:toc:
+:toc-placement!:
+
 # AWK Reference
 
-:toc: macro
-:toc-title:
-:toclevels: 9
 toc::[]
 
 # Program structure
