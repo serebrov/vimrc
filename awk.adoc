@@ -1,0 +1,152 @@
+:toc: macro
+:toc-title:
+:toclevels: 9
+
+# AWK Reference
+
+# Program structure
+
+   BEGIN {}       # executed once
+   /pattern/ { }  # executed for each line matching pattern
+   END {}         # executed once
+
+
+# Pattern matching
+
+    echo '1
+
+    test' | awk '
+        /[0-9]+/ { print "That is an integer" }
+        /[A-Za-z]+/ { print "This is a string" }
+        /^$/ { print "This is a blank line." }
+        { print }
+    '
+
+    This is a blank line.
+
+    That is an integer
+    1
+    This is a blank line.
+
+    This is a string
+
+We can match the specific field:
+
+   echo '1 test description
+         2 script description' | awk '
+   $2 ~ /script/ { print $1 ", " $3 }'
+
+   2, description
+
+Reverse the meaning of the rule by using bang-tilde (!~): `$2 !~ /script/`.
+
+# Fields:
+
+    $0 - the whole record (line)
+    $1, $2, ... - fields
+
+Example:
+
+    echo a b c d | awk '{ print $1 $2 }'
+
+    ab
+
+Any expression that evaluates to integer can be used as field number, the following outputs `c`:
+
+    echo a b c d | awk 'BEGIN { one = 1; two = 2 }
+    { print $(one + two) }'
+
+    c
+
+Default field separator is space, can be changed with command line flag `awk -F:`(':' as separator),
+or `awk -F"\t" ...` to use tab as a separator.
+
+Can also be changed inside the script by setting `FS` variable:
+
+    echo a,b,c,d | awk 'BEGIN { FS="," }
+    { print $2 }'
+
+    b
+
+Field separator can be an expression:
+
+    echo a_b:c d | awk 'BEGIN { FS="[_: ]" }
+    { print $1 "-" $2 "-" $3 "-" $4}'
+
+    a-b-c-d
+
+# Expressions
+
+There are two types of constants: string or numeric ("red" or 1).
+A string must be quoted in an expression. 
+
+Strings can make use of the escape sequences:
+    \a Alert character, usually ASCII BEL character
+    \b Backspace
+    \f Formfeed
+    \n Newline
+    \r Carriage return
+    \t Horizontal tab
+    \v Vertical tab
+    \ddd Character repr esented as 1 to 3 digit octal value
+    \xhex Character repr esented as hexadecimal value a
+    \c Any literal character c (e.g., \" for ") b
+
+    echo a_b:c d | awk 'BEGIN { FS="[_: ]" }
+    { print $1 "\v" $2 "\t" $3 "\"" $4}'
+
+    a
+     b      c"d
+
+Variables:
+- name = value
+- name is case sensitive
+- default value is zero
+- each variable has string and integer value
+  - strings that are not numbers evaluate to zero
+
+A space is the string concatenation operator:
+
+    z = "Hello" "World"
+
+assigns “HelloWorld” to the variable z.
+
+There are +/-, etc arithmetic operators.
+There are +=, -=, ++ (both postfix and infix), -- assignment operators.
+
+    echo '1
+
+    2' | awk '
+    # Count blank lines.
+    /^$/ {
+        ++x  # Default value is 0, so we don't initialize x, just start incrementing
+    }
+    END {
+        print x
+    }'
+
+    1
+
+Average calculation:
+
+    echo 'john 85 92 78 94 88
+    andrea 89 90 75 90 86
+    jasper 84 88 80 92 84' | awk '
+    # average five grades
+    { total = $2 + $3 + $4 + $5 + $6
+    avg = total / 5
+    print $1, avg }'
+
+    john 87.4
+    andrea 86
+    jasper 85.6
+
+# System variables
+
+- FS - input field separator (space by default)
+- OFS - output field separator (space by default)
+- NF - number of fields (so `{ print $NF }` outputs last field)
+  - Note: NF is mutable, can be changed (as well as $0 or fields)
+- RS - record separator, default is newline
+- ORS - output record separator
+- NR - current record number
