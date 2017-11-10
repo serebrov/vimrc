@@ -189,3 +189,29 @@ Average calculation:
 ** Used when we do `str = (5.5 + 3.2) " is a nice value"`
 * `OFMT` - `printf` style number-to-string conversion when number is printed
 ** Used when we do `print 5.5`
+
+Average calculation with auto-numbering:
+
+[source,bash]
+----
+echo 'john 85 92 78 94 88
+andrea 89 90 75 90 86
+jasper 84 88 80 92 84' | awk '
+# We will have tabs as output fields separator.
+BEGIN { OFS = "\t" }
+# average five grades
+{ total = $2 + $3 + $4 + $5 + $6
+avg = total / 5
+print NR ".", $1, avg }
+END {
+print ""
+print NR, "records processed." }'
+
+1.      john    87.4
+2.      andrea  86
+3.      jasper  85.6
+
+3       records processed.
+----
+
+
