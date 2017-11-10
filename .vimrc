@@ -26,14 +26,16 @@
     " Plug 'wikitopian/hardmode'
     " autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
     "
+    " Just disable 'j', I use it too often
+    "nmap j <nop>
+    "
     " This plugin disables repeated use of h/j/k/l and others
-    " (Stopped working in nvim)
     " Hard mode - no jjjjj and kkkkk, :HardTimeToggle to toggle
-    " let g:hardtime_allow_different_key = 1
-    " let g:list_of_normal_keys = ["h", "j", "k", "l"]
-    " let g:list_of_visual_keys = ["h", "j", "k", "l"]
-    " Plug 'takac/vim-hardtime'
-    " autocmd BufEnter * HardTimeOn
+    let g:hardtime_allow_different_key = 1
+    let g:list_of_normal_keys = ["h", "j", "k", "l"]
+    let g:list_of_visual_keys = ["h", "j", "k", "l"]
+    Plug 'takac/vim-hardtime'
+    let g:hardtime_default_on = 1
     "
     " This one, like vim-hardtime, only disables repeated use.
     " Disable repeated character-wise movements
@@ -57,6 +59,32 @@
     "      https://pbrisbin.com/posts/hard_mode/
     "      :help motion.txt
     " Plug 'kbarrette/mediummode'
+
+    Plug 'easymotion/vim-easymotion'
+    " <Leader>f{char} to move to {char}
+    " s{char}{char} to move to {char}{char}
+    nmap s <Plug>(easymotion-overwin-f2)
+    " Operator is `z` because `s` is taken by surround.
+    omap z <Plug>(easymotion-bd-f2)
+    " Move to line
+    map <Leader>L <Plug>(easymotion-bd-jk)
+    nmap <Leader>L <Plug>(easymotion-overwin-line)
+    nmap <Leader>; <Plug>(easymotion-next)
+    nmap <Leader>, <Plug>(easymotion-prev)
+    let g:EasyMotion_use_upper = 1
+    let g:EasyMotion_keys = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ;'
+    " Similar plugins
+    " Plug 'justinmk/vim-sneak'
+    " Plug 't9md/vim-smalls'
+
+    " Plug 'kshenoy/vim-signature'
+    Plug 'vim-scripts/ShowMarks'
+    let g:showmarks_textlower="\t"
+    let g:showmarks_textupper="\t"
+    let g:showmarks_textother="\t"
+
+    " Enable visual hints on multiple matches.
+    " let g:sneak#label = 1
     " auto adjust tab/space settings based on current file
     Plug 'tpope/vim-sleuth'
 
@@ -246,6 +274,8 @@
       "return "ag -i " . a:l . " | sed 's@\\(.[^:]*\\):\\(.[^:]*\\):\\(.*\\)@\\3:\\2:\\1@' "
   endfunction
   noremap <Leader>fm :FZFMru<CR>
+  " Show FZF suggestions inside the active window instead of creating separate one (default).
+  let g:fzf_layout = { 'window': 'enew' }
 
   " Open list of buffers
   command! -bang Buffers call fzf#run(fzf#wrap('buffers',
@@ -688,6 +718,14 @@
     let g:syntastic_python_checkers = ['python', 'flake8']
   endif
 
+  " Use :CoverageShow to show file coverage for the current buffer.
+  " Use :CoverageToggle to toggle coverage visibility for the current file.
+  " For python requires `pip install coverage`
+  " Add maktaba and coverage to the runtimepath.
+  " (The latter must be installed before it can be used.)
+  Plug 'google/vim-maktaba'
+  Plug 'google/vim-coverage'
+
   if has('nvim')
     " " requires
     " " sudo pip3 install neovim
@@ -1088,7 +1126,7 @@ EOF
 
   "set langmap=Ж:,йq,цw,уe,кr,еt,нy,гu,шi,щo,зp,х[,ъ],фa,ыs,вd,аf,пg,рh,оj,лk,дl,э',яz,чx,сc,мv,иb,тn,ьm,б\,,ю.,ё`,ЙQ,ЦW,УE,КR,ЕT,НY,ГU,ШI,ЩO,ЗP,Х{,Ъ},ФA,ЫS,ВD,АF,ПG,РH,ОJ,ЛK,ДL,Э\",ЯZ,ЧX,СC,МV,ИB,ТN,ЬM,Б<,Ю>,Ё~
 
-  set keymap=russian-jcukenwin
+  " set keymap=russian-jcukenwin
   " Make normal-mode keys work in russian
   "set iskeyword=@,48-57,_,192-255 "this is default
   " (XXX: #VIM/tpope warns the line below could break things)
@@ -1907,6 +1945,20 @@ endfunction
 function! FormatPyJson()
   call PreFormatPyJson()
   exe "'<,'>!python -m json.tool"
+endfunction
+
+
+" Password generator, :echo Password() or Ctrl-R=Password()
+function! RandNum() abort
+  return str2nr(matchstr(reltimestr(reltime()), '\.\zs\d*'))
+endfunction
+
+function! RandChar() abort
+  return nr2char((RandNum() % 93) + 33)
+endfunction
+
+function! Password() abort
+  return join(map(range(8), 'RandChar()'), '')
 endfunction
 
 " Disabled {{{
