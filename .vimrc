@@ -1326,8 +1326,6 @@ EOF
   augroup TpopeMisc
     autocmd!
 
-    autocmd FileType netrw nnoremap <buffer> gr :grep <C-R>=shellescape(fnamemodify(expand('%').'/'.getline('.'),':.'),1)<CR><Home><C-Right> -r<Space>
-    autocmd FileType netrw call s:scratch_maps()
     autocmd FileType gitcommit if getline(1)[0] ==# '#' | call s:scratch_maps() | endif
     autocmd FocusGained * if !has('win32') | silent! call fugitive#reload_status() | endif
   augroup END
@@ -1411,12 +1409,6 @@ EOF
   " noremap gj j
   "noremap 0 g0
   "noremap $ g$
-
-  " Move cursor with Ctrl + hjkl in Insert mode
-  " inoremap <C-h> <C-o>h
-  " inoremap <C-j> <C-o>j
-  " inoremap <C-k> <C-o>k
-  " inoremap <C-l> <C-o>l
 
   " Shortcut to rapidly toggle `set list` (def leader = \)
   " :list displays tabs, trailing spaces and other "invisible" chars
