@@ -1768,47 +1768,9 @@ EOF
   " ,vc to edit .vimrc
   "nnoremap <leader>vc :tabedit $MYVIMRC<CR>
   nnoremap <leader>vc :tabedit $HOME/.vim/.vimrc<CR>
-  " ,vcc to open .vimrc
-  nnoremap <leader>vcc :edit $HOME/.vim/.vimrc<CR>
-
-  " http://technotales.wordpress.com/2010/03/31/preserve-a-vim-function-that-keeps-your-state/
-  " remove trailing spaces
-  nnoremap _$ :call preserve("%s/\\s\\+$//e")<cr>
-  " autoformat file
-  nnoremap _= :call preserve("normal gg=g")<cr>
 
 " }}}
 
-  " Highlight VCS conflict markers
-  "match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
-
-" Xiki {{{
-  " function! XikiLaunch()
-  "   ruby << EOF
-
-  "     #xiki_dir = ENV['XIKI_DIR']
-  "     xiki_dir = '/home/seb/xiki'
-  "     ['core/ol', 'vim/line', 'vim/tree'].each {|o| load "#{xiki_dir}/lib/xiki/#{o}.rb"}
-  "     include Xiki
-
-  "     line = Line.value
-  "     next_line = Line.value 2
-
-  "     indent = line[/^ +/]
-  "     command = "xiki '#{line}'"
-  "     result = `#{command}`
-  "     Tree << result
-" EOF
-  " endfunction
-
-  " " imap <silent> <2-LeftMouse> <C-c>:call XikiLaunch()<CR>i
-  " " nmap <silent> <2-LeftMouse> :call XikiLaunch()<CR>
-  " imap <silent> <C-CR> <C-c>:call XikiLaunch()<CR>i
-  " nmap <silent> <C-CR> :call XikiLaunch()<CR>
-  " imap <silent> <C-@> <C-c>:call XikiLaunch()<CR>i
-  " nmap <silent> <C-@> :call XikiLaunch()<CR>
-
-" }}}
 " Highlight Word {{{
 "
 " This mini-plugin provides a few mappings for highlighting words temporarily.
@@ -1878,14 +1840,6 @@ hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
   xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>
   xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<CR>
 
-  " recursively vimgrep for word under cursor or selection if you hit leader-star
-  nmap <leader>* :execute 'noautocmd vimgrep /\V' . substitute(escape(expand("<cword>"), '\'), '\n', '\\n', 'g') . '/ **'<CR>
-  vmap <leader>* :<C-u>call <SID>VSetSearch()<CR>:execute 'noautocmd vimgrep /' . @/ . '/ **'<CR>
-
-  " Search the last search (@/ - '/' register content, last search text)
-  " using vimgrep and show in quickfix
-  nnoremap <Leader>z :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
-
   " If ag is available use it as filename list generator instead of 'find'
   if executable("ag")
       " --vimgrep is available from version  0.25.0+
@@ -1899,41 +1853,6 @@ hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
       command! -nargs=+ -complete=file_in_path -bar Grep silent! grep! <args> | copen | let@/=split('<args>')[-1]
       " redraw!
   endif
-" Grep Motions
-" From https://bitbucket.org/sjl/dotfiles (AckMotions)
-
-" Motions to Grep for things.  Works with pretty much everything, including:
-"   w, W, e, E, b, B, t*, f*, i*, a*, and custom text objects
-"
-" Note: If the text covered by a motion contains a newline it won't work.  Ag
-" searches line-by-line.
-" Note: g@{motion} - calls the 'operatorfunc' with
-"                    one argument - line / char / block
-"                    '[ and '] marks are set to start/end of the text
-"                    selected by motion
-nnoremap <silent> g/ :set opfunc=<SID>GrepMotion<CR>g@
-xnoremap <silent> g/ :<C-U>call <SID>GrepMotion(visualmode())<CR>
-
-" search word under cursor
-" Note: we remap 'gw' here, original gw is similar to gq, see :help gw
-nnoremap gw :Grep '\b<c-r><c-w>\b'<cr> :copen<cr>
-" search for visual selection
-xnoremap <silent> <Leader>w :call <SID>GrepMotion(visualmode())<CR>
-
-function! s:CopyMotionForType(type)
-    if a:type ==# 'v'
-        silent execute "normal! `<" . a:type . "`>y"
-    elseif a:type ==# 'char'
-        silent execute "normal! `[v`]y"
-    endif
-endfunction
-
-function! s:GrepMotion(type) abort
-    let reg_save = @@
-    call s:CopyMotionForType(a:type)
-    execute "normal! :Grep --literal " . shellescape(@@) . "\<cr>"
-    let @@ = reg_save
-endfunction
 
 " }}}
 "
@@ -1961,13 +1880,39 @@ function! Password() abort
   return join(map(range(8), 'RandChar()'), '')
 endfunction
 
+
+let s:session_loaded = 1
+augroup autosession
+  " load last session on start
+  " Note: without 'nested' filetypes are not restored.
+  autocmd VimEnter * nested call s:session_vim_enter()
+  autocmd VimLeavePre * call s:session_vim_leave()
+augroup END
+
+function! s:session_vim_enter()
+    if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
+        execute 'silent source ~/.vim/sessions/lastsession.vim'
+    else
+      let s:session_loaded = 0
+    endif
+endfunction
+
+function! s:session_vim_leave()
+  if s:session_loaded == 1
+    let sessionoptions = &sessionoptions
+    try
+        set sessionoptions-=options
+        set sessionoptions+=tabpages
+        execute 'mksession! ~/.vim/sessions/lastsession.vim'
+    finally
+        let &sessionoptions = sessionoptions
+    endtry
+  endif
+endfunction
+
 " Disabled {{{
   " adopt color schemes for terminal
   " Plug 'godlygeek/csapprox'
-  "
-  " Plug 'sjl/badwolf'
-  " Plug 'nanotech/jellybeans.vim'
-  " Plug 'noahfrederick/vim-hemisu'
   "
   " better search hightlights
   " Plug 'haya14busa/incsearch.vim'
@@ -2009,11 +1954,6 @@ endfunction
   " disable mapping entirely
   " let g:multichange_mapping = ''
 
-  " :Matchmaker - dynamically highlight word under the cursor,
-  "               move the cursor and it will highlight the different word
-  " :Matchmaker! to turn it off
-  " Plug 'qstrahl/vim-matchmaker'
-  "
   " highlight matching surronding pairs ({ }, ( ), etc)
   "Plug 'Yggdroot/hiPairs'
   " :DoMatchParen
@@ -2028,42 +1968,6 @@ endfunction
   "
   " :SemanticHighlightToggle - on/off
   " Plug 'jaxbot/semantic-highlight.vim'
-  "
-  "
-  " Plug 'kien/ctrlp.vim'
-  " Plug 'FelikZ/ctrlp-py-matcher'
-  " Plug 'tacahiroy/ctrlp-funky'
-  " noremap <Leader>f :CtrlP<CR>
-  " noremap <Leader>u :CtrlPFunky<CR>
-  " " PyMatcher for CtrlP
-  " if !has('python')
-  "   echo 'In order to use pymatcher plugin, you need +python compiled vim'
-  " else
-  "   let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-  " endif
-  " " http://stackoverflow.com/questions/18285751/use-ag-in-ctrlp-vim
-  " if executable("ag")
-  "   set grepprg=ag\ --nogroup\ --nocolor
-  "   " --hidden to search dot files, but it also reveals .git, so ignore
-  "   "  it explicitly
-  "   let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --ignore ''node_modules'' --hidden -g ""'
-  " endif
-  " " Note: per-project config can look like this (add to .vimrc.local):
-  " let g:ctrlp_custom_ignore = {
-  " \ 'dir': '\v[\/](' . join([
-  "       \ 'build',
-  "       \ ], '|') . ')$',
-  " \ 'file': '\v\.(exe|so|dll)$',
-  " \ }
-  " let g:ctrlp_switch_buffer = 'vt'
-  " " Set delay to prevent extra search
-  " let g:ctrlp_lazy_update = 350
-  " " Do not clear filenames cache, to improve CtrlP startup
-  " " You can manualy clear it by <F5> when ctrlp is opened, <F7> to clear MRU
-  " let g:ctrlp_clear_cache_on_exit = 0
-  " " Set no file limit, we are building a big project
-  " let g:ctrlp_max_files = 0
-  "
   "
   " Vim / tmux splits integration
   " <ctrl-h> => Left
@@ -2089,23 +1993,6 @@ endfunction
   "let g:slime_python_ipython = 1
   "
   " Similar: https://github.com/krisajenkins/vim-pipe
-
-  " let g:ConqueTerm_ExecFileKey = '<Leader>te'
-  " let g:ConqueTerm_SendFileKey = '<Leader>ts'
-  " let g:ConqueTerm_SendVisKey = '<Leader>tv'
-  " Plug 'nicoraffo/conque'
-  "
-  "  http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
-  "  v to select one character
-  "  v again to expand selection to word
-  "  v again to expand to paragraph
-  "  ...
-  "  <C-v> go back to previous selection if I went too far
-  " Plug 'terryma/vim-expand-region'
-  " vmap v <Plug>(expand_region_expand)
-  " vmap <C-v> <Plug>(expand_region_shrink)
-
-  "
   "
   " Create and format tables (including formulas)
   " Plug 'dhruvasagar/vim-table-mode'
@@ -2140,17 +2027,6 @@ endfunction
   " inoremap vjj <plug>vimple_completers_trigger
   " Plug 'dahu/Vimple'
   "
-  " Use :Gsearch to get a buffer window of your search results
-  " then you can make the replacements inside the buffer window
-  " using traditional tools (s/foo/bar/) and
-  " invoke :Greplace to make your changes.
-  " Similar to EnMasse, but no preview and extra custom :Gsearch command
-  " Plug 'skwp/greplace.vim'
-  " TODO: check alternatives:
-  "https://github.com/dyng/ctrlsf.vim
-  "https://github.com/AndrewRadev/writable_search.vim
-  "https://github.com/stefandtw/quickfix-reflector.vim
-
   " Highlight yanked text
   " see  http://stackoverflow.com/questions/26069278/hightlight-copied-area-on-vim
   " Lets user define their own operators.
@@ -2163,41 +2039,5 @@ endfunction
   " noremap <expr> <Plug>(yank-highlight) operator#sequence#map("y", "\<Plug>(operator-highlight)")
   " nmap yc <Plug>(yank-highlight)
   " vmap yc <Plug>(yank-highlight)
-  "
-  " https://github.com/majutsushi/tagbar/wiki
-  " http://majutsushi.github.com/tagbar/ :TagbarToggle
-  " Plug 'majutsushi/tagbar'
-
-  """""" Go
-  " Plug 'fatih/vim-go'
-
 " }}}
 "
-let s:session_loaded = 1
-augroup autosession
-  " load last session on start
-  " Note: without 'nested' filetypes are not restored.
-  autocmd VimEnter * nested call s:session_vim_enter()
-  autocmd VimLeavePre * call s:session_vim_leave()
-augroup END
-
-function! s:session_vim_enter()
-    if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
-        execute 'silent source ~/.vim/sessions/lastsession.vim'
-    else
-      let s:session_loaded = 0
-    endif
-endfunction
-
-function! s:session_vim_leave()
-  if s:session_loaded == 1
-    let sessionoptions = &sessionoptions
-    try
-        set sessionoptions-=options
-        set sessionoptions+=tabpages
-        execute 'mksession! ~/.vim/sessions/lastsession.vim'
-    finally
-        let &sessionoptions = sessionoptions
-    endtry
-  endif
-endfunction
