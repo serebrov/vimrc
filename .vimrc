@@ -1460,6 +1460,12 @@ EOF
       set relativenumber
     endif
   endfunction
+
+  " ,vv to re-read .vimrc
+  nnoremap <Leader>vv :call Preserve("source ".$MYVIMRC)<CR>
+  " ,vc to edit .vimrc
+  "nnoremap <leader>vc :tabedit $MYVIMRC<CR>
+  nnoremap <leader>vc :tabedit $HOME/.vim/.vimrc<CR>
 " }}}
 
 " Windows navigation {{{
@@ -1689,26 +1695,19 @@ EOF
     :Rooter
     " Use with :find - it will search subdirectories
     set path=.,**
-    "echom 'Loading local in: ' . getcwd()
     " Check for .vimrc.local in the current directory
     let custom_config_file = getcwd() . '/.vimrc.local'
     if filereadable(custom_config_file)
       exe 'source' custom_config_file
-      "echom 'Loaded local vimrc: ' . custom_config_file
     else
       let custom_config_file = getcwd() . '/.git/.vimrc.local'
       if filereadable(custom_config_file)
         exe 'source' custom_config_file
-        "echom 'Loaded local vimrc: ' . custom_config_file
       endif
     endif
-    "execute ':windo filtype detect'
   endfunction
 
   autocmd MyAutoCmd BufWinEnter *  call LoadLocalVimrc()
-  " autocmd MyAutoCmd BufWinEnter *  call TestEcho('BufWinEnter')
-  " autocmd MyAutoCmd VimEnter *  call TestEcho('TabEnter')
-  " autocmd MyAutoCmd VimEnter *  call TestEcho('VimEnter')
 
   function! QuitNetrw()
     for i in range(1, bufnr("$"))
@@ -1763,11 +1762,34 @@ EOF
     \   endif|
     \ endif
 
-  " ,vv to re-read .vimrc
-  nnoremap <Leader>vv :call Preserve("source ".$MYVIMRC)<CR>
-  " ,vc to edit .vimrc
-  "nnoremap <leader>vc :tabedit $MYVIMRC<CR>
-  nnoremap <leader>vc :tabedit $HOME/.vim/.vimrc<CR>
+  let s:session_loaded = 1
+  augroup autosession
+    " load last session on start
+    " Note: without 'nested' filetypes are not restored.
+    autocmd VimEnter * nested call s:session_vim_enter()
+    autocmd VimLeavePre * call s:session_vim_leave()
+  augroup END
+  
+  function! s:session_vim_enter()
+      if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
+          execute 'silent source ~/.vim/sessions/lastsession.vim'
+      else
+        let s:session_loaded = 0
+      endif
+  endfunction
+  
+  function! s:session_vim_leave()
+    if s:session_loaded == 1
+      let sessionoptions = &sessionoptions
+      try
+          set sessionoptions-=options
+          set sessionoptions+=tabpages
+          execute 'mksession! ~/.vim/sessions/lastsession.vim'
+      finally
+          let &sessionoptions = sessionoptions
+      endtry
+    endif
+  endfunction
 
 " }}}
 
@@ -1878,36 +1900,6 @@ endfunction
 
 function! Password() abort
   return join(map(range(8), 'RandChar()'), '')
-endfunction
-
-
-let s:session_loaded = 1
-augroup autosession
-  " load last session on start
-  " Note: without 'nested' filetypes are not restored.
-  autocmd VimEnter * nested call s:session_vim_enter()
-  autocmd VimLeavePre * call s:session_vim_leave()
-augroup END
-
-function! s:session_vim_enter()
-    if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
-        execute 'silent source ~/.vim/sessions/lastsession.vim'
-    else
-      let s:session_loaded = 0
-    endif
-endfunction
-
-function! s:session_vim_leave()
-  if s:session_loaded == 1
-    let sessionoptions = &sessionoptions
-    try
-        set sessionoptions-=options
-        set sessionoptions+=tabpages
-        execute 'mksession! ~/.vim/sessions/lastsession.vim'
-    finally
-        let &sessionoptions = sessionoptions
-    endtry
-  endif
 endfunction
 
 " Disabled {{{
