@@ -29,7 +29,7 @@
 "  command.
 
 " Disable it, testing the vim-session plugin
-" finish
+finish
 
 if !has('mksession') || exists('loaded_autosession')
     finish
