@@ -102,8 +102,6 @@
       Plug 'altercation/vim-colors-solarized'
     endif
     Plug 'notpratheek/vim-sol'
-    Plug 'romainl/Apprentice'
-    Plug 'romainl/flattened'
     Plug 'morhetz/gruvbox'
     Plug 'chriskempson/base16-vim'
     Plug 'jacoborus/tender'
@@ -627,45 +625,57 @@
   " gc<motion> - comment out lines defined by motion
   Plug 'tpope/vim-commentary'
 
-  """ Quickfix improvements
-  " Note: quickfix vs location list
-  "  quickfix is a general list for all windows
-  "  location list is local to the window (so there can be many location lists)
+  """ Search and replace
   "
-  " :Ack -> uses ag / ack or grep to search across files, :Lack - location list
-  " :Acks -> run replace for previous search
-  " :Qargs -> put files from the quickfix to the :args, so can then use :argdo
-  " :Qargs | argdo %s/findme/replacement/gc | update
-  " See also 'nelstrom/vim-qargs' and QFdo from Vimple (below)
-  " Plug 'wincent/ferret'
-
-  " Improvements for [I / ]I / [D / ]D - copy their output and
-  " put into the quickfix list instead of non-usable window
-  " [I / ]I - search for word under cursor in the current file
-  " Ilist (use instead of :ilist) - search custom term :Ilist word
-  " [D / ]D - search for macro definitions
-  " See: https://www.reddit.com/r/vim/comments/1rzvsm/do_any_of_you_redirect_results_of_i_to_the/
-  Plug 'romainl/vim-qlist'
-  " Having the quickfix list execute :EnMasse to edit the
-  " list content and back-sync edits to source files
-  " Simlar: https://github.com/thinca/vim-qfreplace
-  Plug 'Wolfy87/vim-enmasse'
-  " find and replace occurences in many buffers being aware of the context
-  " :Swoop pattern - run for singe buffer
-  " :Swoop! pattern - for all buffers
-  " For all buffers it is convenient to :CloseSession and :BufOnly and then
-  " for example, :args **/*.py to load all python files
-  " or get the files into quickfix list, for example with :Ggrep (provided by
-  " fugitive plugin) and then do :Qargs (provided by ferret plugin)
-  " and then we can review/edit results
-  Plug 'pelodelfuego/vim-swoop'
-  let g:swoopUseDefaultKeyMap = 0
-  " Similar to Swoop, but searches via ack / ag / pt / rg.
-  " :CtrlSF term
+  " CtrlSF - searches via ack / ag / pt / rg and shows an editable buffer
+  " with search results.
+  "   :CtrlSF term
   " It is possible to edit the results (no inserts), save with :w,
   " undo with `u` and `p` to open file preview.
   Plug 'dyng/ctrlsf.vim'
   let g:ctrlsf_auto_close = 0
+  " Similar to CtrlSF:
+  "   vim-swoop - find/replace occurences in open buffers
+  "   Plug 'pelodelfuego/vim-swoop'
+  "
+  "   EnMasse - editable quickfix list.
+  "   Plug 'Wolfy87/vim-enmasse'
+  "   Simlar: https://github.com/thinca/vim-qfreplace
+  "
+  "   Related: ferret - search with :Ack, put results to quickfix / location list
+  "   or put files from quickfix to `args` with :Qargs (and then use :argdo)
+  "   Plug 'wincent/ferret'
+  "   Related: 'nelstrom/vim-qargs'
+  "   Related: QFdo from Vimple (below)
+
+  """ Built-in command improvements
+  "
+  " :QFdo - quickfix do - run a command over quckfix files, see also :LLdo for location list
+  " :BufTypeDo, :BufMatchDo - run a command over buffers of specified type or
+  "    buffers with name matching the pattern
+  " :View command -> command result to split buffer, like :View ilist vim
+  "    or :View map x
+  " Alternative is to use 'redir' command:
+  "   :redir >name_of_registers_file
+  "   :registers
+  "   :redir END
+  "   :r name_of_registers_file
+  " OR:
+  "   :redir => m | silent registers | redir END | put=m
+  " See
+  "   :help redir
+  " :Collect register-or-var command -> command result to register or var
+  "  Collect('reg-or-var command') - similar as function
+  " :GCollect - returns a list of lines for :g/pattern/, see also :GCCollect
+  " :MyMaps - active maps into the new buffer
+  " :Filter - like interactive :g/re/p - modifies the buffer! - leaves only matching lines in a buffer
+  " z=, [I, g] - overlay for spell suggestions, search results, tag search results
+  " Scall (script, function, arg) - call local function from script
+  " nnoremap q[I <plug>vimple_ident_search<bs>
+  " nnoremap q]I <plug>vimple_ident_search_forward
+  " " rempap to avoid conflict
+  " inoremap vjj <plug>vimple_completers_trigger
+  " Plug 'dahu/Vimple'
 
   " :PP: Pretty print. With no argument, acts as a REPL.
   " :Runtime: Reload runtime files. Like :runtime!, but it unlets any include guards first.
@@ -1360,19 +1370,6 @@ EOF
   augroup END
 
   command! -bar -nargs=? -bang Scratch :silent enew<bang>|set buftype=nofile bufhidden=hide noswapfile buflisted filetype=<args> modifiable
-  function! s:scratch_maps() abort
-    nnoremap <silent> <buffer> == :Scratch<CR>
-    nnoremap <silent> <buffer> =" :Scratch<Bar>put<Bar>1delete _<Bar>filetype detect<CR>
-    nnoremap <silent> <buffer> =* :Scratch<Bar>put *<Bar>1delete _<Bar>filetype detect<CR>
-    nnoremap          <buffer> =f :Scratch<Bar>setfiletype<Space>
-  endfunction
-
-  augroup TpopeMisc
-    autocmd!
-
-    autocmd FileType gitcommit if getline(1)[0] ==# '#' | call s:scratch_maps() | endif
-    autocmd FocusGained * if !has('win32') | silent! call fugitive#reload_status() | endif
-  augroup END
 
 " }}}
 
@@ -1745,20 +1742,6 @@ EOF
 
   autocmd MyAutoCmd BufWinEnter *  call LoadLocalVimrc()
 
-  function! QuitNetrw()
-    for i in range(1, bufnr("$"))
-      if buflisted(i)
-        if getbufvar(i, '&filetype') == "netrw"
-          silent exe 'bwipeout ' . i
-        endif
-      endif
-    endfor
-  endfunction
-  let g:netrw_altfile = 1
-  autocmd MyAutoCmd VimLeavePre *  call QuitNetrw()
-
-  autocmd MyAutoCmd VimLeavePre *  call Wipeout(0)
-
   " execute a command while preserve the position
   if !exists("*Preserve")
     function! Preserve(command)
@@ -2028,32 +2011,6 @@ endfunction
   " Search in column, arrange column, delete column, move, sum and much more
   " Plug 'chrisbra/csv.vim'
   "
-  " :QFdo - quickfix do - run a command over quckfix files, see also :LLdo for location list
-  " :BufTypeDo, :BufMatchDo - run a command over buffers of specified type or
-  "    buffers with name matching the pattern
-  " :View command -> command result to split buffer, like :View ilist vim
-  "    or :View map x
-  " Alternative is to use 'redir' command:
-  "   :redir >name_of_registers_file
-  "   :registers
-  "   :redir END
-  "   :r name_of_registers_file
-  " OR:
-  "   :redir => m | silent registers | redir END | put=m
-  " See
-  "   :help redir
-  " :Collect register-or-var command -> command result to register or var
-  "  Collect('reg-or-var command') - similar as function
-  " :GCollect - returns a list of lines for :g/pattern/, see also :GCCollect
-  " :MyMaps - active maps into the new buffer
-  " :Filter - like interactive :g/re/p - modifies the buffer! - leaves only matching lines in a buffer
-  " z=, [I, g] - overlay for spell suggestions, search results, tag search results
-  " Scall (script, function, arg) - call local function from script
-  " nnoremap q[I <plug>vimple_ident_search<bs>
-  " nnoremap q]I <plug>vimple_ident_search_forward
-  " " rempap to avoid conflict
-  " inoremap vjj <plug>vimple_completers_trigger
-  " Plug 'dahu/Vimple'
   "
   " Highlight yanked text
   " see  http://stackoverflow.com/questions/26069278/hightlight-copied-area-on-vim
