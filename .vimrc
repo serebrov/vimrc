@@ -137,7 +137,7 @@
     autocmd User anyfoldLoaded normal zv
 
     " Cycle open and closed folds and nested folds - <CR> / <BS>
-    Plug 'arecarn/vim-fold-cycle'
+    " Plug 'arecarn/vim-fold-cycle'
 
   """"""" Search / highlight
   " On search automatically prints "At match #N out of M matches".
@@ -337,25 +337,69 @@
     " terminal scrollback buffer size
     " set scrollback=100000
 
-    " :T <command> - open terminal with command
-    " :TREPLSend: sends the current line or the selection to a REPL in a terminal.
-    " :TREPLSendFile: sends the current file to a REPL in a terminal.
-    Plug 'kassio/neoterm'
-    let g:neoterm_position = 'horizontal'
-    let g:neoterm_automap_keys = ',tt'
+    " Open terminal with ":term" or ":term ipython" (to run the specific command).
+    " Create the new split and enter / edit the commands there, send to
+    " terminal with "Enter" (current line or visual selection).
+    function! SendCommand(commands) abort
+      " Send the command to the first terminal buffer found in current tab.
+      " If there is no terminal - splits the current window and runs terminal
+      " there.
+      let commands = a:commands
 
-    nnoremap <silent> ,tsf :TREPLSendFile<cr>
-    nnoremap <silent> ,tsl<f9> :TREPLSendLine<cr>
-    vnoremap <silent> ,tss :TREPLSendSelection<cr>
-    " Useful maps
-    " hide/close terminal
-    nnoremap <silent> ,th :call neoterm#close()<cr>
-    " clear terminal
-    nnoremap <silent> ,tl :call neoterm#clear()<cr>
-    " kills the current job (send a <c-c>)
-    nnoremap <silent> ,tc :call neoterm#kill()<cr>
-    " Git commands
-    command! -nargs=+ Tg :T git <args>
+      let term_buffer_id = -1
+      let term_job_id = 0
+      for visible_buffer_id in tabpagebuflist()
+        try
+            let term_job_id = nvim_buf_get_var(visible_buffer_id, 'terminal_job_id')
+            let term_buffer_id = visible_buffer_id
+            break
+        catch
+            let term_job_id = 0
+        endtry
+      endfor
+
+      if term_job_id == 0
+        new
+        let term_job_id = termopen($SHELL)
+      endif
+
+      call jobsend(term_job_id, add(commands, ''))
+    endfunction
+
+    function! SendCommandCurrentLine()
+        " Send current line to terminal buffer.
+        call SendCommand([getline('.')])
+    endfunction
+
+    function! GetVisualSelection()
+        " Returns visual selection as list of lines.
+        " See https://stackoverflow.com/a/6271254/4612064
+        let [line_start, column_start] = getpos("'<")[1:2]
+        let [line_end, column_end] = getpos("'>")[1:2]
+        let lines = getline(line_start, line_end)
+        if len(lines) == 0
+            return []
+        endif
+        let lines[-1] = lines[-1][: column_end - 2]
+        let lines[0] = lines[0][column_start - 1:]
+        return lines
+    endfunction
+
+    function! SendCommandVisualSelection()
+        call SendCommand(GetVisualSelection())
+    endfunction
+
+    function! SendCommandVisualSelectionAsLine()
+        call SendCommand([join(GetVisualSelection(), " ")])
+    endfunction
+
+    nnoremap <CR> :<C-u>call SendCommandCurrentLine()<CR>
+    xnoremap <CR> :<C-u>call SendCommandVisualSelection()<CR>
+    " Useful in ipdb where multi-line input is not supported, this mapping can
+    " be used to send multi-line statement,
+    " see also discussion here https://github.com/randy3k/SendCode/issues/39,
+    " this is what they call "fake multi-line" mode:
+    xnoremap <leader><CR> :<C-u>call SendCommandVisualSelectionAsLine()<CR>
   endif
 
   Plug 'Shougo/neomru.vim'
@@ -1761,7 +1805,7 @@ EOF
     autocmd VimEnter * nested call s:session_vim_enter()
     autocmd VimLeavePre * call s:session_vim_leave()
   augroup END
-  
+
   function! s:session_vim_enter()
       if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
           execute 'silent source ~/.vim/sessions/lastsession.vim'
@@ -1769,7 +1813,7 @@ EOF
         let s:session_loaded = 0
       endif
   endfunction
-  
+
   function! s:session_vim_leave()
     if s:session_loaded == 1
       let sessionoptions = &sessionoptions
