@@ -10,3 +10,5 @@ plugin/eclim.vim
 vim_phpdebug.sess
 init.vim
 node_modules/
+spell/*.add
+spell/*.add.spl
