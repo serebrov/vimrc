@@ -391,13 +391,13 @@
         call SendCommand([join(GetVisualSelection(), " ")])
     endfunction
 
-    nnoremap <CR> :<C-u>call SendCommandCurrentLine()<CR>
-    xnoremap <CR> :<C-u>call SendCommandVisualSelection()<CR>
+    autocmd FileType c,cpp,php,python,javascript,sql nnoremap <buffer> <CR> :<C-u>call SendCommandCurrentLine()<CR>
+    autocmd FileType c,cpp,php,python,javascript,sql xnoremap <buffer> <CR> :<C-u>call SendCommandVisualSelection()<CR>
     " Useful in ipdb where multi-line input is not supported, this mapping can
     " be used to send multi-line statement,
     " see also discussion here https://github.com/randy3k/SendCode/issues/39,
     " this is what they call "fake multi-line" mode:
-    xnoremap <leader><CR> :<C-u>call SendCommandVisualSelectionAsLine()<CR>
+    autocmd FileType c,cpp,php,python,javascript,sql xnoremap <buffer> <leader><CR> :<C-u>call SendCommandVisualSelectionAsLine()<CR>
   endif
 
   Plug 'Shougo/neomru.vim'
