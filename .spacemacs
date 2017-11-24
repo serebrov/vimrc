@@ -412,13 +412,28 @@ before packages are loaded. If you are unsure, you should try in setting them in
 ;; - how to diff two buffers?
 ;; - how to search / replace in files (similar to CtrlSF / vim-swoop or at least quick fix
 ;;   editing as in vim-enmasse), is there something similar to ctrlsf?
-;;   - check moccur
-;;   - check https://www.emacswiki.org/emacs/SearchBuffers
-;;   - check https://github.com/ShingoFukuyama/helm-swoop, it can swoop across multiple buffers
-;;     although it usues separate list of results,
-;;     SPC s C-s opens search and you can navigate the list with preview, but how to switch to the
-;;     buffer at the top without closing the list? or how to do mass-replace with it?
-;;   - check iedit mode
+;;   - helm-ag:
+;;     - initiate a search with SPC /
+;;     - enter in edit mode with C-c C-e
+;;     - go to the occurrence and enter in iedit state with SPC s e
+;;     - edit the occurrences then leave the iedit state
+;;     - press C-c C-c to save changes
+;;     See: http://spacemacs.org/doc/DOCUMENTATION.html#replacing-text-in-several-files
+;;     Similar: https://github.com/mhayashi1120/Emacs-wgrep
+;;     Search in subdirectory: M-x helm-do-ag
+;;     Search specific file type: enter search term like "-G\.py$ search_pattern"
+;;     Also useful: C-c C-l in while searching to access previous searches.
+;;     Note: helm-ag shows only one line per search result, no context like in CtrlSF.
+;;     Related:
+;;     - check moccur
+;;     - check https://www.emacswiki.org/emacs/SearchBuffers
+;;     - check https://github.com/ShingoFukuyama/helm-swoop, it can swoop across multiple buffers
+;;       although it usues separate list of results,
+;;       SPC s C-s opens search and you can navigate the list with preview, but how to switch to the
+;;       buffer at the top without closing the list? or how to do mass-replace with it?
+;;     - check iedit mode - this is included in the helm-ag flow above, we select the text and
+;;       then mass-replace all occurrences, so in helm-ag case it leads to mass-replace in the
+;;       whole project.
 ;;   - in general - wouldn't it be better to have ctrlsf-like UI for all the tasks that are
 ;;     covered by helm / vim unite / fzf / etc - instead of having a kind of a list which is
 ;;     hard to havigate and easy to close accidentally, we could just have a regular buffer
