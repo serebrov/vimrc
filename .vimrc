@@ -871,8 +871,8 @@
   " parameters, but practically it is too inconvenient)
   "
   " - <Leader>sel - execute line
-  " - slt - list tables
-  " - sdt - describe table under cursor
+  " - <Leader>slt - list tables
+  " - <Leader>sdt - describe table under cursor
   " - se - execute multiline (up to ;)
   " - st - select * from table,
   " - sT - select from table, prompt for limit
