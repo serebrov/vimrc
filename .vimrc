@@ -811,7 +811,7 @@
     "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
   endif
-  Plug 'UltiSnips'
+  Plug 'SirVer/ultisnips'
   " Activate with TAB, better with autocompletion plugin,
   " the UlitSnips adds entries marked [US]
   " select the one you need and press <Tab>,
