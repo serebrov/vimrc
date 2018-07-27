@@ -893,6 +893,8 @@
   "   query at all, for example in `\d "TableName"` which shows table
   "   structure in PostgreSQL
   Plug 'vim-scripts/dbext.vim'
+  " Each buffer has own result buffer
+  let g:dbext_default_use_sep_result_buffer = 1
 
   " [range]SQLUFormatter - format SQL
   Plug 'vim-scripts/SQLUtilities'
