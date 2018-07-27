@@ -139,6 +139,18 @@
     " Cycle open and closed folds and nested folds - <CR> / <BS>
     " Plug 'arecarn/vim-fold-cycle'
 
+  Plug 'tpope/vim-obsession'
+  " :Obsess [file_name] - create new session
+  " :Obsess [dir_name] - create new session under dir_name/Session.vim
+  " :Obsess if session is tracked, pause tracking
+  " :Obsess! - stop recording the session
+  " Load the session:
+  "   vim -S session_file - load the session
+  "   OR
+  "   :source session_file
+  "
+  " Active session is auto-saved on exist or on layout changes.
+
   """"""" Search / highlight
   " On search automatically prints "At match #N out of M matches".
   Plug 'henrik/vim-indexed-search'
@@ -1717,14 +1729,6 @@ EOF
   " NOTE: ! is necessary in order to be able to restore last session
   set viminfo=!,'100,/50,:50,<50,@50
 
-  noremap <Leader>s :SessionList<CR>
-  " default: blank,buffers,curdir,folds,help,options,tabpages,winsize"
-  set sessionoptions=buffers,curdir,help,winsize " localoptions,
-  let g:debug_autosession = 0
-  let g:debug_autosession_file = '~/vim.autosession.log'
-  let g:autosession_load_after = 'LoadLocalVimrc()'
-  " Note: to debug Vim error on exit, run it with -V9errorlog
-  "       and all messages will be saved to errorlog
 
   function! LoadLocalVimrc()
     :Rooter
@@ -1783,34 +1787,48 @@ EOF
     \   endif|
     \ endif
 
-  let s:session_loaded = 1
-  augroup autosession
-    " load last session on start
-    " Note: without 'nested' filetypes are not restored.
-    autocmd VimEnter * nested call s:session_vim_enter()
-    autocmd VimLeavePre * call s:session_vim_leave()
-  augroup END
+  set sessionoptions=buffers,curdir,help,winsize " localoptions,
+  " autosession.vim settings
+  " noremap <Leader>s :SessionList<CR>
+  " default: blank,buffers,curdir,folds,help,options,tabpages,winsize"
+  " let g:debug_autosession = 0
+  " let g:debug_autosession_file = '~/vim.autosession.log'
+  " let g:autosession_load_after = 'LoadLocalVimrc()'
+  " Note: to debug Vim error on exit, run it with -V9errorlog
+  "       and all messages will be saved to errorlog
 
-  function! s:session_vim_enter()
-      if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
-          execute 'silent source ~/.vim/sessions/lastsession.vim'
-      else
-        let s:session_loaded = 0
-      endif
-  endfunction
+  " Mini-plugin to auto-save and restore last session
+  " Good when you have 1 project, not convenient for multiple
+  " projects.
+  "
+  " let s:session_loaded = 1
+  " augroup autosession
+  "   " load last session on start
+  "   " Note: without 'nested' filetypes are not restored.
+  "   autocmd VimEnter * nested call s:session_vim_enter()
+  "   autocmd VimLeavePre * call s:session_vim_leave()
+  " augroup END
 
-  function! s:session_vim_leave()
-    if s:session_loaded == 1
-      let sessionoptions = &sessionoptions
-      try
-          set sessionoptions-=options
-          set sessionoptions+=tabpages
-          execute 'mksession! ~/.vim/sessions/lastsession.vim'
-      finally
-          let &sessionoptions = sessionoptions
-      endtry
-    endif
-  endfunction
+  " function! s:session_vim_enter()
+  "     if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
+  "         execute 'silent source ~/.vim/sessions/lastsession.vim'
+  "     else
+  "       let s:session_loaded = 0
+  "     endif
+  " endfunction
+
+  " function! s:session_vim_leave()
+  "   if s:session_loaded == 1
+  "     let sessionoptions = &sessionoptions
+  "     try
+  "         set sessionoptions-=options
+  "         set sessionoptions+=tabpages
+  "         execute 'mksession! ~/.vim/sessions/lastsession.vim'
+  "     finally
+  "         let &sessionoptions = sessionoptions
+  "     endtry
+  "   endif
+  " endfunction
 
 " }}}
 
