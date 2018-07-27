@@ -995,7 +995,7 @@ EOF
   augroup END
 
   """""" Wakatime: https://wakatime.com
-  Plug 'wakatime/vim-wakatime'
+  " Plug 'wakatime/vim-wakatime'
 
   Plug '~/.vim/bundle/potion'
 
