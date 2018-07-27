@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     html
      markdown
      csv
      javascript
@@ -528,6 +529,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 ;;
 ;; - shell / ansi-term / eshell
 ;;   See https://www.masteringemacs.org/article/running-shells-in-emacs-overview
+;;   To send Ctrl-something to terminal, use C-Z C-something.
 ;;
 ;; - Helm
 ;;   M-SPC while in helm (for example, after SPC f f) - helm transient state
