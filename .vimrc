@@ -83,6 +83,8 @@
     let g:showmarks_textupper="\t"
     let g:showmarks_textother="\t"
 
+    Plug 'jamessan/vim-gnupg'
+
     " Enable visual hints on multiple matches.
     " let g:sneak#label = 1
     " auto adjust tab/space settings based on current file
