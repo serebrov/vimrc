@@ -75,8 +75,9 @@
     " Quickly navigate between blocks.
     Plug 'pseewald/vim-anyfold'
     " let anyfold_activate=1  " Note: it conflicts with Magit buffer
-    autocmd Filetype python,javascript,markdown,php,css let b:anyfold_activate=1
-    let anyfold_fold_comments=1
+    autocmd Filetype python,javascript,markdown,php,css AnyFoldActivate
+    " let anyfold_fold_comments=1
+    "
     " Vim's fold commands:
     " zf{motion} or {Visual}zf - create a manual fold
     " za - open/close current fold
