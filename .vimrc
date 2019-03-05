@@ -108,7 +108,7 @@
 
   """"""" Search / highlight
   " On search automatically prints "At match #N out of M matches".
-  Plug 'henrik/vim-indexed-search'
+  " Plug 'henrik/vim-indexed-search'
 
   " always highlight matching html tags
   Plug 'Valloric/MatchTagAlways'
