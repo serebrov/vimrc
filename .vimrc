@@ -1299,7 +1299,7 @@ EOF
     " actually recommended way is to enable spell
     " setlocal spell spelllang=en_us
     "set spell spelllang=ru_ru,en_us
-    set spell spelllang=en_us
+    set spelllang=en_us
     " z= - suggest word
     " [s - previous wrong word
     " ]s - next wrong word
