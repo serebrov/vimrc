@@ -468,9 +468,9 @@
   "   see the source and diff pane for features, for example,
   "   'a' command lets to set diff arguments (like -w - ignore whitespace)
   Plug 'zhaocai/DirDiff.vim'
-  " :CustomDiff histogram | myers | patience | minimal | default
+  " :EnhancedDiff histogram | myers | patience | minimal | default
   " and run :diffupdate
-  " :DisableEnhancedDiff - disable it
+  " :EnhancedDiffDisable - disable it
   Plug 'chrisbra/vim-diff-enhanced'
   " From a very single vim buffer, you can perform all basic git operations. To name a few:
   "  Visualize all diffs in your git repository.
