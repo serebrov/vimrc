@@ -745,13 +745,197 @@
   Plug 'google/vim-coverage'
 
   if has('nvim')
+
+    " set signcolumn=yes
+    " " Languge server client.
+    " " Langserver features are:
+    " "   - autocomletion
+    " "   - diagnostics (errors / warnings)
+    " "   - rename
+    " "   - hover / get identifier info
+    " "   - go to definition, implementation
+    " "   - find references
+    " "   - workspace / document symbols query
+    " "   - formatting
+    " "   - quick fix (code action)
+    " " Alternatives:
+    " " - https://github.com/w0rp/ale - neomake + lang server client
+    " " - https://github.com/neoclide/coc.nvim
+    " " - https://github.com/prabirshrestha/vim-lsp
+    " " - https://github.com/natebosch/vim-lsc
+    "
+    " Note: uses fzf to display lists and deoplete or 
+    "       https://github.com/ncm2/ncm2 for completion.
+    "
+    " Plug 'autozimu/LanguageClient-neovim', {
+    "     \ 'branch': 'next',
+    "     \ 'do': 'bash install.sh',
+    "     \ }
+    " " autostart language servers
+    " let g:LanguageClient_autoStart = 1
+    " " See ./init-lang-servers.sh for installation commands and repo links
+    " " for servers.
+    " let g:LanguageClient_serverCommands = {
+    "     \ 'bash': ['bash-language-server'],
+    "     \ 'dockerfile': ['docker-langserver'],
+    "     \ 'go': ['go-langserver'],
+    "     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    "     \ 'python': ['pyls'],
+    "     \ 'javascript': ['~/.nvm/versions/node/v6.10.3/bin/javascript-typescript-stdio'],
+    "     \ 'typescript': ['~/.nvm/versions/node/v6.10.3/bin/javascript-typescript-stdio'],
+    "     \ 'php': ['php', '~/.vim/vendor/felixfbecker/language-server/bin/php-language-server.php'],
+    "     \ }
+    "     " \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+
+    " nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+    " " Or map each action separately
+    " nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+    " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+    " nnoremap <silent> gi :call LanguageClient#textDocument_implementation()<CR>
+    " nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
+    " nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
     " " requires
-    " " sudo pip3 install neovim
-    " " after install run
-    " " :UpdateRemotePlugins
-    let g:deoplete#enable_at_startup = 1
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'zchee/deoplete-jedi'
+    " "   sudo pip3 install neovim
+    " let g:deoplete#enable_at_startup = 1
+    " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    " " Plug 'zchee/deoplete-jedi'
+
+    " Better display for messages
+    set cmdheight=2
+    " Smaller updatetime for CursorHold & CursorHoldI
+    set updatetime=300
+    " don't give |ins-completion-menu| messages.
+    set shortmess+=c
+    " always show signcolumns
+    set signcolumn=yes
+
+    " Tags: LanguageClient, Langserver
+    " :CocInstall coc-tsserver coc-rls coc-pyls coc-json coc-html coc-css
+    "             coc-vetur (vue.js)
+    "             coc-yaml coc-highlight
+    "             coc-snippets (work with UltiSnips snippets)
+    "             coc-phpls
+    " :CocConfig to edit config
+    Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+
+    " Completion: C-n / C-p
+    " " Use tab for trigger completion with characters ahead and navigate.
+    " " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+    " inoremap <silent><expr> <TAB>
+    "       \ pumvisible() ? "\<C-n>" :
+    "       \ <SID>check_back_space() ? "\<TAB>" :
+    "       \ coc#refresh()
+    " inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+    " function! s:check_back_space() abort
+    "   let col = col('.') - 1
+    "   return !col || getline('.')[col - 1]  =~# '\s'
+    " endfunction
+
+    " Use <c-space> for trigger completion.
+    " inoremap <silent><expr> <c-space> coc#refresh()
+
+    " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+    " Coc only does snippet and additional edit on confirm.
+    " inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+    " Use `[c` and `]c` for navigate diagnostics
+    nmap <silent> [c <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+    " Remap keys for gotos
+    nmap <silent> gd <Plug>(coc-definition)
+    nmap <silent> gy <Plug>(coc-type-definition)
+    nmap <silent> gi <Plug>(coc-implementation)
+    " shows references list and preview buffer, go over results with j/k
+    nmap <silent> gr <Plug>(coc-references)
+
+    " Use K for show documentation in preview window
+    nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+    function! s:show_documentation()
+      if &filetype == 'vim'
+        execute 'h '.expand('<cword>')
+      else
+        call CocAction('doHover')
+      endif
+    endfunction
+
+    " Highlight symbol under cursor on CursorHold
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+
+    " Remap for rename current word
+    nmap <leader>rn <Plug>(coc-rename)
+
+    " Remap for format selected region
+    vmap <leader>if  <Plug>(coc-format-selected)
+    nmap <leader>if  <Plug>(coc-format-selected)
+
+    augroup mygroup
+      autocmd!
+      " Setup formatexpr specified filetype(s).
+      autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+      " Update signature help on jump placeholder
+      autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    augroup end
+
+    " " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+    " vmap <leader>a  <Plug>(coc-codeaction-selected)
+    " nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+    " " Remap for do codeAction of current line
+    nmap <leader>ac  <Plug>(coc-codeaction)
+    " " Fix autofix problem of current line
+    nmap <leader>qf  <Plug>(coc-fix-current)
+
+    " actions can be invoked via :call CocAction('action')
+    " actions are (more in help): 
+    "   jumpDefinition, jumpDeclaration,jumpImplementation,
+    "   jumpTypeDefinition, jumpReferences, doHover,
+    "   showSignatureHelp, documentSymbols, rename,
+    "   workspaceSymbols, format, formatSelected,
+    "   codeAction, codeLensAction, fold, pickColor
+    "   doCodeAction, doQuickfix
+    "
+    " some just return data, like :echo CocAction('services')
+    "  commands, extensionStats, quickfixes
+
+    " Use `:Format` for format current buffer
+    command! -nargs=0 Format :call CocAction('format')
+
+    " Use `:Fold` for fold current buffer
+    command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+    " Using CocList
+    " :CocList (tab to complete options)
+    " :CocList diagnostics or :CocList outline
+    "
+    " :CocList -I -A symbols to search for symbol with preview
+    " (without --normal flag it start in insert mode, not sure how to
+    " switch between insert and normal)
+    " move through results with up/down arrows
+    " 
+    " :CocListResume to reopen last list
+    "
+    " Show all diagnostics
+    " nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+    " " Manage extensions
+    " nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+    " " Show commands
+    " nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+    " " Find symbol of current document
+    " nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+    " " Search workspace symbols
+    " nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+    "
+    " " Do default action for next item.
+    " nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+    " " Do default action for previous item.
+    " nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+    " " Resume latest coc list
+    " nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
     " Preview for substitute
     set inccommand=nosplit
   else
@@ -761,31 +945,34 @@
     "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
   endif
-  Plug 'SirVer/ultisnips'
-  " Activate with TAB, better with autocompletion plugin,
-  " the UlitSnips adds entries marked [US]
-  " select the one you need and press <Tab>,
-  " don't go out of insert mode, enter parts of the template
-  " and press <Tab> again to move to the next placeholder
-  " If you exit the insert mode - just get into insert again and
-  " use <Tab> / <Shift-Tab> to move between placeholders.
-  "
-  " http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
-  " let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
-  " let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
-  " let g:SuperTabDefaultCompletionType = '<C-Tab>'
-  let g:ycm_autoclose_preview_window_after_completion = 1
-  let g:ycm_autoclose_preview_window_after_insertion = 1
-  let g:ycm_key_list_select_completion = []
-  let g:ycm_key_list_previous_completion = []
-  let g:UltiSnipsExpandTrigger="<tab>"
-  let g:UltiSnipsJumpForwardTrigger="<tab>"
-  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-  let g:ultisnips_python_style="google"
-  "let g:UltiSnipsExpandTrigger="<c-tab>"
-  "let g:UltiSnipsListSnippets="<c-s-tab>"
-  "let g:UltiSnipsJumpForwardTrigger="<c-tab>"
-  "let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
+  " Plug 'SirVer/ultisnips'
+  " " Activate with TAB, better with autocompletion plugin,
+  " " the UlitSnips adds entries marked [US]
+  " " select the one you need and press <Tab>,
+  " " don't go out of insert mode, enter parts of the template
+  " " and press <Tab> again to move to the next placeholder
+  " " If you exit the insert mode - just get into insert again and
+  " " use <Tab> / <Shift-Tab> to move between placeholders.
+  " "
+  " " http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
+  " " let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
+  " " let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
+  " " let g:SuperTabDefaultCompletionType = '<C-Tab>'
+
+  " let g:ycm_autoclose_preview_window_after_completion = 1
+  " let g:ycm_autoclose_preview_window_after_insertion = 1
+  " let g:ycm_key_list_select_completion = []
+  " let g:ycm_key_list_previous_completion = []
+  " let g:UltiSnipsExpandTrigger="<tab>"
+  " let g:UltiSnipsJumpForwardTrigger="<tab>"
+  " let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+  " let g:ultisnips_python_style="google"
+
+  " "let g:UltiSnipsExpandTrigger="<c-tab>"
+  " "let g:UltiSnipsListSnippets="<c-s-tab>"
+  " "let g:UltiSnipsJumpForwardTrigger="<c-tab>"
+  " "let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
+  " repository of snippets
   Plug 'honza/vim-snippets'
 
   " HTTP client
@@ -878,6 +1065,15 @@
   let g:used_javascript_libs = 'jquery,underscore,angularjs'
   " ejs templates syntax highlight
   Plug 'briancollins/vim-jst'
+
+  " Typescript syntax
+  Plug 'leafgarland/typescript-vim'
+  " Typescript completion, etc - disable, there is coc.nvim
+  " Requires "npm install -g typescript"
+  " Plug 'Quramy/tsuquyomi'
+
+  " solidity syntax
+  Plug 'tomlion/vim-solidity'
 
   """""" JSON
   " better json highlighting
