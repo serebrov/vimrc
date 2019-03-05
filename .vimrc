@@ -479,9 +479,6 @@
   " :Magit - open it
   Plug 'jreybert/vimagit'
 
-  " Improves the commit buffer - splits into diff, edit, status.
-  Plug 'rhysd/committia.vim'
-
   """""" Motions / normal mode commands
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
   Plug 'bkad/CamelCaseMotion'
