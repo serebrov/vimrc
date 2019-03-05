@@ -109,6 +109,15 @@
   """"""" Search / highlight
   " On search automatically prints "At match #N out of M matches".
   " Plug 'henrik/vim-indexed-search'
+  
+  " Better % from standard matchit plugin:
+  " - Extends vim's % motion to language-specific words.
+  " - Adds motions g%, [%, ]%, and z%.
+  " - Combines these motions into convenient text objects i% and a%.
+  " - Highlights symbols and words under the cursor which % can work on, 
+  "   and highlights matching symbols and words. 
+  "   Now you can easily tell where % will jump to.
+  Plug 'andymass/vim-matchup'
 
   " always highlight matching html tags
   Plug 'Valloric/MatchTagAlways'
