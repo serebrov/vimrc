@@ -67,7 +67,7 @@
     " set foldopen=block,hor,mark,percent,quickfix,tag " what movements open folds
     " Don't autofold anything (but I can still fold manually)
     " set foldlevel=100
-    " Autofold everything:
+    " Open all folds:
     set foldlevel=999
 
     " Generic folding mechanism and motion based on indentation.
