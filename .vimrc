@@ -135,14 +135,6 @@
   " ignorecase, shortmess, smartcase)
   Plug 'wincent/loupe'
 
-  """"""" File browser
-  " Additional features for netrw
-  "  -  to open browser focused on current file, - again to go upper
-  "  .  to put selected file name to the end of command line;
-  "  !  to do the same and start command line with !
-  "  ~  go home; cd/cl - :cd / :lcd
-  " Plug 'tpope/vim-vinegar'
-
   " Filebrowser
   " '-' to open it and to go up dir
   " R - refresh;
@@ -162,15 +154,29 @@
 
   " Suggest to open existing file instead of creating new one when there
   " are multiple matches
+  "   allow using fzf
+  let g:dym_use_fzf = 1
   Plug 'EinfachToll/DidYouMean'
   " Ensure dir exists before save the file
   " :e some_new_dir/some_new_file and then :w will work
   Plug 'dockyard/vim-easydir'
   " Auto CD to project root
-  Plug 'airblade/vim-rooter'
+  " Plug 'airblade/vim-rooter'
   " disables certain vim features to speedup large file editing
   " g:LargeFile (by default, its 100) - 100Mb
   Plug 'vim-scripts/LargeFile'
+
+  let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+  Plug 'editorconfig/editorconfig-vim'
+
+  " Run :Prettier to format the file, release/1.x branch has plugins (php,
+  " python support)
+  Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'branch': 'release/1.x' }
+  " Default mapping is <Leader>p, I use that for paste from system clipboard.
+  nmap <Leader><Leader>p <Plug>(Prettier)
+  let g:prettier#autoformat = 0
+  " This can be used to automatically format before save
+  " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
 
   " Interactive scratchpad for python / node / coffee / haskell / ruby / ocaml
   " / r / closure / php
