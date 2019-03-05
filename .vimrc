@@ -1145,7 +1145,7 @@ EOF
 
   Plug '~/.vim/bundle/potion'
 
-  Plug 'joonty/vdebug'
+  " Plug 'joonty/vdebug'
   " Automatic ctags re-generator
   " similar: https://github.com/xolox/vim-easytags
   Plug 'joonty/vim-taggatron'
