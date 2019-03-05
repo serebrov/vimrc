@@ -12,3 +12,4 @@ init.vim
 node_modules/
 spell/*.add
 spell/*.add.spl
+vendor
