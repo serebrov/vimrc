@@ -190,8 +190,8 @@
   " Native files / buffers navigation
   " Also need `set path=.,**` (see below) to search recursively
   " See:http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/
-  noremap <Leader>i :find<SPACE>
-  noremap <Leader>I :find <C-R>=expand('%:p:h').'/**/*'<CR>
+  " noremap <Leader>i :find<SPACE>
+  " noremap <Leader>I :find <C-R>=expand('%:p:h').'/**/*'<CR>
   " Insert current file's folder
   cnoremap <Leader><Leader>fn <C-r>=expand('%')<CR>
   cnoremap <Leader><Leader>f <C-r>=expand('%:p:h')<CR>
