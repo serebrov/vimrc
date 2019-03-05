@@ -1,0 +1,53 @@
+"""""" Db
+" see https://mutelight.org/dbext-the-last-sql-client-youll-ever-need
+"
+" Define profiles (can be done per-project in .vimrc.local):
+"  let g:dbext_default_profile_mySqlProject = 'type=MYSQL:user=root:passwd=:dbname=mydb'
+"  let g:dbext_default_profile_mySqlProjectTest = 'type=MYSQL:user=root:passwd=:dbname=mydb_test'
+"
+" PostgreSQL example:
+"  let g:dbext_default_profile_postgres_local = 'type=PGSQL:user=seb:passwd=:dbname=andyslist_local'
+"  let g:dbext_default_profile_postgres_develop = 'type=PGSQL:user=myuser:passwd=xxxyyyzzzpppwwww:dbname=mydb:host=mydb.cdiofumurupu.us-east-1.rds.amazonaws.com'
+"  NOTE: depending on the PostgreSQL server configuration, the password setting may not work
+"        in this case it is possible to put the password into ~/.pgpass file
+"        server_name:post:*:db_name:passwor
+" Set db param (name, user, pw, etc) - :DBSetOption dbname=mydb
+"
+" Connect :DBPromptForBufferParameters or <Leader>sbp
+" it is possible to connect without profiles defined (it will ask for all
+" parameters, but practically it is too inconvenient)
+"
+" - <Leader>sel - execute line
+" - <Leader>slt - list tables
+" - <Leader>sdt - describe table under cursor
+" - se - execute multiline (up to ;)
+" - st - select * from table,
+" - sT - select from table, prompt for limit
+" - stw - prompts for where, sta - prompts for table name, slc - copy column names
+"
+" Results buffer: R - rerun command; q - close.
+"
+" Visual mode <Leader>se - execute selection
+"
+" Notes:
+" - <Leader>se usually works good and recognizes the start / end of the
+"   query, so you can just do it while cursor is anywhere inside the query
+"   text
+" - For some queries with subqueries, dbext may fail to find the start of
+"   the query, in this case put the cursor at the stat manually and do
+"   <Leader>se again (the error usually is about misplaced curly bracket).
+" - visual mode or execute line are useful when dbext fails to recognize the
+"   query at all, for example in `\d "TableName"` which shows table
+"   structure in PostgreSQL
+Plug 'vim-scripts/dbext.vim'
+" Each buffer has own result buffer
+let g:dbext_default_use_sep_result_buffer = 1
+
+" [range]SQLUFormatter - format SQL
+Plug 'vim-scripts/SQLUtilities'
+" Upper-case SQL keywords
+let g:sqlutil_keyword_case = '\U'
+" Align comma at the before the column name
+let g:sqlutil_align_comma = 1
+" This is SQLUtitiles dependency
+Plug 'vim-scripts/Align'

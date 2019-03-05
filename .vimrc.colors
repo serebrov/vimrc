@@ -1,0 +1,55 @@
+" Color schemes
+if has('nvim')
+  Plug 'frankier/neovim-colors-solarized-truecolor-only'
+else
+  Plug 'altercation/vim-colors-solarized'
+endif
+Plug 'notpratheek/vim-sol'
+Plug 'morhetz/gruvbox'
+Plug 'chriskempson/base16-vim'
+Plug 'jacoborus/tender'
+
+function! SetupColorscheme()
+  if &diff
+    " Note: to run nvim diff manually use command like this:
+    " nvim -d base.js local.js remote.js merge-result.js
+    echom 'Diff mode setup'
+    set background=light
+    set guifont=Liberation\ Mono\ 9
+    " colorscheme sol
+    colorscheme github
+    " " A bit modified diff colors from github scheme
+    hi DiffAdd         guifg=#003300 guibg=#DDFFDD gui=none
+    hi DiffChange                    guibg=#ececec gui=none
+    hi DiffText        guifg=#000033 guibg=#A6F3A6 gui=none
+    hi DiffDelete      guifg=#DDCCCC guibg=#FFDDDD gui=none
+  else
+    if has('nvim')
+      set background=dark
+      colorscheme solarized
+      "colorscheme apprentice
+    else
+      if !has("gui_running")
+          " tell vim that gnome terminal supports 256 colors
+          set t_Co=256
+          let g:solarized_termcolors=256
+      endif
+      set background=dark
+      let g:solarized_contrast="high"    "default value is normal
+      let g:solarized_diffmode="high"    "default value is normal
+      try
+          colorscheme solarized
+      catch /^Vim\%((\a\+)\)\=:E185/
+          echo "Solarized theme not found. Run :PluginInstall"
+      endtry
+      " From: http://sunaku.github.io/vim-256color-bce.html
+      if &term =~ '256color'
+          " Fix for tmux
+          " disable Background Color Erase (BCE) so that color schemes
+          " render properly when inside 256-color tmux and GNU screen.
+          " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+          set t_ut=
+      endif
+    endif
+  endif
+endfunction

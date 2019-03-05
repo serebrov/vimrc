@@ -1,0 +1,92 @@
+" FZF setup
+"
+" There is very annoying issue with fzf - when you select file and buffer stays in some
+" strange state, where almost anything closes the buffer and some
+" actions like attempt to search text deletes part of buffer without undo
+" Issue is not stable, it is often reproduced when you start work with vim,
+" but then it disappears and it start work normally, not sure why
+" So for now keep ctrlp enabled for main mappings
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+" Files [PATH]    Files (similar to :FZF)
+" GFiles [OPTS]   Git files (git ls-files)
+" GFiles? Git files (git status)
+" Buffers Open buffers
+" Colors  Color schemes
+" Ag [PATTERN]    ag search result (ALT-A to select all, ALT-D to deselect all)
+" Lines [QUERY]   Lines in loaded buffers
+" BLines [QUERY]  Lines in the current buffer
+" Tags [QUERY]    Tags in the project (ctags -R)
+" BTags [QUERY]   Tags in the current buffer
+" Marks   Marks
+" Windows Windows
+" Locate PATTERN  locate command output
+" History v:oldfiles and open buffers
+" History:    Command history
+" History/    Search history
+" Snippets    Snippets (UltiSnips)
+" Commits Git commits (requires fugitive.vim)
+" BCommits    Git commits for the current buffer
+" Commands    Commands
+" Maps    Normal mode mappings
+" Helptags    Help tags 1
+" Filetypes   File types
+noremap <Leader>f :FZF<CR>
+noremap <Leader>t :Tags<CR>
+inoremap <Leader>l :Lines<CR>
+" Complete lines with FZF
+imap <c-x><c-l> <plug>(fzf-complete-line)
+noremap <Leader>a :Ag<CR>
+" " See also: https://github.com/junegunn/fzf/wiki/examples
+" " See also: https://github.com/D630/fzf-contrib
+" " Similar: https://github.com/garybernhardt/selecta
+command! FZFMru call fzf#run({
+          \'source': NeomruHistory(),
+          \'sink' : 'e ',
+          \'options' : '-m',
+          \})
+function! NeomruHistory()
+    return "sed '1d' " . $HOME . "/.vim/tmp/cache/neomru/file"
+    "return "ag -i " . a:l . " | sed 's@\\(.[^:]*\\):\\(.[^:]*\\):\\(.*\\)@\\3:\\2:\\1@' "
+endfunction
+noremap <Leader>fm :FZFMru<CR>
+" Show FZF suggestions inside the active window instead of creating separate one (default).
+let g:fzf_layout = { 'window': 'enew' }
+
+" Open list of buffers
+command! -bang Buffers call fzf#run(fzf#wrap('buffers',
+    \ {'source': map(range(1, bufnr('$')), 'bufname(v:val)')}, <bang>0))
+" Locate any file on the filesystem - :LocateFZF .vimrc
+command! -nargs=1 -bang LocateFZF call fzf#run(fzf#wrap(
+    \ {'source': 'locate <q-args>', 'options': '-m'}, <bang>0))
+" Jump to tags with :Tags
+function! s:tags_sink(line)
+  let parts = split(a:line, '\t\zs')
+  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
+  execute 'silent e' parts[1][:-2]
+  let [magic, &magic] = [&magic, 0]
+  execute excmd
+  let &magic = magic
+endfunction
+
+function! s:tags()
+  if empty(tagfiles())
+    echohl WarningMsg
+    echom 'No tags here'
+    echohl None
+    return
+    " echohl WarningMsg
+    " echom 'Preparing tags'
+    " echohl None
+    " call system('ctags -R')
+  endif
+  call fzf#run({
+  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+  \            '| grep -v -a ^!',
+  \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+  \ 'down':    '40%',
+  \ 'sink':    function('s:tags_sink')})
+endfunction
+
+command! Tags call s:tags()
+

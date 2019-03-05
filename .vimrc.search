@@ -1,0 +1,152 @@
+" CtrlSF - searches via ack / ag / pt / rg and shows an editable buffer
+" with search results.
+"   :CtrlSF term
+" It is possible to edit the results (no inserts), save with :w,
+" undo with `u` and `p` to open file preview.
+Plug 'dyng/ctrlsf.vim'
+let g:ctrlsf_auto_close = 0
+" Similar to CtrlSF:
+"   vim-swoop - find/replace occurences in open buffers
+"   Plug 'pelodelfuego/vim-swoop'
+"
+"   EnMasse - editable quickfix list.
+"   Plug 'Wolfy87/vim-enmasse'
+"   Simlar: https://github.com/thinca/vim-qfreplace
+"
+"   Related: ferret - search with :Ack, put results to quickfix / location list
+"   or put files from quickfix to `args` with :Qargs (and then use :argdo)
+"   Plug 'wincent/ferret'
+"   Related: 'nelstrom/vim-qargs'
+"   Related: QFdo from Vimple (below)
+
+" always highlight matching html tags
+Plug 'Valloric/MatchTagAlways'
+
+" rainbow parenthesis
+" Note: doesn't work for php due some specifics in the syntax file
+" it doesn't work with default syntax file and with extended versions
+" (https://github.com/vim-scripts/php.vim--Garvin) and (https://github.com/StanAngeloff/php.vim)
+" maybe this can be fixed?
+" see https://defuse.ca/blog/vim-rainbow-parentheses-work-in-php
+Plug 'kien/rainbow_parentheses.vim'
+augroup Rainbow
+  autocmd!
+  autocmd VimEnter * RainbowParenthesesToggle
+  autocmd Syntax * RainbowParenthesesLoadRound
+  autocmd Syntax * RainbowParenthesesLoadSquare
+  autocmd Syntax * RainbowParenthesesLoadBraces
+augroup END
+
+" Add abbreviations for all combinations
+" :Abolish {despa,sepe}rat{e,es,ed,ing,ely,ion,ions,or}  {despe,sepa}rat{}
+" Replace combinations + smart case (Facility -> Building, facilities -> buildings)
+" :%Subvert/facilit{y,ies}/building{,s}/g
+" Coercion: crs - coerce to snake case, crm - mixed case, crc - camel, cru - upper fooBar (crs)-> foo_bar
+" See also: http://www.reddit.com/r/vim/comments/1weenn/oh_thats_why_abolish_is_useful_subvert/
+Plug 'tpope/vim-abolish'
+
+Plug 'easymotion/vim-easymotion'
+" <Leader>f{char} to move to {char}
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+" Operator is `z` because `s` is taken by surround.
+omap z <Plug>(easymotion-bd-f2)
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+nmap <Leader>; <Plug>(easymotion-next)
+nmap <Leader>, <Plug>(easymotion-prev)
+let g:EasyMotion_use_upper = 1
+let g:EasyMotion_keys = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ;'
+" Similar plugins
+" Plug 'justinmk/vim-sneak'
+" Plug 't9md/vim-smalls'
+
+" Different highlight for current search result
+" Add `\v` when start search to enable very magic mode
+" Overrides search params (history=1000, hlsearch enabled, incsearch,
+" ignorecase, shortmess, smartcase)
+Plug 'wincent/loupe'
+
+" Highlight Word {{{
+"
+" This mini-plugin provides a few mappings for highlighting words temporarily.
+"
+" Sometimes you're looking at a hairy piece of code and would like a certain
+" word or two to stand out temporarily.  You can search for it, but that only
+" gives you one color of highlighting.  Now you can use <leader>N where N is
+" a number from 1-6 to highlight the current word in a specific color.
+
+function! HiInterestingWord(n) " {{{
+    " Save our location.
+    normal! mz
+    " Yank the current word into the z register.
+    normal! "zyiw
+    " Calculate an arbitrary match ID.  Hopefully nothing else is using it.
+    let mid = 86750 + a:n
+    " Clear existing matches, but don't worry if they don't exist.
+    silent! call matchdelete(mid)
+    " Construct a literal pattern that has to match at boundaries.
+    let pat = '\V\<' . escape(@z, '\') . '\>'
+    " Actually match the words.
+    call matchadd("InterestingWord" . a:n, pat, 1, mid)
+    " Move back to our original location.
+    normal! `z
+endfunction " }}}
+
+" Mappings {{{
+
+nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
+nnoremap <silent> <leader>2 :call HiInterestingWord(2)<cr>
+nnoremap <silent> <leader>3 :call HiInterestingWord(3)<cr>
+nnoremap <silent> <leader>4 :call HiInterestingWord(4)<cr>
+nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
+nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
+
+" }}}
+" Default Highlights {{{
+
+hi def InterestingWord1 guifg=#000000 ctermfg=16 guibg=#ffa724 ctermbg=214
+hi def InterestingWord2 guifg=#000000 ctermfg=16 guibg=#aeee00 ctermbg=154
+hi def InterestingWord3 guifg=#000000 ctermfg=16 guibg=#8cffba ctermbg=121
+hi def InterestingWord4 guifg=#000000 ctermfg=16 guibg=#b88853 ctermbg=137
+hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
+hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
+
+" }}}
+
+" Search {{{
+
+  " Visual search
+  " select text and hit * / # to find it
+  " http://got-ravings.blogspot.com/2008/07/vim-pr0n-visual-search-mappings.html
+  " https://github.com/godlygeek/vim-files/blob/master/plugin/vsearch.vim
+  " Visual mode search
+  function! s:VSetSearch()
+    let temp = @@
+    norm! gvy
+    let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+    " Use this line instead of the above to match matches spanning across lines
+    "let @/ = '\V' . substitute(escape(@@, '\'), '\_s\+', '\\_s\\+', 'g')
+    call histadd('/', substitute(@/, '[?/]', '\="\\%d".char2nr(submatch(0))', 'g'))
+    let @@ = temp
+  endfunction
+  " xnoremap - only for visual mode, but not for select mode
+  xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>
+  xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<CR>
+
+  " If ag is available use it as filename list generator instead of 'find'
+  if executable("ag")
+      " --vimgrep is available from version  0.25.0+
+      if split(system("ag --version"), "[ \n\r\t]")[2] =~ '\d\+.[2-9][5-9]\(.\d\+\)\?'
+        set grepprg=ag\ --vimgrep\ --ignore-case
+      else
+        " --noheading seems odd here, but see https://github.com/ggreer/the_silver_searcher/issues/361
+        set grepprg=ag\ --column\ --nogroup\ --noheading\ --ignore-case
+      endif
+      set grepformat=%f:%l:%c:%m,%f:%l:%m
+      command! -nargs=+ -complete=file_in_path -bar Grep silent! grep! <args> | copen | let@/=split('<args>')[-1]
+      " redraw!
+  endif
+
+" }}}

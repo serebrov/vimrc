@@ -50,6 +50,11 @@
   "  !  to do the same and start command line with !
   "  ~  go home; cd/cl - :cd / :lcd
   " Plug 'tpope/vim-vinegar'
+  augroup MyAutoCmd
+    "" use Leader-r to refresh (default is Ctrl-L which is used to jump
+    "" to the left window)
+    autocmd FileType netrw nnoremap <buffer> <Leader>r <Plug>NetrwRefresh
+  augroup END
 
   " :ConqueTerm bash
   " :ConqueTerm mysql -h localhost -u joe -p sock_collection
@@ -190,3 +195,176 @@
 " inoremap vjj <plug>vimple_completers_trigger
 " Plug 'dahu/Vimple'
 
+
+" Gundo.vim is Vim plugin to visualize your Vim undo tree.
+" Plug 'sjl/gundo.vim'
+" Similar: Plug 'mbbill/undotree'
+
+" HTTP client
+" Example:
+" # Second request.
+" # :foo = bar
+" POST http://httpbin.org/post
+" {
+"   "data": ":foo",
+"   "otherkey": "hello"
+" }
+" <Leader>tt to run the request
+" Similar: Plug 'nicwest/QQ.vim'
+" Plug 'aquach/vim-http-client'
+
+"""""" Wakatime: https://wakatime.com
+" Plug 'wakatime/vim-wakatime'
+
+Plug '~/.vim/bundle/potion'
+
+" On search automatically prints "At match #N out of M matches".
+" Plug 'henrik/vim-indexed-search'
+
+" autosession.vim settings
+" noremap <Leader>s :SessionList<CR>
+" default: blank,buffers,curdir,folds,help,options,tabpages,winsize"
+" let g:debug_autosession = 0
+" let g:debug_autosession_file = '~/vim.autosession.log'
+" let g:autosession_load_after = 'LoadLocalVimrc()'
+" Note: to debug Vim error on exit, run it with -V9errorlog
+"       and all messages will be saved to errorlog
+
+" Mini-plugin to auto-save and restore last session
+" Good when you have 1 project, not convenient for multiple
+" projects.
+"
+" let s:session_loaded = 1
+" augroup autosession
+"   " load last session on start
+"   " Note: without 'nested' filetypes are not restored.
+"   autocmd VimEnter * nested call s:session_vim_enter()
+"   autocmd VimLeavePre * call s:session_vim_leave()
+" augroup END
+
+" function! s:session_vim_enter()
+"     if bufnr('$') == 1 && bufname('%') == '' && !&mod && getline(1, '$') == ['']
+"         execute 'silent source ~/.vim/sessions/lastsession.vim'
+"     else
+"       let s:session_loaded = 0
+"     endif
+" endfunction
+
+" function! s:session_vim_leave()
+"   if s:session_loaded == 1
+"     let sessionoptions = &sessionoptions
+"     try
+"         set sessionoptions-=options
+"         set sessionoptions+=tabpages
+"         execute 'mksession! ~/.vim/sessions/lastsession.vim'
+"     finally
+"         let &sessionoptions = sessionoptions
+"     endtry
+"   endif
+" endfunction
+
+" Disabled {{{
+  " adopt color schemes for terminal
+  " Plug 'godlygeek/csapprox'
+  "
+  " better search hightlights
+  " Plug 'haya14busa/incsearch.vim'
+  " " Similar: https://github.com/junegunn/vim-oblique/
+  " " Similar: https://github.com/dahu/SearchParty
+  " " Similar: 'osyo-manga/vim-over' - highlighs in cmd win (Ctrl-f in cmd
+  " mode) and has own :OverCommandLine where it also shows replace preview
+  " ---
+  " Usage:
+  " - just search to see the incremental matches highlight
+  " - Tab / S-Tab to go forward/backward between results
+  " - automatically disables highlight when you move the cursor with
+  "   non-search related movements (just do j or k when search is active to
+  "   disable highlight)
+  " map /  <Plug>(incsearch-forward)\v
+  " map ?  <Plug>(incsearch-backward)\v
+  " " Search, but don't move the cursor (usually moves to the first match)
+  " map g/ <Plug>(incsearch-stay)
+  " " Setup for vim-indexed-search
+  " " See: https://github.com/haya14busa/incsearch.vim/issues/21
+  " let g:indexed_search_mappings = 0
+  " augroup incsearch-indexed
+  "   autocmd!
+  "   autocmd User IncSearchLeave ShowSearchIndex
+  " augroup END
+  " nnoremap <silent>n nzv:ShowSearchIndex<CR>
+  " nnoremap <silent>N Nzv:ShowSearchIndex<CR>
+  " "set hlsearch
+  " let g:incsearch#auto_nohlsearch = 1
+  " map n  <Plug>(incsearch-nohl-n)zv:ShowSearchIndex<CR>
+  " map N  <Plug>(incsearch-nohl-N)zv:ShowSearchIndex<CR>
+  " map *  <Plug>(incsearch-nohl-*)
+  " map #  <Plug>(incsearch-nohl-#)
+  " map g* <Plug>(incsearch-nohl-g*)
+  " map g# <Plug>(incsearch-nohl-g#)
+
+  " :Multichange to enter multichange mode (cw will affect the whole file)
+  " Plug 'AndrewRadev/multichange.vim'
+  " disable mapping entirely
+  " let g:multichange_mapping = ''
+
+  " highlight matching surronding pairs ({ }, ( ), etc)
+  "Plug 'Yggdroot/hiPairs'
+  " :DoMatchParen
+  "
+  " Semantic highlighting
+  " See: http://www.reddit.com/r/vim/comments/23qy7j/semantic_highlighting/
+  "      https://medium.com/@evnbr/coding-in-color-3a6db2743a1e
+  "      http://stackoverflow.com/questions/21425279/is-there-a-vim-plugin-for-semantics-syntax-highlighting
+  "      http://stackoverflow.com/questions/21383532/vim-variable-syntax-highlighting
+  "      https://github.com/bigfish/vim-js-context-coloring
+  "      https://plus.google.com/+DouglasCrockfordEsq/posts/FzKnHk96m2C
+  "
+  " :SemanticHighlightToggle - on/off
+  " Plug 'jaxbot/semantic-highlight.vim'
+  "
+  " Vim / tmux splits integration
+  " <ctrl-h> => Left
+  " <ctrl-j> => Down
+  " <ctrl-k> => Up
+  " <ctrl-l> => Right
+  " <ctrl-\> => Previous split
+  " Plug 'christoomey/vim-tmux-navigator'
+  ":Tmux lets you call any old tmux command (with really good tab complete).
+  ":Tyank and :Tput give you direct access to tmux buffers.
+  ":Twrite sends a chunk of text to another pane. Give an argument like windowtitle.2, top-right, or last, or let it default to the previously given argument.
+  ":Tattach lets you use a specific tmux session from outside of it.
+  " Plug 'tpope/vim-tbone'
+  "
+  " Note: compare with tbone - :Twrite 1.2 also sends text to another
+  "       tmux pane
+  " Repl for vim
+  " Ctrl-c c - run code in other tmux pane (set :1.2 for win 1 pane 2)
+  " See: http://vimeo.com/34184155 and https://technotales.wordpress.com/2007/10/03/like-slime-for-vim/
+  " Can be used for anything: python, node, bash, mysql, etc
+  "Plug 'jpalardy/vim-slime'
+  "let g:slime_target = "tmux"
+  "let g:slime_python_ipython = 1
+  "
+  " Similar: https://github.com/krisajenkins/vim-pipe
+  "
+  " Create and format tables (including formulas)
+  " Plug 'dhruvasagar/vim-table-mode'
+  "
+  " Search in column, arrange column, delete column, move, sum and much more
+  " Plug 'chrisbra/csv.vim'
+  "
+  "
+  " Highlight yanked text
+  " see  http://stackoverflow.com/questions/26069278/hightlight-copied-area-on-vim
+  " Lets user define their own operators.
+  " Plug 'kana/vim-operator-user'
+  " Operator to do two or more operators.
+  " Plug 'thinca/vim-operator-sequence'
+  " Highlight yanked text
+  " Plug 'osyo-manga/vim-operator-highlight'
+  " let g:operator#highlight#clear_time=2.0
+  " noremap <expr> <Plug>(yank-highlight) operator#sequence#map("y", "\<Plug>(operator-highlight)")
+  " nmap yc <Plug>(yank-highlight)
+  " vmap yc <Plug>(yank-highlight)
+" }}}
+"
