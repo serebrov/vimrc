@@ -1913,7 +1913,7 @@ EOF
 
   " remove trailing whitespace on save
   " new version from http://vimcasts.org/episodes/tidying-whitespace/
-  let g:clean_trails_enabled = 1
+  let g:clean_trails_enabled = 0
   function! CleanTrails()
     if g:clean_trails_enabled
       call Preserve("%s/\\s\\+$//e")
