@@ -1410,7 +1410,7 @@ EOF
 
   set shortmess=aOstT        " shortens messages to avoid
                             " 'press a key' prompt
-  set statusline=[%n]%{fugitive#statusline()}%F\ %m%r%h%w\ [%L]\ [%{&ff}]%y%=[%p%%][%04l,%04v]
+  set statusline=[%n]%{fugitive#statusline()}%{coc#status()}%F\ %m%r%h%w\ [%L]\ [%{&ff}]%y%=[%p%%][%04l,%04v]
   "                |                         |   | | | |    |     |      |     |     |    |
   "                |                         |   | | | |    |     |      |     |     |    + current
   "                |                         |   | | | |    |     |      |     |     |       column
