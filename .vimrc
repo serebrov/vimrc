@@ -22,6 +22,7 @@
   """""" UI
     " sensible defaults
     Plug 'tpope/vim-sensible'
+
     Plug 'easymotion/vim-easymotion'
     " <Leader>f{char} to move to {char}
     " s{char}{char} to move to {char}{char}
@@ -94,7 +95,6 @@
     " Cycle open and closed folds and nested folds - <CR> / <BS>
     " Plug 'arecarn/vim-fold-cycle'
 
-  Plug 'tpope/vim-obsession'
   " :Obsess [file_name] - create new session
   " :Obsess [dir_name] - create new session under dir_name/Session.vim
   " :Obsess if session is tracked, pause tracking
@@ -105,6 +105,7 @@
   "   :source session_file
   "
   " Active session is auto-saved on exist or on layout changes.
+  Plug 'tpope/vim-obsession'
 
   """"""" Search / highlight
   " On search automatically prints "At match #N out of M matches".
