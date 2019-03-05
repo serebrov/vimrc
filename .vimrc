@@ -1145,8 +1145,6 @@ EOF
 
   Plug '~/.vim/bundle/potion'
 
-  " Plug 'joonty/vdebug'
-  " Automatic ctags re-generator
   " similar: https://github.com/xolox/vim-easytags
   Plug 'joonty/vim-taggatron'
 
@@ -1755,94 +1753,6 @@ EOF
   " :%!jq '.'
 
 " }}}
-
-" " Debugger {{{
-"   "http://jaredforsyth.com/projects/vim-debug/
-"   function! DebugWeb(url)
-"     let g:vdebug_options['break_on_open'] = 1
-"     let g:vdebug_options['continuous_mode'] = 1
-"     let url = a:url
-"     let http_pos = stridx(url, 'http')
-"     if http_pos != 0
-"       let url = 'http://'.url
-"     endif
-"     let q_pos = stridx(url, '?')
-"     if q_pos == -1
-"       let url = url.'?XDEBUG_SESSION_START=vim_debug'
-"     else
-"       let url = url.'&XDEBUG_SESSION_START=vim_debug'
-"     endif
-"     exec "!xdg-open '".url."'"
-"     python debugger.run()
-"   endfunction
-"   " example:
-"   "   :Debug localsite.com
-"   command! -nargs=1 DebugWeb call DebugWeb('<args>')
-" 
-"   function! DebugPy(...)
-"     let g:vdebug_options['break_on_open'] = 1
-"     let g:vdebug_options['continuous_mode'] = 0
-"     let str_args = join(a:000, ' ')
-"     "with -S it doesn't work in virtual env
-"     "let last_cmd = '!python -S ~/pydbgp/bin/pydbgp -d localhost:9000 -k vim_debug ' . str_args
-"     let last_cmd = '!python ~/pydbgp/bin/pydbgp -d localhost:9000 -k vim_debug ' . str_args
-"     execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
-"     execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
-"     execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
-"     python debugger.run()
-"   endfunction
-"   " python debugging requires pydbgp
-"   " download from http://code.activestate.com/komodo/remotedebugging/ (version 7.1.3 works)
-"   " example (open test file first):
-"   "   :DebugPy -c tests/acceptance/selenuim/dev.cfg
-"   command! -nargs=* -complete=file DebugPy call DebugPy('% <args>')
-" 
-"   function! DebugPhp(command, ...)
-"     let g:vdebug_options['break_on_open'] = 1
-"     let g:vdebug_options['continuous_mode'] = 0
-"     let str_args = join(a:000, ' ')
-"     let last_cmd = '!export XDEBUG_CONFIG="idekey=vim_debug" && sleep 2 && ' . a:command . ' ' . str_args
-"     execute 'silent !echo "' . str_args . '" > ~/vim.last.arg.txt &'
-"     execute 'silent !echo "' . last_cmd . '" > ~/vim.last.cmd.txt &'
-"     execute 'silent ' . last_cmd . ' > ~/vim.last.out.txt 2> ~/vim.last.err.txt &'
-"     python debugger.run()
-"   endfunction
-" 
-"   " example (runtests.sh invokes phpunit):
-"   "   :DebugPhp wordpress-tests/runtests.sh --filter test_export_book_new --bootstrap wordpress-tests/bootstrap.php %
-"   command! -nargs=* -complete=file DebugPhp call DebugPhp('<args>')
-"   "command! -nargs=* -complete=file DebugPhpTemp call DebugPhpTemp('<args>')
-"   " example (open test file first):
-"   "   :DebugPhpunit --bootstrap tests/unitTests/bootstrap.php
-"   command! -nargs=* -complete=file DebugPhpunit call DebugPhp('phpunit', '<args> %')
-"   " example (open test file first):
-"   "   :DebugPhpScript %
-"   command! -nargs=* -complete=file DebugPhpScript call DebugPhp('php', '<args>')
-"   " example
-"   "   :DebugPhpConsole appadd appto.tests@gmail.com "{\"platform\": {\"app\": ...}}"
-"   command! -nargs=* DebugYiiConsole call DebugPhp('console/yiic', '<args>')
-" 
-"   let g:vdebug_options = {
-"   \    "timeout" : 200,
-"   \    "break_on_open" : 0,
-"   \    "ide_key" : 'vim_debug',
-"   \    "continuous_mode" : 1,
-"   \    "auto_start" : 1,
-"   \}
-"   let g:vdebug_keymap = {
-"   \    "run" : "<F5>",
-"   \    "run_to_cursor" : "<F9>",
-"   \    "step_over" : "<F8>",
-"   \    "step_into" : "<F7>",
-"   \    "step_out" : "<F4>",
-"   \    "close" : "<F6>",
-"   \    "detach" : "<F11>",
-"   \    "set_breakpoint" : "<F12>",
-"   \    "get_context" : "<F10>",
-"   \    "eval_under_cursor" : "<F3>",
-"   \}
-" 
-" " }}}
 
 " Taggatron {{{
   let g:tagcommands = {
