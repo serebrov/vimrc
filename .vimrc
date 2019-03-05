@@ -459,16 +459,6 @@
   "  mergetool.fugitive.cmd=gvim -f -c Gdiff $MERGED
   "  mergetool.fugitive.trustexitcode=true
   Plug 'tpope/vim-fugitive'
-  " :Gitv - git history viewer
-  " Plug 'gregsexton/gitv'
-  " :Extradite - git browser
-  " Plug 'int3/vim-extradite'
-  " Merge tool, see http://sjl.bitbucket.org/splice.vim/
-  " git setup:
-  "  mergetool.splice.cmd=gvim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'
-  "  mergetool.splice.trustexitcode=true
-  " Splice commands are called via 'g:splice_previx' ('-' by default)
-  Plug 'sjl/splice.vim'
   " Shows +/- for git changes
   "  off :GitGutterDisable, on :GitGutterEnable, toggle :GitGutterToggle
   " Jump between diffs: ]c/[c
