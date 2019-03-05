@@ -1,0 +1,35 @@
+" Plugins to work with git and diff
+
+" From a very single vim buffer, you can perform all basic git operations. To name a few:
+"  Visualize all diffs in your git repository.
+"  Stage files/hunks/parts of hunks with single key S.
+"  Write or amend your commit message and commit.
+" :Magit - open it
+Plug 'jreybert/vimagit'
+
+" :EnhancedDiff histogram | myers | patience | minimal | default
+" and run :diffupdate
+" :EnhancedDiffDisable - disable it
+Plug 'chrisbra/vim-diff-enhanced'
+
+" git support:
+" :Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
+" :Ggrep, Glgrep, Glog, Gread, Gwrite, Gbrowse
+" Search in a specific directory:
+" :Ggrep searchterm -- foldername | copen
+" Search specific file types:
+" :Ggrep searchterm -- '*.ext' | copen
+" Git setup:
+"  mergetool.fugitive.cmd=gvim -f -c Gdiff $MERGED
+"  mergetool.fugitive.trustexitcode=true
+Plug 'tpope/vim-fugitive'
+
+" Shows +/- for git changes
+"  off :GitGutterDisable, on :GitGutterEnable, toggle :GitGutterToggle
+" Jump between diffs: ]c/[c
+Plug 'airblade/vim-gitgutter'
+"   :DirDiff <A:Src Directory> <B:Src Directory>
+"   see http://www.vim.org/scripts/script.php?script_id=102
+"   see the source and diff pane for features, for example,
+"   'a' command lets to set diff arguments (like -w - ignore whitespace)
+Plug 'zhaocai/DirDiff.vim'

@@ -161,3 +161,32 @@
 " 
 " " }}}
 
+""" Built-in command improvements
+"
+" :QFdo - quickfix do - run a command over quckfix files, see also :LLdo for location list
+" :BufTypeDo, :BufMatchDo - run a command over buffers of specified type or
+"    buffers with name matching the pattern
+" :View command -> command result to split buffer, like :View ilist vim
+"    or :View map x
+" Alternative is to use 'redir' command:
+"   :redir >name_of_registers_file
+"   :registers
+"   :redir END
+"   :r name_of_registers_file
+" OR:
+"   :redir => m | silent registers | redir END | put=m
+" See
+"   :help redir
+" :Collect register-or-var command -> command result to register or var
+"  Collect('reg-or-var command') - similar as function
+" :GCollect - returns a list of lines for :g/pattern/, see also :GCCollect
+" :MyMaps - active maps into the new buffer
+" :Filter - like interactive :g/re/p - modifies the buffer! - leaves only matching lines in a buffer
+" z=, [I, g] - overlay for spell suggestions, search results, tag search results
+" Scall (script, function, arg) - call local function from script
+" nnoremap q[I <plug>vimple_ident_search<bs>
+" nnoremap q]I <plug>vimple_ident_search_forward
+" " rempap to avoid conflict
+" inoremap vjj <plug>vimple_completers_trigger
+" Plug 'dahu/Vimple'
+
