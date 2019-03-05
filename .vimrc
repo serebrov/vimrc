@@ -1879,7 +1879,7 @@ EOF
 
 
   function! LoadLocalVimrc()
-    :Rooter
+    " :Rooter
     " Use with :find - it will search subdirectories
     set path=.,**
     " Check for .vimrc.local in the current directory
