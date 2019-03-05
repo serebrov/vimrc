@@ -308,13 +308,6 @@
   Plug 'Shougo/vimproc'
   Plug 'Shougo/vimshell.vim'
 
-
-  " :ConqueTerm bash
-  " :ConqueTerm mysql -h localhost -u joe -p sock_collection
-  " :ConqueTerm ipython
-  " Note: to open file use 'gf'
-  Plug 'lrvick/Conque-Shell'
-
   if has('nvim')
     " terminal scrollback buffer size
     " set scrollback=100000
