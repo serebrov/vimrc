@@ -25,9 +25,8 @@ Plug 'chrisbra/vim-diff-enhanced'
 Plug 'tpope/vim-fugitive'
 
 " Shows +/- for git changes
-"  off :GitGutterDisable, on :GitGutterEnable, toggle :GitGutterToggle
-" Jump between diffs: ]c/[c
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
+
 "   :DirDiff <A:Src Directory> <B:Src Directory>
 "   see http://www.vim.org/scripts/script.php?script_id=102
 "   see the source and diff pane for features, for example,

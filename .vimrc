@@ -86,7 +86,7 @@
   let g:neomru#directory_mru_path = $HOME . '/.vim/tmp/cache/neomru/directory'
 
   source ~/.vim/.vimrc.fzf
-  " source ~/.vim/.vimrc.git-and-diff
+  source ~/.vim/.vimrc.git-and-diff
   source ~/.vim/.vimrc.ide
   source ~/.vim/.vimrc.tools
   source ~/.vim/.vimrc.text
