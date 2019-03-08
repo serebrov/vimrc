@@ -53,6 +53,7 @@ nmap <Leader><Leader>p <Plug>(Prettier)
 let g:prettier#autoformat = 0
 " This can be used to automatically format before save
 " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
+autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.less,*.scss,*.vue,*.yaml,*.html Prettier
 
 " Syntax checker
 " Python - pip install flake8 (pyflakes + pep8)
