@@ -392,6 +392,9 @@ Plug 'tomlion/vim-solidity'
 Plug 'elzr/vim-json'
 
 """""" Python
+" Improved syntax highlight
+Plug 'hdima/python-syntax'
+
 " Add the virtualenv's site-packages to vim path
 if has("python")
 python << EOF

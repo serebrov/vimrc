@@ -4,10 +4,19 @@ if has('nvim')
 else
   Plug 'altercation/vim-colors-solarized'
 endif
-Plug 'notpratheek/vim-sol'
+Plug 'lifepillar/vim-solarized8'
 Plug 'morhetz/gruvbox'
-Plug 'chriskempson/base16-vim'
+" Plug 'chriskempson/base16-vim'
 Plug 'jacoborus/tender'
+Plug 'ayu-theme/ayu-vim'
+Plug 'arcticicestudio/nord-vim'
+Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'rakr/vim-one'
+Plug 'rakr/vim-two-firewatch'
+Plug 'mswift42/vim-themes'
+
+Plug 'andreasvc/vim-256noir'
+Plug 'owickstrom/vim-colors-paramount'
 
 function! SetupColorscheme()
   if &diff
@@ -26,8 +35,52 @@ function! SetupColorscheme()
   else
     if has('nvim')
       set background=dark
-      colorscheme solarized
-      "colorscheme apprentice
+      colorscheme deep-space
+      " colorscheme two-firewatch
+      " colorscheme one
+      " colorscheme nord
+      " colorscheme 256_noir
+      " colorscheme paramount
+      " colorscheme solarized
+      " colorscheme solarized8
+      " colorscheme base16-flat
+      " colorscheme warm-night
+      " colorscheme reykjavik
+      " colorscheme foggy-night
+      " colorscheme metalheart
+      "
+      " let ayucolor="light"  " for light version of theme
+      " " let ayucolor="mirage" " for mirage version of theme
+      " " let ayucolor="dark"   " for dark version of theme
+      " colorscheme ayu
+      "
+      " - colorscheme base16-tomorrow-night
+      " - colorscheme base16-snazzy
+      " - colorscheme base16-ia-dark
+      " - colorscheme tender
+      "
+      " - colorscheme base16-harmonic-dark
+      " - colorscheme base16-phd
+      " - colorscheme base16-oceanicnext
+      "
+      " - colorscheme gruvbox
+      " - colorscheme base16-helios
+      " - colorscheme base16-monkai
+      " - colorscheme base16-google-dark
+      " - colorscheme base16-horizon-dark
+      "
+      " colorscheme blue
+      "
+      " (light)
+      " colorscheme bergen
+      " colorscheme breezy-fall
+      " colorscheme silkworm
+      " colorscheme soft-morning
+      " colorscheme soft-stone
+      " colorscheme white-sand
+      " colorscheme base16-shapeshifter
+      " colorscheme base16-tomorrow
+      " colorscheme github
     else
       if !has("gui_running")
           " tell vim that gnome terminal supports 256 colors
