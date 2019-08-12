@@ -1,4 +1,6 @@
 " Color schemes
+set termguicolors
+
 if has('nvim')
   Plug 'frankier/neovim-colors-solarized-truecolor-only'
 else

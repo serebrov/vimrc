@@ -2,21 +2,6 @@
   set nocompatible " explicitly get out of vi-compatible mode
   " filetype off
 
-  " run nvim as below to get gui colors in terminal, works in gnome-termial
-  " and konsole
-  "    NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim
-  "
-  " Or add to your .bashrc / .zshrc
-  "    export NVIM_TUI_ENABLE_TRUE_COLOR=1
-  " See: https://github.com/neovim/neovim/pull/2198
-  if has('nvim')
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-    let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-    " see https://github.com/neovim/neovim/wiki/Following-HEAD
-    " $NVIM_TUI_ENABLE_TRUE_COLOR=1 is now ignored
-    set termguicolors
-  endif
-
   call plug#begin('~/.vim/plugged')
 
   " sensible defaults
