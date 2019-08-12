@@ -55,6 +55,11 @@ let g:prettier#autoformat = 0
 " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
 autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.less,*.scss,*.vue,*.yaml,*.html Prettier
 
+" The prettier/plugin-python is marked as deprecated, page says
+" to use black instead, see https://github.com/prettier/plugin-python
+" requires ``
+Plug 'ambv/black', { 'do': 'pip3 install --user black' }
+autocmd BufWritePre *.py execute ':Black'
 " Syntax checker
 " Python - pip install flake8 (pyflakes + pep8)
 "          pip install pep257 - docstring conventions
