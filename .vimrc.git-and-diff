@@ -32,3 +32,13 @@ Plug 'mhinz/vim-signify'
 "   see the source and diff pane for features, for example,
 "   'a' command lets to set diff arguments (like -w - ignore whitespace)
 Plug 'zhaocai/DirDiff.vim'
+
+" Show commit history in a popup, like an inline Gblame
+" <Leader>gm to open
+" And <Leader>gm once more to move cursor into the popup, here:
+" - o / O - prev / next commit
+" - d - show diff (current file)
+" - D - show diff (all files in the commit)
+" - q - close
+" - ? - show help
+Plug 'rhysd/git-messenger.vim'
