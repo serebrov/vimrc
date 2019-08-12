@@ -23,6 +23,8 @@ Plug 'chrisbra/vim-diff-enhanced'
 "  mergetool.fugitive.cmd=gvim -f -c Gdiff $MERGED
 "  mergetool.fugitive.trustexitcode=true
 Plug 'tpope/vim-fugitive'
+" Enables Github for :Gbrowse (open file on github)
+Plug 'tpope/vim-rhubarb'
 
 " Shows +/- for git changes
 Plug 'mhinz/vim-signify'
