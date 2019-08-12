@@ -31,12 +31,13 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     typescript
      html
      markdown
      csv
      javascript
      sql
-     php
+     ;; php
      python
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -411,6 +412,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 ;; - something similar to dbext
 ;;   check SPC m ' in sql file - how to pre-configure connections?
 ;; - how to diff two buffers?
+;; - LSP (check http://develop.spacemacs.org/layers/+tools/lsp/README.html)
 ;; - how to search / replace in files (similar to CtrlSF / vim-swoop or at least quick fix
 ;;   editing as in vim-enmasse), is there something similar to ctrlsf?
 ;;   - helm-ag:
@@ -455,8 +457,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
 ;; - what's the (practical) difference between helm and ivy?
 ;; - check org mode
 ;; - what are real benefits over vim?
-;;   shell (VimShell in (n)vim works quite good, nvim's term still sucks - no editing, hard to use)
+;;   - shell (VimShell in (n)vim works quite good, nvim's term still sucks - no editing, hard to use)
 ;;   additional modes are auto installed
+;;   - reacher content (can display images, pdfs, different fonts - check the markdown headers
+;;   for examples)
 ;; - status line - how to display file path (now there is only a file name)
 ;; - interactive debugger (python, node, php)?
 ;; - check ibuffer: 
@@ -483,6 +487,18 @@ before packages are loaded. If you are unsure, you should try in setting them in
 ;; - how to use tabs? - use layouts, like SPC l 2 to create or switch to 2nd tab
 ;;   there is also `evil-tabs` package which provides :tabnew, gt
 ;; - how to reload config? SPC f e R
+;;
+;; NOTE:
+;; - Dired: Switch to edit mode in dired with SPC b w -> writable dired
+;;   - Can edit file names
+;;   - Save with C-c C-c
+;;  - Can use `SPC h SPC dired` to see dired settings in spacemacs-base layer
+;;  - Mark files with `m`, R - rename/move, C - copy and `u` to unmark (also undelete)
+;;  - `d` - delete, `u` - undelete, `x` - expunge, apply deletions
+;;  - `+` - create directory
+;;  - Change file/directory permissions with `M`
+;;  - `(` - show / hide file details
+;;  - `s` - change sort mode
 ;;
 ;; Usage
 ;; - Layouts (tabs)
