@@ -397,6 +397,8 @@ Plug 'briancollins/vim-jst'
 
 " Typescript syntax
 Plug 'leafgarland/typescript-vim'
+" For some reason, typescript files are recognized as XML
+autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 " Typescript completion, etc - disable, there is coc.nvim
 " Requires "npm install -g typescript"
 " Plug 'Quramy/tsuquyomi'
