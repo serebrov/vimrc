@@ -7,13 +7,14 @@ endif
 Plug 'lifepillar/vim-solarized8'
 Plug 'morhetz/gruvbox'
 Plug 'lifepillar/vim-gruvbox8'
+" A big collection of color schemes
 " Plug 'chriskempson/base16-vim'
 Plug 'jacoborus/tender'
 Plug 'ayu-theme/ayu-vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'tyrannicaltoucan/vim-deep-space'
-Plug 'rakr/vim-one'
 Plug 'rakr/vim-two-firewatch'
+" Some emacs themes ported to vim.
 Plug 'mswift42/vim-themes'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 
@@ -38,55 +39,52 @@ function! SetupColorscheme()
     if has('nvim')
       set background=dark
       colorscheme deep-space
+      " " brighter than deep-space
       " colorscheme onehalfdark
+      "
+      " " less colors
       " colorscheme two-firewatch
-      " colorscheme one
-      " colorscheme nord
       " colorscheme 256_noir
       " colorscheme paramount
-      " colorscheme solarized
-      " colorscheme solarized8
-      " colorscheme base16-flat
-      " colorscheme warm-night
-      " colorscheme reykjavik
-      " colorscheme foggy-night
-      " colorscheme metalheart
-      " colorscheme gruvbox
-      " colorscheme gruvbox8
       "
+      " " Grey background
+      " colorscheme nord
+      " colorscheme reykjavik
+      " colorscheme metalheart
+      "
+      " " Blue background
+      " " Solarized is good, but contrast is quite low
+      " colorscheme solarized
+      " " has solarized8, solarized8_flat, solarized8_high and solarized8_low variants
+      " colorscheme solarized8
+      "
+      " " Brown background
+      " colorscheme gruvbox
+      " " has variants, gruvbox8_hard is nice
+      " colorscheme gruvbox8
+      " colorscheme tender
+      " colorscheme warm-night
+      " colorscheme foggy-night
+      "
+      " " Black background
       " let ayucolor="light"  " for light version of theme
-      " " let ayucolor="mirage" " for mirage version of theme
-      " " let ayucolor="dark"   " for dark version of theme
+      " " let ayucolor="mirage" " for mirage version of theme, grey background
+      " " let ayucolor="dark"   " for dark version of theme, black background
       " colorscheme ayu
       "
-      " - colorscheme base16-tomorrow-night
-      " - colorscheme base16-snazzy
-      " - colorscheme base16-ia-dark
-      " - colorscheme tender
-      "
-      " - colorscheme base16-harmonic-dark
-      " - colorscheme base16-phd
-      " - colorscheme base16-oceanicnext
-      "
-      " - colorscheme gruvbox
-      " - colorscheme base16-helios
-      " - colorscheme base16-monkai
-      " - colorscheme base16-google-dark
-      " - colorscheme base16-horizon-dark
-      "
+      " " turbo pascal - like
       " colorscheme blue
       "
-      " (light)
-      " colorscheme onehalflight
-      " colorscheme bergen
+      " " Light schemes
+      " colorscheme bergen        " white background, less bright
+      " colorscheme soft-morning  " also not to bright
+      " colorscheme github        " light background, good for diffs
+      " colorscheme onehalflight  " white background, bright
+      "
+      " " Yellow background
       " colorscheme breezy-fall
       " colorscheme silkworm
-      " colorscheme soft-morning
       " colorscheme soft-stone
-      " colorscheme white-sand
-      " colorscheme base16-shapeshifter
-      " colorscheme base16-tomorrow
-      " colorscheme github
     else
       if !has("gui_running")
           " tell vim that gnome terminal supports 256 colors
