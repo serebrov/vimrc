@@ -76,6 +76,7 @@
   " Improves the commit buffer - splits into diff, edit, status.
   Plug 'rhysd/committia.vim'
 
+  " -> https://github.com/vim-vdebug/vdebug
   " Plug 'joonty/vdebug'
   " Automatic ctags re-generator
 " " Debugger {{{
