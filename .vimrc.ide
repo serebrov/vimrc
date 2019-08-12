@@ -60,6 +60,7 @@ autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.less,*.scss,*.vue,*.yaml,*.htm
 " requires ``
 Plug 'ambv/black', { 'do': 'pip3 install --user black' }
 autocmd BufWritePre *.py execute ':Black'
+
 " Syntax checker
 " Python - pip install flake8 (pyflakes + pep8)
 "          pip install pep257 - docstring conventions
@@ -198,10 +199,11 @@ if has('nvim')
   " :CocInstall coc-tsserver coc-rls coc-pyls coc-json coc-html coc-css
   "             coc-vetur (vue.js)
   "             coc-yaml coc-highlight
-  "             coc-snippets (work with UltiSnips snippets)
+  "             coc-snippets (works with UltiSnips snippets)
   "             coc-phpls
   " :CocConfig to edit config
-  Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+  "" Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
   " Completion: C-n / C-p
   " " Use tab for trigger completion with characters ahead and navigate.
@@ -212,10 +214,18 @@ if has('nvim')
   "       \ coc#refresh()
   " inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-  " function! s:check_back_space() abort
-  "   let col = col('.') - 1
-  "   return !col || getline('.')[col - 1]  =~# '\s'
-  " endfunction
+  inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  let g:coc_snippet_next = '<tab>'
 
   " Use <c-space> for trigger completion.
   " inoremap <silent><expr> <c-space> coc#refresh()
@@ -329,6 +339,8 @@ else
   "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
   Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 endif
+
+" Note: coc.nvim supports UlitSnips snippets from honza/vim-snippets
 " Plug 'SirVer/ultisnips'
 " " Activate with TAB, better with autocompletion plugin,
 " " the UlitSnips adds entries marked [US]
@@ -351,16 +363,16 @@ endif
 " let g:UltiSnipsJumpForwardTrigger="<tab>"
 " let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " let g:ultisnips_python_style="google"
-
-" "let g:UltiSnipsExpandTrigger="<c-tab>"
-" "let g:UltiSnipsListSnippets="<c-s-tab>"
-" "let g:UltiSnipsJumpForwardTrigger="<c-tab>"
-" "let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
+" let g:UltiSnipsExpandTrigger="<c-tab>"
+" let g:UltiSnipsListSnippets="<c-s-tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
 " repository of snippets
 Plug 'honza/vim-snippets'
 
 """""" Markdown
-Plug 'tpope/vim-markdown'
+Plug 'plasticboy/vim-markdown'
+" Plug 'tpope/vim-markdown'
 " Markup files preview: <Leader>P
 " Plug 'greyblake/vim-preview'
 " nnoremap <Leader>pm :Preview<CR>
