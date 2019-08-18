@@ -71,8 +71,8 @@ if has('nvim')
       call SendCommand([join(GetVisualSelection(), " ")])
   endfunction
 
-  autocmd FileType c,cpp,php,python,javascript,sql nnoremap <buffer> <CR> :<C-u>call SendCommandCurrentLine()<CR>
-  autocmd FileType c,cpp,php,python,javascript,sql xnoremap <buffer> <CR> :<C-u>call SendCommandVisualSelection()<CR>
+  autocmd FileType c,cpp,php,python,javascript,sql,sh nnoremap <buffer> <CR> :<C-u>call SendCommandCurrentLine()<CR>
+  autocmd FileType c,cpp,php,python,javascript,sql,sh xnoremap <buffer> <CR> :<C-u>call SendCommandVisualSelection()<CR>
   " Useful in ipdb where multi-line input is not supported, this mapping can
   " be used to send multi-line statement,
   " see also discussion here https://github.com/randy3k/SendCode/issues/39,
