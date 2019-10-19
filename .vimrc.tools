@@ -11,6 +11,10 @@ Plug 'jamessan/vim-gnupg'
 Plug 'Shougo/vimproc'
 Plug 'Shougo/vimshell.vim'
 
+" Wakatime
+" https://wakatime.com
+Plug 'wakatime/vim-wakatime'
+
 if has('nvim')
   " terminal scrollback buffer size
   " set scrollback=100000

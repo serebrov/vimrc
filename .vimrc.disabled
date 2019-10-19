@@ -214,9 +214,6 @@
 " Similar: Plug 'nicwest/QQ.vim'
 " Plug 'aquach/vim-http-client'
 
-"""""" Wakatime: https://wakatime.com
-" Plug 'wakatime/vim-wakatime'
-
 Plug '~/.vim/bundle/potion'
 
 " On search automatically prints "At match #N out of M matches".

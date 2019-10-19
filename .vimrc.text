@@ -117,6 +117,15 @@ Plug 'tpope/vim-unimpaired'
 "   Now you can easily tell where % will jump to.
 Plug 'andymass/vim-matchup'
 
+" Exchange MatchParen and MatchParenCur highlights
+" Current value can be seen with :hi MatchParen
+" augroup is to preserve value after color scheme change (see vim-matchup help).
+augroup matchup_matchparen_highlight
+  autocmd!
+  " Standard value hi MatchParenCur cterm=bold ctermbg=6 gui=bold guifg=#232926 guibg=#c47ebd
+  autocmd ColorScheme * hi MatchParen cterm=bold ctermbg=6 gui=bold guifg=lightblue guibg=bg
+augroup END
+
 """""" Visual mode enhancements
 " :NR to move selected text into scratch buffer,
 " :w to put modified text back
