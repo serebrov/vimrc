@@ -440,16 +440,23 @@ endif
 Plug 'hynek/vim-python-pep8-indent'
 " :Ped sqlalchemy.orm -> open the module from current virtual env
 Plug 'sloria/vim-ped'
-" Generate docstrings with :Pydocstring
-"   note: UltiSnips is also able to generate docstring templates, but
-"         I didn't find the way to trigger it for already existing code
-let g:template_vim_template_dir = $HOME . "/.vim/templates/pydocstring"
-Plug 'heavenshell/vim-pydocstring'
-nmap <silent> <nop> <Plug>(pydocstring)
-augroup DocMap
-  autocmd!
-  autocmd FileType python nnoremap <Leader>pd :Pydocstring<CR>
-augroup END
+" " Generate docstrings with :Pydocstring
+" "   note: UltiSnips is also able to generate docstring templates, but
+" "         I didn't find the way to trigger it for already existing code
+" let g:template_vim_template_dir = $HOME . "/.vim/templates/pydocstring"
+" Plug 'heavenshell/vim-pydocstring'
+" nmap <silent> <nop> <Plug>(pydocstring)
+" augroup DocMap
+"   autocmd!
+"   autocmd FileType python nnoremap <Leader>pd :Pydocstring<CR>
+" augroup END
+"
+let g:doge_doc_standard_python = 'google'
+let g:doge_mapping = '<Leader>pd'
+" Generate docstrings for different languages
+" Tab / Shift-Tab to move between placeholders.
+" :DogeGenerate to generate manually or use <Leader>pd.
+Plug 'kkoomen/vim-doge'
 
 """""" Documentation
 " php documenter
