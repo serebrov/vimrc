@@ -16,9 +16,22 @@ Plug 'rakr/vim-two-firewatch'
 Plug 'mswift42/vim-themes'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 
+Plug 'reedes/vim-colors-pencil'
+
 Plug 'andreasvc/vim-256noir'
 Plug 'owickstrom/vim-colors-paramount'
-Plug 'reedes/vim-colors-pencil'
+Plug 'pgdouyon/vim-yin-yang'
+Plug 'ewilazarus/preto'
+Plug 'davidosomething/vim-colors-meh'
+Plug 'pbrisbin/vim-colors-off'
+Plug 'Jorengarenar/vim-darkness'
+Plug 'rj-white/waterfall.vim'
+Plug 'huyvohcmc/atlas.vim'
+Plug 'Lokaltog/vim-monotone'
+Plug 'fxn/vim-monochrome'
+Plug 'andreypopp/vim-colors-plain'
+Plug 'danishprakash/vim-yami'
+Plug 'ajgrf/parchment'
 
 " In a file, run :SemanticHighlight to convert variables into colors.
 " Run :SemanticHighlightRevert to revert.
@@ -60,8 +73,27 @@ function! SetupColorscheme()
     " colorscheme onehalfdark
     "
     " " less colors
+    " See also: https://github.com/mcchrish/vim-no-color-collections
     " colorscheme 256_noir
     " colorscheme paramount
+    " colorscheme yin
+    " colorscheme yang
+    " colorscheme preto
+    " colorscheme meh
+    " colorscheme off
+    " colorscheme darkness
+    " colorscheme waterfall
+    " colorscheme atlas
+    " let g:monotone_color = [120, 100, 70] " Sets theme color to bright green
+    " let g:monotone_secondary_hue_offset = 200 " Offset secondary colors by 200 degrees
+    " let g:monotone_emphasize_comments = 1 " Emphasize comments
+    " colorscheme monotone
+    " colorscheme monochrome
+    " colorscheme plain
+    " colorscheme yami
+    "
+    " Light scheme with less colors:
+    " colorscheme parchment
     "
     " " Brown background
     " let g:gruvbox_italic=1
