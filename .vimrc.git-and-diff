@@ -4,7 +4,15 @@
 "  Visualize all diffs in your git repository.
 "  Stage files/hunks/parts of hunks with single key S.
 "  Write or amend your commit message and commit.
+"
 " :Magit - open it
+"
+" ? inside Magit buffer to show help
+"
+" Useful: edit file and return to Magit:
+" - gf on the file name to open file
+" - do some changes
+" - Ctrl-O to get back to Magit buffer
 Plug 'jreybert/vimagit'
 
 " :EnhancedDiff histogram | myers | patience | minimal | default
