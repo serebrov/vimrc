@@ -3,6 +3,12 @@
 "   :CtrlSF term
 " It is possible to edit the results (no inserts), save with :w,
 " undo with `u` and `p` to open file preview.
+"
+" Ignore directory when searching:
+"   :CtrlSF -ignoredir 'assets' mysearch
+" Or
+"   :let g:ctrlsf_ignore_dir=['dir1', 'dir2']
+"   :CtrlSF mysearch
 Plug 'dyng/ctrlsf.vim'
 let g:ctrlsf_auto_close = 0
 " Similar to CtrlSF:
