@@ -394,6 +394,8 @@ Plug 'othree/javascript-libraries-syntax.vim'
 let g:used_javascript_libs = 'jquery,underscore,angularjs'
 " ejs templates syntax highlight
 Plug 'briancollins/vim-jst'
+" vue componetns
+" Plug 'posva/vim-vue'
 
 " Typescript syntax
 Plug 'leafgarland/typescript-vim'
