@@ -19,21 +19,24 @@
     " Don't autofold anything (but I can still fold manually)
     " set foldlevel=100
     " Open all folds:
-    set foldlevel=999
+    set foldlevel=0
+    " set foldlevel=999
 
     " Generic folding mechanism and motion based on indentation.
     " Fold anything that is structured into indented blocks.
     " Quickly navigate between blocks.
     Plug 'pseewald/vim-anyfold'
     " let anyfold_activate=1  " Note: it conflicts with Magit buffer
-    autocmd Filetype python,javascript,markdown,php,css AnyFoldActivate
+    autocmd Filetype python,javascript,typescript,markdown,php,css,vue,vim :AnyFoldActivate
     " let anyfold_fold_comments=1
     "
     " Vim's fold commands:
     " zf{motion} or {Visual}zf - create a manual fold
-    " za - open/close current fold
-    " zR - open all folds
-    " zM - close all folds
+    " za - open/close current fold, zA - recursively
+    "   zo - open, zc - close
+    "   zO / zC - recursively
+    " zR - open all folds, zr - reduce folds 1-level
+    " zM - close all folds, zm - increase folds 1-level
     "
     " Navigate between blocks:
     " [[ / ]] - beginning / end of the current fold
@@ -41,9 +44,15 @@
     "
     " Unfolds the line in which the cursor is located when opening a file
     autocmd User anyfoldLoaded normal zv
+    " autocmd User anyfoldLoaded hi Folded guifg=#6AC8B1
+    autocmd User anyfoldLoaded hi Folded guifg=#6AB3C8
+    " autocmd User anyfoldLoaded hi Folded guifg=#4592EF
 
     " Cycle open and closed folds and nested folds - <CR> / <BS>
-    " Plug 'arecarn/vim-fold-cycle'
+    Plug 'arecarn/vim-fold-cycle'
+
+    " hi Folded term=NONE cterm=NONE guifg=NONE
+    " hi Folded ctermbg=242
 
   " :Obsess [file_name] - create new session
   " :Obsess [dir_name] - create new session under dir_name/Session.vim

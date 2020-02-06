@@ -75,13 +75,29 @@ if has('nvim')
       call SendCommand([join(GetVisualSelection(), " ")])
   endfunction
 
-  autocmd FileType c,cpp,php,python,javascript,sql,sh nnoremap <buffer> <CR> :<C-u>call SendCommandCurrentLine()<CR>
-  autocmd FileType c,cpp,php,python,javascript,sql,sh xnoremap <buffer> <CR> :<C-u>call SendCommandVisualSelection()<CR>
-  " Useful in ipdb where multi-line input is not supported, this mapping can
-  " be used to send multi-line statement,
-  " see also discussion here https://github.com/randy3k/SendCode/issues/39,
-  " this is what they call "fake multi-line" mode:
-  autocmd FileType c,cpp,php,python,javascript,sql xnoremap <buffer> <leader><CR> :<C-u>call SendCommandVisualSelectionAsLine()<CR>
+  " <CR> is mapped to folds open / close by default
+  " to enable term mappings, do :SetupTerm before using them
+  " autocmd FileType c,cpp,php,python,javascript,sql,sh nnoremap <buffer> <CR> :<C-u>call SendCommandCurrentLine()<CR>
+  " autocmd FileType c,cpp,php,python,javascript,sql,sh xnoremap <buffer> <CR> :<C-u>call SendCommandVisualSelection()<CR>
+  " " Useful in ipdb where multi-line input is not supported, this mapping can
+  " " be used to send multi-line statement,
+  " " see also discussion here https://github.com/randy3k/SendCode/issues/39,
+  " " this is what they call "fake multi-line" mode:
+  " autocmd FileType c,cpp,php,python,javascript,sql xnoremap <buffer> <leader><CR> :<C-u>call SendCommandVisualSelectionAsLine()<CR>
+
+  " Do :SetupTerm to enable terminal mappings for "Enter" (used for folds by
+  " default)
+  function! SetupTermMappings()
+    nnoremap <buffer> <CR> :<C-u>call SendCommandCurrentLine()<CR>
+    xnoremap <buffer> <CR> :<C-u>call SendCommandVisualSelection()<CR>
+    " Useful in ipdb where multi-line input is not supported, this mapping can
+    " be used to send multi-line statement,
+    " see also discussion here https://github.com/randy3k/SendCode/issues/39,
+    " this is what they call "fake multi-line" mode:
+    xnoremap <buffer> <leader><CR> :<C-u>call SendCommandVisualSelectionAsLine()<CR>
+  endfunction
+  command! SetupTerm :call SetupTermMappings()
+
 endif
 
 " Filebrowser
