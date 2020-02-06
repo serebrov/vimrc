@@ -42,8 +42,8 @@ function! FormatPyJson()
   exe "'<,'>!python -m json.tool"
 endfunction
 
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
-Plug 'editorconfig/editorconfig-vim'
+" let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+" Plug 'editorconfig/editorconfig-vim'
 
 " Run :Prettier to format the file, release/1.x branch has plugins (php,
 " python support)
