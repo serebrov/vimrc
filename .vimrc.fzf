@@ -34,12 +34,18 @@ Plug 'junegunn/fzf.vim'
 noremap <Leader>f :FZF<CR>
 noremap <Leader>t :Tags<CR>
 inoremap <Leader>l :Lines<CR>
+
 " Complete lines with FZF
 imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Search across all files
 noremap <Leader>a :Ag<CR>
+
 " " See also: https://github.com/junegunn/fzf/wiki/examples
 " " See also: https://github.com/D630/fzf-contrib
 " " Similar: https://github.com/garybernhardt/selecta
+
+" Most recent files menu.
 command! FZFMru call fzf#run({
           \'source': NeomruHistory(),
           \'sink' : 'e ',
@@ -50,15 +56,18 @@ function! NeomruHistory()
     "return "ag -i " . a:l . " | sed 's@\\(.[^:]*\\):\\(.[^:]*\\):\\(.*\\)@\\3:\\2:\\1@' "
 endfunction
 noremap <Leader>fm :FZFMru<CR>
+
 " Show FZF suggestions inside the active window instead of creating separate one (default).
 let g:fzf_layout = { 'window': 'enew' }
 
 " Open list of buffers
 command! -bang Buffers call fzf#run(fzf#wrap('buffers',
     \ {'source': map(range(1, bufnr('$')), 'bufname(v:val)')}, <bang>0))
+
 " Locate any file on the filesystem - :LocateFZF .vimrc
 command! -nargs=1 -bang LocateFZF call fzf#run(fzf#wrap(
     \ {'source': 'locate <q-args>', 'options': '-m'}, <bang>0))
+
 " Jump to tags with :Tags
 function! s:tags_sink(line)
   let parts = split(a:line, '\t\zs')
@@ -68,7 +77,6 @@ function! s:tags_sink(line)
   execute excmd
   let &magic = magic
 endfunction
-
 function! s:tags()
   if empty(tagfiles())
     echohl WarningMsg
@@ -87,6 +95,5 @@ function! s:tags()
   \ 'down':    '40%',
   \ 'sink':    function('s:tags_sink')})
 endfunction
-
 command! Tags call s:tags()
 
