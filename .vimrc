@@ -26,10 +26,27 @@
     " Fold anything that is structured into indented blocks.
     " Quickly navigate between blocks.
     Plug 'pseewald/vim-anyfold'
+    " set foldmethod=syntax
     " let anyfold_activate=1  " Note: it conflicts with Magit buffer
-    autocmd Filetype python,javascript,typescript,markdown,php,css,vue,vim :AnyFoldActivate
     " let anyfold_fold_comments=1
-    "
+    autocmd Filetype php,css,vue,vim :AnyFoldActivate
+
+    " From 'pangloss/vim-javascript' readme
+    augroup javascript_folding
+        au!
+        au FileType javascript setlocal foldmethod=syntax
+        au FileType typescript setlocal foldmethod=syntax
+    augroup END
+
+    " python folding
+    " let g:SimpylFold_docstring_preview = 1
+    " Plug 'tmhedberg/SimpylFold'
+
+    " let g:coiled_snake_set_foldtext = 0
+    Plug 'kalekundert/vim-coiled-snake'
+    " Recommended to make folding faster.
+    Plug 'Konfekt/FastFold'
+
     " Vim's fold commands:
     " zf{motion} or {Visual}zf - create a manual fold
     " za - open/close current fold, zA - recursively
@@ -39,14 +56,17 @@
     " zM - close all folds, zm - increase folds 1-level
     "
     " Navigate between blocks:
+    " zj / zk - next / prev fold
     " [[ / ]] - beginning / end of the current fold
     " ]k / [j - end of prev block / beginning of the next block
     "
     " Unfolds the line in which the cursor is located when opening a file
     autocmd User anyfoldLoaded normal zv
-    " autocmd User anyfoldLoaded hi Folded guifg=#6AC8B1
-    autocmd User anyfoldLoaded hi Folded guifg=#6AB3C8
+    " hi Folded guifg=#6AC8B1
     " autocmd User anyfoldLoaded hi Folded guifg=#4592EF
+    " autocmd User anyfoldLoaded hi Folded guifg=#6AB3C8
+    autocmd User anyfoldLoaded hi Folded guifg=#608cc3
+    autocmd User Filetype python hi Folded guifg=#608cc3
 
     " Cycle open and closed folds and nested folds - <CR> / <BS>
     Plug 'arecarn/vim-fold-cycle'
