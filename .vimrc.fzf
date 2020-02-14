@@ -46,16 +46,17 @@ noremap <Leader>a :Ag<CR>
 " " Similar: https://github.com/garybernhardt/selecta
 
 " Most recent files menu.
-command! FZFMru call fzf#run({
-          \'source': NeomruHistory(),
-          \'sink' : 'e ',
-          \'options' : '-m',
-          \})
-function! NeomruHistory()
-    return "sed '1d' " . $HOME . "/.vim/tmp/cache/neomru/file"
-    "return "ag -i " . a:l . " | sed 's@\\(.[^:]*\\):\\(.[^:]*\\):\\(.*\\)@\\3:\\2:\\1@' "
-endfunction
-noremap <Leader>fm :FZFMru<CR>
+" command! FZFMru call fzf#run({
+"           \'source': NeomruHistory(),
+"           \'sink' : 'e ',
+"           \'options' : '-m',
+"           \})
+" function! NeomruHistory()
+"     return "sed '1d' " . $HOME . "/.vim/tmp/cache/neomru/file"
+"     "return "ag -i " . a:l . " | sed 's@\\(.[^:]*\\):\\(.[^:]*\\):\\(.*\\)@\\3:\\2:\\1@' "
+" endfunction
+" noremap <Leader>fm :FZFMru<CR>
+noremap <Leader>fm :History<CR>
 
 " Show FZF suggestions inside the active window instead of creating separate one (default).
 let g:fzf_layout = { 'window': 'enew' }
