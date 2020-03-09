@@ -175,9 +175,9 @@ if has('nvim')
   " nnoremap <F5> :call LanguageClient_contextMenu()<CR>
   " " Or map each action separately
   " nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-  " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-  " nnoremap <silent> gi :call LanguageClient#textDocument_implementation()<CR>
-  " nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
+  " nnoremap <silent> gD :call LanguageClient#textDocument_definition()<CR>
+  " nnoremap <silent> gI :call LanguageClient#textDocument_implementation()<CR>
+  " nnoremap <silent> gR :call LanguageClient#textDocument_references()<CR>
   " nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
   " " requires
@@ -196,11 +196,12 @@ if has('nvim')
   set signcolumn=yes
 
   " Tags: LanguageClient, Langserver
-  " :CocInstall coc-tsserver coc-rls coc-pyls coc-json coc-html coc-css
+  " :CocInstall coc-tsserver coc-python coc-json coc-html coc-css
   "             coc-vetur (vue.js)
   "             coc-yaml coc-highlight
   "             coc-snippets (works with UltiSnips snippets)
   "             coc-phpls
+  "             coc-rls  # rust
   " :CocConfig to edit config
   "" Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -239,9 +240,9 @@ if has('nvim')
   nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
   " Remap keys for gotos
-  nmap <silent> gd <Plug>(coc-definition)
-  nmap <silent> gy <Plug>(coc-type-definition)
-  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gD <Plug>(coc-definition)
+  nmap <silent> gY <Plug>(coc-type-definition)
+  nmap <silent> gI <Plug>(coc-implementation)
   " shows references list and preview buffer, go over results with j/k
   nmap <silent> gr <Plug>(coc-references)
 
