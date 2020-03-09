@@ -96,7 +96,7 @@ if has('nvim')
     " this is what they call "fake multi-line" mode:
     xnoremap <buffer> <leader><CR> :<C-u>call SendCommandVisualSelectionAsLine()<CR>
   endfunction
-  command! SetupTerm :call SetupTermMappings()
+  command! TermSetup :call SetupTermMappings()
 
 endif
 
