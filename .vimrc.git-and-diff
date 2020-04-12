@@ -57,6 +57,12 @@ Plug 'rbong/vim-flog'
 Plug 'kablamo/vim-git-log'
 
 " Shows +/- for git changes
+" Additional features:
+" - :SignifyDiff - show diff for current file (this can also be done with :Gsplitdiff)
+" - :SignifyHunkDiff - show inline diff for current change under cursor
+" - :SignifyHunkUndo - undo current change
+" - :SignifyFold - fold code, keep only changes visible
+" - :SignifyToggleHighlight - toggle diff higlight
 Plug 'mhinz/vim-signify'
 
 "   :DirDiff <A:Src Directory> <B:Src Directory>
