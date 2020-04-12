@@ -34,6 +34,28 @@ Plug 'tpope/vim-fugitive'
 " Enables Github for :Gbrowse (open file on github)
 Plug 'tpope/vim-rhubarb'
 
+" :Flog - git log viewer, based on fugitive
+Plug 'rbong/vim-flog'
+
+" :GitLog - git log viewer, based on fugitive
+"  Here are some commands you can use in the browser:
+"  - d View the side by side diff of any file by putting your cursor on that line and typing d (for diff).
+"  - <cr> View the diffstat from git show $revision for that commit.
+"  - f Move your cursor to the first filename in the next commit.
+"  - F Move your cursor to the first filename in the previous commit.
+"  - q Quit. Closes all the GitLog windows and buffers.
+"      To quickly exit out of a side by side diff and return to the 'GitLog' window, type q.
+" There is also :Ribbon command to review new changes arrived after pull:
+"  - M Load more
+"  - First mark your place with `:RibbonSave`
+"    This will place a tag named __ribbon at origin/master. Basically you are bookmarking our current spot with a ribbon.
+"  - Pull changes `:Git pull`
+"  - To review those changes use the following command: `:Ribbon`
+" This will open a window titled 'Ribbon' with the log of changes.
+" see http://gitready.com/advanced/2011/10/21/ribbon-and-catchup-reading-new-commits.html
+"
+Plug 'kablamo/vim-git-log'
+
 " Shows +/- for git changes
 Plug 'mhinz/vim-signify'
 
