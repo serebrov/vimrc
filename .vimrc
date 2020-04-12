@@ -629,7 +629,10 @@ nnoremap gB :ls<CR>:sbuffer<Space>
 
   " move to and open if not exists
   " http://www.agillo.net/simple-vim-window-management/
-  function! WinMove(key)
+  " Note: the `range` is needed to prevent the function invocation multiple
+  " times when there is a visual selection (by default, the function is called
+  " once for every line, which leads to multiple splits created).
+  function! WinMove(key) range
     let t:curwin = winnr()
     exec "wincmd ".a:key
     if (t:curwin == winnr()) "we havent moved
