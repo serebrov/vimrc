@@ -58,7 +58,9 @@ autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.less,*.scss,*.vue,*.yaml,*.htm
 " The prettier/plugin-python is marked as deprecated, page says
 " to use black instead, see https://github.com/prettier/plugin-python
 " requires ``
-Plug 'psf/black'
+" Plug 'psf/black'
+" Temporary pin version, see https://github.com/psf/black/issues/1293
+Plug 'psf/black', { 'tag': '19.10b0' }
 autocmd BufWritePre *.py execute ':Black'
 
 " Syntax checker
