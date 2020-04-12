@@ -2,6 +2,10 @@
   set nocompatible " explicitly get out of vi-compatible mode
   " filetype off
 
+  " Needed at least for nvim to correctly work with unicode
+  " see https://github.com/neovim/neovim/issues/5683#issuecomment-420833679
+  lang en_US.UTF-8
+
   call plug#begin('~/.vim/plugged')
 
   " sensible defaults
