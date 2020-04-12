@@ -34,6 +34,12 @@
     " Open all folds:
     set foldlevel=0
     " set foldlevel=999
+    "
+    " Note: coc.nvim also has folding support, but it doesn't work for python
+    " and vue at the moment.
+    " To use coc, do:
+    " set foldmethod=manual
+    " :Fold
 
     " Generic folding mechanism and motion based on indentation.
     " Fold anything that is structured into indented blocks.

@@ -197,6 +197,18 @@ if has('nvim')
   " always show signcolumns
   set signcolumn=yes
 
+  " Coc commands summary:
+  " - C-n / C-p, TAB - completion
+  " - gD - go to definition, gY - type definition, gI - implementation
+  " - gr - find references
+  " - K - show documentation
+  " - Refactorings:
+  "   - <Leader>rn - rename
+  "   - <Leader>ac = code action (extract variable, method, etc)
+  " - <Leader>if - format selected region
+  " - <Leader>qf - autofix problem on current line
+  " - [c / ]c - navigate errors
+  "
   " Tags: LanguageClient, Langserver
   " :CocInstall coc-tsserver coc-python coc-json coc-html coc-css
   "             coc-vetur (vue.js)
@@ -372,16 +384,6 @@ endif
 " let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
 " repository of snippets
 Plug 'honza/vim-snippets'
-
-"""""" Markdown
-Plug 'plasticboy/vim-markdown'
-" Plug 'tpope/vim-markdown'
-" Markup files preview: <Leader>P
-" Plug 'greyblake/vim-preview'
-" nnoremap <Leader>pm :Preview<CR>
-" let g:PreviewBrowsers='google-chrome'
-
-" Plug 'suan/vim-instant-markdown'
 
 """""" PHP
 " php completion - it should be copied to autoload/phpcomplete.vim
