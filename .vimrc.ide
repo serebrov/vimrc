@@ -205,9 +205,11 @@ if has('nvim')
   " - Refactorings:
   "   - <Leader>rn - rename
   "   - <Leader>ac = code action (extract variable, method, etc)
-  " - <Leader>if - format selected region
+  " - <Leader>if - format selected region, :Format - format current buffer
   " - <Leader>qf - autofix problem on current line
+  " - :Fold - fold current buffer
   " - [c / ]c - navigate errors
+  " - :CocList - manage coc (extensions, commands, etc)
   "
   " Tags: LanguageClient, Langserver
   " :CocInstall coc-tsserver coc-python coc-json coc-html coc-css
