@@ -61,6 +61,8 @@
     " let g:SimpylFold_docstring_preview = 1
     " Plug 'tmhedberg/SimpylFold'
 
+    Plug 'masukomi/vim-markdown-folding'
+
     " let g:coiled_snake_set_foldtext = 0
     Plug 'kalekundert/vim-coiled-snake'
     " Recommended to make folding faster.
