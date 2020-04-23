@@ -1,3 +1,1 @@
-{ "minimum-stability": "dev", "require": {
-        "felixfbecker/language-server": "dev-master"
-    } }
+{ "minimum-stability": "dev", "require": { } }

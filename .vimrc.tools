@@ -13,7 +13,7 @@ Plug 'Shougo/vimshell.vim'
 
 " Wakatime
 " https://wakatime.com
-Plug 'wakatime/vim-wakatime'
+" Plug 'wakatime/vim-wakatime'
 
 if has('nvim')
   " terminal scrollback buffer size
@@ -96,7 +96,7 @@ if has('nvim')
     " this is what they call "fake multi-line" mode:
     xnoremap <buffer> <leader><CR> :<C-u>call SendCommandVisualSelectionAsLine()<CR>
   endfunction
-  command! SetupTerm :call SetupTermMappings()
+  command! TermSetup :call SetupTermMappings()
 
 endif
 

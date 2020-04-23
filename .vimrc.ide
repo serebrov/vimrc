@@ -58,7 +58,9 @@ autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.less,*.scss,*.vue,*.yaml,*.htm
 " The prettier/plugin-python is marked as deprecated, page says
 " to use black instead, see https://github.com/prettier/plugin-python
 " requires ``
-Plug 'ambv/black', { 'do': 'pip3 install --user black' }
+" Plug 'psf/black'
+" Temporary pin version, see https://github.com/psf/black/issues/1293
+Plug 'psf/black', { 'tag': '19.10b0' }
 autocmd BufWritePre *.py execute ':Black'
 
 " Syntax checker
@@ -175,9 +177,9 @@ if has('nvim')
   " nnoremap <F5> :call LanguageClient_contextMenu()<CR>
   " " Or map each action separately
   " nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-  " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-  " nnoremap <silent> gi :call LanguageClient#textDocument_implementation()<CR>
-  " nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
+  " nnoremap <silent> gD :call LanguageClient#textDocument_definition()<CR>
+  " nnoremap <silent> gI :call LanguageClient#textDocument_implementation()<CR>
+  " nnoremap <silent> gR :call LanguageClient#textDocument_references()<CR>
   " nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
   " " requires
@@ -195,12 +197,27 @@ if has('nvim')
   " always show signcolumns
   set signcolumn=yes
 
+  " Coc commands summary:
+  " - C-n / C-p, TAB - completion
+  " - gD - go to definition, gY - type definition, gI - implementation
+  " - gr - find references
+  " - K - show documentation
+  " - Refactorings:
+  "   - <Leader>rn - rename
+  "   - <Leader>ac = code action (extract variable, method, etc)
+  " - <Leader>if - format selected region, :Format - format current buffer
+  " - <Leader>qf - autofix problem on current line
+  " - :Fold - fold current buffer
+  " - [c / ]c - navigate errors
+  " - :CocList - manage coc (extensions, commands, etc)
+  "
   " Tags: LanguageClient, Langserver
-  " :CocInstall coc-tsserver coc-rls coc-pyls coc-json coc-html coc-css
+  " :CocInstall coc-tsserver coc-python coc-json coc-html coc-css
   "             coc-vetur (vue.js)
   "             coc-yaml coc-highlight
   "             coc-snippets (works with UltiSnips snippets)
   "             coc-phpls
+  "             coc-rls  # rust
   " :CocConfig to edit config
   "" Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -239,9 +256,9 @@ if has('nvim')
   nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
   " Remap keys for gotos
-  nmap <silent> gd <Plug>(coc-definition)
-  nmap <silent> gy <Plug>(coc-type-definition)
-  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gD <Plug>(coc-definition)
+  nmap <silent> gY <Plug>(coc-type-definition)
+  nmap <silent> gI <Plug>(coc-implementation)
   " shows references list and preview buffer, go over results with j/k
   nmap <silent> gr <Plug>(coc-references)
 
@@ -369,16 +386,6 @@ endif
 " let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
 " repository of snippets
 Plug 'honza/vim-snippets'
-
-"""""" Markdown
-Plug 'plasticboy/vim-markdown'
-" Plug 'tpope/vim-markdown'
-" Markup files preview: <Leader>P
-" Plug 'greyblake/vim-preview'
-" nnoremap <Leader>pm :Preview<CR>
-" let g:PreviewBrowsers='google-chrome'
-
-" Plug 'suan/vim-instant-markdown'
 
 """""" PHP
 " php completion - it should be copied to autoload/phpcomplete.vim

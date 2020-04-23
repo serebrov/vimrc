@@ -1,6 +1,19 @@
 " Plugins {{{
+" Plug commands:
+"  - PlugInstall [name ...] [#threads] 	Install plugins
+"  - PlugUpdate [name ...] [#threads] 	Install or update plugins
+"  - PlugClean[!] 	Remove unlisted plugins (bang version will clean without prompt)
+"  - PlugUpgrade 	Upgrade vim-plug itself
+"  - PlugStatus 	Check the status of plugins
+"  - PlugDiff 	Examine changes from the previous update and the pending changes
+"  - PlugSnapshot[!] [output path] 	Generate script for restoring the current snapshot of the plugins
+"
   set nocompatible " explicitly get out of vi-compatible mode
   " filetype off
+
+  " Needed at least for nvim to correctly work with unicode
+  " see https://github.com/neovim/neovim/issues/5683#issuecomment-420833679
+  lang en_US.UTF-8
 
   call plug#begin('~/.vim/plugged')
 
@@ -21,6 +34,12 @@
     " Open all folds:
     set foldlevel=0
     " set foldlevel=999
+    "
+    " Note: coc.nvim also has folding support, but it doesn't work for python
+    " and vue at the moment.
+    " To use coc, do:
+    " set foldmethod=manual
+    " :Fold
 
     " Generic folding mechanism and motion based on indentation.
     " Fold anything that is structured into indented blocks.
@@ -41,6 +60,8 @@
     " python folding
     " let g:SimpylFold_docstring_preview = 1
     " Plug 'tmhedberg/SimpylFold'
+
+    Plug 'masukomi/vim-markdown-folding'
 
     " let g:coiled_snake_set_foldtext = 0
     Plug 'kalekundert/vim-coiled-snake'
@@ -625,7 +646,10 @@ nnoremap gB :ls<CR>:sbuffer<Space>
 
   " move to and open if not exists
   " http://www.agillo.net/simple-vim-window-management/
-  function! WinMove(key)
+  " Note: the `range` is needed to prevent the function invocation multiple
+  " times when there is a visual selection (by default, the function is called
+  " once for every line, which leads to multiple splits created).
+  function! WinMove(key) range
     let t:curwin = winnr()
     exec "wincmd ".a:key
     if (t:curwin == winnr()) "we havent moved
