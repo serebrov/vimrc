@@ -5,5 +5,5 @@ sudo apt-get update
 sudo apt-get install neovim
 
 sudo apt-get install libffi-dev
-pip2 install --user neovim
-pip3 install --user neovim
+# pip2 install --user neovim
+pip install --user neovim
