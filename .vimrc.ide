@@ -242,6 +242,8 @@ if has('nvim')
     return !col || getline('.')[col - 1]  =~# '\s'
   endfunction
 
+  set statusline^=%{coc#status()} 
+
   let g:coc_snippet_next = '<tab>'
 
   " Use <c-space> for trigger completion.
