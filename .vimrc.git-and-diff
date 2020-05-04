@@ -34,6 +34,17 @@ Plug 'tpope/vim-fugitive'
 " Enables Github for :Gbrowse (open file on github)
 Plug 'tpope/vim-rhubarb'
 
+" Commit browser, based on fugitive.
+" Useful to see the list of changes for the specific file.
+"
+" Execute :Extradite in the file buffer.
+" <CR> edits the revision on the current line in a fugitive-buffer.
+" oh, ov, and ot edit the revision under the cursor in a new horizontal split / vertical split / tab respectively.
+" dh, dv, and dt diff the current file against the revision under the cursor in a new horizontal split / vertical split / tab respectively.
+" t toggles the visibility of the file diff buffer.
+" q closes the Extradite buffer.
+Plug 'int3/vim-extradite'
+
 " :Flog - git log viewer, based on fugitive
 Plug 'rbong/vim-flog'
 
