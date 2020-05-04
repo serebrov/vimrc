@@ -717,6 +717,28 @@ nnoremap gB :ls<CR>:sbuffer<Space>
   " :%!jq '.'
 
 " }}}
+" Tabs navigation {{{
+" Go to tab by number
+noremap <leader>1 1gt
+noremap <leader>2 2gt
+noremap <leader>3 3gt
+noremap <leader>4 4gt
+noremap <leader>5 5gt
+noremap <leader>6 6gt
+noremap <leader>7 7gt
+noremap <leader>8 8gt
+noremap <leader>9 :tablast<cr>
+
+" Go to last active tab
+" Note: would be good to have i3-like benavior, where using
+" the same number switches to the previous workspace if we
+" are on that number already, for example,
+" I am on workspace 3 then win+1 will go to space 1 and
+" win+1 again will go back to space 3.
+au TabLeave * let g:lasttab = tabpagenr()
+nnoremap <leader>0 :exe "tabn ".g:lasttab<cr>
+vnoremap <leader>0 :exe "tabn ".g:lasttab<cr>
+" }}}
 
 " Save and launch vim {{{
   " default: '100,<50,s10,h
