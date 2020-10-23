@@ -11,6 +11,8 @@
 "   :CtrlSF mysearch
 Plug 'dyng/ctrlsf.vim'
 let g:ctrlsf_auto_close = 0
+
+nnoremap <Leader>cf :tabnew<CR>:CtrlSF
 " Similar to CtrlSF:
 "   vim-swoop - find/replace occurences in open buffers
 "   Plug 'pelodelfuego/vim-swoop'
