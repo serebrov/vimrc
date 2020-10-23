@@ -722,6 +722,10 @@ nnoremap gB :ls<CR>:sbuffer<Space>
 
 " }}}
 " Tabs navigation {{{
+" New tab and close tab
+nnoremap <Leader>tn :tabnew<cr>
+nnoremap <Leader>tc :tabclose<cr>
+
 " Go to tab by number
 noremap <leader>1 1gt
 noremap <leader>2 2gt
