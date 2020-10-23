@@ -77,6 +77,13 @@ function! FormatPyJson()
   exe "'<,'>!python -m json.tool"
 endfunction
 
+" Sort the whole file, no keys sorting
+" python 2 version sorts by default, python 3 needs --sort-keys argument for
+" that (we don't use it, so no sorting)
+function! ReformatPyJson()
+  exe "%!python3 -m json.tool"
+endfunction
+
 " let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " Plug 'editorconfig/editorconfig-vim'
 
@@ -90,13 +97,61 @@ let g:prettier#autoformat = 0
 " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
 autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.less,*.scss,*.vue,*.yaml,*.html Prettier
 
+" TODO: there is a problem with python linting setup (both Coc-based and Neomake):
+" - I have flake8 config under `backend` folder and flake doesn't see it when
+"   run by coc or neomake
+"   - simple solution: create .flake8 config in the root project folder
+"   - ideal solution: config is found automatically by traversing up from the
+"   current file directory
+if has('nvim')
+  " There was a problem with Neovim not seeing python
+  let g:python2_host_prog = '/usr/bin/python'
+  let g:python3_host_prog = '/usr/bin/python3'
+endif
+
 " The prettier/plugin-python is marked as deprecated, page says
 " to use black instead, see https://github.com/prettier/plugin-python
 " requires ``
 " Plug 'psf/black'
 " Temporary pin version, see https://github.com/psf/black/issues/1293
-Plug 'psf/black', { 'tag': '19.10b0' }
-autocmd BufWritePre *.py execute ':Black'
+" Plug 'psf/black', { 'tag': '19.10b0' }
+" Plug 'psf/black'
+"
+" Note: Had a "No module named 'regex._regex'; 'regex' is not a package" error
+" solved by running 'pip3 install --force-reinstall regex'
+" I suspect this was caused by combination of black setup (it uses own regex)
+" and my setup for python (see code below `if has("python")...`.
+" The `pip3 install` command above was executed on the host, no active virtual
+" environment (so this is for the system python).
+" When project venv is activated - still getting the same error, fixed by
+" also adding
+"   alias python=/usr/local/bin/python3
+" to ~/.zshrc
+" Also removed and re-created black venv:
+"   cd ~/.vim
+"   rm -r black_venv
+"   virtualenv -p python3 black_venv
+"   source black_venv/bin/activate
+"   pip install --upgrade git+https://github.com/psf/black.git
+" let g:black_virtualenv = '~/.vim/black_venv'
+" Plug 'psf/black'  " , { 'branch': 'stable' }
+" Black plugin is completely broken for me after brew's python update
+" I tried to reinstall it, recreate venvs, etc - it still doesn't work
+" throwing different errors (not being able to find black, can not import
+" _ast3, can not find 'find_pyproject_toml' attribute)
+" Somehow, I managed to fix it for a few days and then it was broken
+" again.
+" At the same time, command line tool (:!black) works well, so I am
+" using that instead, with custom implementation of the :Black command:
+
+function! RunBlack()
+  silent :!black %
+  :e
+endfunction
+command! Black :call RunBlack()
+
+autocmd BufWritePost *.py execute ':Black'
+" autocmd BufWritePre *.py execute ':Black'
 
 " Syntax checker
 " Python - pip install flake8 (pyflakes + pep8)
@@ -125,38 +180,36 @@ autocmd BufWritePre *.py execute ':Black'
 " For flake8, to disable the error check use comment # noqa
 " to disable the specific error # noqa: F401
 "
-if has('nvim')
-  " There was a problem with Neovim not seeing python
-  let g:python2_host_prog = '/usr/bin/python'
-  let g:python3_host_prog = '/usr/bin/python3'
-  " To get the errors, save the file or run :Neomake
-  " then open the local error list with :lopen to see the
-  " errors (and it is possible to navigate via ]l [l - this is from unimpaired
-  Plug 'benekastah/neomake'
-  let g:neomake_css_enabled_makers = ['csslint']
-  " Available checkers: flake8 pep257 pep8 pyflakes pylama pylint python vulture py3kwarn
-  " To run checker manually use :Neomake vulture
-  " let g:neomake_python_enabled_makers = ['pep257', 'flake8', 'mypy']
-  let g:neomake_python_enabled_makers = ['flake8', 'mypy']
-  let g:neomake_open_list = 2
-  "let g:neomake_python_enabled_makers = ['python', 'flake8', 'frosted', 'pylint', 'pep257']
-  autocmd! BufWritePost * Neomake
-else
-  " Syntastic
-  Plug 'scrooloose/syntastic'
-  " It places errors into local error list which can be viewed with :Errors
-  " With unimpaired plugin you can move to the next / prev error with ]l / [l
-  "
-  " PHP - PHPCS
-  " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
-  " it is also possible to configure options for each checker, see
-  " syntastic helt - "syntastic-config-makeprg"
-  let g:syntastic_check_on_open=0
-  let g:syntastic_css_checkers = ['csslint']
-  let g:syntastic_javascript_checkers = ['eslint', 'flow', 'jshint']
-  " Available checkers: flake8 pep257 pep8 pyflakes pylint python
-  let g:syntastic_python_checkers = ['python', 'flake8']
-endif
+" coc has linting support too, see coc-settings.json
+" if has('nvim')
+"   " To get the errors, save the file or run :Neomake
+"   " then open the local error list with :lopen to see the
+"   " errors (and it is possible to navigate via ]l [l - this is from unimpaired
+"   Plug 'benekastah/neomake'
+"   let g:neomake_css_enabled_makers = ['csslint']
+"   " Available checkers: flake8 pep257 pep8 pyflakes pylama pylint python vulture py3kwarn
+"   " To run checker manually use :Neomake vulture
+"   " let g:neomake_python_enabled_makers = ['pep257', 'flake8', 'mypy']
+"   let g:neomake_python_enabled_makers = ['flake8', 'mypy']
+"   let g:neomake_open_list = 2
+"   "let g:neomake_python_enabled_makers = ['python', 'flake8', 'frosted', 'pylint', 'pep257']
+"   autocmd! BufWritePost * Neomake
+" else
+"   " Syntastic
+"   Plug 'scrooloose/syntastic'
+"   " It places errors into local error list which can be viewed with :Errors
+"   " With unimpaired plugin you can move to the next / prev error with ]l / [l
+"   "
+"   " PHP - PHPCS
+"   " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
+"   " it is also possible to configure options for each checker, see
+"   " syntastic helt - "syntastic-config-makeprg"
+"   let g:syntastic_check_on_open=0
+"   let g:syntastic_css_checkers = ['csslint']
+"   let g:syntastic_javascript_checkers = ['eslint', 'flow', 'jshint']
+"   " Available checkers: flake8 pep257 pep8 pyflakes pylint python
+"   let g:syntastic_python_checkers = ['python', 'flake8']
+" endif
 
 " Use :CoverageShow to show file coverage for the current buffer.
 " Use :CoverageToggle to toggle coverage visibility for the current file.
@@ -478,6 +531,7 @@ python3 << EOF
 import os.path
 import sys
 import vim
+import regex as re
 if 'VIRTUAL_ENV' in os.environ:
   project_base_dir = os.environ['VIRTUAL_ENV']
   sys.path.insert(0, project_base_dir)
