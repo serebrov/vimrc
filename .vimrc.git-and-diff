@@ -24,6 +24,7 @@ Plug 'chrisbra/vim-diff-enhanced'
 " git support:
 " :Gedit, Gdiff, Gstatus, Gcommit, Gblame, Gmove, Gremove
 " :Ggrep, Glgrep, Glog, Gread, Gwrite, Gbrowse
+" :0Glog on a file to see versions for the specific file.
 " Search in a specific directory:
 " :Ggrep searchterm -- foldername | copen
 " Search specific file types:
