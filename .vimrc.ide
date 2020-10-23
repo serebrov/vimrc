@@ -3,6 +3,41 @@
 
 " similar: https://github.com/xolox/vim-easytags
 Plug 'joonty/vim-taggatron'
+
+let test#strategy = {
+  \ 'nearest': 'make',
+  \ 'file':    'dispatch',
+  \ 'suite':   'neovim',
+\}
+ 
+"# let g:test#javascript#jest#file_pattern = '\v(test|spec)\.(js|jsx|coffee|ts)$'
+"# function! test#javascript#jest#test_file(file) abort
+"#   return a:file =~# g:test#javascript#jest#file_pattern
+"# endfunction
+
+let test#javascript#runner = 'jest'
+let test#javascript#jest#executable = 'npm run test:unit'
+" let test#javascript#jest#executable = '../tools/local/frontend-cmd.sh npm run test:unit -- '
+" let g:test#javascript#jest#options = ''
+" let test#project_root = 'frontend' " projectroot#guess()
+
+" function! TypeScriptTransform(cmd) abort
+"   return substitute(a:cmd, '\v/(\S+)\.ts', '/\1.js', '')
+" endfunction
+" let g:test#custom_transformations          = {'typescript': function('TypeScriptTransform')}
+" let g:test#transformation                  = 'typescript'
+
+" Run tests from vim
+" these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
+" nmap <silent> t<C-n> :TestNearest<CR>
+" nmap <silent> t<C-f> :TestFile<CR>
+" nmap <silent> t<C-s> :TestSuite<CR>
+" nmap <silent> t<C-l> :TestLast<CR>
+" nmap <silent> t<C-g> :TestVisit<CR>
+Plug 'vim-test/vim-test'
+" Plug 'neomake/neomake'
+Plug 'tpope/vim-dispatch'
+
 " Taggatron {{{
 augroup MyAutoCmdTags
   let g:tagcommands = {
