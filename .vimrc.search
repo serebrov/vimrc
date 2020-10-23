@@ -28,7 +28,8 @@ nnoremap <Leader>cf :tabnew<CR>:CtrlSF
 "   Related: QFdo from Vimple (below)
 
 " always highlight matching html tags
-Plug 'Valloric/MatchTagAlways'
+" throws an error on some html files
+" Plug 'Valloric/MatchTagAlways'
 
 " rainbow parenthesis
 " Note: doesn't work for php due some specifics in the syntax file
