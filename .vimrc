@@ -525,7 +525,11 @@ nnoremap gB :ls<CR>:sbuffer<Space>
   noremap <leader>w :w<CR>
   noremap <leader>q :q<CR>
 
-  " jj or j+k as ESC
+  " mm to open the command line
+  " Note: this eats the 'm' mark, but I don't use marks too much
+  noremap mm :
+
+" jj or j+k as ESC
   " other options: Ctrl-[, Ctrl-C
   inoremap jj <Esc>
   inoremap jk <Esc>
