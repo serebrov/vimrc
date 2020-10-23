@@ -3,6 +3,7 @@
    "python.linting.flake8Enabled": true,
    "python.linting.mypyEnabled": true,
    "python.linting.enabled": true,
+   "python.jediEnabled": true,
    "languageserver": {
     "golang": {
       "command": "go-langserver",
@@ -12,11 +13,6 @@
         "diagnosticsEnabled": true,
         "lintTool": "golint"
       }
-    },
-    "phplang": {
-      "command": "php",
-      "args": ["~/.vim/vendor/felixfbecker/language-server/bin/php-language-server.php"],
-      "filetypes": ["php"]
     },
     "dockerfile": {
       "command": "docker-langserver",
