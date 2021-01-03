@@ -106,7 +106,7 @@ autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.less,*.scss,*.vue,*.yaml,*.htm
 if has('nvim')
   " There was a problem with Neovim not seeing python
   let g:python2_host_prog = '/usr/bin/python'
-  let g:python3_host_prog = '/usr/bin/python3'
+  let g:python3_host_prog = '/usr/local/bin/python3'
 endif
 
 " The prettier/plugin-python is marked as deprecated, page says
@@ -530,8 +530,7 @@ if has("python3")
 python3 << EOF
 import os.path
 import sys
-import vim
-import regex as re
+# import vim
 if 'VIRTUAL_ENV' in os.environ:
   project_base_dir = os.environ['VIRTUAL_ENV']
   sys.path.insert(0, project_base_dir)
