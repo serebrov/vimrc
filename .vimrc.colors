@@ -38,6 +38,21 @@ Plug 'ajgrf/parchment'
 " Run :SemanticHighlightToggle to toggle the effect on and off.
 Plug 'jaxbot/semantic-highlight.vim'
 
+" Fix the absurdly low constrast of nord-vim
+augroup nord-overrides
+  autocmd!
+  autocmd ColorScheme nord highlight Comment guifg=#7b88a1 gui=bold
+  autocmd ColorScheme nord highlight Folded guifg=#7b88a1
+  autocmd ColorScheme nord highlight FoldColumn guifg=#7b88a1
+augroup END
+
+augroup deep-space-overrides
+  autocmd!
+  autocmd ColorScheme deep-space highlight Comment guifg=#7b88a1 gui=bold
+  autocmd ColorScheme deep-space highlight Folded guifg=#7b88a1
+  autocmd ColorScheme deep-space highlight FoldColumn guifg=#7b88a1
+augroup END
+
 function! SetupColorscheme()
   if &diff
     " deep space looks very good in diff mode.
@@ -61,14 +76,15 @@ function! SetupColorscheme()
   else
   " if has('nvim')
     set background=dark
-    let g:deepspace_italics=1
-    colorscheme deep-space
+    set termguicolors
+    " let g:deepspace_italics=1
+    " colorscheme deep-space
     "
     " " Has solarized8, solarized8_flat, solarized8_high and solarized8_low variants
     " let g:solarized_visibility = "normal"
     " colorscheme solarized8_flat
     "
-    " colorscheme nord
+    colorscheme nord
     " colorscheme tender
     " colorscheme onehalfdark
     "
