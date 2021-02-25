@@ -702,11 +702,17 @@ nnoremap gB :ls<CR>:sbuffer<Space>
   "rotate
   map <leader>wr <C-W>r
 
+  "Shift arrows to resize
+  nmap <S-left>  :3wincmd <<cr>
+  nmap <S-right> :3wincmd ><cr>
+  nmap <S-up>    :3wincmd +<cr>
+  nmap <S-down>  :3wincmd -<cr>
+
   "arrows to resize
-  nmap <left>  :3wincmd <<cr>
-  nmap <right> :3wincmd ><cr>
-  nmap <up>    :3wincmd +<cr>
-  nmap <down>  :3wincmd -<cr>
+  nmap <left> gT
+  nmap <right> gt
+  nmap <up>    :tablast <cr>
+  nmap <down>  1gt
 
   "move windows
   map <Leader>h     :wincmd H<cr>
