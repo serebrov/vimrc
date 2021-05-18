@@ -144,14 +144,15 @@ endif
 " At the same time, command line tool (:!black) works well, so I am
 " using that instead, with custom implementation of the :Black command:
 
-function! RunBlack()
+function! RunBlackAndISort()
   silent :!black %
+  silent :!isort %
   :e
 endfunction
-command! Black :call RunBlack()
+command! BlackAndSort :call RunBlackAndISort()
 
-autocmd BufWritePost *.py execute ':Black'
-" autocmd BufWritePre *.py execute ':Black'
+autocmd BufWritePost *.py execute ':BlackAndSort'
+" autocmd BufWritePre *.py execute ':BlackAndSort'
 
 " Syntax checker
 " Python - pip install flake8 (pyflakes + pep8)
