@@ -42,7 +42,9 @@ Plug 'jaxbot/semantic-highlight.vim'
 augroup nord-overrides
   autocmd!
   autocmd ColorScheme nord highlight Comment guifg=#7b88a1 gui=bold
-  autocmd ColorScheme nord highlight Folded guifg=#7b88a1
+  " autocmd ColorScheme nord highlight Folded guifg=#7cb9e6 guibg=#2B303C
+  autocmd ColorScheme nord highlight Folded guifg=#81A1C1 guibg=#2B303C
+  " autocmd ColorScheme nord highlight Folded guifg=#A3BE8C guibg=#2B303C
   autocmd ColorScheme nord highlight FoldColumn guifg=#7b88a1
 augroup END
 
