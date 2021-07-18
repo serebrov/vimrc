@@ -89,6 +89,14 @@ endfunction
 
 " Run :Prettier to format the file, release/1.x branch has plugins (php,
 " python support)
+let g:prettier#config#tab_width = '2'
+let g:prettier#config#semi = 'false'
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#trailing_coma = 'all'
+let g:prettier#config#allow_parens = 'always'
+
+let g:prettier#config#print_width = '80'
+
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 " Default mapping is <Leader>p, I use that for paste from system clipboard.
 nmap <Leader><Leader>p <Plug>(Prettier)
