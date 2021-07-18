@@ -44,18 +44,18 @@
     " Generic folding mechanism and motion based on indentation.
     " Fold anything that is structured into indented blocks.
     " Quickly navigate between blocks.
-    Plug 'pseewald/vim-anyfold'
+    " Plug 'pseewald/vim-anyfold'
     " set foldmethod=syntax
     " let anyfold_activate=1  " Note: it conflicts with Magit buffer
     " let anyfold_fold_comments=1
-    autocmd Filetype php,css,vue,vim :AnyFoldActivate
+    " autocmd Filetype php,css,vue,vim :AnyFoldActivate
 
     " From 'pangloss/vim-javascript' readme
-    augroup javascript_folding
-        au!
-        au FileType javascript setlocal foldmethod=syntax
-        au FileType typescript setlocal foldmethod=syntax
-    augroup END
+    " augroup javascript_folding
+    "     au!
+    "     au FileType javascript setlocal foldmethod=syntax
+    "     au FileType typescript setlocal foldmethod=syntax
+    " augroup END
 
     " python folding
     " let g:SimpylFold_docstring_preview = 1
@@ -64,9 +64,9 @@
     Plug 'masukomi/vim-markdown-folding'
 
     " let g:coiled_snake_set_foldtext = 0
-    Plug 'kalekundert/vim-coiled-snake'
+    " Plug 'kalekundert/vim-coiled-snake'
     " Recommended to make folding faster.
-    Plug 'Konfekt/FastFold'
+    " Plug 'Konfekt/FastFold'
 
     " Vim's fold commands:
     " zf{motion} or {Visual}zf - create a manual fold
@@ -148,6 +148,68 @@
   Plug 'tpope/vim-scriptease'
 
   call plug#end()
+
+if has('nvim')
+
+" For Plug 'neovim/nvim-lspconfig'
+luafile ~/.vim/.vimrc.ide.lsp.lua
+
+" For Plug 'ojroques/nvim-lspfuzzy'
+lua << EOF
+require('lspfuzzy').setup {}
+EOF
+
+" For Plug 'nvim-treesitter/nvim-treesitter'
+set foldexpr=nvim_treesitter#foldexpr()
+augroup ts_folding
+    au!
+    au FileType javascript setlocal foldmethod=expr
+    au FileType typescript setlocal foldmethod=expr
+    au FileType python setlocal foldmethod=expr
+    au FileType vue setlocal foldmethod=expr
+augroup END
+
+lua << EOF
+  require'nvim-treesitter.configs'.setup {
+    ensure_installed = {
+      "javascript",
+      "typescript",
+      "vue",
+      "python",
+      "json",
+      "html",
+      "scss",
+      "yaml",
+    },
+    highlight = {
+      -- additional_vim_regex_highlighting = false,
+      -- custom_captures = {},
+      -- disable = { "markdown" },
+      enable = true,
+    },
+    incremental_selection = {
+      disable = {},
+      enable = true,
+      keymaps = {
+        init_selection = "gnn",
+        node_decremental = "grm",
+        node_incremental = "grn",
+        scope_incremental = "grc"
+      },
+    },
+    indent = {
+      disable = {},
+      enable = false,
+    },
+    matchup = {
+      disable = {},
+      enable = true,
+    }
+  }
+EOF
+
+endif
+
 
 " if has('nvim')
 "   " For nvim
@@ -380,7 +442,8 @@ nnoremap gB :ls<CR>:sbuffer<Space>
 
   set shortmess=aOstT        " shortens messages to avoid
                             " 'press a key' prompt
-  set statusline=[%n]%{fugitive#statusline()}%{coc#status()}%F\ %m%r%h%w\ [%L]\ [%{&ff}]%y%=[%p%%][%04l,%04v]
+  "set statusline=[%n]%{fugitive#statusline()}%{coc#status()}%F\ %m%r%h%w\ [%L]\ [%{&ff}]%y%=[%p%%][%04l,%04v]
+  set statusline=[%n]%{fugitive#statusline()}%{}%F\ %m%r%h%w\ [%L]\ [%{&ff}]%y%=[%p%%][%04l,%04v]
   "                |                         |   | | | |    |     |      |     |     |    |
   "                |                         |   | | | |    |     |      |     |     |    + current
   "                |                         |   | | | |    |     |      |     |     |       column
@@ -441,7 +504,8 @@ nnoremap gB :ls<CR>:sbuffer<Space>
 
 " Completions {{{
   "set completeopt=longest,menuone,preview " use a pop up menu for completions
-  set completeopt=menuone,longest,preview " use a pop up menu for completions
+  " set completeopt=menuone,longest,preview " use a pop up menu for completions
+  set completeopt=menuone,noinsert,noselect
   set complete=""             " what use for completions
   set complete+=.             " current buffer
   set complete+=t             " tags

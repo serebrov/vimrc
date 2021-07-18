@@ -11,11 +11,11 @@ Plug 'c0r73x/vimdir.vim'
 " If you set g:pf_autorun_delay to a negative value, you get two commands instead:
 " :PathfinderBegin: Set the start position. This still happens automatically when switching windows/tabs, or loading a new file.
 " :PathfinderRun: Set the target position and get a suggestion.
-if has('python3') && has('timers')
-  Plug 'danth/pathfinder.vim'
-else
-  echoerr 'pathfinder.vim is not supported on this Vim installation'
-endif
+" if has('python3') && has('timers')
+"   Plug 'danth/pathfinder.vim'
+" else
+"   echoerr 'pathfinder.vim is not supported on this Vim installation'
+" endif
 
 " Requires Nvim 0.5, can be run via docker:
 " docker run -it --rm brandoncc/vim-be-good:stable

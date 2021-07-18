@@ -239,7 +239,35 @@ if has('nvim')
   " always show signcolumns
   set signcolumn=yes
 
-  source ~/.vim/.vimrc.ide.coc
+  " source ~/.vim/.vimrc.ide.coc
+  " LSP client configurations
+  " :LspInfo - see diagnostics
+  " :LspStart <config_name> Start the requested server name. Will only successfully start if the command detects a root directory matching the current config. Pass autostart = false to your .setup{} call for a language server if you would like to launch clients solely with this command. Defaults to all servers matching current buffer filetype.
+  " :LspStop <client_id> Defaults to stopping all buffer clients.
+  " :LspRestart <client_id> Defaults to restarting all buffer clients.
+  Plug 'neovim/nvim-lspconfig'
+
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+  let g:completion_enable_snippet = 'UltiSnips'
+  Plug 'nvim-lua/completion-nvim'
+  " Use <Tab> and <S-Tab> to navigate through popup menu
+  inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+  " Display LSP references via fzf
+  " In addition, the plugin creates the following commands:
+  "  :LspDiagnostics <bufnr>: list diagnostics from given buffer (use 0 for current buffer)
+  "  :LspDiagnosticsAll: list diagnostics from all buffers
+  " By default the following FZF actions are available:
+  "  tab : select multiple entries
+  "  shift+tab : deselect an entry
+  "  ctrl-a : select all entries
+  "  ctrl-d : deselect all entries
+  "  ctrl-t : go to location in a new tab
+  "  ctrl-v : go to location in a vertical split
+  "  ctrl-x : go to location in a horizontal split
+  Plug 'ojroques/nvim-lspfuzzy'
 
   " Preview for substitute
   set inccommand=nosplit
@@ -252,7 +280,7 @@ else
 endif
 
 " Note: coc.nvim supports UlitSnips snippets from honza/vim-snippets
-" Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 " " Activate with TAB, better with autocompletion plugin,
 " " the UlitSnips adds entries marked [US]
 " " select the one you need and press <Tab>,
@@ -270,14 +298,11 @@ endif
 " let g:ycm_autoclose_preview_window_after_insertion = 1
 " let g:ycm_key_list_select_completion = []
 " let g:ycm_key_list_previous_completion = []
-" let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsJumpForwardTrigger="<tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-" let g:ultisnips_python_style="google"
-" let g:UltiSnipsExpandTrigger="<c-tab>"
-" let g:UltiSnipsListSnippets="<c-s-tab>"
-" let g:UltiSnipsJumpForwardTrigger="<c-tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-s-tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:ultisnips_python_style="google"
+let g:UltiSnipsExpandTrigger="<c-tab>"
+let g:UltiSnipsListSnippets="<c-s-tab>"
 " repository of snippets
 Plug 'honza/vim-snippets'
 

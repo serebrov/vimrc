@@ -37,14 +37,14 @@ nnoremap <Leader>cf :tabnew<CR>:CtrlSF
 " (https://github.com/vim-scripts/php.vim--Garvin) and (https://github.com/StanAngeloff/php.vim)
 " maybe this can be fixed?
 " see https://defuse.ca/blog/vim-rainbow-parentheses-work-in-php
-Plug 'kien/rainbow_parentheses.vim'
-augroup Rainbow
-  autocmd!
-  autocmd VimEnter * RainbowParenthesesToggle
-  autocmd Syntax * RainbowParenthesesLoadRound
-  autocmd Syntax * RainbowParenthesesLoadSquare
-  autocmd Syntax * RainbowParenthesesLoadBraces
-augroup END
+" Plug 'kien/rainbow_parentheses.vim'
+" augroup Rainbow
+"   autocmd!
+"   autocmd VimEnter * RainbowParenthesesToggle
+"   autocmd Syntax * RainbowParenthesesLoadRound
+"   autocmd Syntax * RainbowParenthesesLoadSquare
+"   autocmd Syntax * RainbowParenthesesLoadBraces
+" augroup END
 
 " Add abbreviations for all combinations
 " :Abolish {despa,sepe}rat{e,es,ed,ing,ely,ion,ions,or}  {despe,sepa}rat{}
