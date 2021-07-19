@@ -242,7 +242,9 @@ if has('nvim')
   " always show signcolumns
   set signcolumn=yes
 
+  " Disable in favor of nvim LSP client and nvim-lspconfig
   " source ~/.vim/.vimrc.ide.coc
+  
   " LSP client configurations
   " :LspInfo - see diagnostics
   " :LspStart <config_name> Start the requested server name. Will only successfully start if the command detects a root directory matching the current config. Pass autostart = false to your .setup{} call for a language server if you would like to launch clients solely with this command. Defaults to all servers matching current buffer filetype.

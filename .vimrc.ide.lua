@@ -74,3 +74,44 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
+
+-- " For Plug 'ojroques/nvim-lspfuzzy'
+require('lspfuzzy').setup {}
+
+-- For Plug 'nvim-treesitter/nvim-treesitter'
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {
+    "javascript",
+    "typescript",
+    "vue",
+    "python",
+    "json",
+    "html",
+    "scss",
+    "yaml",
+  },
+  highlight = {
+    -- additional_vim_regex_highlighting = false,
+    -- custom_captures = {},
+    -- disable = { "markdown" },
+    enable = true,
+  },
+  incremental_selection = {
+    disable = {},
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_decremental = "grm",
+      node_incremental = "grn",
+      scope_incremental = "grc"
+    },
+  },
+  indent = {
+    disable = {},
+    enable = false,
+  },
+  matchup = {
+    disable = {},
+    enable = true,
+  }
+}

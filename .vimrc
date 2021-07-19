@@ -155,66 +155,26 @@ else
 
   call plug#end()
 
-if has('nvim')
+  if has('nvim')
+    " Note: this should be outside of plug#begin() / plug#end(),
+    " otherwise errors are raised in the lua code.
+    " The related configuration is in .vimrc.ide,
+    " see nvim-lspconfig.
 
-" For Plug 'neovim/nvim-lspconfig'
-luafile ~/.vim/.vimrc.ide.lsp.lua
+    " For Plug 'neovim/nvim-lspconfig'
+    luafile ~/.vim/.vimrc.ide.lua
 
-" For Plug 'ojroques/nvim-lspfuzzy'
-lua << EOF
-require('lspfuzzy').setup {}
-EOF
+    " For Plug 'nvim-treesitter/nvim-treesitter'
+    set foldexpr=nvim_treesitter#foldexpr()
+    augroup ts_folding
+        au!
+        au FileType javascript setlocal foldmethod=expr
+        au FileType typescript setlocal foldmethod=expr
+        au FileType python setlocal foldmethod=expr
+        au FileType vue setlocal foldmethod=expr
+    augroup END
 
-" For Plug 'nvim-treesitter/nvim-treesitter'
-set foldexpr=nvim_treesitter#foldexpr()
-augroup ts_folding
-    au!
-    au FileType javascript setlocal foldmethod=expr
-    au FileType typescript setlocal foldmethod=expr
-    au FileType python setlocal foldmethod=expr
-    au FileType vue setlocal foldmethod=expr
-augroup END
-
-lua << EOF
-  require'nvim-treesitter.configs'.setup {
-    ensure_installed = {
-      "javascript",
-      "typescript",
-      "vue",
-      "python",
-      "json",
-      "html",
-      "scss",
-      "yaml",
-    },
-    highlight = {
-      -- additional_vim_regex_highlighting = false,
-      -- custom_captures = {},
-      -- disable = { "markdown" },
-      enable = true,
-    },
-    incremental_selection = {
-      disable = {},
-      enable = true,
-      keymaps = {
-        init_selection = "gnn",
-        node_decremental = "grm",
-        node_incremental = "grn",
-        scope_incremental = "grc"
-      },
-    },
-    indent = {
-      disable = {},
-      enable = false,
-    },
-    matchup = {
-      disable = {},
-      enable = true,
-    }
-  }
-EOF
-
-endif
+  endif
 
 
 " if has('nvim')
