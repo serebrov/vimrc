@@ -14,3 +14,6 @@ spell/*.add
 spell/*.add.spl
 vendor
 black
+.mypy_cache
+Session.vim
+*.disabled
