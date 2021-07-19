@@ -161,3 +161,16 @@ Plug 'vim-scripts/LargeFile'
 " :SudoWrite: Write a privileged file with sudo.
 " :W: Write every open window. Handy for kicking off tools like guard.
 Plug 'tpope/vim-eunuch'
+
+" Password generator, :echo Password() or Ctrl-R=Password()
+function! RandNum() abort
+  return str2nr(matchstr(reltimestr(reltime()), '\.\zs\d*'))
+endfunction
+
+function! RandChar() abort
+  return nr2char((RandNum() % 93) + 33)
+endfunction
+
+function! Password() abort
+  return join(map(range(8), 'RandChar()'), '')
+endfunction

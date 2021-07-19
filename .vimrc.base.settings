@@ -1,0 +1,249 @@
+" set runtimepath+=~/.vim/bundle/potion
+
+" Basics {{{
+
+  filetype plugin indent on " load filetype plugins/indent settings
+
+  set lazyredraw
+  syntax on                  " Turn syntax highlighting on.
+  set hidden                 " Can change buffers without saving
+
+  set nobackup
+  set noswapfile
+
+  " try to create undo dir, skip error if exists
+  silent !mkdir ~/.vim/tmp > /dev/null 2>&1
+  silent !mkdir ~/.vim/tmp/undo > /dev/null 2>&1
+
+  set undodir=~/.vim/tmp/undo/
+  set undofile
+  set undolevels=1000
+  set undoreload=10000
+
+  " $ - show '$' at the end of text we are going to change with 'c' command
+  set cpoptions+=$
+
+  " GUI Settings {{{
+  if has("gui_running")
+      " use simple dialogs rather than pop-ups
+      set guioptions+=c
+      " do not use GUI tabs, use console style tabs
+      set guioptions-=e
+      set guioptions-=T
+      set guioptions-=m
+      set guioptions-=r
+
+      "set guifont=* to display font chooser
+      set guifont=Droid\ Sans\ Mono\ 13
+      " set guifont=Ubuntu\ Mono\ 13
+      " set guifont=Monospace\ 11
+  endif
+  " }}}
+
+" }}}
+
+" Spell {{{
+    " enable spell by default
+    " actually recommended way is to enable spell
+    " setlocal spell spelllang=en_us
+    "set spell spelllang=ru_ru,en_us
+    set spelllang=en_us
+    " z= - suggest word
+    " [s - previous wrong word
+    " ]s - next wrong word
+" }}}
+
+" General {{{
+  set mouse=a                 " use mouse everywhere
+  set mousemodel=popup        " right mouse btn=popup, select=Shift+left btn
+  set mousehide               " hide mouse when typing
+
+  set noerrorbells            " don't make noise
+  set novisualbell            " don't blink
+  set t_vb=
+
+  " Key to expand cmd completion inside macros / mappings
+  set wildcharm=<C-Z>
+  " ignore these list file extensions
+  set wildignore+=*.swp,*.bak
+  set wildignore+=*.pyc,*.class,*.sln,*.Master,*.csproj,*.csproj.user,*.cache,*.dll,*.pdb,*.min.*
+  set wildignore+=*/.git/**/*,*/.hg/**/*,*/.svn/**/*
+  set wildignore+=*/min/*,*/vendor/*
+  set wildignore+=tags,cscope.*
+  set wildignore+=*.tar.*
+  set wildignorecase
+  "set wildmode=longest,list
+  set wildmode=list,full
+" }}}
+
+" Langs and encodings {{{
+  set fileformats=unix,dos,mac " support all three, in this order
+
+  " Default text encoding
+  if has('win32') || has('win64')
+    set encoding=utf8
+  elseif has('unix')
+    set encoding=utf8
+  endif
+
+  set fileencodings=utf-8,cp1251,8bit-cp866
+
+  "set langmap=Ж:,йq,цw,уe,кr,еt,нy,гu,шi,щo,зp,х[,ъ],фa,ыs,вd,аf,пg,рh,оj,лk,дl,э',яz,чx,сc,мv,иb,тn,ьm,б\,,ю.,ё`,ЙQ,ЦW,УE,КR,ЕT,НY,ГU,ШI,ЩO,ЗP,Х{,Ъ},ФA,ЫS,ВD,АF,ПG,РH,ОJ,ЛK,ДL,Э\",ЯZ,ЧX,СC,МV,ИB,ТN,ЬM,Б<,Ю>,Ё~
+
+  " set keymap=russian-jcukenwin
+  " Make normal-mode keys work in russian
+  "set iskeyword=@,48-57,_,192-255 "this is default
+  " (XXX: #VIM/tpope warns the line below could break things)
+  "?? set iskeyword+=_,$,@,%,# " none of these are word dividers
+  " this allow to treat underscore (_) as word boundary
+  "set iskeyword-=_
+
+  set iminsert=0              " latin langmap by default when typing
+  set imsearch=0              " latin langmap by default when search
+
+  " Use English messages instead of translations
+  language messages C
+" }}}
+
+" Search {{{
+  set hlsearch               " highlight search
+  set ignorecase             " case insensitive by default
+  set smartcase              " if there are caps, go case-sensitive
+" }}}
+
+" Vim UI {{{
+  set cursorline             " highlight current line
+  set guicursor=n:blinkon0   " turn off cursor blinking
+
+  set wrap                   " wrap text, see http://vimcasts.org/episodes/soft-wrapping-text/
+  set linebreak              " do not wrap in the middle of the word
+
+  set list                   " we do what to show tabs, to ensure we get them
+                            " out of my files
+  set listchars=tab:>-,trail:- " show tabs and trailing
+  if has("gui_running")
+    set listchars=tab:▸\ ,trail:·",eol:¶,extends:»,precedes:«
+    set showbreak=-
+  else
+    set listchars=tab:»\ ,trail:·",eol:¬,extends:❯,precedes:❮
+    set showbreak=↪
+  endif
+  if has("linebreak")
+    let &sbr = nr2char(8618).' '  " Show ↪ at the beginning of wrapped lines
+  endif
+  if has("balloon_eval") && has("unix")
+    set ballooneval
+  endif
+  "Invisible character colors
+  highlight NonText guifg=#4a4a59
+  highlight SpecialKey guifg=#4a4a59
+
+  "For gitgutter, to make the sign column to be the same as line numbers
+  "column
+  highlight clear SignColumn
+
+  set nostartofline          " leave my cursor where it was
+
+  set relativenumber         " both relative and number (for current line)
+  set number                 " turn on line numbers
+  set numberwidth=5          " We are good up to 99999 lines
+  set report=0               " tell us when anything is changed via :...
+  set showmode               " Show editing mode
+
+  "set scrolloff=10          " Keep 10 lines (top/bottom) for scope
+  set scrolloff=999          " Work line is always in the middle
+                            " alternative: zz - centers current line
+  set sidescroll=1           " smooth horizontal scrolling
+  set sidescrolloff=10       " Keep 5 lines at the size
+
+  set shortmess=aOstT        " shortens messages to avoid
+                            " 'press a key' prompt
+  "set statusline=[%n]%{fugitive#statusline()}%{coc#status()}%F\ %m%r%h%w\ [%L]\ [%{&ff}]%y%=[%p%%][%04l,%04v]
+  set statusline=[%n]%{fugitive#statusline()}%{}%F\ %m%r%h%w\ [%L]\ [%{&ff}]%y%=[%p%%][%04l,%04v]
+  "                |                         |   | | | |    |     |      |     |     |    |
+  "                |                         |   | | | |    |     |      |     |     |    + current
+  "                |                         |   | | | |    |     |      |     |     |       column
+  "                |                         |   | | | |    |     |      |     |     +-- current line
+  "                |                         |   | | | |    |     |      |     +-- current % into file
+  "                |                         |   | | | |    |     |      +-- current syntax in
+  "                |                         |   | | | |    |     |          square brackets
+  "                |                         |   | | | |    |     +-- current fileformat
+  "                |                         |   | | | |    +-- number of lines
+  "                |                         |   | | | +-- preview flag in square brackets
+  "                |                         |   | | +-- help flag in square brackets
+  "                |                         |   | +-- readonly flag in square brackets
+  "                |                         |   +-- modified flag in square brackets
+  "                |                         +-- full path to file in the buffer
+  "                +-- buffer number
+
+" }}}
+
+" Text Formatting/Layout {{{
+  set expandtab               " expand tabs to spaces
+  set shiftwidth=4            " auto-indent amount when using cindent,
+                              " >>, << and stuff like that
+  set softtabstop=4           " when hitting tab or backspace, how many spaces
+                              " should a tab be (see expandtab)
+  set tabstop=4               " real tabs will show with set list on
+
+  set formatoptions-=t        " Do not automatically wrap text on textwidth
+  set formatoptions+=crq      " Automatically insert comment leader on return,
+                              " and let gq format comments
+
+  set infercase               " case inferred by default
+
+  set smartindent             " smart indenting when starting a new line (after {, before }, etc)
+  " Virtual editing means that the cursor can be positioned where there is
+  " no actual character.  This can be halfway into a tab or beyond the end
+  " of the line.  Useful for selecting a rectangle in Visual mode and
+  " editing a table.
+  set virtualedit=all
+" }}}
+
+" Display numbers for tabs
+" Plug 'mkitt/tabline.vim'
+
+function! Tabline()
+  let s = ''
+  for i in range(tabpagenr('$'))
+    let tab = i + 1
+    let winnr = tabpagewinnr(tab)
+    let buflist = tabpagebuflist(tab)
+    let bufnr = buflist[winnr - 1]
+    let bufname = bufname(bufnr)
+    let bufmodified = getbufvar(bufnr, "&mod")
+
+    let s .= '%' . tab . 'T'
+    let s .= (tab == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
+    let s .= ' ' . tab .':'
+    let s .= (bufname != '' ? '['. fnamemodify(bufname, ':t') . '] ' : '[No Name] ')
+
+    if bufmodified
+      let s .= '[+] '
+    endif
+  endfor
+
+  let s .= '%#TabLineFill#'
+  if (exists("g:tablineclosebutton"))
+    let s .= '%=%999XX'
+  endif
+  return s
+endfunction
+set tabline=%!Tabline()
+
+" Folding {{{
+  " " Make zO recursively open whatever fold we're in, even if it's partially open.
+  " nnoremap zO zczO
+  "
+  " " "Focus" the current line.  Basically:
+  " "
+  " " 1. Close all folds.
+  " " 2. Open just the folds containing the current line.
+  " " 3. Move the line to a little bit (15 lines) above the center of the screen.
+  " " 4. Pulse the cursor line.  My eyes are bad.
+  " "
+  " " This mapping wipes out the z mark, which I never use.
+  " "
+  " " I use :sus for the rare times I want to actually background Vim.
+  " nnoremap <c-z> mzzMzvzz15<c-e>`z:Pulse<cr>
+" }}}

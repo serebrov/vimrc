@@ -1,0 +1,144 @@
+" Auto-read and auto-write {{{
+  if !&diff
+    set autoread
+    "See http://stackoverflow.com/questions/2490227/how-does-vims-autoread-work
+    augroup checktime
+      au!
+      if !has("gui_running")
+          "silent! necessary otherwise throws errors when using command
+          "line window.
+          autocmd BufEnter        * silent! checktime
+          autocmd CursorHold      * silent! checktime
+          autocmd CursorHoldI     * silent! checktime
+          "these two _may_ slow things down. Remove if they do.
+          "autocmd CursorMoved     * silent! checktime
+          "autocmd CursorMovedI    * silent! checktime
+      endif
+    augroup END
+    au FocusGained,BufEnter * :silent! !
+
+    set autowrite
+    "au FocusLost,WinLeave * :silent! w
+    " See https://github.com/907th/vim-auto-save/
+    function! DoAutosave()
+      " expand('%') != '' - if this is new buffer without name
+      " filereadable(expand('%')) - if this is new not saved buffer (like :e newfile)
+      " expand('%') != '[Command Line]' - command line buffer
+      if expand('%') != '' && filereadable(expand('%')) && expand('%') != '[Command Line]'
+        update
+      endif
+    endfunction
+    " autowrite on leave the insert mode, focus load and cursor hold
+    augroup MyAutoCmdAutosave
+      autocmd!
+      "autocmd InsertLeave,CursorHold,CursorHoldI * call DoAutosave()
+      autocmd FocusLost,WinLeave   * call DoAutosave()
+    augroup END
+  endif
+" }}}
+
+" Autocommands {{{
+  " MyAutoCmd : an augroup for my autocmd
+  augroup MyAutoCmd
+    autocmd!
+
+    autocmd BufRead,BufNewFile *.js      set filetype=javascript
+    autocmd BufRead,BufNewFile *.ejs     set filetype=html
+    autocmd BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     set ft=ruby
+    autocmd BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
+    autocmd BufRead,BufNewFile {COMMIT_EDITMSG}                                set ft=gitcommit
+
+    " S-k to open help
+    autocmd BufNewFile,Bufread *.php set keywordprg="help"
+
+    " there is a problem with hash (#) indentation - it always shifted
+    " to the start of the string
+    " see http://stackoverflow.com/questions/354097/how-to-configure-vim-to-not-put-comments-at-the-beginning-of-lines-while-editing
+    autocmd FileType python :set nosmartindent
+    autocmd FileType python :set cindent
+
+    autocmd FileType html :set filetype=xhtml
+
+    autocmd FileType git,gitcommit setlocal foldmethod=syntax foldlevel=1
+    autocmd FileType gitcommit setlocal spell
+    autocmd FileType markdown setlocal spell
+    autocmd FileType markdown :set nosmartindent
+
+  augroup END
+
+  " see https://github.com/romainl/vim-qf for more
+  augroup autoquickfix
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost    l* lwindow
+  augroup END
+
+  command! -bar -nargs=? -bang Scratch :silent enew<bang>|set buftype=nofile bufhidden=hide noswapfile buflisted filetype=<args> modifiable
+
+" }}}
+
+" Save and launch vim {{{
+  " default: '100,<50,s10,h
+  " NOTE: ! is necessary in order to be able to restore last session
+  set viminfo=!,'100,/50,:50,<50,@50
+
+
+  function! LoadLocalVimrc()
+    " :Rooter
+    " Use with :find - it will search subdirectories
+    set path=.,**
+    " Check for .vimrc.local in the current directory
+    let custom_config_file = getcwd() . '/.vimrc.local'
+    if filereadable(custom_config_file)
+      exe 'source' custom_config_file
+    else
+      let custom_config_file = getcwd() . '/.git/.vimrc.local'
+      if filereadable(custom_config_file)
+        exe 'source' custom_config_file
+      endif
+    endif
+  endfunction
+
+  autocmd MyAutoCmd BufWinEnter *  call LoadLocalVimrc()
+
+  " execute a command while preserve the position
+  if !exists("*Preserve")
+    function! Preserve(command)
+      " Preparation: save last search, and cursor position.
+      let _s=@/
+      let l = line(".")
+      let c = col(".")
+      " Do the business:
+      execute a:command
+      " Clean up: restore previous search history, and cursor position
+      let @/=_s
+      call cursor(l, c)
+    endfunction
+  endif
+
+  " remove trailing whitespace on save
+  " new version from http://vimcasts.org/episodes/tidying-whitespace/
+  let g:clean_trails_enabled = 0
+  function! CleanTrails()
+    if g:clean_trails_enabled
+      call Preserve("%s/\\s\\+$//e")
+    endif
+  endfunction
+
+  autocmd MyAutoCmd FileType c,cpp,java,php,python,vim,text,markdown,javascript,xhtml,sql autocmd MyAutoCmd BufWritePre <buffer>
+    \ call CleanTrails()
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event
+  " handler.
+  autocmd MyAutoCmd BufReadPost *
+    \ if line("'\"") > 0 |
+    \   if line("'\"") <= line("$") |
+    \     exe("norm '\"") |
+    \   else |
+    \     exe "norm $" |
+    \   endif|
+    \ endif
+
+  set sessionoptions=buffers,curdir,help,winsize " localoptions,
+" }}}

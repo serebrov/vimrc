@@ -254,6 +254,31 @@ if has('nvim')
 
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+  " Folding with treesitter.
+  set foldexpr=nvim_treesitter#foldexpr()
+  augroup ts_folding
+      au!
+      au FileType javascript setlocal foldmethod=expr
+      au FileType typescript setlocal foldmethod=expr
+      au FileType python setlocal foldmethod=expr
+      au FileType vue setlocal foldmethod=expr
+  augroup END
+
+  " Completions {{{
+    "set completeopt=longest,menuone,preview " use a pop up menu for completions
+    " set completeopt=menuone,longest,preview " use a pop up menu for completions
+    set completeopt=menuone,noinsert,noselect
+    set complete=""             " what use for completions
+    set complete+=.             " current buffer
+    set complete+=t             " tags
+    set complete+=kspell        " dictionary
+    set complete+=b             " other open buffers
+
+    " tag files
+    " ';/' - this will look in the current directory for "tags", and work up the tree
+    " towards root until one is found
+    " set tags=tags;/
+  " }}}
   let g:completion_enable_snippet = 'UltiSnips'
   Plug 'nvim-lua/completion-nvim'
   " Use <Tab> and <S-Tab> to navigate through popup menu

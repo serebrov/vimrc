@@ -1,0 +1,278 @@
+" Mappings {{{
+  "let mapleader = ","
+  "let mapleader = "\<space>"
+  " Better then let mapleader because vim command line will still
+  " display leader-based mappings as \s
+  " From http://www.reddit.com/r/vim/comments/1vdrxg/space_is_a_big_key_what_do_you_map_it_to/
+  map <space> <leader>
+
+  " * and # will stay on the first match
+  nnoremap * *N
+  nnoremap # #N
+
+  " Use CTRL-N to remove search highlight
+  noremap <C-N> :noh \| call clearmatches()<CR>
+  vnoremap <C-N> <C-C>:noh \| call clearmatches()<CR>gv
+  " CTRL-N in insert mode is a completion!!!
+  " inoremap <C-N> <C-O>:noh<CR>
+
+  " Repeat change on word
+  " Set cursor over a word, <leader>c - change it,
+  " now '.' will repeat the change on the next word, n - skip the next word
+  nnoremap <leader>c *Ncgn
+
+  " Note: to replace something with yanked text it's easy to use
+  " a change operation and then <C-R>0 to insert register '0' content
+  " in insert mode, like cw<C-R>0 - replace  a word with yanked text
+
+  " save
+  noremap <leader>w :w<CR>
+  noremap <leader>q :q<CR>
+
+  " mm to open the command line
+  " Note: this eats the 'm' mark, but I don't use marks too much
+  noremap mm :
+
+" jj or j+k as ESC
+  " other options: Ctrl-[, Ctrl-C
+  inoremap jj <Esc>
+  inoremap jk <Esc>
+  inoremap kj <Esc>
+
+  "runtime macros/matchit.vim
+  " Tab to move between matches
+  " Notes regarding %:
+  " - for parentesis () it works for next pair on the current line, so
+  "     function name(arg1, arg2)
+  "               ^--- cursor here, % will jump to )
+  " - and c% will change to the ), useful in such case:
+  "     my_fun(arg1, func2(arg1, arg2, fun3(arg3)))
+  "                  ^- cursor here, c% will change inside the my_fun brackets
+  " See: http://www.viemu.com/a-why-vi-vim.html
+  "      http://thepugautomatic.com/2014/03/vims-life-changing-c-percent/
+  " nnoremap <Leader><Leader> %
+
+  " Make last word uppercase
+  inoremap <C-F> <Esc>gUiw`]a
+
+  " ,o to insert a new line below, ,O - above
+  " (in normal mode and go back to normal)
+  nnoremap <Leader>o o<Esc>
+  nnoremap <Leader>O O<Esc>
+
+  "note: "+ - real clipboard, "* - current selection
+  "note: p - paste after cursor, P - before
+  "      gp - cursor will be after pasted text
+  "           with just p - on the last pasted char
+  nnoremap <Leader>y "+y
+  vnoremap <Leader>y "+y
+  nnoremap <Leader>p "+p
+  vnoremap <Leader>p "+p
+  nnoremap <Leader>P "+P
+  vnoremap <Leader>P "+P
+
+  " Move cursor by display lines when wrapping
+  " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
+  " noremap k gk
+  " noremap j gj
+  " noremap gk k
+  " noremap gj j
+  "noremap 0 g0
+  "noremap $ g$
+
+  " Shortcut to rapidly toggle `set list` (def leader = \)
+  " :list displays tabs, trailing spaces and other "invisible" chars
+  " nnoremap <leader>l :set list!<CR>
+
+  " Put ending { to the next line
+  function! ClosingBracketToNextLine()
+    normal g$F{i
+  endfunction
+  "nmap <leader>bn :call ClosingBracketToNextLine()<CR>
+
+  " Standard keys
+  " Speller shorcuts
+  " z= - suggest word
+  " [s - previous wrong word
+  " ]s - next wrong word
+
+  " History
+  " http://vim.wikia.com/wiki/Using_command-line_history
+  " q: for commands
+  " q/ for searches
+  " or type : or / to start entering a command or search,
+  " then press the 'cedit' key (default is Ctrl-f :help 'cedit').
+
+  " gv - select last visual area and go to visual mode
+  " Visually select the text that was last edited/pasted
+  nnoremap gV `[v`]
+
+  " Don't move the cursor after yanking the visual selection
+  " (usually it jumps back to the start of the selection)
+  " http://ddrscott.github.io/blog/2016/yank-without-jank/
+  vnoremap <expr>y "my\"" . v:register . "y`y"
+  " Y will yank line-wise even if you have character-wise selection
+  vnoremap <expr>Y "my\"" . v:register . "Y`y"
+
+  nnoremap gl :call ToggleRelativeAbsoluteNumber()<CR>
+  function! ToggleRelativeAbsoluteNumber()
+    if &relativenumber
+      set norelativenumber
+    else
+      set relativenumber
+    endif
+  endfunction
+
+  " ,vv to re-read .vimrc
+  nnoremap <Leader>vv :call Preserve("source ".$MYVIMRC)<CR>
+  " ,vc to edit .vimrc
+  "nnoremap <leader>vc :tabedit $MYVIMRC<CR>
+  nnoremap <leader>vc :tabedit $HOME/.vim/.vimrc<CR>
+" }}}
+
+" Windows navigation {{{
+
+  " C-W h|j|k|l   - move to left|down|up|right win
+  " v C-W h|j|k|l - split to left|down|up|right win
+  " C-W w         - cycle
+  " C-W s|v       - split current win horiz | vert
+  " :on[ly]       - leave only current win
+  " C-W +|-       - height +|- 1 px
+  " C-W >         - increase current window width N columns
+  " C-W _||       - maximize height|width
+  " moving windows:
+  " C-W H|J|K|L   - move win to the left|down|up|right
+  " C-W r         - rotate
+  " C-W x         - exchange with neighbour
+  " C-W T         - move window to separate tab
+  " C-W P         - go to preview window
+  " C-W z         - close preview window
+  "
+  " Window swap plugin: <leader>ww in first window and
+  "                     then <leader>ww in second to
+  "                     swap them.
+
+  " move to and open if not exists
+  " http://www.agillo.net/simple-vim-window-management/
+  " Note: the `range` is needed to prevent the function invocation multiple
+  " times when there is a visual selection (by default, the function is called
+  " once for every line, which leads to multiple splits created).
+  function! WinMove(key) range
+    let t:curwin = winnr()
+    exec "wincmd ".a:key
+    if (t:curwin == winnr()) "we havent moved
+      if (match(a:key,'[jk]')) "were we going up/down
+        wincmd v
+      else
+        wincmd s
+      endif
+      exec "wincmd ".a:key
+    endif
+  endfunction
+
+  " See also an alternative approach to windows navigation
+  " using submode plugin: http://ddrscott.github.io/blog/2016/making-a-window-submode/
+  " The plugin: https://github.com/kana/vim-submode
+  " Basically, the idea is that Ctrl-W starts the sumbode and then you just
+  " use h/j/k/l and other keys without prefixing each one with Ctrl-W
+
+  " move to and open if not exists
+  map <c-j> :call WinMove('j')<CR>
+  map <c-k> :call WinMove('k')<CR>
+  map <c-l> :call WinMove('l')<CR>
+  map <c-h> :call WinMove('h')<CR>
+  if has('nvim')
+    " Testing, map jk/kj as Esc
+    " Map Ctrl + h,j,k,l to move between windows
+    " And map Alt + h,j,k,l for the same
+    " now it is possible to map Alt in terminal
+    " see also :help nvim-terminal-emulator
+    :tnoremap jk <C-\><C-n>
+    :tnoremap kj <C-\><C-n>
+    :tnoremap <C-h> <C-\><C-n>:call WinMove('h')<CR>
+    :tnoremap <C-j> <C-\><C-n>:call WinMove('j')<CR>
+    :tnoremap <C-k> <C-\><C-n>:call WinMove('j')<CR>
+    :tnoremap <C-l> <C-\><C-n>:call WinMove('j')<CR>
+    :tnoremap <A-h> <C-\><C-n>:call WinMove('h')<CR>
+    :tnoremap <A-j> <C-\><C-n>:call WinMove('j')<CR>
+    :tnoremap <A-k> <C-\><C-n>:call WinMove('j')<CR>
+    :tnoremap <A-l> <C-\><C-n>:call WinMove('j')<CR>
+    :nnoremap <A-h> :call WinMove('h')<CR>
+    :nnoremap <A-j> :call WinMove('j')<CR>
+    :nnoremap <A-k> :call WinMove('k')<CR>
+    :nnoremap <A-l> :call WinMove('l')<CR>
+  endif
+
+  "rotate
+  map <leader>wr <C-W>r
+
+  "Shift arrows to resize
+  nmap <S-left>  :3wincmd <<cr>
+  nmap <S-right> :3wincmd ><cr>
+  nmap <S-up>    :3wincmd +<cr>
+  nmap <S-down>  :3wincmd -<cr>
+
+  "arrows to resize
+  nmap <left> gT
+  nmap <right> gt
+  nmap <up>    :tablast <cr>
+  nmap <down>  1gt
+
+  "move windows
+  map <Leader>h     :wincmd H<cr>
+  map <Leader>k     :wincmd K<cr>
+  map <Leader>l     :wincmd L<cr>
+  map <Leader>j     :wincmd J<cr>
+
+  " format json, see https://coderwall.com/p/faceag
+  " :%!python -m json.tool
+  " or with jq http://stedolan.github.io/jq/
+  "   download, mv to ~/bin/jq, chmod +x ~/bin/jq
+  " :%!jq '.'
+
+" }}}
+" Tabs navigation {{{
+" New tab and close tab
+nnoremap <Leader>tn :tabnew<cr>
+nnoremap <Leader>tc :tabclose<cr>
+
+" Go to tab by number
+noremap <leader>1 1gt
+noremap <leader>2 2gt
+noremap <leader>3 3gt
+noremap <leader>4 4gt
+noremap <leader>5 5gt
+noremap <leader>6 6gt
+noremap <leader>7 7gt
+noremap <leader>8 8gt
+noremap <leader>9 :tablast<cr>
+
+" Go to last active tab
+" Note: would be good to have i3-like benavior, where using
+" the same number switches to the previous workspace if we
+" are on that number already, for example,
+" I am on workspace 3 then win+1 will go to space 1 and
+" win+1 again will go back to space 3.
+au TabLeave * let g:lasttab = tabpagenr()
+nnoremap <leader>0 :exe "tabn ".g:lasttab<cr>
+vnoremap <leader>0 :exe "tabn ".g:lasttab<cr>
+
+" Native files / buffers navigation
+" Also need `set path=.,**` (see below) to search recursively
+" See:http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/
+" noremap <Leader>i :find<SPACE>
+" noremap <Leader>I :find <C-R>=expand('%:p:h').'/**/*'<CR>
+" Insert current file's folder
+cnoremap <Leader><Leader>fn <C-r>=expand('%')<CR>
+cnoremap <Leader><Leader>f <C-r>=expand('%:p:h')<CR>
+" will expand %% to current file path
+"cabbr <expr> %% expand('%:p:h')
+cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<CR>
+" list buffers and start completion
+nnoremap <Leader>b :buffer <C-z>
+nnoremap <Leader>B :sbuffer <C-z>
+" list buffers with ls and start completion
+" see: http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/
+nnoremap gb :ls<CR>:buffer<Space>
+nnoremap gB :ls<CR>:sbuffer<Space>
+
