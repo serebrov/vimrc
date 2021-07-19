@@ -8,6 +8,59 @@
 "  - PlugDiff 	Examine changes from the previous update and the pending changes
 "  - PlugSnapshot[!] [output path] 	Generate script for restoring the current snapshot of the plugins
 "
+if exists('g:vscode')
+  set nocompatible " explicitly get out of vi-compatible mode
+
+  "let mapleader = "\<space>"
+  map <space> <leader>
+
+  " vim-commentary replacement
+  xmap gc  <Plug>VSCodeCommentary
+  nmap gc  <Plug>VSCodeCommentary
+  omap gc  <Plug>VSCodeCommentary
+  nmap gcc <Plug>VSCodeCommentaryLine
+
+  " https://code.visualstudio.com/docs/getstarted/keybindings
+
+  function! WinCmd(key)
+    if (a:key == 'h')
+      call VSCodeNotify('workbench.action.navigateLeft')
+    elseif (a:key == 'j')
+      call VSCodeNotify('workbench.action.navigateDown')
+    elseif (a:key == 'k')
+      call VSCodeNotify('workbench.action.navigateUp')
+    elseif (a:key == 'l')
+      call VSCodeNotify('workbench.action.navigateRight')
+    endif
+  endfunction
+
+  function! WinMove(key) range
+    let t:curwin = winnr()
+    call WinCmd(a:key)
+    if (t:curwin == winnr()) "we havent moved
+      if (match(a:key,'[jk]')) "were we going up/down
+        call VSCodeNotify('workbench.action.splitEditorDown')
+      else
+        call VSCodeNotify('workbench.action.splitEditorRight')
+      endif
+      call WinCmd(a:key)
+    endif
+  endfunction
+
+  " move to and open if not exists
+  map <c-j> :call WinMove('j')<CR>
+  map <c-k> :call WinMove('k')<CR>
+  map <c-l> :call WinMove('l')<CR>
+  map <c-h> :call WinMove('h')<CR>
+
+  "move windows
+  " moves to left tab
+  " map <Leader>h     <Cmd>call VSCodeNotify('workbench.action.moveEditorToLeftGroup')<CR>
+  map <Leader>h     <Cmd>call VSCodeNotify('workbench.action.moveEditorLeftInGroup')<CR>
+  map <Leader>k     <Cmd>call VSCodeNotify('workbench.action.positionPanelUp')<CR>
+  map <Leader>l     <Cmd>call VSCodeNotify('workbench.action.positionPanelRight')<CR> 
+  map <Leader>j     <Cmd>call VSCodeNotify('workbench.action.positionPanelBottom')<CR>
+else
   set nocompatible " explicitly get out of vi-compatible mode
   " filetype off
 
@@ -929,3 +982,5 @@ endfunction
 function! Password() abort
   return join(map(range(8), 'RandChar()'), '')
 endfunction
+
+endif " if exists('g:vscode')
