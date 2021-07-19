@@ -105,6 +105,9 @@ let g:prettier#autoformat = 0
 " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
 autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.less,*.scss,*.vue,*.yaml,*.html Prettier
 
+" Note: markdown can be formatted with :Prettier (for example,
+" to format the markdown table, select it and run :Prettier)
+
 " TODO: there is a problem with python linting setup (both Coc-based and Neomake):
 " - I have flake8 config under `backend` folder and flake doesn't see it when
 "   run by coc or neomake

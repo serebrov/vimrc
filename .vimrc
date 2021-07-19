@@ -114,6 +114,9 @@ else
     " let g:SimpylFold_docstring_preview = 1
     " Plug 'tmhedberg/SimpylFold'
 
+    " Note: markdown can be formatted with :Prettier (for example,
+    " to format the markdown table, select it and run :Prettier)
+
     Plug 'masukomi/vim-markdown-folding'
 
     " let g:coiled_snake_set_foldtext = 0
