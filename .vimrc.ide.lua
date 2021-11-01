@@ -74,9 +74,6 @@ require'lspconfig'.html.setup {
   capabilities = coq.lsp_ensure_capabilities(capabilities),
 }
 
--- " For Plug 'ojroques/nvim-lspfuzzy'
-require('lspfuzzy').setup {}
-
 -- For Plug 'nvim-treesitter/nvim-treesitter'
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {

@@ -281,6 +281,8 @@ if has('nvim')
     " set tags=tags;/
   " }}}
 
+  let g:coq_settings = { 'auto_start': v:true }
+  " or let g:coq_settings = { 'auto_start': 'shut-up' }
   " Note: another alternative - https://github.com/hrsh7th/nvim-cmp/
   " main one
   Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
@@ -296,20 +298,6 @@ if has('nvim')
   " - scientific calculator
   " - comment banner
   " - etc
-
-  " Display LSP references via fzf
-  " In addition, the plugin creates the following commands:
-  "  :LspDiagnostics <bufnr>: list diagnostics from given buffer (use 0 for current buffer)
-  "  :LspDiagnosticsAll: list diagnostics from all buffers
-  " By default the following FZF actions are available:
-  "  tab : select multiple entries
-  "  shift+tab : deselect an entry
-  "  ctrl-a : select all entries
-  "  ctrl-d : deselect all entries
-  "  ctrl-t : go to location in a new tab
-  "  ctrl-v : go to location in a vertical split
-  "  ctrl-x : go to location in a horizontal split
-  Plug 'ojroques/nvim-lspfuzzy'
 
   " Preview for substitute
   set inccommand=nosplit
