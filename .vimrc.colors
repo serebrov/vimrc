@@ -80,14 +80,18 @@ function! SetupColorscheme()
     set termguicolors
     " let g:deepspace_italics=1
     " colorscheme deep-space
+
+    " For now, I switched to the light scheme, it is easier for the eyes.
+    colorscheme onehalflight
+    " Dark default:
+    " colorscheme nord
+    "
+    " colorscheme tender
+    " colorscheme onehalfdark
     "
     " " Has solarized8, solarized8_flat, solarized8_high and solarized8_low variants
     " let g:solarized_visibility = "normal"
     " colorscheme solarized8_flat
-    "
-    colorscheme nord
-    " colorscheme tender
-    " colorscheme onehalfdark
     "
     " " less colors
     " See also: https://github.com/mcchrish/vim-no-color-collections
