@@ -253,7 +253,27 @@ if has('nvim')
   " :LspRestart <client_id> Defaults to restarting all buffer clients.
   Plug 'neovim/nvim-lspconfig'
 
+  " Companion for nvim-lspconfig that allows you to install LSP servers locally.
+  " :LspInstallInfo - opens a graphical overview of your language servers
+  " :LspInstall [--sync] <server> ... - installs/reinstalls language servers. 
+  " :LspUninstall [--sync] <server> ... - uninstalls language servers.
+  " :LspInstallLog - opens the log file in a new tab window
+  " :LspPrintInstalled - prints all installed language servers
+  "
+  " :LspInstall bashls jsonls vuels htm pyrigh tsserver vimls
+  Plug 'williamboman/nvim-lsp-installer'
+
+  " Install languages with :TSInstall
+  " List of avaiable and installed languages :TSinstallInfo
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+  " Use treesitter to autoclose and autorename html tag.
+  " Works with html,tsx,vue,svelte,php.
+  " Note: does not work if tag has properties,
+  "   <div class="xxx">...</div>
+  " Changing opening div does nothing (but changing
+  " closing div works).
+  Plug 'windwp/nvim-ts-autotag'
 
   " Folding with treesitter.
   set foldexpr=nvim_treesitter#foldexpr()
@@ -281,23 +301,30 @@ if has('nvim')
     " set tags=tags;/
   " }}}
 
-  let g:coq_settings = { 'auto_start': v:true }
+  " LSP-based code completion.
+  let g:coq_settings = { 'auto_start': v:true, 'keymap.jump_to_mark': '<C-X>' }
   " or let g:coq_settings = { 'auto_start': 'shut-up' }
   " Note: another alternative - https://github.com/hrsh7th/nvim-cmp/
   " main one
   Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
   " 9000+ Snippets
   Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
-
   " lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
   " Need to **configure separately**
-
   Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
   " - shell repl
   " - nvim lua api
   " - scientific calculator
   " - comment banner
   " - etc
+
+  " Clean and elegant distraction-free writing for NeoVim.
+  " :TZMinimalist - Minimalist mode. Activates/deactivates NeoVim's UI
+  "                 components from the left, bottom and top.
+  " :TZFocus toggles Focus mode. Maximizes/minimizes the current window.
+  " :TZAtaraxis toggles Ataraxis - "super" minimalist mode.
+  " Has parameters to set the padding: :TZAtaraxis l10 r10 t3 b1
+  Plug 'Pocco81/TrueZen.nvim'
 
   " Preview for substitute
   set inccommand=nosplit

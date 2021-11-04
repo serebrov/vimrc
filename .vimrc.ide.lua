@@ -14,7 +14,7 @@ local coq = require "coq" -- add this
 -- " Vue
 -- " npm install -g vls
 -- "
-local servers = { 'pyright', 'bashls', 'tsserver', 'vuels' }
+local servers = { 'pyright', 'bashls', 'jsonls', 'tsserver', 'vuels', 'vimls' }
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -52,6 +52,19 @@ local on_attach = function(client, bufnr)
 
 end
 
+
+-- Setup via nvim-lsp-installer.
+-- local lsp_installer = require("nvim-lsp-installer")
+-- lsp_installer.on_server_ready(function (server) 
+--   server.setup(coq.lsp_ensure_capabilities({
+--     on_attach = on_attach,
+--     flags = {
+--       debounce_text_changes = 150,
+--     }
+--   }))
+-- end)
+
+-- Setup without nvim-lsp-installer.
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 for _, lsp in ipairs(servers) do
@@ -108,6 +121,10 @@ require'nvim-treesitter.configs'.setup {
   },
   matchup = {
     disable = {},
+    enable = true,
+  },
+  -- Plug 'windwp/nvim-ts-autotag'
+  autotag = {
     enable = true,
   }
 }
