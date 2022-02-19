@@ -38,6 +38,51 @@ Plug 'vim-test/vim-test'
 " Plug 'neomake/neomake'
 Plug 'tpope/vim-dispatch'
 
+if has('nvim')
+  " mkdir .virtualenvs
+  " cd .virtualenvs
+  " python -m venv debugpy
+  " debugpy/bin/python -m pip install debugpy
+
+  " Debug Adapter Protocol
+  "
+  " "raw" usage:
+  " - :lua require('dap').set_breakpoint()
+  " - :lua require('dap').continue()
+  "
+  " Run pytest for nearest function:
+  " - :lua require('dap-python').test_method()
+  "
+  " Repl can be used to inspect variables and run commands (see >dap help in
+  " repl).
+  " - :lua require('dap').repl.open()
+  "
+  " Run frontend test (in the test file, vim lanched in the frontend folder):
+  " - :lua require('dap').set_breakpoint()
+  " - :lua require('dap').continue()
+  " - :lua require('dap').repl.open()
+  "
+  Plug 'mfussenegger/nvim-dap'
+  " Pyton adapter config and test runner.
+  Plug 'mfussenegger/nvim-dap-python'
+
+   " See config in .vimrc.dap.lua
+
+   " Some example mappings:
+   "    nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
+   "    nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
+   "    nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
+   "    nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
+   "    nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
+   "    nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+   "    nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+   "    nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
+   "    nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+
+  " Plugin 'rcarriga/nvim-dap-ui'
+  " Plug 'theHamsta/nvim-dap-virtual-text'
+endif
+
 " Taggatron {{{
 augroup MyAutoCmdTags
   let g:tagcommands = {

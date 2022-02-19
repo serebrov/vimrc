@@ -163,6 +163,7 @@ else
 
     " For Plug 'neovim/nvim-lspconfig'
     luafile ~/.vim/.vimrc.ide.lua
+    luafile ~/.vim/.vimrc.dap.lua
 
   endif
 

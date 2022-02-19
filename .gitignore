@@ -17,3 +17,5 @@ black
 .mypy_cache
 Session.vim
 *.disabled
+
+dap-adapters
