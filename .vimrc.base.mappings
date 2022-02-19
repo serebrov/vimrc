@@ -16,10 +16,19 @@
   " CTRL-N in insert mode is a completion!!!
   " inoremap <C-N> <C-O>:noh<CR>
 
-  " Repeat change on word
-  " Set cursor over a word, <leader>c - change it,
-  " now '.' will repeat the change on the next word, n - skip the next word
-  nnoremap <leader>c *Ncgn
+  " Repeatable "change word" command:
+  " - set cursor on a word, cg* - change it,
+  " - now '.' will repeat the change on the next word, n - skip the next word
+  nnoremap cg* *Ncgn
+
+  " Even better: just change something and then use `g.` to start repeating
+  " the change on next occurences of the word.
+  " https://www.reddit.com/r/neovim/comments/sf0hmc/im_really_proud_of_this_mapping_i_came_up_with/
+  " the mapping lets me use . to repeat a regular c-prefixed command
+  " as if it were performed using cgn.
+  " For example, do `ciw` at some word and then go `g.` to change next such
+  " word.
+  nnoremap g. /\V\C<C-r>"<CR>cgn<C-a><Esc>
 
   " Note: to replace something with yanked text it's easy to use
   " a change operation and then <C-R>0 to insert register '0' content
