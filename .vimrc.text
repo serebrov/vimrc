@@ -156,9 +156,9 @@ Plug 'vim-scripts/DrawIt'
 " F10 - toggle replace/insert
 Plug 't9md/vim-textmanip'
 xmap <Space>d <Plug>(textmanip-duplicate-down)
-nmap <Space>d <Plug>(textmanip-duplicate-down)
+" nmap <Space>d <Plug>(textmanip-duplicate-down)
 xmap <Space>D <Plug>(textmanip-duplicate-up)
-nmap <Space>D <Plug>(textmanip-duplicate-up)
+" nmap <Space>D <Plug>(textmanip-duplicate-up)
 
 xmap <Down> <Plug>(textmanip-move-down)
 xmap <Up> <Plug>(textmanip-move-up)
@@ -166,7 +166,7 @@ xmap <Left> <Plug>(textmanip-move-left)
 xmap <Right> <Plug>(textmanip-move-right)
 
 " toggle insert/replace with <F10>
-nmap <F10> <Plug>(textmanip-toggle-mode)
+" nmap <F10> <Plug>(textmanip-toggle-mode)
 xmap <F10> <Plug>(textmanip-toggle-mode)
 "
 " Related: https://github.com/jondkinney/dragvisuals.vim - dragging visual blocks
