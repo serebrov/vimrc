@@ -290,6 +290,9 @@ if has('nvim')
 
   " Disable in favor of nvim LSP client and nvim-lspconfig
   " source ~/.vim/.vimrc.ide.coc
+
+  " Initializes pyright server, helps with venv support.
+  Plug 'HallerPatrick/py_lsp.nvim'
   
   " LSP client configurations
   " :LspInfo - see diagnostics
