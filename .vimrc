@@ -162,8 +162,9 @@ else
     " see nvim-lspconfig.
 
     " For Plug 'neovim/nvim-lspconfig'
-    luafile ~/.vim/.vimrc.ide.lua
-    luafile ~/.vim/.vimrc.dap.lua
+    luafile ~/.vim/.vimrc.ide.lsp.lua
+    " For Plug 'neovim/nvim-dap'
+    luafile ~/.vim/.vimrc.ide.dap.lua
 
   endif
 
