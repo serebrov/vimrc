@@ -80,6 +80,42 @@
   nnoremap <Leader>P "+P
   vnoremap <Leader>P "+P
 
+  " Remap p in visual mode to paste yanked text to allow pasting multipe times.
+  " Otherwise the removed text will be in the clipboard and pasted on the
+  " next paste.
+  " For example:
+  " - Select and copy "word1" - we, y
+  " - Select "word2" and press p
+  " - Select "word3" and press p
+  "
+  " By default, the last paste will replace `word3` with `word2`. This is
+  " because we pasted over `word2` which was deleted and got into the
+  " default register holding the last deleted text.
+  " With override below, we will paste the `word1` instead.
+  "
+  " To do the 'normal' vim paste, use gp (almost the same as p, with cursor
+  " after the pasted text instead of the last char of it)
+  "
+  " Alternative method: do not paste over in visual mode - copy the text,
+  " then search for the thing to replace, do ct{something}, CTRL-R * to
+  " paste in the insert mode, then n. to repeat.
+  "
+  " Alternative method: xnoremap p "0p
+  " Note: 
+  " The problem with `xnoremap p "0p` override is that if we delete
+  " something explicitely, we would expect next "p" to paste it,
+  " but it pastes the prvious copied text instead:
+  " - Copy "word1"
+  " - Select "word1" and press p
+  " - Delete "new_word" with de
+  " - Select "word3" and press p
+  " On the last step, it is expected to paste `new_word`, but actually it
+  " pastes the `word1`. Workaround: use `gp`.
+  " Trying the `pgvy` instead - it re-copies just pasted text, so does not
+  " affect the deletion operation
+  "
+  xnoremap p pgvy
+
   " Move cursor by display lines when wrapping
   " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
   " noremap k gk
