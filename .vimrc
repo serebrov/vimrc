@@ -8,11 +8,14 @@
 "  - PlugDiff 	Examine changes from the previous update and the pending changes
 "  - PlugSnapshot[!] [output path] 	Generate script for restoring the current snapshot of the plugins
 "
+" Updates:
+" PlugUpdate to update plugins
+" TSUpdate update treesitter parsers
+"
 if exists('g:vscode')
   source ~/.vim/.vimrc.vscode-neovim
 else
   set nocompatible " explicitly get out of vi-compatible mode
-  " filetype off
 
   " Needed at least for nvim to correctly work with unicode
   " see https://github.com/neovim/neovim/issues/5683#issuecomment-420833679
@@ -34,45 +37,18 @@ else
     " set foldopen=block,hor,mark,percent,quickfix,tag " what movements open folds
     " Don't autofold anything (but I can still fold manually)
     " set foldlevel=100
-    " Open all folds:
-    set foldlevel=0
+    " Close all folds initially:
+    " set foldlevel=0
+    " Open all folds initally:
     " set foldlevel=999
-    "
-    " Note: coc.nvim also has folding support, but it doesn't work for python
-    " and vue at the moment.
-    " To use coc, do:
-    " set foldmethod=manual
-    " :Fold
-
-    " Generic folding mechanism and motion based on indentation.
-    " Fold anything that is structured into indented blocks.
-    " Quickly navigate between blocks.
-    " Plug 'pseewald/vim-anyfold'
-    " set foldmethod=syntax
-    " let anyfold_activate=1  " Note: it conflicts with Magit buffer
-    " let anyfold_fold_comments=1
-    " autocmd Filetype php,css,vue,vim :AnyFoldActivate
-
-    " From 'pangloss/vim-javascript' readme
-    " augroup javascript_folding
-    "     au!
-    "     au FileType javascript setlocal foldmethod=syntax
-    "     au FileType typescript setlocal foldmethod=syntax
-    " augroup END
-
-    " python folding
-    " let g:SimpylFold_docstring_preview = 1
-    " Plug 'tmhedberg/SimpylFold'
 
     " Note: markdown can be formatted with :Prettier (for example,
     " to format the markdown table, select it and run :Prettier)
 
-    Plug 'masukomi/vim-markdown-folding'
-
-    " let g:coiled_snake_set_foldtext = 0
-    " Plug 'kalekundert/vim-coiled-snake'
-    " Recommended to make folding faster.
-    " Plug 'Konfekt/FastFold'
+    " Original plugin has issue in newer vim/nvim
+    " https://github.com/masukomi/vim-markdown-folding/issues/42
+    " Plug 'masukomi/vim-markdown-folding'
+    Plug 'mikeboiko/vim-markdown-folding'
 
     " Vim's fold commands:
     " zf{motion} or {Visual}zf - create a manual fold
@@ -87,20 +63,15 @@ else
     " [[ / ]] - beginning / end of the current fold
     " ]k / [j - end of prev block / beginning of the next block
     "
-    " Unfolds the line in which the cursor is located when opening a file
-    autocmd User anyfoldLoaded normal zv
-    " hi Folded guifg=#6AC8B1
-    " autocmd User anyfoldLoaded hi Folded guifg=#4592EF
-    " autocmd User anyfoldLoaded hi Folded guifg=#6AB3C8
-    autocmd User anyfoldLoaded hi Folded guifg=#608cc3
-    autocmd User Filetype python hi Folded guifg=#608cc3
-
     " Cycle open and closed folds and nested folds - <CR> / <BS>
+    " Use when the cursor is on the fold.
     Plug 'arecarn/vim-fold-cycle'
 
-    " hi Folded term=NONE cterm=NONE guifg=NONE
-    " hi Folded ctermbg=242
+    " Note: related config is in .vimrc.ide, folding with treesitter.
 
+  " End Folding
+
+  " Vim sessions with Obsession
   " :Obsess [file_name] - create new session
   " :Obsess [dir_name] - create new session under dir_name/Session.vim
   " :Obsess if session is tracked, pause tracking
