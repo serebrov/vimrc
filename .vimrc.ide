@@ -292,7 +292,7 @@ if has('nvim')
   " source ~/.vim/.vimrc.ide.coc
 
   " Initializes pyright server, helps with venv support.
-  Plug 'HallerPatrick/py_lsp.nvim'
+  " Plug 'HallerPatrick/py_lsp.nvim'
   
   " LSP client configurations
   " :LspInfo - see diagnostics
@@ -308,10 +308,11 @@ if has('nvim')
   " :LspInstallLog - opens the log file in a new tab window
   " :LspPrintInstalled - prints all installed language servers
   "
-  " :LspInstall bashls jsonls vuels htm pyrigh tsserver vimls
+  " :LspInstall bashls jsonls vuels htm pyright tsserver vimls
   Plug 'williamboman/nvim-lsp-installer'
 
   " Install languages with :TSInstall
+  " :TSInstall typescript lua
   " List of avaiable and installed languages :TSinstallInfo
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 

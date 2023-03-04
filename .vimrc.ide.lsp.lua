@@ -19,7 +19,7 @@ local coq = require "coq" -- add this
 -- " npm install -g vls
 -- "
 -- local servers = { 'pyright', 'bashls', 'jsonls', 'tsserver', 'vuels', 'vimls' }
-local servers = { 'bashls', 'jsonls', 'tsserver', 'vuels', 'vimls' }
+local servers = { 'pyright', 'bashls', 'jsonls', 'tsserver', 'vuels', 'vimls' }
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -82,11 +82,11 @@ for _, lsp in ipairs(servers) do
   }))
 end
 
-require'py_lsp'.setup {
-  -- This is optional, but allows to create virtual envs from nvim
-  -- host_python = "/path/to/python/bin"
-  on_attach = on_attach,
-}
+-- require'py_lsp'.setup {
+--   -- This is optional, but allows to create virtual envs from nvim
+--   -- host_python = "/path/to/python/bin"
+--   on_attach = on_attach,
+-- }
 
 -- -- venv support for pyright
 -- -- See https://github.com/neovim/nvim-lspconfig/issues/500
@@ -129,9 +129,9 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.on_attach = on_attach
 
-require'lspconfig'.html.setup {
-  capabilities = coq.lsp_ensure_capabilities(capabilities),
-}
+-- require'lspconfig'.html.setup {
+--   capabilities = coq.lsp_ensure_capabilities(capabilities),
+-- }
 
 -- For Plug 'nvim-treesitter/nvim-treesitter'
 require'nvim-treesitter.configs'.setup {
