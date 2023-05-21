@@ -474,6 +474,31 @@ A mapping to work from any level inside the function: `:map t ? function <CR>f{v
 - `<C-G>` - normal mode, show current file name and path and cursor position
 - `<g C-G> - show file stats (numer of columns, lines, words, bytes)
 
+# Calculator: expression register
+
+In insert mode, `Ctrl-R=` will prompt for the expression and insert the result into the document.
+
+It can also be convenient to have the expression in the document, then copy it and insert when prompted. The insert operation will be in command-line mode and we can do it using `Ctrl-R"` (in cmd mode, Ctrl-R inserts the given register value).
+
+For example:
+
+```
+Document:
+5+5*2       | ^ v $ y       - go to start, select until end, copy
+5+5*2=      | A = Ctrl-R =  - append, enter =, Ctrl-R = to invoke prompt
+
+Command line:
+=           | Ctrl-R "      - insert the copied expression
+=5+5*2      | Enter
+
+Document:
+5+5*2=15
+
+cos(1.57)=7.963267e-4
+```
+
+See `:help i_CTRL-R_=`, `:help c_CTRL-R`, `:help registers`.
+
 # Digraphs and special chars
 
 - `<C-K>{char1}{char2}` - insert a digraph (normal mode)
