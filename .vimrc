@@ -109,6 +109,14 @@ else
   source ~/.vim/.vimrc.db
   source ~/.vim/.vimrc.colors
 
+  " Github copilot
+  " :Copilot setup
+  " :Copilot status
+  " :Copilot panel
+  Plug 'github/copilot.vim'
+  imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+  let g:copilot_no_tab_map = v:true
+
   " gcc - comment out line
   " gc<motion> - comment out lines defined by motion
   Plug 'tpope/vim-commentary'
