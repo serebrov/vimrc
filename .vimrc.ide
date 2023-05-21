@@ -34,7 +34,12 @@ let test#javascript#jest#executable = 'npm run test:unit'
 " nmap <silent> t<C-s> :TestSuite<CR>
 " nmap <silent> t<C-l> :TestLast<CR>
 " nmap <silent> t<C-g> :TestVisit<CR>
-Plug 'vim-test/vim-test'
+" Plug 'vim-test/vim-test'
+" Note: for python this is also possible with `nvim-python-dap`:
+" test nearest funciton:
+"   :lua require('dap-python').test_method()
+" Plug 'rcarriga/vim-ultest'
+
 " Plug 'neomake/neomake'
 Plug 'tpope/vim-dispatch'
 
@@ -499,12 +504,12 @@ Plug 'sloria/vim-ped'
 "   autocmd FileType python nnoremap <Leader>pd :Pydocstring<CR>
 " augroup END
 "
-let g:doge_doc_standard_python = 'google'
-let g:doge_mapping = '<Leader>pd'
-" Generate docstrings for different languages
-" Tab / Shift-Tab to move between placeholders.
-" :DogeGenerate to generate manually or use <Leader>pd.
-Plug 'kkoomen/vim-doge'
+" let g:doge_doc_standard_python = 'google'
+" let g:doge_mapping = '<Leader>pd'
+" " Generate docstrings for different languages
+" " Tab / Shift-Tab to move between placeholders.
+" " :DogeGenerate to generate manually or use <Leader>pd.
+" Plug 'kkoomen/vim-doge'
 
 """""" Documentation
 " php documenter
