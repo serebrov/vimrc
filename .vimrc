@@ -43,7 +43,7 @@ else
     " Close all folds initially:
     " set foldlevel=0
     " Open all folds initally:
-    " set foldlevel=999
+    set foldlevel=999
 
     " Note: markdown can be formatted with :Prettier (for example,
     " to format the markdown table, select it and run :Prettier)
@@ -51,7 +51,7 @@ else
     " Original plugin has issue in newer vim/nvim
     " https://github.com/masukomi/vim-markdown-folding/issues/42
     " Plug 'masukomi/vim-markdown-folding'
-    Plug 'mikeboiko/vim-markdown-folding'
+    " Plug 'mikeboiko/vim-markdown-folding'
 
     " Vim's fold commands:
     " zf{motion} or {Visual}zf - create a manual fold

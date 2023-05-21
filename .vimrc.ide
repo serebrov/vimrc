@@ -326,12 +326,13 @@ if has('nvim')
 
   " Folding with treesitter.
   set foldexpr=nvim_treesitter#foldexpr()
-  augroup ts_folding
+  augroup treesitter_folding
       au!
       au FileType javascript setlocal foldmethod=expr
       au FileType typescript setlocal foldmethod=expr
       au FileType python setlocal foldmethod=expr
       au FileType vue setlocal foldmethod=expr
+      au FileType markdown setlocal foldmethod=expr
   augroup END
 
   " Completions {{{
