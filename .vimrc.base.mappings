@@ -307,14 +307,15 @@ vnoremap <leader>0 :exe "tabn ".g:lasttab<cr>
 " See:http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/
 " noremap <Leader>i :find<SPACE>
 " noremap <Leader>I :find <C-R>=expand('%:p:h').'/**/*'<CR>
-" Insert current file's folder
-cnoremap <Leader><Leader>fn <C-r>=expand('%')<CR>
-cnoremap <Leader><Leader>f <C-r>=expand('%:p:h')<CR>
-" will expand %% to current file path
+" Insert current file name
+cnoremap %% <C-r>=expand('%')<CR>
+" Insert current file dir
 "cabbr <expr> %% expand('%:p:h')
-cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<CR>
+" cnoremap %%f <C-r>=expand('%:p:h')<CR>
+cnoremap %%f <C-R>=fnameescape(expand('%:h')).'/'<CR>
 " list buffers and start completion
 nnoremap <Leader>b :buffer <C-z>
+" list buffers and start completion, will open in split
 nnoremap <Leader>B :sbuffer <C-z>
 " list buffers with ls and start completion
 " see: http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/

@@ -33,7 +33,7 @@ Plug 'junegunn/fzf.vim'
 " Filetypes   File types
 noremap <Leader>f :FZF<CR>
 noremap <Leader>t :Tags<CR>
-inoremap <Leader>l :Lines<CR>
+" inoremap <Leader>l :Lines<CR>
 
 " Complete lines with FZF
 imap <c-x><c-l> <plug>(fzf-complete-line)
