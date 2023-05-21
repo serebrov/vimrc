@@ -11,6 +11,9 @@
 " Updates:
 " PlugUpdate to update plugins
 " TSUpdate update treesitter parsers
+" TSInstall to install treesitter parsers
+" LspInstallInfo to see installed lsp servers.
+" LspInstall to install more lsp servers.
 "
 if exists('g:vscode')
   source ~/.vim/.vimrc.vscode-neovim
