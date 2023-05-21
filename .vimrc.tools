@@ -31,6 +31,12 @@ Plug 'Shougo/vimshell.vim'
 " https://wakatime.com
 " Plug 'wakatime/vim-wakatime'
 
+" Open files from terminal buffer in current nvim instance.
+" Plug 'willothy/flatten.nvim'
+" g:unception_open_buffer_in_new_tab = 1
+" Note: we can get back to terminal after opening the file with Ctrl-O
+Plug 'samjwill/nvim-unception'
+
 if has('nvim')
   " terminal scrollback buffer size
   " set scrollback=100000
