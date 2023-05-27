@@ -103,6 +103,7 @@ else
   source ~/.vim/.vimrc.fzf
   source ~/.vim/.vimrc.git-and-diff
   source ~/.vim/.vimrc.ide
+  " source ~/.vim/.vimrc.ide.coc
   source ~/.vim/.vimrc.tools
   source ~/.vim/.vimrc.text
   source ~/.vim/.vimrc.search
@@ -144,9 +145,9 @@ else
     " see nvim-lspconfig.
 
     " For Plug 'neovim/nvim-lspconfig'
-    luafile ~/.vim/.vimrc.ide.lsp.lua
+    " luafile ~/.vim/.vimrc.ide.lsp.lua
     " For Plug 'neovim/nvim-dap'
-    luafile ~/.vim/.vimrc.ide.dap.lua
+    " luafile ~/.vim/.vimrc.ide.dap.lua
 
   endif
 

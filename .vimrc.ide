@@ -165,11 +165,11 @@ autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.vue,*.yaml,*.html Prettier
 "   - simple solution: create .flake8 config in the root project folder
 "   - ideal solution: config is found automatically by traversing up from the
 "   current file directory
-if has('nvim')
-  " There was a problem with Neovim not seeing python
-  let g:python2_host_prog = '/usr/bin/python'
-  let g:python3_host_prog = '/usr/local/bin/python3'
-endif
+" if has('nvim')
+"   " There was a problem with Neovim not seeing python
+"   let g:python2_host_prog = '/usr/bin/python'
+"   let g:python3_host_prog = '/usr/local/bin/python3'
+" endif
 
 " The prettier/plugin-python is marked as deprecated, page says
 " to use black instead, see https://github.com/prettier/plugin-python
@@ -355,23 +355,6 @@ if has('nvim')
     " towards root until one is found
     " set tags=tags;/
   " }}}
-
-  " LSP-based code completion.
-  let g:coq_settings = { 'auto_start': v:true, 'keymap.jump_to_mark': '<C-X>' }
-  " or let g:coq_settings = { 'auto_start': 'shut-up' }
-  " Note: another alternative - https://github.com/hrsh7th/nvim-cmp/
-  " main one
-  Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
-  " 9000+ Snippets
-  Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
-  " lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
-  " Need to **configure separately**
-  Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
-  " - shell repl
-  " - nvim lua api
-  " - scientific calculator
-  " - comment banner
-  " - etc
 
   " Clean and elegant distraction-free writing for NeoVim.
   " :TZMinimalist - Minimalist mode. Activates/deactivates NeoVim's UI
