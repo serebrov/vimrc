@@ -1,5 +1,4 @@
 " Mappings {{{
-  "let mapleader = ","
   "let mapleader = "\<space>"
   " Better then let mapleader because vim command line will still
   " display leader-based mappings as \s
@@ -7,6 +6,7 @@
   map <space> <leader>
 
   " * and # will stay on the first match
+  " Note: these does not work, Loupe plugin overrides them
   nnoremap * *N
   nnoremap # #N
 
@@ -38,36 +38,14 @@
   noremap <leader>w :w<CR>
   noremap <leader>q :q<CR>
 
-  " mm to open the command line
-  " Note: this eats the 'm' mark, but I don't use marks too much
-  noremap mm :
-
-" jj or j+k as ESC
+  " jj or j+k as ESC
   " other options: Ctrl-[, Ctrl-C
   inoremap jj <Esc>
   inoremap jk <Esc>
   inoremap kj <Esc>
 
-  "runtime macros/matchit.vim
-  " Tab to move between matches
-  " Notes regarding %:
-  " - for parentesis () it works for next pair on the current line, so
-  "     function name(arg1, arg2)
-  "               ^--- cursor here, % will jump to )
-  " - and c% will change to the ), useful in such case:
-  "     my_fun(arg1, func2(arg1, arg2, fun3(arg3)))
-  "                  ^- cursor here, c% will change inside the my_fun brackets
-  " See: http://www.viemu.com/a-why-vi-vim.html
-  "      http://thepugautomatic.com/2014/03/vims-life-changing-c-percent/
-  " nnoremap <Leader><Leader> %
-
   " Make last word uppercase
   inoremap <C-F> <Esc>gUiw`]a
-
-  " ,o to insert a new line below, ,O - above
-  " (in normal mode and go back to normal)
-  nnoremap <Leader>o o<Esc>
-  nnoremap <Leader>O O<Esc>
 
   "note: "+ - real clipboard, "* - current selection
   "note: p - paste after cursor, P - before
@@ -124,10 +102,6 @@
   " noremap gj j
   "noremap 0 g0
   "noremap $ g$
-
-  " Shortcut to rapidly toggle `set list` (def leader = \)
-  " :list displays tabs, trailing spaces and other "invisible" chars
-  " nnoremap <leader>l :set list!<CR>
 
   " Put ending { to the next line
   function! ClosingBracketToNextLine()
@@ -281,16 +255,16 @@
 nnoremap <Leader>tn :tabnew<cr>
 nnoremap <Leader>tc :tabclose<cr>
 
-" Go to tab by number
-noremap <leader>1 1gt
-noremap <leader>2 2gt
-noremap <leader>3 3gt
-noremap <leader>4 4gt
-noremap <leader>5 5gt
-noremap <leader>6 6gt
-noremap <leader>7 7gt
-noremap <leader>8 8gt
-noremap <leader>9 :tablast<cr>
+" " Go to tab by number
+" noremap <leader>1 1gt
+" noremap <leader>2 2gt
+" noremap <leader>3 3gt
+" noremap <leader>4 4gt
+" noremap <leader>5 5gt
+" noremap <leader>6 6gt
+" noremap <leader>7 7gt
+" noremap <leader>8 8gt
+" noremap <leader>9 :tablast<cr>
 
 " Go to last active tab
 " Note: would be good to have i3-like benavior, where using
@@ -321,4 +295,3 @@ nnoremap <Leader>B :sbuffer <C-z>
 " see: http://www.reddit.com/r/vim/comments/2ueu0g/which_pluginskeybindsetc_significantly_changed/
 nnoremap gb :ls<CR>:buffer<Space>
 nnoremap gB :ls<CR>:sbuffer<Space>
-

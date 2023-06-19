@@ -48,9 +48,6 @@
     autocmd BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         set ft=markdown
     autocmd BufRead,BufNewFile {COMMIT_EDITMSG}                                set ft=gitcommit
 
-    " S-k to open help
-    autocmd BufNewFile,Bufread *.php set keywordprg="help"
-
     " there is a problem with hash (#) indentation - it always shifted
     " to the start of the string
     " see http://stackoverflow.com/questions/354097/how-to-configure-vim-to-not-put-comments-at-the-beginning-of-lines-while-editing
@@ -65,15 +62,6 @@
     autocmd FileType markdown :set nosmartindent
 
   augroup END
-
-  " see https://github.com/romainl/vim-qf for more
-  augroup autoquickfix
-    autocmd!
-    autocmd QuickFixCmdPost [^l]* cwindow
-    autocmd QuickFixCmdPost    l* lwindow
-  augroup END
-
-  command! -bar -nargs=? -bang Scratch :silent enew<bang>|set buftype=nofile bufhidden=hide noswapfile buflisted filetype=<args> modifiable
 
 " }}}
 

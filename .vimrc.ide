@@ -3,6 +3,100 @@
 Plug 'tpope/vim-dispatch'
 
 if has('nvim')
+
+  " Better display for messages
+  set cmdheight=2
+  " Smaller updatetime for CursorHold & CursorHoldI
+  set updatetime=300
+  " don't give |ins-completion-menu| messages.
+  set shortmess+=c
+  " always show signcolumns
+  set signcolumn=yes
+
+  " Disable in favor of nvim LSP client and nvim-lspconfig
+  " source ~/.vim/.vimrc.ide.coc
+
+  "" LSP Support, see VonHeikemen/lsp-zero.nvim
+  " LSP client configurations
+  " :LspInfo - see diagnostics
+  " :LspStart <config_name> Start the requested server name. Will only successfully start if the command detects a root directory matching the current config. Pass autostart = false to your .setup{} call for a language server if you would like to launch clients solely with this command. Defaults to all servers matching current buffer filetype.
+  " :LspStop <client_id> Defaults to stopping all buffer clients.
+  " :LspRestart <client_id> Defaults to restarting all buffer clients.
+  Plug 'neovim/nvim-lspconfig'
+  " Installer for language servers
+  ":Mason - opens a graphical status window
+  " :MasonUpdate - updates all managed registries
+  " :MasonInstall <package> ... - installs/re-installs the provided packages
+  " :MasonUninstall <package> ... - uninstalls the provided packages
+  " :MasonUninstallAll - uninstalls all packages
+  " :MasonLog - opens the mason.nvim log file in a new tab window
+  Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'}
+  " :LspInstall [<server>...] - installs the provided servers
+  " :LspUninstall <server> ... - uninstalls the provided servers
+  "
+  " :LspInstall bashls jsonls vuels htm pyright tsserver vimls
+  Plug 'williamboman/mason-lspconfig.nvim'               " Optional
+
+  " Autocompletion
+  Plug 'hrsh7th/nvim-cmp'     " Required
+  Plug 'hrsh7th/cmp-nvim-lsp' " Required
+  Plug 'L3MON4D3/LuaSnip'     " Required
+
+  " Configures lsp-related staff, default keys
+  " K: Displays hover information about the symbol under the cursor in a floating window. See :help vim.lsp.buf.hover().
+  " gd: Jumps to the definition of the symbol under the cursor. See :help vim.lsp.buf.definition().
+  " gD: Jumps to the declaration of the symbol under the cursor. Some servers don't implement this feature. See :help vim.lsp.buf.declaration().
+  " gi: Lists all the implementations for the symbol under the cursor in the quickfix window. See :help vim.lsp.buf.implementation().
+  " go: Jumps to the definition of the type of the symbol under the cursor. See :help vim.lsp.buf.type_definition().
+  " gr: Lists all the references to the symbol under the cursor in the quickfix window. See :help vim.lsp.buf.references().
+  " gs: Displays signature information about the symbol under the cursor in a floating window. See :help vim.lsp.buf.signature_help(). If a mapping already exists for this key this function is not bound.
+  " <F2>: Renames all references to the symbol under the cursor. See :help vim.lsp.buf.rename().
+  " <F3>: Format code in current buffer. See :help vim.lsp.buf.format().
+  " <F4>: Selects a code action available at the current cursor position. See :help vim.lsp.buf.code_action().
+  " gl: Show diagnostics in a floating window. See :help vim.diagnostic.open_float().
+  " [d: Move to the previous diagnostic in the current buffer. See :help vim.diagnostic.goto_prev().
+  " ]d: Move to the next diagnostic. See :help vim.diagnostic.goto_next().
+  Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
+  
+  " Install languages with :TSInstall
+  " :TSInstall typescript lua markdown
+  " List of avaiable and installed languages :TSinstallInfo
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+  " Use treesitter to autoclose and autorename html tag.
+  " Works with html,tsx,vue,svelte,php.
+  " Note: does not work if tag has properties,
+  "   <div class="xxx">...</div>
+  " Changing opening div does nothing (but changing
+  " closing div works).
+  Plug 'windwp/nvim-ts-autotag'
+
+  " Folding with treesitter.
+  set foldexpr=nvim_treesitter#foldexpr()
+  augroup treesitter_folding
+      au!
+      au FileType javascript setlocal foldmethod=expr
+      au FileType typescript setlocal foldmethod=expr
+      au FileType python setlocal foldmethod=expr
+      au FileType vue setlocal foldmethod=expr
+      au FileType markdown setlocal foldmethod=expr
+  augroup END
+
+  " Completions {{{
+    "set completeopt=longest,menuone,preview " use a pop up menu for completions
+    " set completeopt=menuone,longest,preview " use a pop up menu for completions
+    set completeopt=menuone,noinsert,noselect
+    set complete=""             " what use for completions
+    set complete+=.             " current buffer
+    set complete+=t             " tags
+    set complete+=kspell        " dictionary
+    set complete+=b             " other open buffers
+
+  " Preview for substitute
+  set inccommand=nosplit
+endif
+
+if has('nvim')
   " mkdir .virtualenvs
   " cd .virtualenvs
   " python -m venv debugpy
@@ -88,53 +182,6 @@ autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.vue,*.yaml,*.html Prettier
 " Note: markdown can be formatted with :Prettier (for example,
 " to format the markdown table, select it and run :Prettier)
 
-" TODO: there is a problem with python linting setup (both Coc-based and Neomake):
-" - I have flake8 config under `backend` folder and flake doesn't see it when
-"   run by coc or neomake
-"   - simple solution: create .flake8 config in the root project folder
-"   - ideal solution: config is found automatically by traversing up from the
-"   current file directory
-" if has('nvim')
-"   " There was a problem with Neovim not seeing python
-"   let g:python2_host_prog = '/usr/bin/python'
-"   let g:python3_host_prog = '/usr/local/bin/python3'
-" endif
-
-" The prettier/plugin-python is marked as deprecated, page says
-" to use black instead, see https://github.com/prettier/plugin-python
-" requires ``
-" Plug 'psf/black'
-" Temporary pin version, see https://github.com/psf/black/issues/1293
-" Plug 'psf/black', { 'tag': '19.10b0' }
-" Plug 'psf/black'
-"
-" Note: Had a "No module named 'regex._regex'; 'regex' is not a package" error
-" solved by running 'pip3 install --force-reinstall regex'
-" I suspect this was caused by combination of black setup (it uses own regex)
-" and my setup for python (see code below `if has("python")...`.
-" The `pip3 install` command above was executed on the host, no active virtual
-" environment (so this is for the system python).
-" When project venv is activated - still getting the same error, fixed by
-" also adding
-"   alias python=/usr/local/bin/python3
-" to ~/.zshrc
-" Also removed and re-created black venv:
-"   cd ~/.vim
-"   rm -r black_venv
-"   virtualenv -p python3 black_venv
-"   source black_venv/bin/activate
-"   pip install --upgrade git+https://github.com/psf/black.git
-" let g:black_virtualenv = '~/.vim/black_venv'
-" Plug 'psf/black'  " , { 'branch': 'stable' }
-" Black plugin is completely broken for me after brew's python update
-" I tried to reinstall it, recreate venvs, etc - it still doesn't work
-" throwing different errors (not being able to find black, can not import
-" _ast3, can not find 'find_pyproject_toml' attribute)
-" Somehow, I managed to fix it for a few days and then it was broken
-" again.
-" At the same time, command line tool (:!black) works well, so I am
-" using that instead, with custom implementation of the :Black command:
-
 function! RunBlackAndISort()
   silent :!black %
   silent :!isort %
@@ -143,124 +190,3 @@ endfunction
 command! BlackAndSort :call RunBlackAndISort()
 
 autocmd BufWritePost *.py execute ':BlackAndSort'
-
-if has('nvim')
-
-  " Better display for messages
-  set cmdheight=2
-  " Smaller updatetime for CursorHold & CursorHoldI
-  set updatetime=300
-  " don't give |ins-completion-menu| messages.
-  set shortmess+=c
-  " always show signcolumns
-  set signcolumn=yes
-
-  " Disable in favor of nvim LSP client and nvim-lspconfig
-  " source ~/.vim/.vimrc.ide.coc
-
-  "" LSP Support, see VonHeikemen/lsp-zero.nvim
-  " LSP client configurations
-  " :LspInfo - see diagnostics
-  " :LspStart <config_name> Start the requested server name. Will only successfully start if the command detects a root directory matching the current config. Pass autostart = false to your .setup{} call for a language server if you would like to launch clients solely with this command. Defaults to all servers matching current buffer filetype.
-  " :LspStop <client_id> Defaults to stopping all buffer clients.
-  " :LspRestart <client_id> Defaults to restarting all buffer clients.
-  Plug 'neovim/nvim-lspconfig'                           " Required
-  " Installer for language servers
-  ":Mason - opens a graphical status window
-  " :MasonUpdate - updates all managed registries
-  " :MasonInstall <package> ... - installs/re-installs the provided packages
-  " :MasonUninstall <package> ... - uninstalls the provided packages
-  " :MasonUninstallAll - uninstalls all packages
-  " :MasonLog - opens the mason.nvim log file in a new tab window
-  Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'} " Optional
-  " :LspInstall [<server>...] - installs the provided servers
-  " :LspUninstall <server> ... - uninstalls the provided servers
-  "
-  " :LspInstall bashls jsonls vuels htm pyright tsserver vimls
-  Plug 'williamboman/mason-lspconfig.nvim'               " Optional
-
-  " Autocompletion
-  Plug 'hrsh7th/nvim-cmp'     " Required
-  Plug 'hrsh7th/cmp-nvim-lsp' " Required
-  Plug 'L3MON4D3/LuaSnip'     " Required
-
-  " Configures lsp-related staff, default keys
-  " K: Displays hover information about the symbol under the cursor in a floating window. See :help vim.lsp.buf.hover().
-  " gd: Jumps to the definition of the symbol under the cursor. See :help vim.lsp.buf.definition().
-  " gD: Jumps to the declaration of the symbol under the cursor. Some servers don't implement this feature. See :help vim.lsp.buf.declaration().
-  " gi: Lists all the implementations for the symbol under the cursor in the quickfix window. See :help vim.lsp.buf.implementation().
-  " go: Jumps to the definition of the type of the symbol under the cursor. See :help vim.lsp.buf.type_definition().
-  " gr: Lists all the references to the symbol under the cursor in the quickfix window. See :help vim.lsp.buf.references().
-  " gs: Displays signature information about the symbol under the cursor in a floating window. See :help vim.lsp.buf.signature_help(). If a mapping already exists for this key this function is not bound.
-  " <F2>: Renames all references to the symbol under the cursor. See :help vim.lsp.buf.rename().
-  " <F3>: Format code in current buffer. See :help vim.lsp.buf.format().
-  " <F4>: Selects a code action available at the current cursor position. See :help vim.lsp.buf.code_action().
-  " gl: Show diagnostics in a floating window. See :help vim.diagnostic.open_float().
-  " [d: Move to the previous diagnostic in the current buffer. See :help vim.diagnostic.goto_prev().
-  " ]d: Move to the next diagnostic. See :help vim.diagnostic.goto_next().
-  Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
-  
-  " Install languages with :TSInstall
-  " :TSInstall typescript lua markdown
-  " List of avaiable and installed languages :TSinstallInfo
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-  " Use treesitter to autoclose and autorename html tag.
-  " Works with html,tsx,vue,svelte,php.
-  " Note: does not work if tag has properties,
-  "   <div class="xxx">...</div>
-  " Changing opening div does nothing (but changing
-  " closing div works).
-  Plug 'windwp/nvim-ts-autotag'
-
-  " Folding with treesitter.
-  set foldexpr=nvim_treesitter#foldexpr()
-  augroup treesitter_folding
-      au!
-      au FileType javascript setlocal foldmethod=expr
-      au FileType typescript setlocal foldmethod=expr
-      au FileType python setlocal foldmethod=expr
-      au FileType vue setlocal foldmethod=expr
-      au FileType markdown setlocal foldmethod=expr
-  augroup END
-
-  " Completions {{{
-    "set completeopt=longest,menuone,preview " use a pop up menu for completions
-    " set completeopt=menuone,longest,preview " use a pop up menu for completions
-    set completeopt=menuone,noinsert,noselect
-    set complete=""             " what use for completions
-    set complete+=.             " current buffer
-    set complete+=t             " tags
-    set complete+=kspell        " dictionary
-    set complete+=b             " other open buffers
-
-  " Preview for substitute
-  set inccommand=nosplit
-endif
-
-" Add the virtualenv's site-packages to vim path
-if has("python")
-python << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  sys.path.insert(0, project_base_dir)
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
-endif
-if has("python3")
-python3 << EOF
-import os.path
-import sys
-# import vim
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  sys.path.insert(0, project_base_dir)
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  activate_source = open(activate_this, "rb").read()
-  exec(compile(activate_source, activate_this, 'exec'), dict(__file__=activate_this))
-EOF
-endif

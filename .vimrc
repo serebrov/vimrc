@@ -70,6 +70,21 @@ else
     " Use when the cursor is on the fold.
     Plug 'arecarn/vim-fold-cycle'
 
+    " " Make zO recursively open whatever fold we're in, even if it's partially open.
+    " nnoremap zO zczO
+    "
+    " " "Focus" the current line.  Basically:
+    " "
+    " " 1. Close all folds.
+    " " 2. Open just the folds containing the current line.
+    " " 3. Move the line to a little bit (15 lines) above the center of the screen.
+    " " 4. Pulse the cursor line.  My eyes are bad.
+    " "
+    " " This mapping wipes out the z mark, which I never use.
+    " "
+    " " I use :sus for the rare times I want to actually background Vim.
+    " nnoremap <c-z> mzzMzvzz15<c-e>`z:Pulse<cr>
+
     " Note: related config is in .vimrc.ide, folding with treesitter.
 
   " End Folding
@@ -113,8 +128,22 @@ else
   " gc<motion> - comment out lines defined by motion
   Plug 'tpope/vim-commentary'
 
-  " Plug 'MunifTanjim/nui.nvim'
-  " Plug 'X3eRo0/dired.nvim'
+  """""" Motions / normal mode commands
+  " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
+  " let g:camelcasemotion_key = ','
+  " Note: we have an integration with vim-smartword below, so
+  " CamelCaseMotion is used by default for w, b, e and ge.
+  " To operate on whole words, use W, B, E and gE.
+  Plug 'bkad/CamelCaseMotion'
+
+  " call camelcasemotion#CreateMotionMappings(',')
+  " Default w motion:
+  " <a href="http://www.vim.org/">www.vim.org</a>
+  "  # #   # #   #  #  ##  ##  #  #  ##  ##  # #
+  " Smart word (skip non-letters between words):
+  " <a href="http://www.vim.org/">www.vim.org</a>
+  "  # #     #      #   #   #     #   #   #    #
+  Plug 'kana/vim-smartword'
 
   call plug#end()
 
@@ -124,22 +153,41 @@ else
     " The related configuration is in .vimrc.ide,
     " see nvim-lspconfig.
 
-    " For Plug 'neovim/nvim-lspconfig'
-    " luafile ~/.vim/.vimrc.ide.lsp.lua
+    " For lsp plugins in .vimrc.ide
+    luafile ~/.vim/.vimrc.ide.lsp.lua
     " For Plug 'neovim/nvim-dap'
     " luafile ~/.vim/.vimrc.ide.dap.lua
 
-    " lua << EOF
-    " require("dired").setup {
-    "     path_separator = "/",
-    "     show_banner = false,
-    "     show_hidden = true,
-    "     show_dot_dirs = true,
-    "     show_colors = true
-    " }
-" EOF
-
   endif
+
+  map <Plug>(smartword-basic-w) <Plug>CamelCaseMotion_w
+  map <Plug>(smartword-basic-b) <Plug>CamelCaseMotion_b
+  map <Plug>(smartword-basic-e) <Plug>CamelCaseMotion_e
+
+"""""" Motions / normal mode commands: mappings
+" Regular mappings for CamelCaseMotion integration do not work
+" so we use the function and autocommand to enable them.
+function s:smartword_mappings() abort
+  " For Plug 'vim-smartword'
+  map w  <Plug>(smartword-w)
+  map b  <Plug>(smartword-b)
+  map e  <Plug>(smartword-e)
+  map ge  <Plug>(smartword-ge)
+
+  " For Plug 'CamelCaseMotion'
+  " This combines two plugins, vim-smartword will skip  non-letters between
+  " words, CamelCaseMotion will use CamelCase as word boundaries.
+  " (remove these mappings and uncomment let g:camelcasemotion_key = ','
+  " above to use special ,w ,b ,e motions)
+  map <Plug>(smartword-basic-w)  <Plug>CamelCaseMotion_w
+  map <Plug>(smartword-basic-b)  <Plug>CamelCaseMotion_b
+  map <Plug>(smartword-basic-e)  <Plug>CamelCaseMotion_e
+  map <Plug>(smartword-basic-ge)  <Plug>CamelCaseMotion_ge
+endfunction
+augroup SmartWordCustom
+  autocmd!
+  autocmd VimEnter * call <SID>smartword_mappings()
+augroup END
 
 " see .vimrc.colors
 call SetupColorscheme()

@@ -6,6 +6,71 @@
 Plug 'google/vim-maktaba'
 Plug 'google/vim-coverage'
 
+  " Plug 'MunifTanjim/nui.nvim'
+  " Plug 'X3eRo0/dired.nvim'
+
+  call plug#end()
+
+  if has('nvim')
+    " lua << EOF
+    " require("dired").setup {
+    "     path_separator = "/",
+    "     show_banner = false,
+    "     show_hidden = true,
+    "     show_dot_dirs = true,
+    "     show_colors = true
+    " }
+" EOF
+  endif
+
+
+" TODO: there is a problem with python linting setup (both Coc-based and Neomake):
+" - I have flake8 config under `backend` folder and flake doesn't see it when
+"   run by coc or neomake
+"   - simple solution: create .flake8 config in the root project folder
+"   - ideal solution: config is found automatically by traversing up from the
+"   current file directory
+" if has('nvim')
+"   " There was a problem with Neovim not seeing python
+"   let g:python2_host_prog = '/usr/bin/python'
+"   let g:python3_host_prog = '/usr/local/bin/python3'
+" endif
+
+" The prettier/plugin-python is marked as deprecated, page says
+" to use black instead, see https://github.com/prettier/plugin-python
+" requires ``
+" Plug 'psf/black'
+" Temporary pin version, see https://github.com/psf/black/issues/1293
+" Plug 'psf/black', { 'tag': '19.10b0' }
+" Plug 'psf/black'
+"
+" Note: Had a "No module named 'regex._regex'; 'regex' is not a package" error
+" solved by running 'pip3 install --force-reinstall regex'
+" I suspect this was caused by combination of black setup (it uses own regex)
+" and my setup for python (see code below `if has("python")...`.
+" The `pip3 install` command above was executed on the host, no active virtual
+" environment (so this is for the system python).
+" When project venv is activated - still getting the same error, fixed by
+" also adding
+"   alias python=/usr/local/bin/python3
+" to ~/.zshrc
+" Also removed and re-created black venv:
+"   cd ~/.vim
+"   rm -r black_venv
+"   virtualenv -p python3 black_venv
+"   source black_venv/bin/activate
+"   pip install --upgrade git+https://github.com/psf/black.git
+" let g:black_virtualenv = '~/.vim/black_venv'
+" Plug 'psf/black'  " , { 'branch': 'stable' }
+" Black plugin is completely broken for me after brew's python update
+" I tried to reinstall it, recreate venvs, etc - it still doesn't work
+" throwing different errors (not being able to find black, can not import
+" _ast3, can not find 'find_pyproject_toml' attribute)
+" Somehow, I managed to fix it for a few days and then it was broken
+" again.
+" At the same time, command line tool (:!black) works well, so I am
+" using that instead, with custom implementation of the :Black command:
+
 " """""" Javascript
 " Plug 'pangloss/vim-javascript'
 " let g:javascript_conceal = 0
@@ -670,4 +735,144 @@ Plug '~/.vim/bundle/potion'
   " nmap yc <Plug>(yank-highlight)
   " vmap yc <Plug>(yank-highlight)
 " }}}
+
+" " Add the virtualenv's site-packages to vim path
+" if has("python")
+" python << EOF
+" import os.path
+" import sys
+" import vim
+" if 'VIRTUAL_ENV' in os.environ:
+"   project_base_dir = os.environ['VIRTUAL_ENV']
+"   sys.path.insert(0, project_base_dir)
+"   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"   execfile(activate_this, dict(__file__=activate_this))
+" EOF
+" endif
+" if has("python3")
+" python3 << EOF
+" import os.path
+" import sys
+" # import vim
+" if 'VIRTUAL_ENV' in os.environ:
+"   project_base_dir = os.environ['VIRTUAL_ENV']
+"   sys.path.insert(0, project_base_dir)
+"   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"   activate_source = open(activate_this, "rb").read()
+"   exec(compile(activate_source, activate_this, 'exec'), dict(__file__=activate_this))
+" EOF
+" endif
 "
+"
+" Autocommands {{{
+  " MyAutoCmd : an augroup for my autocmd
+  augroup MyAutoCmd
+
+    " S-k to open help
+    autocmd BufNewFile,Bufread *.php set keywordprg="help"
+  augroup END
+
+  " see https://github.com/romainl/vim-qf for more
+  augroup autoquickfix
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost    l* lwindow
+  augroup END
+
+  command! -bar -nargs=? -bang Scratch :silent enew<bang>|set buftype=nofile bufhidden=hide noswapfile buflisted filetype=<args> modifiable
+
+  " mm to open the command line
+  " Note: this eats the 'm' mark, but I don't use marks too much
+  noremap mm :
+
+  "runtime macros/matchit.vim
+  " Tab to move between matches
+  " Notes regarding %:
+  " - for parentesis () it works for next pair on the current line, so
+  "     function name(arg1, arg2)
+  "               ^--- cursor here, % will jump to )
+  " - and c% will change to the ), useful in such case:
+  "     my_fun(arg1, func2(arg1, arg2, fun3(arg3)))
+  "                  ^- cursor here, c% will change inside the my_fun brackets
+  " See: http://www.viemu.com/a-why-vi-vim.html
+  "      http://thepugautomatic.com/2014/03/vims-life-changing-c-percent/
+  " nnoremap <Leader><Leader> %
+
+  " <Leader>o to insert a new line below, <Leader>O - above
+  " (in normal mode and go back to normal)
+  nnoremap <Leader>o o<Esc>
+  nnoremap <Leader>O O<Esc>
+
+  " Shortcut to rapidly toggle `set list` (def leader = \)
+  " :list displays tabs, trailing spaces and other "invisible" chars
+  " nnoremap <leader>l :set list!<CR>
+
+" always highlight matching html tags
+" throws an error on some html files
+" Plug 'Valloric/MatchTagAlways'
+
+Plug 'easymotion/vim-easymotion'
+" <Leader>f{char} to move to {char}
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+" Operator is `z` because `s` is taken by surround.
+omap z <Plug>(easymotion-bd-f2)
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+nmap <Leader>; <Plug>(easymotion-next)
+nmap <Leader>, <Plug>(easymotion-prev)
+let g:EasyMotion_use_upper = 1
+let g:EasyMotion_keys = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ;'
+" Similar plugins
+" Plug 'justinmk/vim-sneak'
+" Plug 't9md/vim-smalls'
+
+" Highlight Word {{{
+"
+" This mini-plugin provides a few mappings for highlighting words temporarily.
+"
+" Sometimes you're looking at a hairy piece of code and would like a certain
+" word or two to stand out temporarily.  You can search for it, but that only
+" gives you one color of highlighting.  Now you can use <leader>N where N is
+" a number from 1-6 to highlight the current word in a specific color.
+
+function! HiInterestingWord(n) " {{{
+    " Save our location.
+    normal! mz
+    " Yank the current word into the z register.
+    normal! "zyiw
+    " Calculate an arbitrary match ID.  Hopefully nothing else is using it.
+    let mid = 86750 + a:n
+    " Clear existing matches, but don't worry if they don't exist.
+    silent! call matchdelete(mid)
+    " Construct a literal pattern that has to match at boundaries.
+    let pat = '\V\<' . escape(@z, '\') . '\>'
+    " Actually match the words.
+    call matchadd("InterestingWord" . a:n, pat, 1, mid)
+    " Move back to our original location.
+    normal! `z
+endfunction " }}}
+
+" Mappings {{{
+
+nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
+nnoremap <silent> <leader>2 :call HiInterestingWord(2)<cr>
+nnoremap <silent> <leader>3 :call HiInterestingWord(3)<cr>
+nnoremap <silent> <leader>4 :call HiInterestingWord(4)<cr>
+nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
+nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
+
+" }}}
+"
+" Default Highlights {{{
+
+hi def InterestingWord1 guifg=#000000 ctermfg=16 guibg=#ffa724 ctermbg=214
+hi def InterestingWord2 guifg=#000000 ctermfg=16 guibg=#aeee00 ctermbg=154
+hi def InterestingWord3 guifg=#000000 ctermfg=16 guibg=#8cffba ctermbg=121
+hi def InterestingWord4 guifg=#000000 ctermfg=16 guibg=#b88853 ctermbg=137
+hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
+hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
+
+" }}}
+

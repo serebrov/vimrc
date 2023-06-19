@@ -18,18 +18,6 @@ call plug#begin('~/.vim/plugged')
 " Folding
   set foldenable
   set foldlevel=0
-  Plug 'mikeboiko/vim-markdown-folding'
-  " " Cycle open and closed folds and nested folds - <CR> / <BS>
-  Plug 'arecarn/vim-fold-cycle'
-
-  " Interactive scratchpad for python / node / coffee / haskell / ruby / ocaml
-  " / r / closure / php
-  " PHP requires psysh
-  " Codi [filetype] activates Codi for the current buffer, using the provided filetype or the buffer's filetype.
-  " Codi! deactivates Codi for the current buffer.
-  " Codi!! [filetype] toggles Codi for the current buffer.
-  " Plus there is a shell-wrapper (in ~/.zshrc, call with code [filetype] [filename]
-  Plug 'metakirby5/codi.vim'
 
 " source ~/.vim/.vimrc.fzf
 " source ~/.vim/.vimrc.git-and-diff

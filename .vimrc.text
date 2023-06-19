@@ -1,21 +1,5 @@
 " Plugins to manipulate text and text objects
 
-"""""" Motions / normal mode commands
-" CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
-Plug 'bkad/CamelCaseMotion'
-" call camelcasemotion#CreateMotionMappings(',')
-" Default w motion:
-" <a href="http://www.vim.org/">www.vim.org</a>
-"  # #   # #   #  #  ##  ##  #  #  ##  ##  # #
-" Smart word (skip non-letters between words):
-" <a href="http://www.vim.org/">www.vim.org</a>
-"  # #     #      #   #   #     #   #   #    #
-Plug 'kana/vim-smartword'
-map w  <Plug>(smartword-w)
-map b  <Plug>(smartword-b)
-map e  <Plug>(smartword-e)
-map ge  <Plug>(smartword-ge)
-
 " gS / gJ to split / join multiline / single lines forms of code
 Plug 'AndrewRadev/splitjoin.vim'
 " :Deleft or `dh` (by default) to remove surrounding parent block.
@@ -47,7 +31,7 @@ Plug 'coderifous/textobj-word-column.vim'
 " pair objects - (,[,{,<,t - will look forward (like vi" does)
 "                            if there is no pair forward, will also look
 "                            backward
-"  note: ( == b and { == B
+"  note: ( == b [=bracket] and { == B [=Block]
 " in pair - i(, i), ib, etc - inside pair
 " a pair - a(, a), ab, etc - include pair chars (brackets, tags, etc)
 " inside pair - I(, I), etc - inside pair, but exclude whitespace
@@ -111,6 +95,13 @@ Plug 'tpope/vim-unimpaired'
 " Better % from standard matchit plugin:
 " - Extends vim's % motion to language-specific words.
 " - Adds motions g%, [%, ]%, and z%.
+"   - g% - go backwards to [count]th previous matching word.
+"   - [% - go to [count]th previous outer open word.
+"   - ]% - go to [count]th next outer open close word.
+"   - z% - go to inside [count]th nearest block.
+" - Provides analogous text objects |i%| and |a%|.
+"   - a% - similar to Vim's aB, but recoginizes more types of blocks.
+"   - i% - similar to Vim's iB, but recoginizes more types of blocks.
 " - Combines these motions into convenient text objects i% and a%.
 " - Highlights symbols and words under the cursor which % can work on, 
 "   and highlights matching symbols and words. 

@@ -24,9 +24,6 @@ Plug 'c0r73x/vimdir.vim'
 
 Plug 'jamessan/vim-gnupg'
 
-Plug 'Shougo/vimproc'
-Plug 'Shougo/vimshell.vim'
-
 " Wakatime
 " https://wakatime.com
 " Plug 'wakatime/vim-wakatime'
@@ -34,7 +31,8 @@ Plug 'Shougo/vimshell.vim'
 " Open files from terminal buffer in current nvim instance.
 " Plug 'willothy/flatten.nvim'
 " g:unception_open_buffer_in_new_tab = 1
-" Note: we can get back to terminal after opening the file with Ctrl-O
+" Note: we can get back to terminal after opening the file with Ctrl-O or
+" Ctrl-^ (Ctrl-6).
 Plug 'samjwill/nvim-unception'
 
 if has('nvim')
