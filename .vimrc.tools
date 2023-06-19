@@ -132,12 +132,57 @@ endif
 " ~ - go home
 " + / % - create file
 " :ClipPathname / :ClipDirname - copy the full path of the selected file / current dir
-Plug 'jeetsukumaran/vim-filebeagle'
-let g:filebeagle_suppress_keymaps = 1
-let g:filebeagle_show_hidden = 1
-let g:filebeagle_check_gitignore = 1
-" map <silent> <Leader>f  <Plug>FileBeagleOpenCurrentWorkingDir
-map <silent> -          <Plug>FileBeagleOpenCurrentBufferDir
+" Plug 'jeetsukumaran/vim-filebeagle'
+" let g:filebeagle_suppress_keymaps = 1
+" let g:filebeagle_show_hidden = 1
+" let g:filebeagle_check_gitignore = 1
+" " map <silent> <Leader>f  <Plug>FileBeagleOpenCurrentWorkingDir
+" map <silent> -          <Plug>FileBeagleOpenCurrentBufferDir
+
+" using vim-plug
+" Plug 'mcchrish/nnn.vim'
+
+" Dirvish
+"
+" The '-' mapping is default: open current file dir,
+" in file browser goes up one dir.
+"
+" The filebrowser buffer is editable, but changes are not
+" saved. Refresh with R.
+"
+" File operations can be done with :Shdo, use '.' mapping
+" in filebrowser to stat the :Shdo command.
+" In the Shdo buffer - edit the shell script and apply with Z!.
+"
+" For example: select files, then :Shdo mv {} {} - rename files.
+" Also '%' represents the current directory, so
+" :edit %/new_file.txt in command line will create a new file.
+Plug 'justinmk/vim-dirvish'
+" Show directories at the top
+let g:dirvish_mode = ':sort ,^.*[\/],'
+" How to expand a directory inline (like a tree-style view)?  
+" There is a hacky solution. Put this in your vimrc and hit "t" on a directory:  
+
+augroup dirvish_config
+  autocmd!
+  autocmd FileType dirvish
+              \ nnoremap <silent><buffer> t ddO<Esc>:let @"=substitute(@", '\n', '', 'g')<CR>:r ! find "<C-R>"" -maxdepth 1 -print0 \| xargs -0 ls -Fd<CR>:silent! keeppatterns %s/\/\//\//g<CR>:silent! keeppatterns %s/[^a-zA-Z0-9\/]$//g<CR>:silent! keeppatterns g/^$/d<CR>:noh<CR>
+augroup END
+
+" Extra commands on top of dirvish
+" Create file	a	<Plug>(dovish_create_file)
+" Create directory	A	<Plug>(dovish_create_directory)
+" Delete under cursor	dd	<Plug>(dovish_delete)
+" Rename under cursor	r	<Plug>(dovish_rename)
+" Yank under cursor (or visual selection)	yy	<Plug>(dovish_yank)
+" Copy file to current directory	pp	<Plug>(dovish_copy)
+" Move file to current directory	PP	<Plug>(dovish_move)
+Plug 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
+
+" let g:broot_default_conf_path = $HOME . '/.config/broot/conf.hjson'
+" Plug 'lstwn/broot.vim'
+" map <silent> - :BrootCurrentDir<CR>
+" noremap <Leader>f :BrootWorkingDir<CR>
 
 " Suggest to open existing file instead of creating new one when there
 " are multiple matches

@@ -11,6 +11,9 @@
   set nobackup
   set noswapfile
 
+  set splitbelow            " split below instead of above
+  set splitright            " split right instead of left
+
   " try to create undo dir, skip error if exists
   silent !mkdir ~/.vim/tmp > /dev/null 2>&1
   silent !mkdir ~/.vim/tmp/undo > /dev/null 2>&1

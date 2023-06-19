@@ -87,15 +87,6 @@ else
   " Active session is auto-saved on exist or on layout changes.
   Plug 'tpope/vim-obsession'
 
-  " Interactive scratchpad for python / node / coffee / haskell / ruby / ocaml
-  " / r / closure / php
-  " PHP requires psysh
-  " Codi [filetype] activates Codi for the current buffer, using the provided filetype or the buffer's filetype.
-  " Codi! deactivates Codi for the current buffer.
-  " Codi!! [filetype] toggles Codi for the current buffer.
-  " Plus there is a shell-wrapper (in ~/.zshrc, call with code [filetype] [filename]
-  Plug 'metakirby5/codi.vim'
-
   Plug 'Shougo/neomru.vim'
   let g:neomru#file_mru_path = $HOME . '/.vim/tmp/cache/neomru/file'
   let g:neomru#directory_mru_path = $HOME . '/.vim/tmp/cache/neomru/directory'
@@ -122,19 +113,8 @@ else
   " gc<motion> - comment out lines defined by motion
   Plug 'tpope/vim-commentary'
 
-  " :PP: Pretty print. With no argument, acts as a REPL.
-  " :Runtime: Reload runtime files. Like :runtime!, but it unlets any include guards first.
-  " :Disarm: Remove a runtime file's maps, commands, and autocommands, effectively disabling it.
-  " :Scriptnames: Load :scriptnames into the quickfix list.
-  " :Verbose: Capture the output of a :verbose invocation into the preview window.
-  " :Time: Measure how long a command takes.
-  " :Breakadd: Like its lowercase cousin, but makes it much easier to set breakpoints inside functions. Also :Breakdel.
-  " :Vedit: Edit a file relative the runtime path. For example, :Vedit plugin/scriptease.vim. Also, :Vsplit, :Vtabedit, etc. Extracted from pathogen.vim.
-  " K: Look up the :help for the VimL construct under the cursor.
-  " zS: Show the active syntax highlighting groups under the cursor.
-  " g!: Eval a motion or selection as VimL and replace it with the result.
-  "     This is handy for doing math, even outside of VimL. It's so handy, in fact, that it probably deserves its own plugin.
-  Plug 'tpope/vim-scriptease'
+  " Plug 'MunifTanjim/nui.nvim'
+  " Plug 'X3eRo0/dired.nvim'
 
   call plug#end()
 
@@ -148,6 +128,16 @@ else
     " luafile ~/.vim/.vimrc.ide.lsp.lua
     " For Plug 'neovim/nvim-dap'
     " luafile ~/.vim/.vimrc.ide.dap.lua
+
+    " lua << EOF
+    " require("dired").setup {
+    "     path_separator = "/",
+    "     show_banner = false,
+    "     show_hidden = true,
+    "     show_dot_dirs = true,
+    "     show_colors = true
+    " }
+" EOF
 
   endif
 

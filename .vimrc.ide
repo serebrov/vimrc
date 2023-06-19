@@ -1,46 +1,5 @@
 " Prettier and language-server / language-client setup, linters
-" Plugins for specific languages
 
-" similar: https://github.com/xolox/vim-easytags
-Plug 'joonty/vim-taggatron'
-
-let test#strategy = {
-  \ 'nearest': 'make',
-  \ 'file':    'dispatch',
-  \ 'suite':   'neovim',
-\}
- 
-"# let g:test#javascript#jest#file_pattern = '\v(test|spec)\.(js|jsx|coffee|ts)$'
-"# function! test#javascript#jest#test_file(file) abort
-"#   return a:file =~# g:test#javascript#jest#file_pattern
-"# endfunction
-
-let test#javascript#runner = 'jest'
-let test#javascript#jest#executable = 'npm run test:unit'
-" let test#javascript#jest#executable = '../tools/local/frontend-cmd.sh npm run test:unit -- '
-" let g:test#javascript#jest#options = ''
-" let test#project_root = 'frontend' " projectroot#guess()
-
-" function! TypeScriptTransform(cmd) abort
-"   return substitute(a:cmd, '\v/(\S+)\.ts', '/\1.js', '')
-" endfunction
-" let g:test#custom_transformations          = {'typescript': function('TypeScriptTransform')}
-" let g:test#transformation                  = 'typescript'
-
-" Run tests from vim
-" these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
-" nmap <silent> t<C-n> :TestNearest<CR>
-" nmap <silent> t<C-f> :TestFile<CR>
-" nmap <silent> t<C-s> :TestSuite<CR>
-" nmap <silent> t<C-l> :TestLast<CR>
-" nmap <silent> t<C-g> :TestVisit<CR>
-" Plug 'vim-test/vim-test'
-" Note: for python this is also possible with `nvim-python-dap`:
-" test nearest funciton:
-"   :lua require('dap-python').test_method()
-" Plug 'rcarriga/vim-ultest'
-
-" Plug 'neomake/neomake'
 Plug 'tpope/vim-dispatch'
 
 if has('nvim')
@@ -87,36 +46,6 @@ if has('nvim')
   " Plugin 'rcarriga/nvim-dap-ui'
   " Plug 'theHamsta/nvim-dap-virtual-text'
 endif
-
-" Taggatron {{{
-augroup MyAutoCmdTags
-  let g:tagcommands = {
-  \    "python" : {
-  \        "tagfile": ".python.tags",
-  \         "args": "-R",
-  \         "filesappend": "/**"
-  \    },
-  \    "php" : {
-  \        "tagfile":".php.tags",
-  \        "args":"-R",
-  \        "filesappend": "/**"
-  \    },
-  \    "javascript" : {
-  \        "tagfile":".js.tags",
-  \        "args":"-R --exclude=node_modules --exclude=*.min.js --exclude=*-min.js",
-  \        "filesappend": "/**"
-  \    }
-  \}
-  let g:taggatron_verbose=0
-  autocmd MyAutoCmdTags FileType php call taggatron#SetTags(".php.tags")
-  autocmd MyAutoCmdTags FileType python call taggatron#SetTags(".python.tags")
-  autocmd MyAutoCmdTags FileType javascript call taggatron#SetTags(".js.tags")
-augroup END
-
-  " todo: check http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
-  "       and https://github.com/tpope/vim-fugitive/issues/104
-
-" }}}
 
 function! PreFormatPyJson()
   exe "s/\\vDecimal\\('(-?\\d+)'\\)/\\1/g | s/'/\"/g | s/u\"/\"/g | s/None/null/g | s/False/false/g | s/True/true/g | s/\\(\\d\\)L\\([},]\\)/\\1\\2/g"
@@ -214,73 +143,6 @@ endfunction
 command! BlackAndSort :call RunBlackAndISort()
 
 autocmd BufWritePost *.py execute ':BlackAndSort'
-" autocmd BufWritePre *.py execute ':BlackAndSort'
-
-" Syntax checker
-" Python - pip install flake8 (pyflakes + pep8)
-"          pip install pep257 - docstring conventions
-"          pip install mypy-lang - python3 static type checks
-"          pip install vulture - dead code checks
-"          pip install frosted - pyflakes re-work
-"          pip install pylint
-" Note: pylint also checks docstrings + gives a lot of other notices, not
-" always useful
-" The pylint behavior can be modified via pylintrc (place into the project
-" root) or with special comments, like:
-"
-"    except Exception as error:  # pylint: disable=W0703
-"
-" here we disable the [broad-except] warning, the warning name is shown in
-" the error message
-"
-" The warning id (W0703) can be shown using pylint itself:
-"
-" $ pylint --help-msg broad-except
-"  :broad-except (W0703): *Catching too general exception %s*
-"  Used when an except catches a too general exception, possibly burying
-"  unrelated errors. This message belongs to the exceptions checker.
-"
-" For flake8, to disable the error check use comment # noqa
-" to disable the specific error # noqa: F401
-"
-" coc has linting support too, see coc-settings.json
-" if has('nvim')
-"   " To get the errors, save the file or run :Neomake
-"   " then open the local error list with :lopen to see the
-"   " errors (and it is possible to navigate via ]l [l - this is from unimpaired
-"   Plug 'benekastah/neomake'
-"   let g:neomake_css_enabled_makers = ['csslint']
-"   " Available checkers: flake8 pep257 pep8 pyflakes pylama pylint python vulture py3kwarn
-"   " To run checker manually use :Neomake vulture
-"   " let g:neomake_python_enabled_makers = ['pep257', 'flake8', 'mypy']
-"   let g:neomake_python_enabled_makers = ['flake8', 'mypy']
-"   let g:neomake_open_list = 2
-"   "let g:neomake_python_enabled_makers = ['python', 'flake8', 'frosted', 'pylint', 'pep257']
-"   autocmd! BufWritePost * Neomake
-" else
-"   " Syntastic
-"   Plug 'scrooloose/syntastic'
-"   " It places errors into local error list which can be viewed with :Errors
-"   " With unimpaired plugin you can move to the next / prev error with ]l / [l
-"   "
-"   " PHP - PHPCS
-"   " set default standard for phpcs: sudo phpcs --config-set default_standard PSR2
-"   " it is also possible to configure options for each checker, see
-"   " syntastic helt - "syntastic-config-makeprg"
-"   let g:syntastic_check_on_open=0
-"   let g:syntastic_css_checkers = ['csslint']
-"   let g:syntastic_javascript_checkers = ['eslint', 'flow', 'jshint']
-"   " Available checkers: flake8 pep257 pep8 pyflakes pylint python
-"   let g:syntastic_python_checkers = ['python', 'flake8']
-" endif
-
-" Use :CoverageShow to show file coverage for the current buffer.
-" Use :CoverageToggle to toggle coverage visibility for the current file.
-" For python requires `pip install coverage`
-" Add maktaba and coverage to the runtimepath.
-" (The latter must be installed before it can be used.)
-Plug 'google/vim-maktaba'
-Plug 'google/vim-coverage'
 
 if has('nvim')
 
@@ -296,26 +158,48 @@ if has('nvim')
   " Disable in favor of nvim LSP client and nvim-lspconfig
   " source ~/.vim/.vimrc.ide.coc
 
-  " Initializes pyright server, helps with venv support.
-  " Plug 'HallerPatrick/py_lsp.nvim'
-  
+  "" LSP Support, see VonHeikemen/lsp-zero.nvim
   " LSP client configurations
   " :LspInfo - see diagnostics
   " :LspStart <config_name> Start the requested server name. Will only successfully start if the command detects a root directory matching the current config. Pass autostart = false to your .setup{} call for a language server if you would like to launch clients solely with this command. Defaults to all servers matching current buffer filetype.
   " :LspStop <client_id> Defaults to stopping all buffer clients.
   " :LspRestart <client_id> Defaults to restarting all buffer clients.
-  Plug 'neovim/nvim-lspconfig'
-
-  " Companion for nvim-lspconfig that allows you to install LSP servers locally.
-  " :LspInstallInfo - opens a graphical overview of your language servers
-  " :LspInstall [--sync] <server> ... - installs/reinstalls language servers. 
-  " :LspUninstall [--sync] <server> ... - uninstalls language servers.
-  " :LspInstallLog - opens the log file in a new tab window
-  " :LspPrintInstalled - prints all installed language servers
+  Plug 'neovim/nvim-lspconfig'                           " Required
+  " Installer for language servers
+  ":Mason - opens a graphical status window
+  " :MasonUpdate - updates all managed registries
+  " :MasonInstall <package> ... - installs/re-installs the provided packages
+  " :MasonUninstall <package> ... - uninstalls the provided packages
+  " :MasonUninstallAll - uninstalls all packages
+  " :MasonLog - opens the mason.nvim log file in a new tab window
+  Plug 'williamboman/mason.nvim', {'do': ':MasonUpdate'} " Optional
+  " :LspInstall [<server>...] - installs the provided servers
+  " :LspUninstall <server> ... - uninstalls the provided servers
   "
   " :LspInstall bashls jsonls vuels htm pyright tsserver vimls
-  Plug 'williamboman/nvim-lsp-installer'
+  Plug 'williamboman/mason-lspconfig.nvim'               " Optional
 
+  " Autocompletion
+  Plug 'hrsh7th/nvim-cmp'     " Required
+  Plug 'hrsh7th/cmp-nvim-lsp' " Required
+  Plug 'L3MON4D3/LuaSnip'     " Required
+
+  " Configures lsp-related staff, default keys
+  " K: Displays hover information about the symbol under the cursor in a floating window. See :help vim.lsp.buf.hover().
+  " gd: Jumps to the definition of the symbol under the cursor. See :help vim.lsp.buf.definition().
+  " gD: Jumps to the declaration of the symbol under the cursor. Some servers don't implement this feature. See :help vim.lsp.buf.declaration().
+  " gi: Lists all the implementations for the symbol under the cursor in the quickfix window. See :help vim.lsp.buf.implementation().
+  " go: Jumps to the definition of the type of the symbol under the cursor. See :help vim.lsp.buf.type_definition().
+  " gr: Lists all the references to the symbol under the cursor in the quickfix window. See :help vim.lsp.buf.references().
+  " gs: Displays signature information about the symbol under the cursor in a floating window. See :help vim.lsp.buf.signature_help(). If a mapping already exists for this key this function is not bound.
+  " <F2>: Renames all references to the symbol under the cursor. See :help vim.lsp.buf.rename().
+  " <F3>: Format code in current buffer. See :help vim.lsp.buf.format().
+  " <F4>: Selects a code action available at the current cursor position. See :help vim.lsp.buf.code_action().
+  " gl: Show diagnostics in a floating window. See :help vim.diagnostic.open_float().
+  " [d: Move to the previous diagnostic in the current buffer. See :help vim.diagnostic.goto_prev().
+  " ]d: Move to the next diagnostic. See :help vim.diagnostic.goto_next().
+  Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
+  
   " Install languages with :TSInstall
   " :TSInstall typescript lua markdown
   " List of avaiable and installed languages :TSinstallInfo
@@ -350,92 +234,9 @@ if has('nvim')
     set complete+=kspell        " dictionary
     set complete+=b             " other open buffers
 
-    " tag files
-    " ';/' - this will look in the current directory for "tags", and work up the tree
-    " towards root until one is found
-    " set tags=tags;/
-  " }}}
-
-  " Clean and elegant distraction-free writing for NeoVim.
-  " :TZMinimalist - Minimalist mode. Activates/deactivates NeoVim's UI
-  "                 components from the left, bottom and top.
-  " :TZFocus toggles Focus mode. Maximizes/minimizes the current window.
-  " :TZAtaraxis toggles Ataraxis - "super" minimalist mode.
-  " Has parameters to set the padding: :TZAtaraxis l10 r10 t3 b1
-  Plug 'Pocco81/TrueZen.nvim'
-
   " Preview for substitute
   set inccommand=nosplit
-else
-  Plug 'davidhalter/jedi-vim'
-  " fetching can take a long time causing the timeout
-  " to manually install it
-  "  git clone --recursive https://github.com/Valloric/YouCompleteMe.git
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 endif
-
-" Note: coc.nvim supports UlitSnips snippets from honza/vim-snippets
-" Plug 'SirVer/ultisnips'
-" " Activate with TAB, better with autocompletion plugin,
-" " the UlitSnips adds entries marked [US]
-" " select the one you need and press <Tab>,
-" " don't go out of insert mode, enter parts of the template
-" " and press <Tab> again to move to the next placeholder
-" " If you exit the insert mode - just get into insert again and
-" " use <Tab> / <Shift-Tab> to move between placeholders.
-" "
-" " http://0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
-" " let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
-" " let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>']
-" " let g:SuperTabDefaultCompletionType = '<C-Tab>'
-
-" let g:ycm_autoclose_preview_window_after_completion = 1
-" let g:ycm_autoclose_preview_window_after_insertion = 1
-" let g:ycm_key_list_select_completion = []
-" let g:ycm_key_list_previous_completion = []
-" let g:UltiSnipsJumpForwardTrigger="<tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-" let g:ultisnips_python_style="google"
-" let g:UltiSnipsExpandTrigger="<c-tab>"
-" let g:UltiSnipsListSnippets="<c-s-tab>"
-" " repository of snippets
-" Plug 'honza/vim-snippets'
-
-"""""" PHP
-" php completion - it should be copied to autoload/phpcomplete.vim
-" Plug 'shawncplus/phpcomplete.vim'
-" php 5.3 syntax
-" Plug 'StanAngeloff/php.vim'
-" Plug '2072/PHP-Indenting-for-VIm'
-
-"""""" Javascript
-Plug 'pangloss/vim-javascript'
-let g:javascript_conceal = 0
-Plug 'othree/javascript-libraries-syntax.vim'
-let g:used_javascript_libs = 'jquery,underscore,angularjs'
-" ejs templates syntax highlight
-Plug 'briancollins/vim-jst'
-" vue componetns
-" Plug 'posva/vim-vue'
-
-" Typescript syntax
-Plug 'leafgarland/typescript-vim'
-" For some reason, typescript files are recognized as XML
-autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
-" Typescript completion, etc - disable, there is coc.nvim
-" Requires "npm install -g typescript"
-" Plug 'Quramy/tsuquyomi'
-
-" solidity syntax
-Plug 'tomlion/vim-solidity'
-
-"""""" JSON
-" better json highlighting
-Plug 'elzr/vim-json'
-
-"""""" Python
-" Improved syntax highlight
-Plug 'hdima/python-syntax'
 
 " Add the virtualenv's site-packages to vim path
 if has("python")
@@ -463,57 +264,3 @@ if 'VIRTUAL_ENV' in os.environ:
   exec(compile(activate_source, activate_this, 'exec'), dict(__file__=activate_this))
 EOF
 endif
-
-" Install: cd ~/.vim/bundle/ropevim
-"          python setup.py install
-" See: https://github.com/python-rope/ropevim
-" Plug 'python-rope/ropevim'
-" let ropevim_vim_completion=1
-" let ropevim_extended_complete=1
-
-"Plug 'klen/python-mode'
-" Correct python code indenting
-Plug 'hynek/vim-python-pep8-indent'
-" :Ped sqlalchemy.orm -> open the module from current virtual env
-Plug 'sloria/vim-ped'
-" " Generate docstrings with :Pydocstring
-" "   note: UltiSnips is also able to generate docstring templates, but
-" "         I didn't find the way to trigger it for already existing code
-" let g:template_vim_template_dir = $HOME . "/.vim/templates/pydocstring"
-" Plug 'heavenshell/vim-pydocstring'
-" nmap <silent> <nop> <Plug>(pydocstring)
-" augroup DocMap
-"   autocmd!
-"   autocmd FileType python nnoremap <Leader>pd :Pydocstring<CR>
-" augroup END
-"
-" let g:doge_doc_standard_python = 'google'
-" let g:doge_mapping = '<Leader>pd'
-" " Generate docstrings for different languages
-" " Tab / Shift-Tab to move between placeholders.
-" " :DogeGenerate to generate manually or use <Leader>pd.
-" Plug 'kkoomen/vim-doge'
-
-"""""" Documentation
-" php documenter
-" Plug 'mikehaertl/pdv-standalone'
-" phpDocumenter
-" let g:pdv_cfg_Package = "app"
-" let g:pdv_cfg_Version = ""
-" let g:pdv_cfg_Author = "Boris Serebrov"
-" let g:pdv_cfg_Copyright = ""
-" let g:pdv_cfg_License = ""
-Plug 'heavenshell/vim-jsdoc'
-"JSDoc
-let g:jsdoc_default_mapping = 0
-augroup DocMap
-  autocmd!
-
-  " autocmd FileType php inoremap <Leader>pd <ESC>:call PhpDocSingle()<CR>i
-  " autocmd FileType php nnoremap <Leader>pd :call PhpDocSingle()<CR>
-  " autocmd FileType php vnoremap <Leader>pd :call PhpDocRange()<CR>
-
-  autocmd FileType javascript nnoremap <Leader>pd :JsDoc<CR>
-
-augroup END
-
