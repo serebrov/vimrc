@@ -169,11 +169,6 @@ A sentence.               - ) / ( - [count] sentences, like y3) - yank 3 sentenc
 A paragraph of
 text.                     - } / { - [count] paragraphs
 
-A section                 - ]] / [[ - [count] sections, see [:h section](http://vimhelp.appspot.com/motion.txt.html#section),
-                          can be redefined by filetype plugins, like move between
-                          classes / methods in python.
-End of the section        - ][ / [] - [count] end of section
-
 Unmatched (               - [( / ]( - prev/next unmatched (
 Unmatched {               - [{ / ]{ - prev/next unmatched {
 Unmatched #if / #else     - [# / ]# - prev/next unmatched {
@@ -185,6 +180,11 @@ A block comment /*  */    - [*, [/ / ]*, ]* - prev / next comment mark
 [n] lines from the top    - [n]H
 [n] lines from the bootom - [n]L
 Middle line               - M
+
+A section                 - ]] / [[ - [count] sections, see [:h section](http://vimhelp.appspot.com/motion.txt.html#section),
+                          can be redefined by filetype plugins, like move between
+                          classes / methods in python.
+End of the section        - ][ / [] - [count] end of section
 ```
 
 Each of them can be used as an operator target.

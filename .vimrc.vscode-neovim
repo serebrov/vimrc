@@ -12,6 +12,30 @@ nmap gc  <Plug>VSCodeCommentary
 omap gc  <Plug>VSCodeCommentary
 nmap gcc <Plug>VSCodeCommentaryLine
 
+" Note: it should be possible to use plugins too, see, for example:
+" https://www.reddit.com/r/vim/comments/zy0nk1/comment/j4uzo93/
+" set rtp+=~/.vim/bundle/Vundle.vim
+" call vundle#begin()
+" Plugin 'VundleVim/Vundle.vim'
+" Plugin 'https://github.com/kana/vim-smartword.git'
+" Plugin 'https://github.com/bkad/CamelCaseMotion.git'
+" call vundle#end()
+
+" try
+"   runtime bundle/vim-smartword/plugin/smartword.vim
+"   map w  <Plug>(smartword-w)
+"   map b  <Plug>(smartword-b)
+"   map e  <Plug>(smartword-e)
+
+"   map <Plug>(smartword-basic-w)  <Plug>CamelCaseMotion_w
+"   map <Plug>(smartword-basic-b)  <Plug>CamelCaseMotion_b
+"   map <Plug>(smartword-basic-e)  <Plug>CamelCaseMotion_e
+" catch
+" endtry
+"
+" This sets up vim-smartword and CamelCaseMotion plugins similar
+" to what we have in main .vimrc file.
+
 " https://code.visualstudio.com/docs/getstarted/keybindings
 
 " Note: window shortcuts is work in progress,

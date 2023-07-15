@@ -3,6 +3,8 @@
 "   :CtrlSF term
 " It is possible to edit the results (no inserts), save with :w,
 " undo with `u` and `p` to open file preview.
+" M - collapses results into a list.
+" Ctrl-j / Ctrl-k - move between results.
 "
 " Ignore directory when searching:
 "   :CtrlSF -ignoredir 'assets' mysearch
