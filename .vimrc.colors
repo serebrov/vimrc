@@ -31,6 +31,8 @@ Plug 'fxn/vim-monochrome'
 Plug 'andreypopp/vim-colors-plain'
 Plug 'danishprakash/vim-yami'
 Plug 'ajgrf/parchment'
+Plug 'YorickPeterse/vim-paper'
+Plug 'saulhoward/kaodam'
 
 " In a file, run :SemanticHighlight to convert variables into colors.
 " Run :SemanticHighlightRevert to revert.
@@ -52,6 +54,16 @@ augroup deep-space-overrides
   autocmd ColorScheme deep-space highlight Comment guifg=#7b88a1 gui=bold
   autocmd ColorScheme deep-space highlight Folded guifg=#7b88a1
   autocmd ColorScheme deep-space highlight FoldColumn guifg=#7b88a1
+augroup END
+
+augroup onehalflight-overrides
+  autocmd!
+  autocmd ColorScheme onehalflight highlight Comment guifg=#383a42 gui=altfont " font='Monospace 9'
+augroup END
+
+augroup plain-overrides
+  autocmd!
+  autocmd ColorScheme plain highlight Comment guifg=#383a42
 augroup END
 
 function! SetupColorscheme()
@@ -76,13 +88,14 @@ function! SetupColorscheme()
     " hi DiffDelete      guifg=#DDCCCC guibg=#FFDDDD gui=none
   else
   " if has('nvim')
-    set background=dark
+    set background=light
     set termguicolors
     " let g:deepspace_italics=1
     " colorscheme deep-space
 
     " For now, I switched to the light scheme, it is easier for the eyes.
-    colorscheme onehalflight
+    " colorscheme onehalflight
+    "
     " Dark default:
     " colorscheme nord
     "
@@ -94,9 +107,14 @@ function! SetupColorscheme()
     " colorscheme solarized8_flat
     "
     " " less colors
+    colorscheme plain
+    " Light scheme with less colors:
+    " colorscheme paramount
+    " colorscheme parchment
+    " colorscheme paper
+    "
     " See also: https://github.com/mcchrish/vim-no-color-collections
     " colorscheme 256_noir
-    " colorscheme paramount
     " colorscheme yin
     " colorscheme yang
     " colorscheme preto
@@ -110,11 +128,7 @@ function! SetupColorscheme()
     " let g:monotone_emphasize_comments = 1 " Emphasize comments
     " colorscheme monotone
     " colorscheme monochrome
-    " colorscheme plain
     " colorscheme yami
-    "
-    " Light scheme with less colors:
-    " colorscheme parchment
     "
     " " Brown background
     " let g:gruvbox_italic=1
