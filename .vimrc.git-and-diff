@@ -38,7 +38,6 @@ Plug 'tpope/vim-rhubarb'
 
 " Commit browser, based on fugitive.
 " Useful to see the list of changes for the specific file.
-"
 " Execute :Extradite in the file buffer.
 " <CR> edits the revision on the current line in a fugitive-buffer.
 " oh, ov, and ot edit the revision under the cursor in a new horizontal split / vertical split / tab respectively.
@@ -93,3 +92,6 @@ Plug 'zhaocai/DirDiff.vim'
 " - q - close
 " - ? - show help
 Plug 'rhysd/git-messenger.vim'
+
+" Improves the commit buffer - splits into diff, edit, status.
+Plug 'rhysd/committia.vim'
