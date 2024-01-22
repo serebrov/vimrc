@@ -3,6 +3,7 @@
 " :VimdirR [directory] - To list files and folders recursive
 " Then change file names, dd to delete and save buffer to apply changes
 Plug 'c0r73x/vimdir.vim'
+
 " Similar: vidir from moreutils (https://joeyh.name/code/moreutils/)
 " Similar: Plug 'idbrii/renamer.vim'
 
@@ -20,7 +21,7 @@ Plug 'c0r73x/vimdir.vim'
 " Requires Nvim 0.5, can be run via docker:
 " docker run -it --rm brandoncc/vim-be-good:stable
 " Vim games, :VimBeGood
-" Plug 'ThePrimeagen/vim-be-good'
+Plug 'ThePrimeagen/vim-be-good'
 
 Plug 'jamessan/vim-gnupg'
 
@@ -121,6 +122,128 @@ if has('nvim')
 endif
 
 " Filebrowser
+Plug 'tpope/vim-vinegar'
+" '-' to open it and to go up dir
+" I - toggle the usage information
+" . - put the file  name at the end of a : command line, for example .!chmod +x
+"  !  to do the same and start command line with !
+" y. - yank the absolute path of the file under the cursor
+" ~ - go home
+"
+" CTRL-^ - switch to the previous buffer (vim feature)
+"
+" Netrw features:
+" s - change sort order (name, time, size)
+" r - reverse sort order
+" i - thin, long, wide, tree listing
+" gh - toggle dot files hiding
+" % - create new file
+" a - normal / hiding / show all
+" d - create dir
+" D - delete dir or file
+" R - rename dir or file
+"
+" u / U - go back to the previous/next dir
+"
+" Marking files:
+"
+" mf / mF - mark/unmark file
+" mc - copy marked files to the target dir
+" mm - move marked files to the target dir
+" me - edit marked files
+" md - diff marked files
+" mr - mark files with a regexp
+" mt - current direction becomes the target dir
+" mu - unmark all
+" mv - apply vim command to marked files
+" mx - apply shell command to marked files
+" mX - apply shell command to marked files, en bloc (?)
+" mz - compress / decompress marked files
+" :MF *.c - mark all *.c files
+"
+" Note: operations on marked files are a bit strange and
+" require a specific order of actions:
+" 1. mark files with mf in the source dir
+" 2. go to the target dir, use mt to make it the target dir
+" 3. go back to the source dir
+" 4. use mc or mm to copy or move files
+" If we skip step 3 then it will not work, the error message is:
+" **error** (netrw) there are no marked files in this window (:help netrw-mf)
+"
+" Bookmarks:
+" mb - bookmark current dir
+" gb - go to most recent bookmarked dir
+" qb - list bookmarks and history (not it is small Q, not G)
+"
+" See also :help netrw, many other features
+"
+"" use Leader-r to refresh (default is Ctrl-L which is used to jump
+"" to the left window)
+nnoremap <Leader>r <Plug>NetrwRefresh
+
+" Copy files to another netwr window (split):
+" Find another netwr widnow, switch to it, use mt to mark it as a target,
+" then go back to the source window and use mc to copy files.
+function! NetrwRunMarkCommand(cmd)
+  " Find another vim window with netrw
+  let l:curwin = winnr()
+  let l:curbuf = bufnr('%')
+
+  " Find another window with netrw filetype in the same tab.
+  let l:targetbufid = -1
+  for l:bufid in tabpagebuflist()
+    if l:bufid == l:curbuf
+      continue
+    endif
+    if getbufvar(l:bufid, '&filetype') == 'netrw'
+      echo 'Found target window: ' . bufname(l:targetbufid)
+      let l:targetbufid = l:bufid
+      " Mark another window as a target.
+      call netrw#MakeTgt(bufname(l:bufid))
+      break
+    endif
+  endfor
+
+  if l:targetbufid == -1
+    echoerr 'No other netrw window found'
+    return
+  endif
+  echo 'Found target window: ' . bufname(l:targetbufid)
+
+  " Execute the command in the source window
+  execute 'normal ' . a:cmd
+  echo 'Executed command: ' . a:cmd
+endfunction
+
+function! NetrwMapping()
+  " Note: the autocommand does not work for some reason, so we use the global
+  " mapping above.
+  "" use Leader-r to refresh (default is Ctrl-L which is used to jump
+  "" to the left window)
+  " nnoremap <buffer> <Leader>r <Plug>NetrwRefresh
+  "
+  " Mark files with space.
+  nmap <buffer> <Space> mfj
+  " See https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
+  " Show a list of marked files
+  nmap <buffer> fl :echo join(netrw#Expose("netrwmarkfilelist"), "\n")<CR>
+  " Show a target dir (it is also shown in the netrw banner,
+  " "Copy/Move Tgt: ..."
+  nmap <buffer> fq :echo 'Target:' . netrw#Expose("netrwmftgt")<CR>
+  " Copy files to another netwr window (split):
+  " Find another netwr widnow, switch to it, use mt to mark it as a target,
+  " then go back to the source window and use mc to copy files.
+  nmap <buffer> fc :call NetrwRunMarkCommand('mc')<CR>
+  nmap <buffer> q :q<CR>
+  nmap <buffer> <Leader>q :q<CR>
+endfunction
+
+augroup netrw_mapping
+  autocmd!
+  autocmd filetype netrw call NetrwMapping()
+augroup END
+
+" Filebrowser: filebeagle
 " '-' to open it and to go up dir
 " R - refresh;
 " f - define the filter for filenames; F - toggle filter;
@@ -155,27 +278,27 @@ endif
 " For example: select files, then :Shdo mv {} {} - rename files.
 " Also '%' represents the current directory, so
 " :edit %/new_file.txt in command line will create a new file.
-Plug 'justinmk/vim-dirvish'
+" Plug 'justinmk/vim-dirvish'
 " Show directories at the top
 let g:dirvish_mode = ':sort ,^.*[\/],'
 " How to expand a directory inline (like a tree-style view)?  
 " There is a hacky solution. Put this in your vimrc and hit "t" on a directory:  
 
-augroup dirvish_config
-  autocmd!
-  autocmd FileType dirvish
-              \ nnoremap <silent><buffer> t ddO<Esc>:let @"=substitute(@", '\n', '', 'g')<CR>:r ! find "<C-R>"" -maxdepth 1 -print0 \| xargs -0 ls -Fd<CR>:silent! keeppatterns %s/\/\//\//g<CR>:silent! keeppatterns %s/[^a-zA-Z0-9\/]$//g<CR>:silent! keeppatterns g/^$/d<CR>:noh<CR>
-augroup END
-
-" Extra commands on top of dirvish
-" Create file	a	<Plug>(dovish_create_file)
-" Create directory	A	<Plug>(dovish_create_directory)
-" Delete under cursor	dd	<Plug>(dovish_delete)
-" Rename under cursor	r	<Plug>(dovish_rename)
-" Yank under cursor (or visual selection)	yy	<Plug>(dovish_yank)
-" Copy file to current directory	pp	<Plug>(dovish_copy)
-" Move file to current directory	PP	<Plug>(dovish_move)
-Plug 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
+" augroup dirvish_config
+"   autocmd!
+"   autocmd FileType dirvish
+"               \ nnoremap <silent><buffer> t ddO<Esc>:let @"=substitute(@", '\n', '', 'g')<CR>:r ! find "<C-R>"" -maxdepth 1 -print0 \| xargs -0 ls -Fd<CR>:silent! keeppatterns %s/\/\//\//g<CR>:silent! keeppatterns %s/[^a-zA-Z0-9\/]$//g<CR>:silent! keeppatterns g/^$/d<CR>:noh<CR>
+" augroup END
+" 
+" " Extra commands on top of dirvish
+" " Create file	a	<Plug>(dovish_create_file)
+" " Create directory	A	<Plug>(dovish_create_directory)
+" " Delete under cursor	dd	<Plug>(dovish_delete)
+" " Rename under cursor	r	<Plug>(dovish_rename)
+" " Yank under cursor (or visual selection)	yy	<Plug>(dovish_yank)
+" " Copy file to current directory	pp	<Plug>(dovish_copy)
+" " Move file to current directory	PP	<Plug>(dovish_move)
+" Plug 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
 
 " let g:broot_default_conf_path = $HOME . '/.config/broot/conf.hjson'
 " Plug 'lstwn/broot.vim'
