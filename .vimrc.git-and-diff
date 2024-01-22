@@ -25,15 +25,15 @@ Plug 'chrisbra/vim-diff-enhanced'
 " :Git [add|status|commit|...] - run git command with enhanced vim support
 " :Git blame - show git blame for current file, with history in a separate buffer
 "              ~ to re-blame the selected commit (go deeper back in history)
-               -     reblame at commit
-               A     resize to end of author column
-               C     resize to end of commit column
-               D     resize to end of date/time column
-               gq    close blame, then |:Gedit| to return to work tree version
-               <CR>  close blame, and jump to patch that added line
-               o     jump to patch or blob in horizontal split
-               O     jump to patch or blob in new tab
-               p     jump to patch or blob in preview window
+"              -     reblame at commit
+"              A     resize to end of author column
+"              C     resize to end of commit column
+"              D     resize to end of date/time column
+"              gq    close blame, then |:Gedit| to return to work tree version
+"              <CR>  close blame, and jump to patch that added line
+"              o     jump to patch or blob in horizontal split
+"              O     jump to patch or blob in new tab
+"              p     jump to patch or blob in preview window
 " :Git - magit-like git interface
 "        = to expand diffs for the file
 "        - to stage/unstage the file or hunk under cursor (or s=stage and
