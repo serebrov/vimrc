@@ -133,7 +133,7 @@
   " Y will yank line-wise even if you have character-wise selection
   vnoremap <expr>Y "my\"" . v:register . "Y`y"
 
-  nnoremap gl :call ToggleRelativeAbsoluteNumber()<CR>
+  nnoremap grl :call ToggleRelativeAbsoluteNumber()<CR>
   function! ToggleRelativeAbsoluteNumber()
     if &relativenumber
       set norelativenumber
