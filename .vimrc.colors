@@ -32,12 +32,20 @@ Plug 'andreypopp/vim-colors-plain'
 Plug 'danishprakash/vim-yami'
 Plug 'ajgrf/parchment'
 Plug 'YorickPeterse/vim-paper'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'saulhoward/kaodam'
 
 " In a file, run :SemanticHighlight to convert variables into colors.
 " Run :SemanticHighlightRevert to revert.
 " Run :SemanticHighlightToggle to toggle the effect on and off.
 Plug 'jaxbot/semantic-highlight.vim'
+
+" Colorscheme switcher
+" :NextColorScheme to switch to the next color scheme.
+" :PrevColorScheme to switch to the previous color scheme.
+" Keys: F8 and Shift-F8.
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-colorscheme-switcher'
 
 " Fix the absurdly low constrast of nord-vim
 augroup nord-overrides
@@ -63,7 +71,15 @@ augroup END
 
 augroup plain-overrides
   autocmd!
-  autocmd ColorScheme plain highlight Comment guifg=#383a42
+  " autocmd ColorScheme plain highlight Comment guifg=#10A778 gui=altfont
+  autocmd ColorScheme plain highlight Comment guifg=#189392 gui=altfont
+  autocmd ColorScheme plain highlight Constant guifg=#008EC4 gui=altfont
+  autocmd ColorScheme plain highlight CursorLine guifg=#222222 guibg=#EAF3FB
+
+  " See :highlight for the list of groups.
+  autocmd ColorScheme plain highlight DiagnosticError guifg=#E32791
+  autocmd ColorScheme plain highlight DiagnosticWarn guifg=#6855DE
+  autocmd ColorScheme plain highlight DiagnosticInfo guifg=#20A5BA
 augroup END
 
 function! SetupColorscheme()
@@ -101,6 +117,7 @@ function! SetupColorscheme()
     "
     " colorscheme tender
     " colorscheme onehalfdark
+    " colorscheme metalheart
     "
     " " Has solarized8, solarized8_flat, solarized8_high and solarized8_low variants
     " let g:solarized_visibility = "normal"
