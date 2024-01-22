@@ -130,7 +130,7 @@ else
 
   """""" Motions / normal mode commands
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
-  " let g:camelcasemotion_key = ','
+  let g:camelcasemotion_key = ','
   " Note: we have an integration with vim-smartword below, so
   " CamelCaseMotion is used by default for w, b, e and ge.
   " To operate on whole words, use W, B, E and gE.
@@ -143,7 +143,7 @@ else
   " Smart word (skip non-letters between words):
   " <a href="http://www.vim.org/">www.vim.org</a>
   "  # #     #      #   #   #     #   #   #    #
-  Plug 'kana/vim-smartword'
+  " Plug 'kana/vim-smartword'
 
   call plug#end()
 
@@ -160,34 +160,38 @@ else
 
   endif
 
-  map <Plug>(smartword-basic-w) <Plug>CamelCaseMotion_w
-  map <Plug>(smartword-basic-b) <Plug>CamelCaseMotion_b
-  map <Plug>(smartword-basic-e) <Plug>CamelCaseMotion_e
+  " map <Plug>(smartword-basic-w) <Plug>CamelCaseMotion_w
+  " map <Plug>(smartword-basic-b) <Plug>CamelCaseMotion_b
+  " map <Plug>(smartword-basic-e) <Plug>CamelCaseMotion_e
+
+" TODO: how to select ConfigBase in the following?
+" ve only selects "Config" and vE selects "ConfigBase)"
+" def create_app(app_config: ConfigBase) -> App:
 
 """""" Motions / normal mode commands: mappings
 " Regular mappings for CamelCaseMotion integration do not work
 " so we use the function and autocommand to enable them.
-function s:smartword_mappings() abort
-  " For Plug 'vim-smartword'
-  map w  <Plug>(smartword-w)
-  map b  <Plug>(smartword-b)
-  map e  <Plug>(smartword-e)
-  map ge  <Plug>(smartword-ge)
+" function s:smartword_mappings() abort
+"   " For Plug 'vim-smartword'
+"   map w  <Plug>(smartword-w)
+"   map b  <Plug>(smartword-b)
+"   map e  <Plug>(smartword-e)
+"   map ge  <Plug>(smartword-ge)
 
-  " For Plug 'CamelCaseMotion'
-  " This combines two plugins, vim-smartword will skip  non-letters between
-  " words, CamelCaseMotion will use CamelCase as word boundaries.
-  " (remove these mappings and uncomment let g:camelcasemotion_key = ','
-  " above to use special ,w ,b ,e motions)
-  map <Plug>(smartword-basic-w)  <Plug>CamelCaseMotion_w
-  map <Plug>(smartword-basic-b)  <Plug>CamelCaseMotion_b
-  map <Plug>(smartword-basic-e)  <Plug>CamelCaseMotion_e
-  map <Plug>(smartword-basic-ge)  <Plug>CamelCaseMotion_ge
-endfunction
-augroup SmartWordCustom
-  autocmd!
-  autocmd VimEnter * call <SID>smartword_mappings()
-augroup END
+"   " For Plug 'CamelCaseMotion'
+"   " This combines two plugins, vim-smartword will skip  non-letters between
+"   " words, CamelCaseMotion will use CamelCase as word boundaries.
+"   " (remove these mappings and uncomment let g:camelcasemotion_key = ','
+"   " above to use special ,w ,b ,e motions)
+"   map <Plug>(smartword-basic-w)  <Plug>CamelCaseMotion_w
+"   map <Plug>(smartword-basic-b)  <Plug>CamelCaseMotion_b
+"   map <Plug>(smartword-basic-e)  <Plug>CamelCaseMotion_e
+"   map <Plug>(smartword-basic-ge)  <Plug>CamelCaseMotion_ge
+" endfunction
+" augroup SmartWordCustom
+"   autocmd!
+"   autocmd VimEnter * call <SID>smartword_mappings()
+" augroup END
 
 " see .vimrc.colors
 call SetupColorscheme()
