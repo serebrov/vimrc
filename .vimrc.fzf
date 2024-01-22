@@ -8,6 +8,29 @@
 " So for now keep ctrlp enabled for main mappings
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
+" Show FZF suggestions inside the active window instead of creating separate one (default).
+let g:fzf_layout = { 'window': 'enew' }
+
+" command! -bang -nargs=? -complete=dir HFiles
+"   \ call fzf#vim#files(<q-args>, {'source': 'ag --hidden --ignore .git -g ""'}, <bang>0)
+command! -bang -nargs=? -complete=dir HFiles
+  \ call fzf#vim#files(<q-args>, {'source': 'rg . -l --hidden --iglob "!.git" -g ""'}, <bang>0)
+
+noremap <Leader>f :HFiles<CR>
+" noremap <Leader>f :FZF<CR>
+" noremap <Leader>t :Tags<CR>
+" inoremap <Leader>l :Lines<CR>
+"
+noremap <Leader>fm :History<CR>
+noremap <Leader>fb :Buffers<CR>
+
+" Complete lines with FZF
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Search across all files
+" noremap <Leader>a :Ag<CR>
+
 " Files [PATH]    Files (similar to :FZF)
 " GFiles [OPTS]   Git files (git ls-files)
 " GFiles? Git files (git status)
@@ -31,15 +54,6 @@ Plug 'junegunn/fzf.vim'
 " Maps    Normal mode mappings
 " Helptags    Help tags 1
 " Filetypes   File types
-noremap <Leader>f :FZF<CR>
-noremap <Leader>t :Tags<CR>
-" inoremap <Leader>l :Lines<CR>
-
-" Complete lines with FZF
-imap <c-x><c-l> <plug>(fzf-complete-line)
-
-" Search across all files
-noremap <Leader>a :Ag<CR>
 
 " " See also: https://github.com/junegunn/fzf/wiki/examples
 " " See also: https://github.com/D630/fzf-contrib
@@ -56,45 +70,83 @@ noremap <Leader>a :Ag<CR>
 "     "return "ag -i " . a:l . " | sed 's@\\(.[^:]*\\):\\(.[^:]*\\):\\(.*\\)@\\3:\\2:\\1@' "
 " endfunction
 " noremap <Leader>fm :FZFMru<CR>
-noremap <Leader>fm :History<CR>
 
-" Show FZF suggestions inside the active window instead of creating separate one (default).
-let g:fzf_layout = { 'window': 'enew' }
+" FZY setup
 
-" Open list of buffers
-command! -bang Buffers call fzf#run(fzf#wrap('buffers',
-    \ {'source': map(range(1, bufnr('$')), 'bufname(v:val)')}, <bang>0))
+" " Related: https://github.com/cloudhead/neovim-fuzzy/tree/master
+" " Plug 'cloudhead/neovim-fuzzy'
 
-" Locate any file on the filesystem - :LocateFZF .vimrc
-command! -nargs=1 -bang LocateFZF call fzf#run(fzf#wrap(
-    \ {'source': 'locate <q-args>', 'options': '-m'}, <bang>0))
+" " See https://github.com/jhawthorn/fzy/issues/64
+" if has('nvim')
+"     function! FzyCommand(choice_command, vim_command) abort
+"         let l:callback = {
+"                     \ 'window_id': win_getid(),
+"                     \ 'filename': tempname(),
+"                     \  'vim_command':  a:vim_command
+"                     \ }
+"         function! l:callback.on_exit(job_id, data, event) abort
+"             bdelete!
+"             call win_gotoid(self.window_id)
+"             if filereadable(self.filename)
+"                 try
+"                     let l:selected_filename = readfile(self.filename)[0]
+"                     exec self.vim_command . ' ' . l:selected_filename
+"                 catch /E684/
+"                 endtry
+"             endif
+"             call delete(self.filename)
+"         endfunction
+"         botright 10 new
+"         let l:term_command = a:choice_command . ' | fzy > ' .  l:callback.filename
+"         silent call termopen(l:term_command, l:callback)
+"         setlocal nonumber norelativenumber
+"         startinsert
+"     endfunction
 
-" Jump to tags with :Tags
-function! s:tags_sink(line)
-  let parts = split(a:line, '\t\zs')
-  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
-  execute 'silent e' parts[1][:-2]
-  let [magic, &magic] = [&magic, 0]
-  execute excmd
-  let &magic = magic
-endfunction
-function! s:tags()
-  if empty(tagfiles())
-    echohl WarningMsg
-    echom 'No tags here'
-    echohl None
-    return
-    " echohl WarningMsg
-    " echom 'Preparing tags'
-    " echohl None
-    " call system('ctags -R')
-  endif
-  call fzf#run({
-  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
-  \            '| grep -v -a ^!',
-  \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
-  \ 'down':    '40%',
-  \ 'sink':    function('s:tags_sink')})
-endfunction
-command! Tags call s:tags()
+"     function! FzyCommandForLines(lines, vim_command) abort
+"         let l:callback = {
+"                     \ 'window_id': win_getid(),
+"                     \ 'filename': tempname(),
+"                     \  'vim_command':  a:vim_command
+"                     \ }
+"         function! l:callback.on_exit(job_id, data, event) abort
+"             bdelete!
+"             call win_gotoid(self.window_id)
+"             if filereadable(self.filename)
+"                 try
+"                     let l:selected_filename = readfile(self.filename)[0]
+"                     exec self.vim_command . ' ' . l:selected_filename
+"                 catch /E684/
+"                 endtry
+"             endif
+"             call delete(self.filename)
+"         endfunction
+"         botright 10 new
+"         let l:term_command = 'fzy > ' .  l:callback.filename
+"         silent call termopen(l:term_command, l:callback)
+"         setlocal nonumber norelativenumber
+"         startinsert
+"     endfunction
+" else
+"     function! FzyCommand(choice_command, vim_command)
+"         try
+"             let output = system(a:choice_command . " | fzy ")
+"         catch /Vim:Interrupt/
+"             " Swallow errors from ^C, allow redraw! below
+"         endtry
+"         redraw!
+"         if v:shell_error == 0 && !empty(output)
+"             exec a:vim_command . ' ' . output
+"         endif
+"     endfunction
+" endif
+
+" " nnoremap <leader>e :call FzyCommand("find . -type f", ":e")<cr>
+" " nnoremap <leader>f :call FzyCommand("ag . --silent -l -g ''", ":e")<cr>
+" " nnoremap <C-p> :call FzyCommand("git ls-files --cached --modified \| sort \| uniq", ":e")<cr>
+
+" " '-.' - search hidden files
+" " '--igolb '!.*' - but ignore .git folder
+" nnoremap <leader>f :call FzyCommand("rg . -l -. --iglob '!.git' -g ''", ":e")<cr>
+" nnoremap <LocalLeader>i :call FzyCommand(join(getline(1, '$'), "\n"), "fzy", "/\\V")<cr>
 
