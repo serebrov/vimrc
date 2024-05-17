@@ -34,6 +34,9 @@ Plug 'jamessan/vim-gnupg'
 " g:unception_open_buffer_in_new_tab = 1
 " Note: we can get back to terminal after opening the file with Ctrl-O or
 " Ctrl-^ (Ctrl-6).
+" Note: to have normal git flow, also needs the following in .gitconfig:
+" [core]
+"     editor = nvim --cmd 'let g:unception_block_while_host_edits=1'
 Plug 'samjwill/nvim-unception'
 
 if has('nvim')
