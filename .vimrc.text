@@ -57,7 +57,7 @@ Plug 'wellle/targets.vim'
 " Similar: Plug 'paradigm/TextObjectify'
 
 " Show context of the current line
-Plug 'wellle/context.vim'
+" Plug 'wellle/context.vim'
 
 " Required by vim-surround
 Plug 'tpope/vim-repeat'
