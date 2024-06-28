@@ -8,6 +8,7 @@ Plug 'jamessan/vim-gnupg'
 " Open files from terminal buffer in current nvim instance.
 " Plug 'willothy/flatten.nvim'
 " g:unception_open_buffer_in_new_tab = 1
+"
 " Note: we can get back to terminal after opening the file with Ctrl-O or
 " Ctrl-^ (Ctrl-6).
 " - It is also an option to setup the autocommand so files will be opened
@@ -104,8 +105,12 @@ if has('nvim')
 
 endif
 
-" Filebrowser
-Plug 'tpope/vim-vinegar'
+" Filebrowser: vim-vinegar + netrw
+" Plug 'tpope/vim-vinegar'
+" Temporary switch to my fork to test the change for the
+" search issue
+" https://github.com/serebrov/vim-vinegar/tree/136-fix-search-in-vinegar-up
+Plug 'serebrov/vim-vinegar', {'branch': '136-fix-search-in-vinegar-up'}
 " '-' to open it and to go up dir
 " I - toggle the usage information
 " . - put the file  name at the end of a : command line, for example .!chmod +x
