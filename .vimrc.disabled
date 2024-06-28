@@ -871,3 +871,31 @@ hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
 
 " }}}
 
+" Manage files and directories in vim
+" :Vimdir [directory] - To list files and folders
+" :VimdirR [directory] - To list files and folders recursive
+" Then change file names, dd to delete and save buffer to apply changes
+" Plug 'c0r73x/vimdir.vim'
+
+" Similar: vidir from moreutils (https://joeyh.name/code/moreutils/)
+" Similar: Plug 'idbrii/renamer.vim'
+
+" Find the shortest motion sequence or search query to move the cursor
+" :PathfinderExplain - explain a suggestion
+" If you set g:pf_autorun_delay to a negative value, you get two commands instead:
+" :PathfinderBegin: Set the start position. This still happens automatically when switching windows/tabs, or loading a new file.
+" :PathfinderRun: Set the target position and get a suggestion.
+" if has('python3') && has('timers')
+"   Plug 'danth/pathfinder.vim'
+" else
+"   echoerr 'pathfinder.vim is not supported on this Vim installation'
+" endif
+
+" Wakatime
+" https://wakatime.com
+" Plug 'wakatime/vim-wakatime'
+
+  " Note: nvim now has built-in commenting support, see :h commenting
+  " gcc - comment out line
+  " gc<motion> - comment out lines defined by motion
+  "Plug 'tpope/vim-commentary'

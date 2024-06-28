@@ -1,5 +1,6 @@
 " Color schemes
-set termguicolors
+" The `set termguicolors` is set automatically since nvim 0.10.
+" set termguicolors
 
 Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'lifepillar/vim-solarized8'
@@ -105,7 +106,8 @@ function! SetupColorscheme()
   else
   " if has('nvim')
     set background=light
-    set termguicolors
+    " set termguicolors
+    "
     " let g:deepspace_italics=1
     " colorscheme deep-space
 

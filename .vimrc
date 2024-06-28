@@ -124,10 +124,6 @@ else
   imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
   let g:copilot_no_tab_map = v:true
 
-  " gcc - comment out line
-  " gc<motion> - comment out lines defined by motion
-  Plug 'tpope/vim-commentary'
-
   """""" Motions / normal mode commands
   " CamelCase and under_score motions: ,w ,b ,e and i,w i,b i,e
   let g:camelcasemotion_key = ','

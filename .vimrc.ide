@@ -44,6 +44,9 @@ if has('nvim')
 
   " Configures lsp-related staff, default keys
   " K: Displays hover information about the symbol under the cursor in a floating window. See :help vim.lsp.buf.hover().
+  " [d: Move to the previous diagnostic in the current buffer. See :help vim.diagnostic.goto_prev().
+  " ]d: Move to the next diagnostic. See :help vim.diagnostic.goto_next().
+  " <C-W>d (and <C-W><C-D>) in Normal mode map to vim.diagnostic.open_float(). Use this to view information about any diagnostics under the cursor in a floating window.
   " gd: Jumps to the definition of the symbol under the cursor. See :help vim.lsp.buf.definition().
   " gD: Jumps to the declaration of the symbol under the cursor. Some servers don't implement this feature. See :help vim.lsp.buf.declaration().
   " gI: Lists all the implementations for the symbol under the cursor in the quickfix window. See :help vim.lsp.buf.implementation().
@@ -55,8 +58,6 @@ if has('nvim')
   " <F3>: Format code in current buffer. See :help vim.lsp.buf.format().
   " <F4>: Selects a code action available at the current cursor position. See :help vim.lsp.buf.code_action().
   " gl: Show diagnostics in a floating window. See :help vim.diagnostic.open_float().
-  " [d: Move to the previous diagnostic in the current buffer. See :help vim.diagnostic.goto_prev().
-  " ]d: Move to the next diagnostic. See :help vim.diagnostic.goto_next().
   Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v3.x'}
 
   " Install languages with :TSInstall
@@ -70,7 +71,7 @@ if has('nvim')
   " ac, ic - outer/inner class
   " as - scope
   "
-  " Allows moving arguments (similar to sideways plugin)
+  " Allows moving arguments (similar to the sideways plugin)
   " <leader>ll and <leader>hh to move a function argument left or right
   "
   " Jump to method or class (overrides vim standard mappings)

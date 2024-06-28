@@ -1,23 +1,3 @@
-" Manage files and directories in vim
-" :Vimdir [directory] - To list files and folders
-" :VimdirR [directory] - To list files and folders recursive
-" Then change file names, dd to delete and save buffer to apply changes
-Plug 'c0r73x/vimdir.vim'
-
-" Similar: vidir from moreutils (https://joeyh.name/code/moreutils/)
-" Similar: Plug 'idbrii/renamer.vim'
-
-" Find the shortest motion sequence or search query to move the cursor
-" :PathfinderExplain - explain a suggestion
-" If you set g:pf_autorun_delay to a negative value, you get two commands instead:
-" :PathfinderBegin: Set the start position. This still happens automatically when switching windows/tabs, or loading a new file.
-" :PathfinderRun: Set the target position and get a suggestion.
-" if has('python3') && has('timers')
-"   Plug 'danth/pathfinder.vim'
-" else
-"   echoerr 'pathfinder.vim is not supported on this Vim installation'
-" endif
-
 " Requires Nvim 0.5, can be run via docker:
 " docker run -it --rm brandoncc/vim-be-good:stable
 " Vim games, :VimBeGood
@@ -25,15 +5,15 @@ Plug 'ThePrimeagen/vim-be-good'
 
 Plug 'jamessan/vim-gnupg'
 
-" Wakatime
-" https://wakatime.com
-" Plug 'wakatime/vim-wakatime'
-
 " Open files from terminal buffer in current nvim instance.
 " Plug 'willothy/flatten.nvim'
 " g:unception_open_buffer_in_new_tab = 1
 " Note: we can get back to terminal after opening the file with Ctrl-O or
 " Ctrl-^ (Ctrl-6).
+" - It is also an option to setup the autocommand so files will be opened
+" in splits and the terminal stays open, see
+" https://github.com/samjwill/nvim-unception/issues/61
+"
 " Note: to have normal git flow, also needs the following in .gitconfig:
 " [core]
 "     editor = nvim --cmd 'let g:unception_block_while_host_edits=1'
