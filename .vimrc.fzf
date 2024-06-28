@@ -22,8 +22,8 @@ noremap <Leader>f :HFiles<CR>
 " noremap <Leader>t :Tags<CR>
 " inoremap <Leader>l :Lines<CR>
 "
-noremap <Leader>fm :History<CR>
-noremap <Leader>fb :Buffers<CR>
+noremap <Leader>zm :History<CR>
+noremap <Leader>zb :Buffers<CR>
 
 " Complete lines with FZF
 imap <c-x><c-l> <plug>(fzf-complete-line)
