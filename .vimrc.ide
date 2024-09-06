@@ -62,7 +62,9 @@ if has('nvim')
 
   " Install languages with :TSInstall
   " :TSInstall typescript lua markdown
-  " List of avaiable and installed languages :TSinstallInfo
+  " List of avaiable and installed languages :TSInstallInfo
+  " :TSUpdate to update installed parsers
+  " :TSEnable / :TSDisable to enable/disable parsers
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
   " Textobjects for functions, classes, etc.
