@@ -105,6 +105,17 @@ if has('nvim')
 
 endif
 
+" Filebrowser: vifm
+"   :EditVifm - select a file or files to open in the current buffer
+"   :Vifm - alias for :EditVifm to be used like :vert Vifm
+"   :PeditVifm - select a file in preview window
+"   :SplitVifm - split buffer and select a file or files to open
+"   :VsplitVifm - vertically split buffer and select a file or files to open
+"   :DiffVifm - select a file or files to compare to the current file with :vert diffsplit
+"   :TabVifm - select a file or files to open in tabs
+"   :VifmCs - attempts to convert Vim's color scheme to Vifm's one
+Plug 'vifm/vifm.vim'
+
 " Filebrowser: vim-vinegar + netrw
 " Plug 'tpope/vim-vinegar'
 " Temporary switch to my fork to test the change for the
