@@ -133,6 +133,53 @@
   " Y will yank line-wise even if you have character-wise selection
   vnoremap <expr>Y "my\"" . v:register . "Y`y"
 
+  " Do not jump to the next match when highlighing
+  nnoremap * *N
+
+  " Visual search
+  " select text and hit * / # to find it
+  " http://got-ravings.blogspot.com/2008/07/vim-pr0n-visual-search-mappings.html
+  " https://github.com/godlygeek/vim-files/blob/master/plugin/vsearch.vim
+  " Visual mode search
+  function! s:VSetSearch()
+    let temp = @@
+    norm! gvy
+    let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+    " Use this line instead of the above to match matches spanning across lines
+    "let @/ = '\V' . substitute(escape(@@, '\'), '\_s\+', '\\_s\\+', 'g')
+    call histadd('/', substitute(@/, '[?/]', '\="\\%d".char2nr(submatch(0))', 'g'))
+    let @@ = temp
+  endfunction
+  " xnoremap - only for visual mode, but not for select mode
+  xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>N
+  xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<CR>N
+
+  " Usage tip: highlight-select-change pattern
+  "  - use `*` to highlight the word
+  "  - select the area in visual mode
+  "  - execute :'<,'>s//new_word/g or :d or :g, etc.
+  "
+  "  In this scenario, we can visually see words that will be replaced
+  "  and we limit the operation to the selected visual area.
+  "  The key is that we highlight the word with `*` first, then we can
+  "  skip the first argument for :s or other commands and we see it
+  "  on the screen.
+  "
+  "  Useful commands:
+  "  - :g//t$ - copy all lines with the word to the end of the file
+  "  - :g//d - delete all lines with the word
+  "  - :g!//d or :v//d - delete all lines without the word
+  "  - :g//m$ - move all lines with the word to the end of the file
+  "
+  "  More complex examples:
+  "  - :v/./,/./-j - replace multiple empty lines with one
+  "  - :'<,'>g/^$/d - delete empty lines in the visual area
+  "  - :'<,'>s/$/\r/g - add new line after each line in the visual area
+  "
+  "  References:
+  "  - https://habr.com/ru/articles/131951/
+  "  - http://vim.wikia.com/wiki/Power_of_g
+
   nnoremap grl :call ToggleRelativeAbsoluteNumber()<CR>
   function! ToggleRelativeAbsoluteNumber()
     if &relativenumber

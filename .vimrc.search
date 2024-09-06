@@ -58,38 +58,16 @@ Plug 'tpope/vim-abolish'
 " ignorecase, shortmess, smartcase)
 Plug 'wincent/loupe'
 
-" Search {{{
-
-  " Visual search
-  " select text and hit * / # to find it
-  " http://got-ravings.blogspot.com/2008/07/vim-pr0n-visual-search-mappings.html
-  " https://github.com/godlygeek/vim-files/blob/master/plugin/vsearch.vim
-  " Visual mode search
-  function! s:VSetSearch()
-    let temp = @@
-    norm! gvy
-    let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
-    " Use this line instead of the above to match matches spanning across lines
-    "let @/ = '\V' . substitute(escape(@@, '\'), '\_s\+', '\\_s\\+', 'g')
-    call histadd('/', substitute(@/, '[?/]', '\="\\%d".char2nr(submatch(0))', 'g'))
-    let @@ = temp
-  endfunction
-  " xnoremap - only for visual mode, but not for select mode
-  xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>
-  xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<CR>
-
-  " If ag is available use it as filename list generator instead of 'find'
-  if executable("ag")
-      " --vimgrep is available from version  0.25.0+
-      if split(system("ag --version"), "[ \n\r\t]")[2] =~ '\d\+.[2-9][5-9]\(.\d\+\)\?'
-        set grepprg=ag\ --vimgrep\ --ignore-case
-      else
-        " --noheading seems odd here, but see https://github.com/ggreer/the_silver_searcher/issues/361
-        set grepprg=ag\ --column\ --nogroup\ --noheading\ --ignore-case
-      endif
-      set grepformat=%f:%l:%c:%m,%f:%l:%m
-      command! -nargs=+ -complete=file_in_path -bar Grep silent! grep! <args> | copen | let@/=split('<args>')[-1]
-      " redraw!
+" If ag is available use it as filename list generator instead of 'find'
+if executable("ag")
+  " --vimgrep is available from version  0.25.0+
+  if split(system("ag --version"), "[ \n\r\t]")[2] =~ '\d\+.[2-9][5-9]\(.\d\+\)\?'
+    set grepprg=ag\ --vimgrep\ --ignore-case
+  else
+    " --noheading seems odd here, but see https://github.com/ggreer/the_silver_searcher/issues/361
+    set grepprg=ag\ --column\ --nogroup\ --noheading\ --ignore-case
   endif
-
-" }}}
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+  command! -nargs=+ -complete=file_in_path -bar Grep silent! grep! <args> | copen | let@/=split('<args>')[-1]
+  " redraw!
+endif
