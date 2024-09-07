@@ -1,12 +1,32 @@
+" Standard motions {{{
+"
+"  Word motions: w, b, e, ge / W, B, E, gE
+"  Char search: f, t, F, T and ; / ,
+"  Line start/end: 0, $, ^ (non-blank start)
+"  Text objects: Vi{ to select a block in {}
+"  Search: /forward or ?backward
+"  Insert at start/end: I / A
+"  By-block movements: { / }, [[ / ]], etc
+"  Change list: g; / g, or gi to insert at last change position
+"  Jump history: C-O / C-I
+"  Matching pair jump: %
+"  Line jumps: 50G to line 50 or 20j to 20 lines down
+"
+" See: http://vimcasts.org/blog/2013/02/habit-breaking-habit-making/
+"      http://stackoverflow.com/questions/37059399/vim-motion-without-jk-and-hardmode-installed
+"      https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim
+"      https://pbrisbin.com/posts/hard_mode/
+"      :help motion.txt
+" }}}
+
 " Mappings {{{
-  "let mapleader = "\<space>"
-  " Better then let mapleader because vim command line will still
+  " let mapleader = "\<space>"
+  " Below is better then `let mapleader` because vim command line will still
   " display leader-based mappings as \s
   " From http://www.reddit.com/r/vim/comments/1vdrxg/space_is_a_big_key_what_do_you_map_it_to/
   map <space> <leader>
 
   " * and # will stay on the first match
-  " Note: these does not work, Loupe plugin overrides them
   nnoremap * *N
   nnoremap # #N
 
@@ -16,10 +36,71 @@
   " CTRL-N in insert mode is a completion!!!
   " inoremap <C-N> <C-O>:noh<CR>
 
+  " Visual search
+  " select text and hit * / # to find it
+  " http://got-ravings.blogspot.com/2008/07/vim-pr0n-visual-search-mappings.html
+  " https://github.com/godlygeek/vim-files/blob/master/plugin/vsearch.vim
+  " Visual mode search
+  function! s:VSetSearch()
+    let temp = @@
+    norm! gvy
+    let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+    " Use this line instead of the above to match matches spanning across lines
+    "let @/ = '\V' . substitute(escape(@@, '\'), '\_s\+', '\\_s\\+', 'g')
+    call histadd('/', substitute(@/, '[?/]', '\="\\%d".char2nr(submatch(0))', 'g'))
+    let @@ = temp
+  endfunction
+  " xnoremap - only for visual mode, but not for select mode
+  xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>N
+  xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<CR>N
+
+  " Usage tip: highlight-select-change pattern
+  "  - use `*` to highlight the word
+  "  - select the area in visual mode
+  "  - execute :'<,'>s//new_word/g or :d or :g, etc.
+  "
+  "  In this scenario, we can visually see words that will be replaced
+  "  and we limit the operation to the selected visual area.
+  "  The key is that we highlight the word with `*` first, then we can
+  "  skip the first argument for :s or other commands and we see it
+  "  on the screen.
+  "
+  "  Useful ex commands:
+  "  - :g//t$ - copy all lines with the word to the end of the file
+  "  - :g//d - delete all lines with the word
+  "  - :g!//d or :v//d - delete all lines without the word
+  "  - :g//m$ - move all lines with the word to the end of the file
+  "
+  " Ex commands with range:
+  " - :8,15d - delete lines
+  " - :8,15co . - copy lines
+  " - :-5,-3co . with relative numbers
+  " - :8,15m . - move lines
+  "
+  "  More complex examples:
+  "  - :v/./,/./-j - replace multiple empty lines with one
+  "  - :'<,'>g/^$/d - delete empty lines in the visual area
+  "  - :'<,'>s/$/\r/g - add new line after each line in the visual area
+  "
+  "  References:
+  "  - https://habr.com/ru/articles/131951/
+  "  - http://vim.wikia.com/wiki/Power_of_g
+
   " Repeatable "change word" command:
   " - set cursor on a word, cg* - change it,
   " - now '.' will repeat the change on the next word, n - skip the next word
   nnoremap cg* *Ncgn
+
+  " gv - select last visual area and go to visual mode
+  " Visually select the text that was last edited/pasted
+  nnoremap gV `[v`]
+
+  " Don't move the cursor after yanking the visual selection
+  " (usually it jumps back to the start of the selection)
+  " http://ddrscott.github.io/blog/2016/yank-without-jank/
+  vnoremap <expr>y "my\"" . v:register . "y`y"
+  " Y will yank line-wise even if you have character-wise selection
+  vnoremap <expr>Y "my\"" . v:register . "Y`y"
 
   " Even better: just change something and then use `g.` to start repeating
   " the change on next occurences of the word.
@@ -121,64 +202,6 @@
   " q/ for searches
   " or type : or / to start entering a command or search,
   " then press the 'cedit' key (default is Ctrl-f :help 'cedit').
-
-  " gv - select last visual area and go to visual mode
-  " Visually select the text that was last edited/pasted
-  nnoremap gV `[v`]
-
-  " Don't move the cursor after yanking the visual selection
-  " (usually it jumps back to the start of the selection)
-  " http://ddrscott.github.io/blog/2016/yank-without-jank/
-  vnoremap <expr>y "my\"" . v:register . "y`y"
-  " Y will yank line-wise even if you have character-wise selection
-  vnoremap <expr>Y "my\"" . v:register . "Y`y"
-
-  " Do not jump to the next match when highlighing
-  nnoremap * *N
-
-  " Visual search
-  " select text and hit * / # to find it
-  " http://got-ravings.blogspot.com/2008/07/vim-pr0n-visual-search-mappings.html
-  " https://github.com/godlygeek/vim-files/blob/master/plugin/vsearch.vim
-  " Visual mode search
-  function! s:VSetSearch()
-    let temp = @@
-    norm! gvy
-    let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
-    " Use this line instead of the above to match matches spanning across lines
-    "let @/ = '\V' . substitute(escape(@@, '\'), '\_s\+', '\\_s\\+', 'g')
-    call histadd('/', substitute(@/, '[?/]', '\="\\%d".char2nr(submatch(0))', 'g'))
-    let @@ = temp
-  endfunction
-  " xnoremap - only for visual mode, but not for select mode
-  xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>N
-  xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<CR>N
-
-  " Usage tip: highlight-select-change pattern
-  "  - use `*` to highlight the word
-  "  - select the area in visual mode
-  "  - execute :'<,'>s//new_word/g or :d or :g, etc.
-  "
-  "  In this scenario, we can visually see words that will be replaced
-  "  and we limit the operation to the selected visual area.
-  "  The key is that we highlight the word with `*` first, then we can
-  "  skip the first argument for :s or other commands and we see it
-  "  on the screen.
-  "
-  "  Useful commands:
-  "  - :g//t$ - copy all lines with the word to the end of the file
-  "  - :g//d - delete all lines with the word
-  "  - :g!//d or :v//d - delete all lines without the word
-  "  - :g//m$ - move all lines with the word to the end of the file
-  "
-  "  More complex examples:
-  "  - :v/./,/./-j - replace multiple empty lines with one
-  "  - :'<,'>g/^$/d - delete empty lines in the visual area
-  "  - :'<,'>s/$/\r/g - add new line after each line in the visual area
-  "
-  "  References:
-  "  - https://habr.com/ru/articles/131951/
-  "  - http://vim.wikia.com/wiki/Power_of_g
 
   nnoremap grl :call ToggleRelativeAbsoluteNumber()<CR>
   function! ToggleRelativeAbsoluteNumber()
