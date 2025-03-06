@@ -3,14 +3,45 @@
 "  Word motions: w, b, e, ge / W, B, E, gE
 "  Char search: f, t, F, T and ; / ,
 "  Line start/end: 0, $, ^ (non-blank start)
-"  Text objects: Vi{ to select a block in {}
 "  Search: /forward or ?backward
-"  Insert at start/end: I / A
-"  By-block movements: { / }, [[ / ]], etc
+"  By sentence: ( , )
+"  By paragraph: { , }
+"  By-section: [[ , ]]
+"  By method: ]m , [m (start), ]M , [M (end)
+"  Comment start/end: [* , ]* or [/ , ]/
+"
+"  Text objects: Vi{ to select a block in {}
+"
 "  Change list: g; / g, or gi to insert at last change position
-"  Jump history: C-O / C-I
+"  Jump history: CTRL-O / CTRL-I
 "  Matching pair jump: %
 "  Line jumps: 50G to line 50 or 20j to 20 lines down
+"  Visual modes: v, V, <CTRL-V>
+"  Repeat last change: .
+"  Record macro / execute macro: q[key], q / @[key]
+"
+"  Insert at start/end: I / A
+"  Insert line above/below: O / o
+"  Insert line above/below in insert mode: <CTRL-o>O / <CTRL-o>o
+"  Join lines: J
+"  Indent / unindent: > / <
+"
+"  Combos:
+"  - ciw - change inner word
+"  - ci( - change inside brackets (works on closed brackets, even if cursor is outside)
+"  - vi" - select inside quotes
+"  - d/foo - delete until next "foo"
+"  - y?bar - yank until previous "bar"
+"  - c2w - change 2 words
+"  - 3j - move 3 lines down
+"  - 3J - join 3 lines
+"  - xp - swap two characters (x to delete, p to paste, it goes to the right)
+"
+"  Command line history (select, edit and execute previous commands):
+"  - q: - command line history
+"  - :<CTRL-F> - command line history (same as above, but in command mode)
+"  In the history buffer: go to insert mode after the command, Enter to
+"  execute.
 "
 " See: http://vimcasts.org/blog/2013/02/habit-breaking-habit-making/
 "      http://stackoverflow.com/questions/37059399/vim-motion-without-jk-and-hardmode-installed
@@ -65,26 +96,74 @@
   "  skip the first argument for :s or other commands and we see it
   "  on the screen.
   "
-  "  Useful ex commands:
-  "  - :g//t$ - copy all lines with the word to the end of the file
-  "  - :g//d - delete all lines with the word
-  "  - :g!//d or :v//d - delete all lines without the word
-  "  - :g//m$ - move all lines with the word to the end of the file
+  " Useful ex commands:
+  " - :g//t$ - copy all lines with the word to the end of the file
+  " - :g//d - delete all lines with the word
+  " - :g!//d or :v//d - delete all lines without the word
+  " - :g//m$ - move all lines with the word to the end of the file
+  "
+  " More complex examples:
+  " - :v/./,/./-j - replace multiple empty lines with one
+  " - :'<,'>g/^$/d - delete empty lines in the visual area
+  " - :'<,'>s/$/\r/g - add new line after each line in the visual area
   "
   " Ex commands with range:
-  " - :8,15d - delete lines
-  " - :8,15co . - copy lines
-  " - :-5,-3co . with relative numbers
-  " - :8,15m . - move lines
+  " - :8,15d - delete lines 8 to 15
+  " - :8,15co . - copy lines 8 to 15 after the current line
+  " - :-5,-3co . with relative numbers - copy lines from 5th above to 3rd above
+  "   after the current line (works great with :set relativenumber)
+  " - :8,15m . - move lines 8 to 15 after the current line
   "
-  "  More complex examples:
-  "  - :v/./,/./-j - replace multiple empty lines with one
-  "  - :'<,'>g/^$/d - delete empty lines in the visual area
-  "  - :'<,'>s/$/\r/g - add new line after each line in the visual area
+  " Some ex commands for edititng:
+  " - :co[py] - copy lines
+  "   :t - same as ":copy"
+  " - :m[ove] - move lines
+  " - :c[hange] - change lines (type new text, enter . to finish)
+  " - :d[elete] - delete line
+  " - :j[oin] - join lines
   "
-  "  References:
-  "  - https://habr.com/ru/articles/131951/
-  "  - http://vim.wikia.com/wiki/Power_of_g
+  " Globals, execute commands for matching lines:
+  " - :g[lobal] - execute commands for matching lines
+  " - :v[global] - execute commands for not matching lines
+  " - :norm[al] - execute Normal mode commands
+  "     for example, :%norm I// - add // to the beginning of each line
+  "     or :g/^$/norm J - join empty lines
+  " - :@ - execute contents of a register
+  "     we can enter the command in a normal buffer, yank it, then execute
+  "
+  " Related:
+  " - :exe[cute] - execute a string as a command
+  "   (for example, :exe "norm ixxx\<Esc>", so we can use special chars like
+  "   \<Esc>, it can be used with any commands,
+  "   like ':exe "e " .. expand("%") .. ".bak"' to edit the file with the same
+  "   name as the current file and .bak extension)
+  "
+  " Filter, sort, insert text:
+  " - :! - filter lines or execute an external command
+  "       can be used to run shell commands over the text,
+  "       like :%!uniq to remove duplicate line
+  "       or :.!date to insert date on the current line
+  "       or :.!xargs curl -s on the line with URL to insert that URL
+  "       contents into the file.
+  "       Related: :.write !xargs curl -s to display the output without inserting
+  " - :sor[t] - sort lines
+  " - :r[ead] - read file into the text
+  "       can also be used to execute shell commands, for example:
+  "       :read !date - to insert the date into the file
+  "       :read !curl -s https://example.com - to insert the content of the URL
+  " - :y[ank] - yank lines into a register
+  " - :pu[t] - insert contents of register in the text
+  "
+  " Formatting:
+  " - :< - shift lines one 'shiftwidth' left
+  " - :> - shift lines one 'shiftwidth' right
+  " - :ce[nter] - format lines at the center
+  " - :le[ft] - left align lines
+  "
+  " References:
+  " - https://habr.com/ru/articles/131951/
+  " - http://vim.wikia.com/wiki/Power_of_g
+  " - :help Ex-commands
 
   " Repeatable "change word" command:
   " - set cursor on a word, cg* - change it,
@@ -174,6 +253,69 @@
   " affect the deletion operation
   "
   xnoremap p pgvy
+
+  " Ctrl-R in insert mode or command line to paste:
+  " - Ctrl-R + a-z - named register
+  " - Ctrl-R + " - default register
+  " - Ctrl-R + % - current file name
+  "   (useful for :r!cat % to insert the file content)
+  " - Ctrl-R + # - alternate file name
+  " - Ctrl-R + * / + - clipboard contents
+  " - Ctrl-R + / - last search
+  " - Ctrl-R + : - command line
+  " - Ctrl-R + . - last inserted text
+  " - Ctrl-R + - - last small delete
+  "
+  " - Ctrl-R + = - evaluate expression
+  "   (for example, in insert mode, Ctrl-R =, then 2+2)
+  "
+  " Only in command line mode:
+  " - Ctrl-R Ctrl-W to paste word under cursor
+  " - Ctrl-R Ctrl-A to paste WORD under cursor
+  " - Ctrl-R Ctrl-L to paste line under cursor
+  " - Ctrl-R Ctrl-F filename under cursor
+  " - Ctrl-R Ctrl-P filename under cursor
+  " - Ctrl-\ e {expr} - evaluate expression and replace command line with the
+  "   result
+  "
+  " See: :help i_CTRL-R and :help c_CTRL-R
+
+  " Note about @ command:
+  " From: https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim
+  " 
+  " The @ command is probably the most obscure vi command. 
+  " @ executes the contents of a register as if it were a vi or ex command.
+  " Example: I often use: :r!locate ... to find some file on my system and
+  " read its name into my document. From there I delete any extraneous hits,
+  " leaving only the full path to the file I'm interested in.
+  " Rather than laboriously Tab-ing through each component of the path
+  " (or worse, if I happen to be stuck on a machine without Tab completion
+  " support in its copy of vi) I just use:
+  " - 0i:r (to turn the current line into a valid :r command),
+  "   it becomes something lke :r /path/to/file
+  " - "cdd (to delete the line into the "c" register) and
+  " - @c execute that command.
+  "
+  " So we execute the `:r /path/to/file` command with @c and the file content
+  " is inserted into the current buffer.
+  "
+  " ---
+  "
+  " Practically it allows using main vim buffer to edit and execute commands
+  " The commaand buffer is not super convenient
+  "
+  " For example: do "cdd or "cyy on the line below and then @c to add // to all lines.
+  "
+  " :% norm I//
+  "
+  " This is also the same as instead of recording the macro, type it out and then execute.
+  " Or record, paste and edit, for example
+  "
+  " - qa - start recording into register a
+  " - q - stop recording
+  " - "ap - paste the macro, edit it
+  " - "ayy - yank back
+  " - @a - execute
 
   " Move cursor by display lines when wrapping
   " http://vim.wikia.com/wiki/Move_cursor_by_display_lines_when_wrapping
