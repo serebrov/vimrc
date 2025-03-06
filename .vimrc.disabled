@@ -895,7 +895,34 @@ hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
 " https://wakatime.com
 " Plug 'wakatime/vim-wakatime'
 
-  " Note: nvim now has built-in commenting support, see :h commenting
-  " gcc - comment out line
-  " gc<motion> - comment out lines defined by motion
-  "Plug 'tpope/vim-commentary'
+" wellle/targets.vim. See the problem below.
+" Improve text objects:
+" quote objects (",',`) - work for multiple lines (like standard vi{ )
+" pair objects - (,[,{,<,t - will look forward (like vi" does)
+"                            if there is no pair forward, will also look
+"                            backward
+"  note: ( == b [=bracket] and { == B [=Block]
+" in pair - i(, i), ib, etc - inside pair
+" a pair - a(, a), ab, etc - include pair chars (brackets, tags, etc)
+" inside pair - I(, I), etc - inside pair, but exclude whitespace
+" around pair - A(, A), etc - include space after pair (or before if there
+"                             is no space after)
+" next pair - in(, in), etc - search for next pair
+" last pair - il(, il), etc - search for previous pair
+" next and last quote - in', In', An', il', Il', etc - select next/last
+"                         quotes pair
+" Next and Last quote - iN', IN', AN', etc - select next PROPER quote
+"                          instead of pseudo quote between two quotes
+" Separator text objects: , . ; : + - = ~ _ * # / | \ & $
+"      work over multiple lines, i, - in separator, a, - a separator
+"      I, - inside separator, A, - around separator
+"      in, an, In, An, il, al, Al, iN, aN, IN, etc - next/last separator
+" Argument text object: ia - inside, aa - an argument (with comma after it)
+"                       Ia - inside, exclude space, Aa - around
+"                       ina, ana, Ina, Ana, etc - next/last argument
+" Plug 'wellle/targets.vim'
+"
+" Note: it breaks the va{a{a{ behavior where we can reselect parent block
+" See: https://github.com/wellle/targets.vim/issues/282
+"
+" Similar: Plug 'paradigm/TextObjectify'

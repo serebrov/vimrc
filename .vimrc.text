@@ -1,4 +1,48 @@
-" Plugins to manipulate text and text objects
+" Standard text objects:
+"   iw - inner word, aw - a word
+"   iW - inner WORD, aW - a WORD
+"   is - inner sentence, as - a sentence
+"   ip - inner paragraph, ap - a paragraph
+"   iq - inner quote, aq - a quote (aslo i', a', i", a")
+"   i[, a[, i], a[ - a [] block
+"   ib, ab - a () "block", also a), a(, i), i(
+"   i{, a{, i}, a{, aB, iB - a {} block
+"   i<, a<, i>, a> - a <> block
+"   it, at - a tag block
+"
+" Note: after using the text object in visual mode, we can repeat
+" it again to expand the selection.
+" For example, va{a{ will select a block and then expand to the parent block.
+"
+" See: :help text-objects
+
+" Python indent object
+" ai – the current indentation level and the line above
+" ii – the current indentation level excluding the line above
+Plug 'michaeljsmith/vim-indent-object'
+
+" ic, ac, iC, aC text object for columns
+" ic / iC based on inner word / WORD (iw / iW),
+" ac / aC - on "a word" / "a WORD" (aw / aW)
+" like vic - select a col / dic - delete a col / cic - change a col
+"      vicI - prepend text to col / vicA - append text
+Plug 'coderifous/textobj-word-column.vim'
+
+" Related: https://github.com/kana/vim-textobj-user
+" https://github.com/kana/vim-textobj-user/wiki
+
+" Exapand/shrink selection
+" + - expand selection
+" _ - shrink selection
+Plug 'terryma/vim-expand-region'
+
+" Related: https://github.com/rhysd/vim-textobj-anyblock
+" This plugin provides text object mappings ib and ab.
+" ib is a union of i(, i{, i[, i', i" and i<.
+" ab is a union of a(, a{, a[, a', a" and a<.
+
+" Show context of the current line
+" Plug 'wellle/context.vim'
 
 " gS / gJ to split / join multiline / single lines forms of code
 Plug 'AndrewRadev/splitjoin.vim'
@@ -16,48 +60,6 @@ Plug 'AndrewRadev/deleft.vim'
 " " xmap aa <Plug>SidewaysArgumentTextobjA
 " " omap ia <Plug>SidewaysArgumentTextobjI
 " " xmap ia <Plug>SidewaysArgumentTextobjI
-
-" Python indent object
-" ai – the current indentation level and the line above
-" ii – the current indentation level excluding the line above
-Plug 'michaeljsmith/vim-indent-object'
-
-" ic, ac, iC, aC text object for columns
-" ic / iC based on inner word / WORD (iw / iW),
-" ac / aC - on "a word" / "a WORD" (aw / aW)
-" like vic - select a col / dic - delete a col / cic - change a col
-"      vicI - prepend text to col / vicA - append text
-Plug 'coderifous/textobj-word-column.vim'
-
-" Improve text objects:
-" quote objects (",',`) - work for multiple lines (like standard vi{ )
-" pair objects - (,[,{,<,t - will look forward (like vi" does)
-"                            if there is no pair forward, will also look
-"                            backward
-"  note: ( == b [=bracket] and { == B [=Block]
-" in pair - i(, i), ib, etc - inside pair
-" a pair - a(, a), ab, etc - include pair chars (brackets, tags, etc)
-" inside pair - I(, I), etc - inside pair, but exclude whitespace
-" around pair - A(, A), etc - include space after pair (or before if there
-"                             is no space after)
-" next pair - in(, in), etc - search for next pair
-" last pair - il(, il), etc - search for previous pair
-" next and last quote - in', In', An', il', Il', etc - select next/last
-"                         quotes pair
-" Next and Last quote - iN', IN', AN', etc - select next PROPER quote
-"                          instead of pseudo quote between two quotes
-" Separator text objects: , . ; : + - = ~ _ * # / | \ & $
-"      work over multiple lines, i, - in separator, a, - a separator
-"      I, - inside separator, A, - around separator
-"      in, an, In, An, il, al, Al, iN, aN, IN, etc - next/last separator
-" Argument text object: ia - inside, aa - an argument (with comma after it)
-"                       Ia - inside, exclude space, Aa - around
-"                       ina, ana, Ina, Ana, etc - next/last argument
-Plug 'wellle/targets.vim'
-" Similar: Plug 'paradigm/TextObjectify'
-
-" Show context of the current line
-" Plug 'wellle/context.vim'
 
 " Required by vim-surround
 Plug 'tpope/vim-repeat'
