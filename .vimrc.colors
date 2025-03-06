@@ -50,11 +50,14 @@ Plug 'letorbi/vim-colors-modern-borland'
 Plug 'jaxbot/semantic-highlight.vim'
 
 " Colorscheme switcher
+" :Colors command from fzf.vim
+
+" Colorscheme switcher
 " :NextColorScheme to switch to the next color scheme.
 " :PrevColorScheme to switch to the previous color scheme.
 " Keys: F8 and Shift-F8.
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-colorscheme-switcher'
+" Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-colorscheme-switcher'
 
 " How to handle colorscheme overrides:
 " https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
@@ -112,7 +115,7 @@ augroup plain-overrides
   " autocmd ColorScheme plain highlight Comment guifg=#10A778 gui=altfont
   autocmd ColorScheme plain highlight Comment guifg=#189392 gui=altfont
   autocmd ColorScheme plain highlight Constant guifg=#008EC4 gui=altfont
-  autocmd ColorScheme plain highlight CursorLine guifg=#222222 guibg=#EAF3FB
+  autocmd ColorScheme plain highlight CursorLine guifg=#222222 guibg=#F8F8F8
 
   " See :highlight for the list of groups.
   autocmd ColorScheme plain highlight DiagnosticError guifg=#E32791
