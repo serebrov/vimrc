@@ -141,6 +141,12 @@ else
   "  # #     #      #   #   #     #   #   #    #
   " Plug 'kana/vim-smartword'
 
+  " Live preview for commands, like `:Preview norm`, etc.
+  " https://github.com/smjonas/live-command.nvim
+  " We initialize it in the lua code (below):
+  " require('live-command').setup()
+  Plug 'smjonas/live-command.nvim'
+
   call plug#end()
 
   if has('nvim')
@@ -153,6 +159,10 @@ else
     luafile ~/.vim/.vimrc.ide.lsp.lua
     " For Plug 'neovim/nvim-dap'
     " luafile ~/.vim/.vimrc.ide.dap.lua
+
+    lua << EOF
+    require('live-command').setup()
+EOF
 
   endif
 
