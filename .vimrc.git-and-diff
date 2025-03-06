@@ -1,5 +1,11 @@
 " Plugins to work with git and diff
 
+set diffopt=internal,filler,closeoff,linematch:60
+" default algorithm is myers
+" set diffopt+=algorithm:minimal
+" set diffopt+=algorithm:patience
+" set diffopt+=algorithm:histogram
+
 " From a very single vim buffer, you can perform all basic git operations. To name a few:
 "  Visualize all diffs in your git repository.
 "  Stage files/hunks/parts of hunks with single key S.
