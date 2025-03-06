@@ -52,11 +52,8 @@ nnoremap <Leader>cf :tabnew<CR>:CtrlSF
 " See also: http://www.reddit.com/r/vim/comments/1weenn/oh_thats_why_abolish_is_useful_subvert/
 Plug 'tpope/vim-abolish'
 
-" Different highlight for current search result
-" Add `\v` when start search to enable very magic mode
-" Overrides search params (history=1000, hlsearch enabled, incsearch,
-" ignorecase, shortmess, smartcase)
-Plug 'wincent/loupe'
+" Multicorsor plugin: https://github.com/jake-stewart/multicursor.nvim
+" Plug 'jake-stewart/multicursor.nvim'
 
 " If ag is available use it as filename list generator instead of 'find'
 if executable("ag")

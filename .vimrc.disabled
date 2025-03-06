@@ -926,3 +926,9 @@ hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
 " See: https://github.com/wellle/targets.vim/issues/282
 "
 " Similar: Plug 'paradigm/TextObjectify'
+
+" Different highlight for current search result
+" Add `\v` when start search to enable very magic mode
+" Overrides search params (history=1000, hlsearch enabled, incsearch,
+" ignorecase, shortmess, smartcase)
+" Plug 'wincent/loupe'
