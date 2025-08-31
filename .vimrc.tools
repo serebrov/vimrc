@@ -24,15 +24,8 @@ if has('nvim')
   " terminal scrollback buffer size
   " set scrollback=100000
 
-  " Open terminal with ":term" or ":term ipython" (to run the specific command).
-  " Create the new split and enter / edit the commands there, send to
-  " terminal with "Enter" (current line or visual selection).
-  function! SendCommand(commands) abort
-    " Send the command to the first terminal buffer found in current tab.
-    " If there is no terminal - splits the current window and runs terminal
-    " there.
-    let commands = a:commands
-
+  " Find terminal job_id
+  function! FindOrCreateTerminalJob() abort
     let term_buffer_id = -1
     let term_job_id = 0
     for visible_buffer_id in tabpagebuflist()
@@ -45,17 +38,70 @@ if has('nvim')
       endtry
     endfor
 
+    "if term_job_id == 0
+    "  echoerr "No terminal job found"
+    "  return
+    "endif
+
     if term_job_id == 0
       new
       let term_job_id = termopen($SHELL)
     endif
 
-    call jobsend(term_job_id, add(commands, ''))
+    return term_job_id
+  endfunction
+
+  " Maps special keys like <CR>, <Esc>, etc to terminal codes
+  " This way we can have something like
+  " <Esc> that will be sent to the terminal as actual Esc key.
+  function! MapSpecialKey(key) abort
+    " Convert Vim-style key notation (<C-c>, <Esc>, etc.) into terminal codes
+    return nvim_replace_termcodes(a:key, v:true, v:false, v:true)
+    " Note that the special key should be the only thing on the line,
+    " something like
+    " > print('Hello')<Esc>
+    " will not work.
+    " But
+    " > print('Hello')
+    " > <Esc>
+    " will work.
+    "let keymap = {
+    "      \ '<Esc>': "\x1b",
+    "      \ '<C-c>': "\x03",
+    "      \ '<C-d>': "\x04",
+    "      \ '<CR>':  "\n",
+    "      \ }
+    "return get(keymap, a:key, a:key)   " return raw string if not in map
+  endfunction
+
+  " Open terminal with ":term" or ":term ipython" (to run the specific command).
+  " Create the new split and enter / edit the commands there, send to
+  " terminal with "Enter" (current line or visual selection).
+  function! SendCommand(commands) abort
+    " Send the command to the first terminal buffer found in current tab.
+    " If there is no terminal - splits the current window and runs terminal
+    " there.
+    let commands = a:commands
+    let term_job_id = FindOrCreateTerminalJob()
+
+    " This allows using special keys like <CR>, <Esc>, etc from the
+    " MapSpecialKey.
+    let cmds = map(copy(a:commands), 'MapSpecialKey(v:val)')
+    call jobsend(term_job_id, cmds)
+  endfunction
+
+  function! SendCommandWithEnter(commands) abort
+    " jobsend interprets '' as new line, same as "\n" or enter
+    call SendCommand(add(a:commands, ''))
+    " Note that special key should also work
+    " call SendCommand(add(a:commands, '<CR>'))
+    " but the version above works even without the MapSpecialKey function.
   endfunction
 
   function! SendCommandCurrentLine()
       " Send current line to terminal buffer.
-      call SendCommand([getline('.')])
+      let commands = [getline('.')]
+      call SendCommandWithEnter(commands)
   endfunction
 
   function! GetVisualSelection()
@@ -73,11 +119,36 @@ if has('nvim')
   endfunction
 
   function! SendCommandVisualSelection()
-      call SendCommand(GetVisualSelection())
+      let commands = GetVisualSelection()
+      call SendCommandWithEnter(commands)
   endfunction
 
   function! SendCommandVisualSelectionAsLine()
-      call SendCommand([join(GetVisualSelection(), " ")])
+      let commands = [join(GetVisualSelection(), " ")]
+      call SendCommandWithEnter(commands)
+  endfunction
+
+  " At the moment this is the same as SendCommand, but
+  " maybe useful if I find that automatic handling for special keys
+  " does not work well.
+  " Then I can revert this to send keys explicitely.
+  function! SendKey(key) abort
+    call SendCommand([a:key])
+
+    "" Map friendly names to control codes
+    "let keymap = {
+    "      \ 'esc': "\x1b",
+    "      \ 'ctrl-c': "\x03",
+    "      \ 'ctrl-d': "\x04",
+    "      \ 'enter': "\n",
+    "      \ }
+    "
+    " let term_job_id = FindOrCreateTerminalJob()
+    "if has_key(keymap, a:key)
+    "  call jobsend(term_job_id, [keymap[a:key]])
+    "else
+    "  echoerr "Unknown key: " . a:key
+    "endif
   endfunction
 
   " <CR> is mapped to folds open / close by default
@@ -116,12 +187,17 @@ endif
 "   :VifmCs - attempts to convert Vim's color scheme to Vifm's one
 Plug 'vifm/vifm.vim'
 
+" Filebrowser: oil.nvim
+" Allows to browse and edit the filesytem.
+" The initialization is in .vimrc, after the plug#end()
+Plug 'stevearc/oil.nvim'
+
 " Filebrowser: vim-vinegar + netrw
 " Plug 'tpope/vim-vinegar'
 " Temporary switch to my fork to test the change for the
 " search issue
 " https://github.com/serebrov/vim-vinegar/tree/136-fix-search-in-vinegar-up
-Plug 'serebrov/vim-vinegar', {'branch': '136-fix-search-in-vinegar-up'}
+" Plug 'serebrov/vim-vinegar', {'branch': '136-fix-search-in-vinegar-up'}
 " '-' to open it and to go up dir
 " I - toggle the usage information
 " . - put the file  name at the end of a : command line, for example .!chmod +x
