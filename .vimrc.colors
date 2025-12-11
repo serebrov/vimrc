@@ -110,11 +110,16 @@ augroup onehalflight-overrides
   autocmd ColorScheme onehalflight highlight Comment guifg=#383a42 gui=altfont " font='Monospace 9'
 augroup END
 
+" see also https://github.com/Verf/deepwhite.nvim?tab=readme-ov-file
+" https://github.com/biletskyy/flatwhite-syntax
 augroup plain-overrides
   autocmd!
-  " autocmd ColorScheme plain highlight Comment guifg=#10A778 gui=altfont
-  autocmd ColorScheme plain highlight Comment guifg=#189392 gui=altfont
-  autocmd ColorScheme plain highlight Constant guifg=#008EC4 gui=altfont
+  "autocmd ColorScheme plain highlight Comment guifg=#189392 gui=altfont
+  "autocmd ColorScheme plain highlight Constant guifg=#008EC4 gui=altfont
+  "autocmd ColorScheme plain highlight CursorLine guifg=#222222 guibg=#F8F8F8
+
+  autocmd ColorScheme plain highlight Comment guifg=#000000 guibg=#C8FAFA gui=altfont
+  autocmd ColorScheme plain highlight Constant guifg=#000000 guibg=#FAFAC8 gui=altfont
   autocmd ColorScheme plain highlight CursorLine guifg=#222222 guibg=#F8F8F8
 
   " See :highlight for the list of groups.

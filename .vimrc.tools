@@ -54,6 +54,7 @@ if has('nvim')
   " Maps special keys like <CR>, <Esc>, etc to terminal codes
   " This way we can have something like
   " <Esc> that will be sent to the terminal as actual Esc key.
+  " See the list of special keys in :help keycodes
   function! MapSpecialKey(key) abort
     " Convert Vim-style key notation (<C-c>, <Esc>, etc.) into terminal codes
     return nvim_replace_termcodes(a:key, v:true, v:false, v:true)
@@ -161,7 +162,7 @@ if has('nvim')
   " " this is what they call "fake multi-line" mode:
   " autocmd FileType c,cpp,php,python,javascript,sql xnoremap <buffer> <leader><CR> :<C-u>call SendCommandVisualSelectionAsLine()<CR>
 
-  " Do :SetupTerm to enable terminal mappings for "Enter" (used for folds by
+  " Do :TermSetup to enable terminal mappings for "Enter" (used for folds by
   " default)
   function! SetupTermMappings()
     nnoremap <buffer> <CR> :<C-u>call SendCommandCurrentLine()<CR>

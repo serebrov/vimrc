@@ -13,7 +13,7 @@ end)
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = {'tsserver', 'pyright', 'vimls', 'bashls', 'yamlls'},
+  ensure_installed = {'ts_ls', 'pyright', 'vimls', 'bashls', 'yamlls'},
   handlers = {
     lsp_zero.default_setup,
     lua_ls = function()
