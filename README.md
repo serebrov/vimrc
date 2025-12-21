@@ -558,7 +558,7 @@ The ['tpope/vim-eunuch'](https://github.com/tpope/vim-eunuch) adds more commands
 - :help UserGettingBored
 - :help quotes
 - :Ni!
-- :set rightleft
+- :set rightleft (revert with :set norightleft or :set rightleft!)
 - :help map-modes (see comment below the table about :nunmap)
 - :help showmatch (read the note)
 - :help bar
