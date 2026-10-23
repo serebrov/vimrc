@@ -29,10 +29,15 @@ Plug 'chrisbra/vim-diff-enhanced'
 
 " vscode-diff dependency
 " Start with :CodeDiff
-" :CodeDiff HEAD~1 to comapre with specific commit
-" :CodeDiff main HEAD to compare two revisions
+" :CodeDiff HEAD~1         # comapre with specific commit
+" :CodeDiff main HEAD      # compare two revisions
+" :CodeDiff file main HEAD # compare two revisions for current file
+" :CodeDiff file file_a.txt file_b.txt  # compare two files
+" Use as merge tool:
+" git config --global merge.tool codediff
+" git config --global mergetool.codediff.cmd 'nvim "$MERGED" -c "CodeDiff merge \"$MERGED\""'
 Plug 'MunifTanjim/nui.nvim'
-Plug 'esmuellert/vscode-diff.nvim'
+Plug 'esmuellert/codediff.nvim'
 
 " git support:
 " :Git [add|status|commit|...] - run git command with enhanced vim support

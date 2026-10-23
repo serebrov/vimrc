@@ -65,7 +65,7 @@ if has('nvim')
   " List of avaiable and installed languages :TSInstallInfo
   " :TSUpdate to update installed parsers
   " :TSEnable / :TSDisable to enable/disable parsers
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/nvim-treesitter', {'branch': 'main', 'do': ':TSUpdate'}
 
   " Textobjects for functions, classes, etc.
   " See config in .vimrc.ide.lsp.lua
@@ -85,7 +85,7 @@ if has('nvim')
   " ]s - next scope
   " ]z - next fold
   " ]d - next conditional, [d - previous
-  Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+  Plug 'nvim-treesitter/nvim-treesitter-textobjects', {'branch': 'main'}
 
   " Use treesitter to autoclose and autorename html tag.
   " Works with html,tsx,vue,svelte,php.

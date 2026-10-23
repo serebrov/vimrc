@@ -37,6 +37,8 @@ Plug 'YorickPeterse/vim-paper'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'saulhoward/kaodam'
 
+Plug 'tanmaymanojgandhi/circadia', { 'rtp': 'ports/vim' }
+
 " Turbo pascal scheme - classic and modern variants
 " Settings:
 " g:BorlandStyle 	modern, classic 	change the colour style (see screenshots above)

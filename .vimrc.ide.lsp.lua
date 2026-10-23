@@ -69,7 +69,7 @@ cmp.setup({
 --   - vue                 ✓ . ✓ ✓ ✓
 --   - yaml                ✓ ✓ ✓ ✓ ✓
 
-require'nvim-treesitter.configs'.setup {
+require'nvim-treesitter.config'.setup {
   -- A list of parser names, or "all" (the listed parsers MUST always be installed)
   ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
 
@@ -111,7 +111,7 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-require'nvim-treesitter.configs'.setup {
+require'nvim-treesitter.config'.setup {
   textobjects = {
     select = {
       enable = true,
@@ -156,7 +156,7 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-require'nvim-treesitter.configs'.setup {
+require'nvim-treesitter.config'.setup {
   textobjects = {
     swap = {
       enable = true,
@@ -170,7 +170,7 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-require'nvim-treesitter.configs'.setup {
+require'nvim-treesitter.config'.setup {
   textobjects = {
     move = {
       enable = true,
@@ -213,36 +213,36 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
--- You can make the movements repeatable like ; and ,.
-local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
--- This breaks standard ; and , behaviour for f, F, t, T.
--- Repeat movement with ; and ,
--- ensure ; goes forward and , goes backward regardless of the last direction
--- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
--- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
-
--- vim way: ; goes to the direction you were moving.
--- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
--- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
-
--- This breaks repetition with . (things like cf( get broken when using .)
--- Optionally, make builtin f, F, t, T also repeatable with ; and ,
--- vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
--- vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
--- vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
--- vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
-
--- You can even make a custom repeat behaviour:
-
--- This repeats the last query with always previous direction and to the start of the range.
-vim.keymap.set({ "n", "x", "o" }, "<home>", function()
-  ts_repeat_move.repeat_last_move({forward = false, start = true})
-end)
-
--- This repeats the last query with always next direction and to the end of the range.
-vim.keymap.set({ "n", "x", "o" }, "<end>", function()
-  ts_repeat_move.repeat_last_move({forward = true, start = false})
-end)
+-- -- You can make the movements repeatable like ; and ,.
+-- local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+-- -- This breaks standard ; and , behaviour for f, F, t, T.
+-- -- Repeat movement with ; and ,
+-- -- ensure ; goes forward and , goes backward regardless of the last direction
+-- -- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+-- -- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+--
+-- -- vim way: ; goes to the direction you were moving.
+-- -- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+-- -- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+--
+-- -- This breaks repetition with . (things like cf( get broken when using .)
+-- -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
+-- -- vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
+-- -- vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
+-- -- vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
+-- -- vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
+--
+-- -- You can even make a custom repeat behaviour:
+--
+-- -- This repeats the last query with always previous direction and to the start of the range.
+-- vim.keymap.set({ "n", "x", "o" }, "<home>", function()
+--   ts_repeat_move.repeat_last_move({forward = false, start = true})
+-- end)
+--
+-- -- This repeats the last query with always next direction and to the end of the range.
+-- vim.keymap.set({ "n", "x", "o" }, "<end>", function()
+--   ts_repeat_move.repeat_last_move({forward = true, start = false})
+-- end)
 
 -- Furthermore, you can make any custom movements (e.g. from another plugin) repeatable with the same keys. This doesn't need to be treesitter-related.
 
@@ -261,7 +261,7 @@ end)
 
 -- peek_definition_code: show textobject surrounding definition as determined using Neovim's built-in LSP in a floating window. Press the shortcut twice to enter the floating window.
 
-require'nvim-treesitter.configs'.setup {
+require'nvim-treesitter.config'.setup {
   textobjects = {
     lsp_interop = {
       enable = true,
@@ -274,3 +274,13 @@ require'nvim-treesitter.configs'.setup {
     },
   },
 }
+
+-- not related to LSP, the blink-edit plugin
+require("blink-edit").setup({
+  llm = {
+    provider = "sweep",
+    backend = "openai",
+    url = "http://localhost:8000",
+    model = "sweep",
+  },
+})

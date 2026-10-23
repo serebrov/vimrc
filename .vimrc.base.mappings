@@ -186,13 +186,13 @@
   " https://www.reddit.com/r/neovim/comments/sf0hmc/im_really_proud_of_this_mapping_i_came_up_with/
   " the mapping lets me use . to repeat a regular c-prefixed command
   " as if it were performed using cgn.
-  " For example, do `ciw` at some word and then go `g.` to change next such
+  " For example, do `ciw` at some word and then do `g.` to change next such
   " word.
   nnoremap g. /\V\C<C-r>"<CR>cgn<C-a><Esc>
 
   " Note: to replace something with yanked text it's easy to use
   " a change operation and then <C-R>0 to insert register '0' content
-  " in insert mode, like cw<C-R>0 - replace  a word with yanked text
+  " in insert mode, like cw<C-R>0 - replace a word with yanked text
 
   " save
   noremap <leader>w :w<CR>
@@ -239,7 +239,7 @@
   " paste in the insert mode, then n. to repeat.
   "
   " Alternative method: xnoremap p "0p
-  " Note: 
+  " Note:
   " The problem with `xnoremap p "0p` override is that if we delete
   " something explicitely, we would expect next "p" to paste it,
   " but it pastes the prvious copied text instead:
@@ -282,8 +282,8 @@
 
   " Note about @ command:
   " From: https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim
-  " 
-  " The @ command is probably the most obscure vi command. 
+  "
+  " The @ command is probably the most obscure vi command.
   " @ executes the contents of a register as if it were a vi or ex command.
   " Example: I often use: :r!locate ... to find some file on my system and
   " read its name into my document. From there I delete any extraneous hits,
